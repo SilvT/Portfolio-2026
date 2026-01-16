@@ -4,19 +4,8 @@ import path from 'path';
 export default defineConfig({
   root: '.',
   publicDir: 'public',
-  resolve: {
-    extensions: ['.js', '.json'],
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: ``,
-      },
-    },
-  },
+  
+ 
   build: {
     target: 'esnext',
     outDir: 'dist',
@@ -36,10 +25,7 @@ export default defineConfig({
     host: true,
     allowedHosts: ['.ngrok-free.dev', '.ngrok.io', '.ngrok-free.app'],
     port: 3000,
-    open: '/Applications/Firefox.app',
-    fs: {
-      strict: false,
-    },
+    open: '/'
   },
   optimizeDeps: {
     exclude: ['*.mov', '*.mp4', '*.webm'],
