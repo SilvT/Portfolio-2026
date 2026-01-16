@@ -3,6 +3,12 @@
  * Ripple animation with "scroll" text
  */
 
+import gsap from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+
+// Register ScrollToPlugin
+gsap.registerPlugin(ScrollToPlugin);
+
 /**
  * Initialize scroll hint animation
  */
@@ -20,7 +26,7 @@ export function initScrollHint() {
       // Add hover cursor pointer
       scrollHint.style.cursor = 'pointer';
 
-      // Add click handler to scroll to first project with smooth scroll
+      // Add click handler to scroll to first project with GSAP smooth scroll
       scrollHint.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -31,10 +37,15 @@ export function initScrollHint() {
           // Calculate the target scroll position (center in viewport)
           const targetY = firstProject.offsetTop - (window.innerHeight / 2) + (firstProject.offsetHeight / 2);
 
-          // Use native smooth scroll
-          window.scrollTo({
-            top: targetY,
-            behavior: 'smooth'
+          // Use GSAP to animate scrollTop with smooth easing that matches natural scroll
+          gsap.to(window, {
+            duration: 1.5, // Longer duration for smoother transition
+            scrollTo: {
+              y: targetY,
+              autoKill: false, // Don't kill on user interaction - let transition complete
+            },
+            ease: 'power2.inOut', // Smooth ease for natural scroll feel
+            overwrite: 'auto',
           });
         }
       });
@@ -88,7 +99,7 @@ function showScrollHint() {
     scrollTimeout = setTimeout(checkVisibility, 10);
   }, { passive: true });
 
-  // Initial check with small delay
+  // Initial check with small delay to ensure GSAP snap has finished
   setTimeout(checkVisibility, 100);
 }
 
@@ -97,21 +108,22 @@ function showScrollHint() {
  */
 function showScrollHinter() {
   const scrollHinter = document.querySelector('.scroll-hinter');
-  const landingSection = document.querySelector('#about-landing');
+  const aboutSection = document.querySelector('.section-about');
 
-  if (!scrollHinter || !landingSection) {
+  if (!scrollHinter || !aboutSection) {
     return;
   }
 
-  // Show hinter when About section is visible in viewport
+  // Show hinter ONLY when About section is visible in viewport
   const checkVisibility = () => {
-    const rect = landingSection.getBoundingClientRect();
+    const rect = aboutSection.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Check if About section is visible in viewport (centered or near center)
-    const isVisible = rect.top < windowHeight / 2 && rect.bottom > windowHeight / 2;
+    // Only show when about section is in view (top is near or above viewport top, bottom is below viewport top)
+    // This means: show when about section is the current snapped section
+    const isAboutSectionVisible = rect.top <= 100 && rect.bottom >= windowHeight * 0.5;
 
-    if (isVisible) {
+    if (isAboutSectionVisible) {
       scrollHinter.style.opacity = '1';
       scrollHinter.style.visibility = 'visible';
     } else {
