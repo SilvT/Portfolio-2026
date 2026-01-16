@@ -1,0 +1,106 @@
+@use '../_variables' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+
+@use 'about' as *;
+@use 'footer' as *;
+@use 'nav-bar' as *;
+@use 'project-cards' as *;
+
+
+
+// Reset & Base
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* Create a snapping rule on the html element */
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  timeline-scope: --section;
+
+  @include breakpoint(mobile){
+    // scroll-snap-type: none;
+    timeline-scope: none;
+  }
+
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-bricolage;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $cream;
+}
+
+
+// Sections
+.section-about,
+.section-project, .section-contact {
+  width: 100%;
+  max-width: 100dvw;
+  position: relative;
+  height: 100vh; // Full viewport height for scroll snapping
+
+  @include breakpoint(mobile) {
+    height: auto;
+    min-height: 100svh;
+    padding-block: clamp(2rem, 6vw, 4rem);
+  }
+
+
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  view-timeline: --section;
+
+  .contentbox {
+    // position: fixed;
+    overflow: hidden;
+
+    // animation: smooth-reveal linear both;
+    // animation-timeline: --section;
+    // animation-range: entry 20% exit 80%;
+
+      transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  @keyframes smooth-reveal {
+    from {
+      opacity: 0.6;
+      transform: translateY(2vh);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.section-about {
+  background-color: $cream;
+  z-index: 0;
+
+  --dot-size: 1px;
+  --dot-space: 22px;
+	background:
+		linear-gradient(90deg, $cream calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+		linear-gradient( $cream calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+		$blue;
+
+  @include breakpoint(mobile) {
+    --dot-space: 40px;
+  }
+}
+
+
+.section-project,.section-contact{
+  z-index: 1;
+}

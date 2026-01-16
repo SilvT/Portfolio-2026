@@ -1,7 +1,7 @@
 // Variables
 
-    $color-white: #FAFAFA;
-    $color-full-white: #FFFFFF;
+    $color-bg: #FAFAFA;
+    $color-white: #FFFFFF;
     $color-white-alpha:rgba(255,255,255,0.4);
 
 
@@ -17,18 +17,19 @@
   $color-blue-alpha:rgba(0, 102, 255, 0.1);
   $color-blue-alpha-soft:rgba(0, 102, 255, 0.05);
 
-    // To-be-deprecated - LEGACY
-    $color-blue-light: $color-blue-100;
-    $color-blue-soft: $color-blue-200; //to be eliminated
-    $color-blue-main: $color-blue-300;
-    $color-blue-dark: $color-blue-400;
-    $color-blue-darker: $color-blue-500;
-    $color-blue-darkest: $color-blue-500; //to be eliminated**
-
-    // Shorthand-versions
+    // Shorthand-versions (must be defined first)
     $blue-light:$color-blue-100;
+    $blue-soft:$color-blue-200;
     $blue:$color-blue-300;
     $blue-dark:$color-blue-500;
+
+    // To-be-deprecated - LEGACY
+    $color-blue-light: $blue-light;
+    $color-blue-soft: $color-blue-200; //to be eliminated
+    $color-blue-main: $blue;
+    $color-blue-dark: $color-blue-400;
+    $color-blue-darker: $blue-dark;
+    $color-blue-darkest: $color-blue-500; //to be eliminated**
 
 // ===========================
 // GREEN
@@ -43,6 +44,11 @@ $color-green-400: #79854F;   // main (existing)
 $color-green-500: #525D2E;   // dark (existing)
 $color-green-600: #3F471F;   // dark (existing)
 
+// Shorthand-versions
+$green:$color-green-400;
+$green-light:$color-green-200;
+$green-dark:$color-green-500;
+
     // To-be-deprecated - LEGACY
   $color-green-lightest: $color-green-100;
   $color-green-light: $color-green-200;
@@ -51,10 +57,6 @@ $color-green-600: #3F471F;   // dark (existing)
   $color-green-darker: $color-green-600;
   $color-green-alpha: rgba(199, 205, 169, 0.3);
 
-    // Shorthand-versions
-    $green:$color-green-400;
-    $green-light:$color-green-200;
-    $green-dark:$color-green-500;
 
 // ===========================
 // RED
@@ -79,20 +81,17 @@ $color-neutral-600: #3D3A34;   // dark (existing)
 $color-neutral-700: #2A2723;  
 
 
+// Shorthand-versions
+$neutral-light:$color-neutral-300;
+$neutral:$color-neutral-500;
+$neutral-dark:$color-neutral-600;
+$neutral-darker:$color-neutral-700;
+
     // To-be-deprecated - LEGACY
     $color-neutral-lighter:$color-neutral-300;
     $color-neutral-light: $color-neutral-400;
     $color-neutral: $color-neutral-500;
     $color-neutral-dark:$color-neutral-600;
-
-    // Shorthand-versions
-    $neutral-light:$color-neutral-300;
-    $neutral:$color-neutral-500;
-    $neutral-dark:$color-neutral-600;
-    $neutral-darker:$color-neutral-700;
-
-
-
 
 
 // ===========================
@@ -106,15 +105,16 @@ $color-cream-300: #E3DDD3;   // from alpha base, solid
 $color-cream-400: #CFC7BB;   // UI contrast cream
 $color-cream-500: #B8B0A4;   // dark cream accent
 
+// Shorthand-versions
+$cream-light:$color-cream-100;
+$cream:$color-cream-200;
+$cream-mid:$color-cream-300;
+$cream-dark:$color-cream-400;
+
     // To-be-deprecated - LEGACY
     $color-cream: $color-cream-200;
     $color-cream-alpha:rgba(227, 221, 211, 0.4);
 
-    // Shorthand-versions
-    $cream-light:$color-cream-100;
-    $cream:$color-cream-200;
-    $cream-mid:$color-cream-300;
-    $cream-dark:$color-cream-400;
 
 //
 // OTHERS
@@ -134,21 +134,21 @@ $font-anonymous: 'Anonymous Pro', monospace;
 
 
 //Typography Size
-$font-size-4xl: 48px;
-$font-size-3xl: 40px;
-$font-size-2xl: 32px;
-$font-size-xl: 28px;
-$font-size-l: 22px;
-$font-size-base: 18px;
-$font-size-s: 16px;
-$font-size-xs: 14px;
+$font-4xl: 48px;
+$font-3xl: 40px;
+$font-2xl: 32px;
+$font-xl: 28px;
+$font-l: 22px;
+$font-base: 18px;
+$font-s: 16px;
+$font-xs: 14px;
 
 //Typography Weight
-$font-weight-light: 300;
-$font-weight-regular: 400;
-$font-weight-medium: 500;
-$font-weight-semibold: 600;
-$font-weight-bold: 700;
+$weight-light: 300;
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
 
 //Spacings
 $space-4:0.25rem;

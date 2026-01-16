@@ -1,0 +1,1915 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+
+// updates for the testing new structure
+
+.project-page-body{
+    width: 100% !important;
+    overflow-x: hidden;
+    &.js-loaded{
+        width: 100% !important;
+        overflow-x: hidden;
+    }
+
+    .case-study-page.active{
+        width: 100% !important;
+    }
+}
+
+//text styles
+
+.cs-block p, .cs-section-text{
+    font-size: $font-base;
+            @include breakpoint(mobile){
+                 font-size: calc($font-base*0.9); 
+                 line-height: 1.8;
+                 color: $neutral;
+        }
+}
+
+.cs-block-two-column .cs-column {
+
+    .cs-section-text{
+        color: $neutral;
+         @include breakpoint(mobile){
+         font-size: calc($font-base*0.9);   
+         line-height: 1.8;
+        }  
+    }
+
+    .cs-text-block-list li{
+        font-size: $font-base;
+        color: $blue-dark;
+        strong, b{
+            color: $blue;
+        }
+        @include breakpoint(mobile){
+            font-size: calc($font-base*0.8);
+        }
+    }
+
+    .cs-column-heading{
+        font-size: $font-l;
+        @include breakpoint(mobile){
+            font-size: calc($font-l*0.9);
+        }
+    }
+}
+
+.cs-images-caption, .cs-image-caption{
+    @include breakpoint(mobile){
+        font-size: calc($font-xs*0.9);
+    }
+}
+
+
+
+// Hero section animations
+.hero {
+    .cs-header {
+        @include fade-in-up($delay: 0.1s, $duration: 0.8s);
+    }
+
+    .cs-metrics {
+        @include fade-in-up($delay: 0.3s, $duration: 0.8s);
+    }
+
+    .cs.scroll-hinter {
+        @include fade-in-up($delay: 0.5s, $duration: 0.8s);
+    }
+
+    // Animate cs-hero child elements
+    .cs-hero {
+        .eyebrow {
+            @include fade-in-up($delay: 0.15s);
+        }
+
+        .cs-hero-title {
+            @include fade-in-up($delay: 0.25s);
+        }
+
+        .cs-story-hook-context {
+            @include fade-in-up($delay: 0.35s);
+        }
+
+        .switch-container {
+            @include fade-in-up($delay: 0.45s);
+        }
+
+        .cs-hero-images {
+            @include fade-in-up($delay: 0.55s);
+        }
+    }
+
+    // Animate metric card contents
+    .cs-metric-card {
+        // Stagger each card's animation
+        &:nth-child(1) {
+            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.4s, $duration: 0.6s); }
+            .cs-metric-value { @include fade-in-up($delay: 0.5s, $duration: 0.6s); }
+            .cs-metric-label { @include fade-in-up($delay: 0.6s, $duration: 0.6s); }
+        }
+
+        &:nth-child(2) {
+            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.5s, $duration: 0.6s); }
+            .cs-metric-value { @include fade-in-up($delay: 0.6s, $duration: 0.6s); }
+            .cs-metric-label { @include fade-in-up($delay: 0.7s, $duration: 0.6s); }
+        }
+
+        &:nth-child(3) {
+            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.6s, $duration: 0.6s); }
+            .cs-metric-value { @include fade-in-up($delay: 0.7s, $duration: 0.6s); }
+            .cs-metric-label { @include fade-in-up($delay: 0.8s, $duration: 0.6s); }
+        }
+
+        &:nth-child(4) {
+            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.7s, $duration: 0.6s); }
+            .cs-metric-value { @include fade-in-up($delay: 0.8s, $duration: 0.6s); }
+            .cs-metric-label { @include fade-in-up($delay: 0.9s, $duration: 0.6s); }
+        }
+    }
+
+    // Animate data-container items
+    .data-container {
+        .data-item {
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+            &:nth-child(1) {
+                animation-delay: 0.5s;
+            }
+
+            &:nth-child(2) {
+                animation-delay: 0.6s;
+            }
+
+            &:nth-child(3) {
+                animation-delay: 0.7s;
+            }
+
+            &:nth-child(4) {
+                animation-delay: 0.8s;
+            }
+        }
+    }
+}
+
+// Toggle Switch Styling
+.switch-container {
+    display: flex;
+    align-items: center;
+    gap: $space-16;
+    margin-top: $space-24;
+
+    @include breakpoint(mobile) {
+        gap: $space-12;
+        margin-top: $space-16;
+    }
+
+    .switch-label {
+        font-family: $font-anonymous;
+        font-size: $font-s;
+        color: $neutral;
+        font-weight: 400;
+        transition: color 0.3s ease;
+
+        @include breakpoint(mobile) {
+            font-size: calc($font-s * 0.85);
+        }
+
+        &:first-child {
+            color: $blue;
+        }
+    }
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+
+    @include breakpoint(mobile) {
+        width: 44px;
+        height: 22px;
+    }
+
+    .switch-input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+
+        &:checked + .switch-slider {
+            background-color: $blue;
+        }
+
+        &:checked + .switch-slider:before {
+            transform: translateX(24px);
+
+            @include breakpoint(mobile) {
+                transform: translateX(22px);
+            }
+        }
+    }
+
+    .switch-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $neutral-light;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 26px;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+
+        &:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+            @include breakpoint(mobile) {
+                height: 16px;
+                width: 16px;
+            }
+        }
+
+        &:hover {
+            background-color: color.adjust($neutral-light, $lightness: -5%);
+        }
+    }
+
+    .switch-input:checked + .switch-slider:hover {
+        background-color: color.adjust($blue, $lightness: -5%);
+    }
+
+    .switch-input:focus + .switch-slider {
+        box-shadow: 0 0 0 3px rgba($blue, 0.2);
+    }
+}
+
+// Update label colors based on toggle state
+.switch-container:has(.switch-input:checked) {
+    .switch-label:first-child {
+        color: $neutral;
+    }
+
+    .switch-label:last-child {
+        color: $blue;
+    }
+}
+
+
+.cs-header {
+
+    .cs-hero-images{
+        display: block !important;
+        opacity: 1;
+    }
+
+
+
+    // position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: transparent;
+    transition: background-color 0.4s 
+    cubic-bezier(0.4, 0, 0.2, 1);
+
+
+     
+        .cs-hero{
+
+            @include breakpoint(mobile){
+                display: block;
+                padding: 0 1rem;
+            }
+        }
+
+
+        .cs-hero-title{
+            @include breakpoint(mobile){
+                margin-bottom: 1rem;
+            }
+        }
+
+    .eyebrow{
+        display: flex;
+        flex-direction: row;
+        gap: $space-24;
+        align-items: center;
+
+          @include breakpoint(mobile){
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            }
+
+        .cs-type-label{
+            color: rgb(255, 255, 255);
+            width: fit-content;
+            background: rgb(32, 58, 72);
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            font-size: $font-s;
+
+            @include breakpoint(mobile){
+             font-size: calc($font-s*0.8);   
+            }
+        }
+        .cs-hero-data{
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            span{
+                font-family: $font-anonymous;
+                color: $neutral;
+                font-size: $font-s;
+             @include breakpoint(mobile){
+             font-size: calc($font-s*0.8);   
+            }
+            }
+        }    
+    }
+    .cs-hero-images{
+        display: block !important;
+        opacity: 1;
+    }
+    .cs-hero .cs-hero-header{
+        margin-bottom: 1.5rem;
+       @include breakpoint(mobile){
+        margin-bottom: 1rem;
+        }
+    }
+
+     .cs-story-hook-context{
+        font-size: $font-base;
+        color:$blue-dark;
+        font-weight: light;
+        line-height:1.6;
+        margin:0;
+
+        em{
+            font-weight: 400;
+            font-size: calc($font-base*1.2);
+                  @include breakpoint(mobile){
+                    font-size: $font-base;
+                    line-height: 1.3;
+                  }
+        }
+
+      @include breakpoint(mobile){
+         font-size: calc($font-base*0.8);   
+         margin-bottom: 1rem;
+        }
+     }
+    
+    }
+
+
+
+.metrics-content{
+display: flex;
+flex-direction: row;
+gap: $space-30;
+justify-content: space-between;
+margin:0 $space-120 0 $space-60;
+
+       @include breakpoint(mobile){
+        flex-direction: column-reverse;
+        margin: 0 $space-24;
+        justify-self: center;
+        // width: 100%;
+    }
+}
+
+
+.cs-metrics{
+    display: block;
+
+    .cs-metric-dot{
+        display: none;
+    }
+
+    .cs-section-title{
+        margin-bottom: 2rem;
+        color: $blue-dark;
+    }
+
+    .new{
+        max-width: 30vw;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+
+            @include breakpoint(mobile){
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+    
+                max-width: none;
+                width: 100%;
+            }
+
+
+        .cs-metric-card {
+            min-height: 2rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            height: 100%;
+            min-height: 2rem;
+            padding: 0.75rem;
+            // background-color: $neutral-lightest;
+            background-color: $color-white;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 4px 4px 4px $color-shadows-blue;
+            border: solid $blue 1px;
+
+            @include breakpoint(mobile){
+            min-height: fit-content;
+            width: 100%;
+            width: 47%;
+            min-width: auto;
+            min-height: 22vh;
+            justify-content: space-evenly;
+            }
+
+        &:hover{
+            transform: translateY(-1px);
+            background-color: $color-blue-alpha-soft;
+            box-shadow: 6px 6px 1px rgba(0, 102, 255, 0.1);
+        }
+        }
+        .cs-metric-value{
+                text-wrap: auto;
+                font-weight: 300;
+                @include breakpoint(mobile){
+                    font-size: calc($font-xs*0.9);
+                    font-weight: 600;
+                }
+                
+        }
+    }
+
+.data-container{
+    display: flex;
+    flex-direction: column;
+    min-width: 30vw;
+    // justify-content: space-between;
+    justify-content: center;
+    gap: 2rem;
+
+
+
+    .data-item{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border-bottom:solid 1px $blue;
+
+        .left-data{
+            color: $blue;
+            font-size:$font-base;
+            $font-weigth: medium;
+            line-height: 121%;
+        @include breakpoint(mobile){
+            font-size:calc($font-base*0.7);
+        }
+        }
+        .right-data{
+            color: $neutral-light;
+            font-size:$font-base;
+            $font-weigth: 100;
+            line-height: 121%;
+
+            .em{
+                color: $blue;
+                font-weight: 500;
+                
+            }
+            @include breakpoint(mobile){
+            font-size:calc($font-base*0.7);
+        }
+        }
+
+    }
+}
+}
+
+
+
+.cs-line-breaker{
+    height: 50vh;
+    background-color: rgba($blue, 0.2);
+    padding-right: 5rem;
+    
+        @include breakpoint(mobile){
+        overflow: hidden;
+        padding: 0;
+        height: 70vh;
+
+    }
+
+
+
+
+    .cs-landscape-cover{
+    padding: 1rem 10vh;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    height: 100%;
+
+    // justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+
+
+     @include breakpoint(mobile){
+        flex-direction: column; 
+        padding: 0.5rem 3rem;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    img{
+        height: 100%;
+        &.before{
+            filter: grayscale(100%);
+            opacity: 0.50;
+        }
+         @include breakpoint(mobile){
+            // width: 100;
+            // height: auto;
+                width: auto;
+                max-width: 100%;
+         }
+    }
+     .cs-line-subhead{
+        color: $neutral-light;
+                &.arrow{
+            @include breakpoint(mobile){
+                transform: rotate(90deg);
+                display: none;
+               }
+        }
+    }
+
+    .floating-text{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+
+        @include breakpoint(mobile){
+            flex-direction: column-reverse;
+         }
+
+    .cs-line-heading {
+        font-size: 16px;
+        font-weight: 500;
+        font-variation-settings: "opsz" 14, "wdth" 100;
+        color: $color-white;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        text-align: left;
+        color: $blue;
+
+    }
+    .cs-line-subhead{
+        color: $neutral-light;
+
+        &.arrow{
+            @include breakpoint(mobile){
+                transform: rotate(90deg);
+               }
+        }
+    }
+
+    img.before{
+            height: 100%;
+            filter: grayscale(100%);
+            opacity: 0.50;
+
+            @include breakpoint(mobile){
+                // width: 100;
+                // height: auto;
+                width: auto;
+                max-width: 100%;
+         }
+        }
+    }
+    }
+
+
+}
+
+
+.cs-large-image {
+background-color: radial-gradient(circle, $blue-light 0%, $blue-soft 100%);
+padding: 1rem 0;
+    a{
+        display: flex;
+        flex-direction: row;
+        height: 20vh;
+        // justify-content: space-evenly;
+        justify-content: center;
+        gap: 1rem;
+        background-color: white;
+        margin: 0 5rem;
+        
+        img{
+            height: 100%;    
+        }
+    }
+}
+
+.cs-key-insight{
+border-color: rgba(57, 128, 170, 0.3);
+box-shadow: 4px 4px 4px rgba(57, 128, 170, 0.1), -4px -4px 4px rgba(57, 128, 170, 0.1);
+
+    @include breakpoint(mobile){
+        padding: 0;
+
+        box-shadow: 8px 8px 4px rgba(57, 128, 170, 0.1), -8px -8px 4px rgba(57, 128, 170, 0.1);
+
+
+        .cs-key-insight-content{
+            max-width: 100%;
+            padding: 4rem 2rem;
+
+            .cs-key-insight-title{
+                font-size: calc($font-base*0.8);
+            }
+
+            .cs-key-insight-text{
+                font-size: $font-l;
+            }
+            .cs-key-insight-result{
+                font-size: calc($font-s*0.9);
+            }
+        }
+
+    }
+
+
+}
+
+.cs.scroll-hinter{
+    bottom: 3vh;
+    position: absolute;
+                @include breakpoint(mobile){
+                    display: none;
+                }
+}
+
+
+
+h2.cs-section-heading{
+    text-align: center;
+    margin-top: 2rem;
+    border-bottom: 1px solid $blue;
+    width: 70%;
+    justify-self: center;
+
+    .cs-block-two-column:nth-child(1){
+    padding-top:3rem;   
+    }
+
+    @include breakpoint(mobile){
+        width: 100%;
+        font-size: calc($font-l);
+    }
+
+}
+
+
+.cs-layout-grid{
+        padding: 2rem 4rem 0 0;
+        @include breakpoint(mobile){
+            padding: 2rem 0 0 0;
+            gap: 1rem;
+        }
+}
+
+
+
+.cs-paragraph{
+    margin-bottom: 1rem;
+}
+
+.side-resume{
+    justify-items: left;
+    
+        @include breakpoint(mobile){
+         background-color: $color-white;   
+         padding-left: 2rem;
+        }
+
+    
+    *{
+        text-align: right;
+        @include breakpoint(mobile){
+        text-align: left;
+        }
+    }
+    h4{
+        // text-align: center;
+        @include breakpoint(mobile){
+         font-size: $font-base;   
+        }
+    }
+    p, span{
+        color: $neutral;
+       &.arrows{
+            font-size: $font-l;
+            color: $blue;
+            vertical-align: -0.1em;
+        @include breakpoint(mobile){
+         font-size: calc($font-l*0.9);   
+        }
+
+        }
+        
+        @include breakpoint(mobile){
+        font-size: calc($font-s*0.9);    
+        }
+
+    }
+}
+
+.text-higlight {
+margin: 0.7rem 0.7rem;
+i{
+    color: $blue-dark;
+    font-size: $font-base;
+    font-style: italic;
+    @include breakpoint(mobile){
+    font-size: calc($font-base*0.8);
+    }
+}}
+
+.full-width {
+    height: 35vh;
+    overflow: hidden;
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    @include breakpoint(mobile){
+        height: 70vh;
+        overflow: hidden;
+    }
+
+
+    .cs-three-column-grid{
+    height: 100%;
+
+        @include breakpoint(mobile){
+            display: flex;
+            flex-direction: column;
+            gap: 0rem;
+            padding: 1rem 3rem;
+            width: 100%;
+        }
+
+
+
+    .cs-text-column{
+        width: 33vw;
+        position: relative;
+
+        @include breakpoint(mobile){
+            width: 100%;
+        }
+
+        .content{
+            h4{
+            font-size: $font-base;
+            font-weight: 500;
+            font-variation-settings: "opsz" 14, "wdth" 100;
+            color: $blue-dark;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.7rem;
+                @include breakpoint(mobile){
+                    font-size: calc($font-base*0.8);
+                }
+
+            }
+            span{
+                color: $blue-dark;
+                @include breakpoint(mobile){
+                font-size: $font-xs;
+                }
+                i{
+                color: $blue-dark;
+                }
+             &.quote-author{
+                width: 100%;
+                text-align: right;
+             }
+            }
+            .big-commas{
+            font-size: 3rem;
+            color: $neutral;
+            opacity: .3;
+            vertical-align: -0.3em;
+            line-height: 0.8;
+            @include breakpoint(mobile){
+            font-size: 2rem;    
+            }
+            }
+        }
+        p.cs-images-caption{
+            padding-top: 20%;
+            text-align: right;
+
+            @include breakpoint(mobile){
+                padding-top:0;
+            font-size: calc($font-xs*0.8);
+            }
+        }
+    }
+    .cs-images-column{
+        // max-width: 33vw;
+        max-height: 20vh;
+
+        .cs-images-wrapper img{
+        width: 100%;
+        }
+    }
+}
+
+
+    // Accordion state
+    &.accordion {
+        position: relative;
+
+        &:hover {
+            background-color: rgba($blue, 0.05);
+        }
+
+        .cs-text-column{
+            p.cs-section-text{
+                font-size: calc($font-base*0.8);
+            }
+
+            // Arrow indicator for accordion
+            &::after {
+                content: '▼';
+                position: absolute;
+                right: 2rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: $blue;
+                font-size: $font-l;
+                transition: transform 0.3s ease;
+            }
+            
+            // When accordion is open
+            &.is-open {
+                height: auto;
+                overflow: visible;
+                background-color: rgba($blue, 0.1);
+                
+                .cs-text-column::after {
+                    transform: translateY(-50%) rotate(180deg);
+                }
+            }
+        }
+    }
+
+.cs-three-column-grid{
+    height: 100%;
+
+        @include breakpoint(mobile){
+            display: flex;
+            flex-direction: column;
+            gap: 0rem;
+            padding: 1rem 3rem;
+            width: 100%;
+        }
+
+
+
+    .cs-text-column{
+        width: 33vw;
+        position: relative;
+
+        @include breakpoint(mobile){
+            width: 100%;
+        }
+
+        .content{
+            h4{
+            font-size: $font-base;
+            font-weight: 500;
+            font-variation-settings: "opsz" 14, "wdth" 100;
+            color: $blue-dark;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.7rem;
+                @include breakpoint(mobile){
+                    font-size: calc($font-base*0.8);
+                }
+
+            }
+            span{
+                color: $blue-dark;
+                @include breakpoint(mobile){
+                font-size: $font-xs;
+                }
+                i{
+                color: $blue-dark;
+                }
+             &.quote-author{
+                width: 100%;
+                text-align: right;
+             }
+            }
+            .big-commas{
+            font-size: 3rem;
+            color: $neutral;
+            opacity: .3;
+            vertical-align: -0.3em;
+            line-height: 0.8;
+            @include breakpoint(mobile){
+            font-size: 2rem;    
+            }
+            }
+        }
+        p.cs-images-caption{
+            padding-top: 20%;
+            text-align: right;
+
+            @include breakpoint(mobile){
+                padding-top:0;
+            font-size: calc($font-xs*0.8);
+            }
+        }
+    }
+    .cs-images-column{
+        // max-width: 33vw;
+        max-height: 20vh;
+
+        .cs-images-wrapper img{
+        width: 100%;
+        }
+    }
+}
+
+// Accordion content styling
+.accordion-content {
+    // padding: 2rem 4rem;
+    // background-color: rgba($blue, 0.05);
+    // border-top: 1px solid $blue;
+    animation: fadeIn 0.3s ease-in-out;
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+}
+
+// ============================================
+// SWIPER CAROUSEL - Custom Integration
+// ============================================
+
+// Swiper-specific overrides (NO TRANSITIONS)
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-wrapper {
+  position: relative;
+  &.new-container{
+      height: auto;
+      width: 100%;
+    }
+}
+
+.swiper-slide {
+  // Disable ALL transitions and animations
+  transition: none !important;
+  animation: none !important;
+}
+
+// Custom pagination styling
+.swiper-pagination {
+  position: relative !important;
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+
+  .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: $neutral-light;
+    opacity: 0.5;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &-active {
+      background: $blue;
+      opacity: 1;
+      transform: scale(1.3);
+
+      &:hover{
+        opacity: 0.7;
+        border: 2px solid $blue-dark;
+      }
+
+    }
+
+    &:hover{
+        background: $blue;
+    }
+   
+
+  }
+}
+
+
+
+// Main carousel wrapper
+.new-carousel {
+  width: 100%;
+  height: 100%;
+  min-height: 40vh;
+  position: relative;
+
+  @include breakpoint(mobile) {
+    min-height: 30vh;
+    padding: 0;
+    height: auto;
+  }
+}
+
+// Container (Swiper wrapper)
+.new-container {
+  min-height: 400px;
+  padding-right: 40px;
+  padding-bottom: 40px;
+  position: relative;
+
+  @include breakpoint(mobile) {
+    min-height: 30vh;
+    padding: 0;
+  }
+}
+
+// Individual slides
+.new-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+//   border-radius: 8px;
+  background: $color-white;
+//   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+box-shadow: 0px 2px 26px $color-shadows-blue;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+}
+
+
+// ============================================
+// STACKED CAROUSEL FOR IMAGES (OLD - DISABLED FOR SWIPER)
+// ============================================
+// .images-carousel.stacked-carousel {
+//   position: relative;
+//   height: 100%;
+
+
+//   .cs-carousel-container {
+//     min-height: auto;
+//     position: relative;
+//     padding-right: 3.5rem; // Space for stacked cards peeking
+//     padding-bottom: 3.5rem;
+//     height: 100%;
+
+//     @include breakpoint(mobile){
+//         padding: 0;
+//         margin: 0;
+//         height: auto;
+//     }
+//   }
+
+//   .cs-carousel-track {
+//     position: relative;
+//     height: auto;
+//     min-height: 300px;
+//     @include breakpoint(mobile){
+//     min-height: 30vh;
+//     }
+//   }
+
+//   .cs-carousel-slide {
+//     // Override default carousel behavior - all slides always visible
+//     opacity: 1 !important;
+//     visibility: visible !important;
+//     position: absolute !important;
+//     padding: 0 !important;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     max-width: 100%;
+//     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+//     display: block !important;
+//     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+//     border-radius: 8px;
+//     // height: 100%;
+
+//     img {
+//       display: block;
+//       width: 100%;
+//       height: auto;
+//       border-radius: 8px;
+//     }
+
+//     // Position 1: Front and center
+//     &.slide-position-1 {
+//       z-index: 40;
+//       transform: translateX(0) translateY(0);
+//       opacity: 1 !important;
+//     }
+
+//     // Position 2: Slightly behind and offset
+//     &.slide-position-2 {
+//       z-index: 30;
+//       transform: translateX(1rem) translateY(1rem) scale(0.98);
+//       opacity: 0.9 !important;
+//     }
+
+//     // Position 3: Further behind
+//     &.slide-position-3 {
+//       z-index: 20;
+//       transform: translateX(2rem) translateY(2rem) scale(0.96);
+//       opacity: 0.7 !important;
+//     }
+
+//     // Position 4: Almost stacked (for 4+ slide carousels)
+//     &.slide-position-4 {
+//       z-index: 10;
+//       transform: translateX(3rem) translateY(3rem) scale(0.94);
+//       opacity: 0.5 !important;
+//     }
+
+//     // Stacked: Hidden behind (for 5+ slide carousels)
+//     &.slide-position-stacked {
+//       z-index: 5;
+//       transform: translateX(3rem) translateY(3rem) scale(0.92);
+//       opacity: 0.2 !important;
+//     }
+
+//     // Remove active state overrides
+//     &.active {
+//       position: absolute !important;
+//     }
+//   }
+
+//   figure {
+//     margin-top: 1.5rem;
+//   }
+
+//   .cs-carousel-indicators {
+//     margin-top: 1.5rem;
+//   }
+
+
+//   &.tight{
+//     margin-right: 4rem;
+
+//     .cs-carousel-container{
+//       height: 90% !important;
+//       min-height: 37vh;
+//     @include breakpoint(mobile){
+//         min-height: auto;
+//     }
+//       .cs-carousel-slide{
+//       height: 90%;
+//     }
+//     }
+//   }
+
+// }
+
+
+// ============================================
+// MILESTONES ACCORDIONS
+// ============================================
+.milestones {
+  max-width: 60vw;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+
+  &-title {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+  }
+  @include breakpoint(mobile){
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+/* === Milestone container === */
+
+.milestone {
+  border-radius: 12px;
+  background: $color-white;
+  margin-bottom: 1.25rem;
+  border: 1px solid #e5edf5;
+  overflow: hidden;
+  // opacity: .95;
+  filter: grayscale(1);
+
+  .milestone-period{
+    display: none;
+  }
+  .milestone-header{
+    padding: 0.5rem 1.5rem;
+    transition: padding 200ms ease;
+  }
+
+  &[open] {
+    background: $color-white;
+    opacity: 1;
+    filter: none;
+    .milestone-period{
+      display: block;
+    }
+    .milestone-header{
+       padding: 2rem 1.5rem;
+    }
+    &:hover{
+      .milestone-header{
+        padding: 2rem 1.5rem;
+      }
+    }
+    }
+    &:hover{
+      background-color: $color-blue-alpha-soft;
+      box-shadow: 6px 6px 1px rgba(0, 102, 255, 0.1);
+      filter: none;
+      .milestone-header{
+          padding: 1.2rem 1.5rem;
+      }
+      }
+      
+    }
+
+/* === Header (always visible) === */
+
+.milestone-header {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  padding: 0.5rem 1.5rem;
+  transition: padding 200ms ease;
+
+  &[open] {
+  padding: 2rem 1.5rem;
+    }
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  // Dropdown arrow indicator
+  &::after {
+    content: '';
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid $blue-dark;
+    transition: transform 0.5s ease-in-out;
+
+    @include breakpoint(mobile){
+        top: auto;
+        bottom: 10%;
+    }
+  }
+}
+
+// Rotate arrow when accordion is open
+.milestone[open] .milestone-header::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.milestone-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.milestone-index {
+  // font-size: 0.875rem;
+  font-size: $font-s;
+  font-weight: 600;
+  color: #4a8fdc;
+  flex-shrink: 0;
+}
+
+.milestone-title {
+  // font-size: 1.1rem;
+  font-size: $font-base;
+  margin: 0;
+}
+
+.milestone-period {
+  // font-size: 0.85rem;
+  font-size: $font-xs;
+  color: #6b7c93;
+}
+
+/* === Outcome strip (critical) === */
+
+.milestone-outcome {
+  // font-size: 0.9rem;
+  font-size: $font-s;
+  color: $neutral-light;
+  padding-left: calc(1rem + 1.25rem);
+  background-color: $color-blue-alpha-soft;
+  margin-right: 2rem;
+  padding-bottom: 0.5rem;
+  border-radius: 1rem;
+  padding-right: 0.5rem;
+
+  strong {
+    font-weight: 600;
+  }
+@include breakpoint(mobile){
+    font-size: calc($font-s*0.9);
+    padding: 0.5rem 1rem;
+}
+
+}
+
+/* === Expanded content === */
+
+.milestone-body {
+  padding: 0 1.5rem 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+
+
+&.with-cta{
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+
+  .milestone-cta {
+    align-content: flex-end;
+    text-align: right;
+    
+    p{
+      font-size: $font-s;
+      padding-bottom: 0.5rem;
+      color: $neutral-light;
+      font-style: italic;
+    }
+    a.cta-button{
+    font-size: $font-s;
+    opacity: 0.7;
+    line-height: 140%;
+    text-align: left;
+    }
+  }
+}
+
+
+}
+
+.milestone-block {
+  h4 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+    color: $blue-dark;
+  }
+
+  ul {
+    // padding-left: 1.25rem;
+    // margin: 0;
+
+    // li {
+    //   font-size: 0.95rem;
+    //   margin-bottom: 0.4rem;
+    //   color: $neutral;
+    // }
+
+    // personalised icons on list
+
+    list-style: none;
+    padding-left: 0;
+
+    li{
+        position: relative;
+        padding-left: 1.75rem;
+        margin-bottom: 0.5rem;
+
+        &::before {
+          content: ">";
+          position: absolute;
+          left: 0;
+          color: $blue-dark;
+        }
+
+      &.milestone--shipped {
+        color: $blue;
+      &::before {
+        content: "★"; // or ✓ → ▶ → ⬤
+        color: $blue;
+        font-size: 0.9rem;
+      }
+    }
+      &.milestone--insight{
+        color: $blue;
+      &::before {
+        content: ">"; // or ✓ → ▶ → ⬤
+        color: $blue;
+        font-weight: bold;
+        // font-size: 1.1rem;
+      }
+    }
+  }
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+}
+
+/* === Desktop refinements === */
+
+@media (min-width: 768px) {
+  .milestone-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .milestone-outcome {
+    max-width: 40%;
+    padding-left: 1rem;
+    border-left: none;
+    border-top: 2px solid #d6e4f2;
+    padding-top: 0.75rem;
+  }
+}
+
+// Override the default arrow for line-breaker accordions
+.full-width.cs-line-breaker.accordion {
+    overflow: hidden;
+
+        @include breakpoint(mobile){
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+    .content{
+        @include breakpoint(mobile){
+        margin-bottom: 2rem;
+        }
+    }
+    .cs-text-column::after {
+        content: "See how it unfolded ▼";
+        font-size: $font-s;
+        font-family: $font-anonymous;
+        padding-top:20% ;
+        @include breakpoint(mobile){
+            padding-top: 0;
+            position: initial;
+            width: 100%;
+        }
+    }
+
+    &.is-open .cs-text-column::after {
+        content: "Collapse ▲";
+        transform: translateY(-50%);
+    }
+
+
+    &.is-open .cs-three-column-grid{
+        max-height: 20vh;
+    }
+
+    .cs-images-column .cs-images-wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+
+   
+}
+
+
+// Open accordion
+
+.full-width.cs-line-breaker.accordion.is-open {
+    overflow: auto;
+    height: auto;
+
+.cs-three-column-grid{
+        @include breakpoint(mobile){
+        max-height: none;
+        }
+}
+
+    .cs-images-column{
+        @include breakpoint(mobile){
+        overflow: hidden;      
+    }
+    &.one-img, &.two-img .first{
+        @include breakpoint(mobile){
+        display: none;
+        }
+    }
+    &.two-img{
+        @include breakpoint(mobile){
+        max-height: none;
+        }
+    }
+    }
+
+ .accordion-content{
+        background-color: transparent;
+        border-top: none;
+        padding: 0;
+        padding-top: 3rem;
+        // position: relative;
+
+        @include breakpoint(mobile){
+        padding-top: 2rem;
+        }
+
+        .cs-block-one-column{
+            background-color: transparent;
+            padding: 0;
+            width: 40%;
+            padding-right: 3rem;
+
+            @include breakpoint(xl-desktop, min){
+            padding-right: 5rem;
+            }           
+            @include breakpoint(mobile){
+            width: 100%;
+            padding: 0 2rem;
+            }
+
+            .cs-text-block-section{
+                color: $neutral;
+                h3{
+                    margin-bottom: 0.3rem;
+                    margin-top: 2rem;
+                    color: $blue-dark;
+                }
+
+
+                .cs-text-block-list{
+                    margin: 1rem 0;
+                    padding-left: 1.5rem;
+                    // padding-right: 15rem;
+                    li{
+                        font-size: calc($font-base*0.9);
+                        font-variation-settings: "opsz" 14, "wdth" 100;
+                        color: $neutral;
+                        line-height: calc(1.6*0.9);
+                        margin-bottom: 0.5rem;
+                        
+                        @include breakpoint(mobile){
+                         font-size: calc($font-base*0.6);   
+                        }
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+
+}
+
+
+
+
+.cs-metrics .new .cs-metric-card {
+    border: solid $blue 1px;
+
+    .cs-metric-tag{
+        padding: 0.1rem 0.7rem;
+        border-radius: 0.2rem;
+        background: $color-green-alpha;
+        color:$green-dark;
+        
+        
+        &.org{
+        background: $color-blue-alpha;
+        color: $blue-dark;
+        }
+        &.bus{
+        background: $color-cream-alpha;
+        color:$neutral-dark;
+        }
+    }
+}
+
+
+
+// conclusions
+
+.conclusions .cs-paragraph p{
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+
+
+// ---
+
+.switch-container{
+    display: none;
+}
+
+
+// ---
+.cs-text-image-grid{
+    color: $neutral;
+    h3{
+        color: $blue-dark;
+    }
+    li {
+            color:$blue-dark;
+        b{
+            color:$blue;
+            font-weight:$weight-bold;
+            font-size: $font-base;
+            @include breakpoint (mobile){
+                font-size: calc($font-base*0.8);
+            }
+        }
+    }
+p{
+    color: red;
+}
+}
+
+// ============================================
+// STACKED METRICS SWIPER (EFFECTCARDS)
+// Custom styling to approximate original diagonal stacking
+// ============================================
+
+.cs-block.cs-block-two-column.metrics{
+    height: auto;
+    .cs-column{
+        width: auto;
+    }
+}
+
+
+.stacked-metrics-swiper {
+  padding-right: 3.5rem;
+  padding-bottom: 3.5rem;
+  overflow: visible !important;
+  height: 280px;
+
+  .swiper-wrapper {
+    // height: 250px;
+    height: 20vh;
+    max-width: 50vw;
+    transform: none !important; // Prevent wrapper from moving
+    position: relative;
+
+    @include breakpoint(mobile){
+        max-width: 100vw;
+    }
+  }
+
+  .swiper-slide {
+    width: 90% !important;
+    max-width: 25vw !important;
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
+
+
+        @include breakpoint(mobile){
+            max-width: 100% !important;
+            width: auto ;
+        }
+
+
+    // Active slide - front and center
+    &.stack-active {
+      z-index: 40;
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+
+    // First card behind - slight offset
+    &.stack-1 {
+      z-index: 30;
+      transform: translate3d(1rem, 1rem, -50px) scale(0.98);
+      opacity: 0.9;
+    }
+
+    // Second card behind
+    &.stack-2 {
+      z-index: 20;
+      transform: translate3d(2rem, 2rem, -100px) scale(0.96);
+      opacity: 0.7;
+    }
+
+    // Third card behind
+    &.stack-3 {
+      z-index: 10;
+      transform: translate3d(3rem, 3rem, -150px) scale(0.94);
+      opacity: 0.5;
+    }
+
+    // All remaining cards further back
+    &.stack-back {
+      z-index: 5;
+      transform: translate3d(3rem, 3rem, -200px) scale(0.92);
+      opacity: 0.2;
+    }
+
+    // Previous slides (before active) are hidden
+    &:not(.stack-active):not(.stack-1):not(.stack-2):not(.stack-3):not(.stack-back) {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  // Style pagination to match original indicators
+  .swiper-pagination {
+    position: relative;
+    // margin-top: 1.5rem;
+    margin-top: 7vh;
+    bottom: auto;
+
+    .swiper-pagination-bullet {
+      width: 12px;
+      height: 12px;
+      margin: 0 6px;
+      background: $neutral-light;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+      border: solid 1px $blue;
+
+      &.swiper-pagination-bullet-active {
+        background: $blue;
+        transform: scale(1.2);
+
+      background: $blue;
+      opacity: 1;
+      transform: scale(1.3);
+
+
+        &:hover{
+        background: $blue-dark;
+         opacity: 0.7;
+        border: 2px solid $blue-dark;
+        }
+      }
+
+      &:hover {
+
+        background: $blue;
+      }
+    }
+  }
+
+  // Match original card styling
+  .cs-carousel-metrics-grid {
+    height: 100%;
+  }
+
+  .cs-metric-card {
+    height: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  // Disable shadows that EffectCards adds (we use our own)
+  .swiper-slide-shadow {
+    display: none;
+  }
+}
+
+
+.stacked-metrics-swiper {
+    .metrics-content{
+        margin: 0;
+    }
+    .swiper-slide{
+        .cs-metric-card{
+            justify-content: space-evenly;
+            width: 100%;
+            
+            
+            @include breakpoint(mobile){
+                min-width: auto;
+                width: 100%;
+            }
+            &:hover{
+                background-color: $color-white;
+            }
+            
+            
+            
+        }
+    }
+}
+
+
+
+// Before and After 
+.cs-before-after{
+
+    .cs-before-after-col{
+        @include breakpoint(mobile){
+            padding:1rem;
+        }
+        .cs-before-after-label{
+            font-size: $font-l;
+            color: $blue-dark;
+            @include breakpoint(mobile){
+                font-size: calc($font-l*0.9);
+                margin-bottom: 1rem;
+            }
+        }
+        .cs-before-after-list{
+
+            @include breakpoint(mobile){
+                margin: 0
+            }
+
+            li{
+                font-size: $font-base;
+
+                @include breakpoint(mobile){
+                    font-size: $font-s;
+                    margin-bottom: 0.5rem;
+                }
+
+            }
+        }
+    }
+}

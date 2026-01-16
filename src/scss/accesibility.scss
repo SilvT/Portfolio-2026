@@ -1,0 +1,26 @@
+@use '_variables' as *;
+@use 'breakpoints' as *;
+
+
+@mixin touch-target($min-size: 44px) {
+  min-width: $min-size;
+  min-height: $min-size;
+  padding: 8px;
+
+  @include touch-device {
+    // Extra space for touch devices
+    min-width: $min-size;
+    min-height: $min-size;
+  }
+}
+
+/**
+ * Focus Visible Mixin
+ * Accessible focus states for keyboard navigation
+ */
+@mixin focus-visible($color: $color-blue-main, $offset: 2px) {
+  &:focus-visible {
+    outline: 2px solid $color;
+    outline-offset: $offset;
+  }
+}

@@ -1,0 +1,113 @@
+/**
+ * Typography Styles
+ * Base styles for headings, paragraphs, and inline text elements
+ */
+
+@use '_variables' as *;
+@use 'breakpoints' as *;
+
+// Base text elements
+h1, h2, h3, h4, h5, p, p.mid, p.caption {
+  font-family: $font-bricolage;
+  line-height: 150%;
+  letter-spacing: 0;
+}
+
+// Headings
+h1 {
+  font-size: $font-3xl;
+  font-weight: $weight-bold;
+}
+
+h2 {
+  font-size: $font-l;
+  font-weight: $weight-medium;
+  line-height: 1.5;
+}
+
+h3 {
+  font-size: $font-l;
+  font-weight: $weight-medium;
+  line-height: 150%;
+}
+
+h4 {
+  font-size: $font-l;
+  font-weight: $weight-medium;
+}
+
+// Paragraphs
+p {
+  font-size: $font-base;
+  font-weight: $weight-light;
+}
+
+p.mid {
+  font-weight: $weight-regular;
+  font-size: $font-s;
+}
+
+p.caption {
+  font-weight: $weight-regular;
+  font-size: $font-xs;
+}
+
+// Inline text styles
+em {
+  // Only color change
+  color: $blue;
+  font-style: inherit;
+}
+
+b {
+  // Weight and darker change
+  font-weight: $weight-bold;
+  color: $color-neutral;
+}
+
+strong {
+  // Weight and color change
+  font-weight: $weight-medium;
+  color: $blue;
+}
+
+i {
+  color: $blue-dark;
+  font-weight: $weight-light;
+}
+
+// ============================================================================
+// GLOBAL RESPONSIVE STYLES
+// ============================================================================
+// ============================================================================
+
+// Global Typography Adjustments
+@include breakpoint(mobile) {
+  h3 {
+    font-size: $font-base;
+    line-height: 130%;
+  }
+
+  p {
+    font-size: calc($font-s*0.9);
+  }
+  li{
+    font-size: calc($font-s*0.8);
+  }
+}
+
+// Case Study Responsive Adjustments (Global across case study pages)
+@include breakpoint(tablet) {
+  .cs-hero {
+    padding: 0 3rem 2.5rem;
+
+    .cs-hero-metrics {
+      max-width: 500px;
+    }
+  }
+
+  .cs-layout-grid {
+    padding: 2.5rem 3rem;
+    gap: 3rem;
+  }
+}

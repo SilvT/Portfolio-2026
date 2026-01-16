@@ -1,0 +1,248 @@
+@use '../_variables' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+@use '../accesibility' as *;
+
+.section-contact {
+  position: relative;
+  color:$blue-dark;
+
+  
+
+  .contact__inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+  }
+
+  .contact__content{
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    gap: 5rem;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10rem;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+    & .icon {
+    text-transform: capitalize;
+    font-family: $font-fascinate;
+    font-size: $font-2xl;
+    white-space: pre;
+  }
+}
+
+// Frame container
+.socials {
+  flex-basis: 0;
+  display: flex;
+  gap: 1rem;
+  flex-grow: 1;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+  width: fit-content;
+  width: 100%;
+  justify-content: space-between;
+}
+
+// Social link blocks
+.social-link {
+  @include touch-target(44px); // Accessibility: Minimum 44px touch target
+  display: flex;
+  align-content: center;
+  width: 10vw;
+  // min-width: 10vw;
+  gap: 1rem;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+  color: $blue-dark;
+  white-space: nowrap;
+  text-decoration: none;
+  border-left: 4px dotted transparent;
+  padding: 8px 0.5rem 8px 1rem; // Updated to work with touch-target mixin
+  transition: color 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    color: $blue;
+    border-left-color: $blue;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    font-family: $font-bricolage;
+    font-weight: $weight-regular;
+    justify-content: center;
+    font-size: $font-base;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+  }
+
+  // Hover text underneath
+  &[data-hover-text] {
+    &::after {
+      content: attr(data-hover-text);
+      position: relative;
+      left: 0;
+      top: 80%;
+      transform: translateX(-50%) translateY(8px);
+      font-family: $font-anonymous;
+      font-size: $font-s;
+      font-weight: $weight-bold;
+      color: $blue;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      z-index: 10;
+      // text-wrap: wrap;
+      min-width: 10vw;
+    }
+
+    }
+
+    &:hover::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-60%) translateY($space-32);
+    }
+
+}
+
+// CV Download Button
+#cv-download-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-left: 4px dotted transparent;
+  padding-left: 1rem;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    color: $blue;
+    border-left-color: $blue;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+}
+.web {
+  display: flex;
+  gap: 0.5rem;
+  position: relative;
+  cursor: pointer;
+ & a{
+  text-decoration: none;
+  color: $blue-dark;
+  &:hover{
+    color:$blue;
+  }
+ }
+  // Tooltip
+  &[data-tooltip] {
+    &::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateX(8px) translateY(-50%);
+      background-color: $blue;
+      color: $color-white;
+      padding: $space-12;
+      border-radius: 4px;
+      font-family: $font-anonymous;
+      font-size: $font-xs;
+      font-weight: $weight-bold;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      white-space: normal;
+      min-width: 17rem;
+      line-height: 1.4;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    // Tooltip arrow
+    &::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateX(2px) translateY(-50%);
+      border: 12px solid transparent;
+      border-right-color: $blue;
+      opacity: 0;
+      visibility: hidden;
+      border-radius: 8px;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    &:hover::before {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX($space-32) translateY(-50%);
+    }
+
+    &:hover::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(6px) translateY(-50%);
+    }
+  }
+}
+
+// Responsive adjustments
+@include breakpoint(desktop) {
+  .contact__content {
+    padding: 80px;
+  }
+
+  .socials {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@include breakpoint(mobile) {
+
+  .contact__inner {
+    // height: 80dvh;
+   margin:5rem 0;
+   padding-bottom: 10rem;
+  }
+  .contact__content {
+    padding: 40px;
+    justify-content: flex-start;
+    height: 80%;
+
+  }
+
+  .social-link {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-4;
+
+    &__icon {
+      font-size: $font-xl;
+    }
+
+    &__text {
+      font-size: $font-s;
+    }
+  }
+}

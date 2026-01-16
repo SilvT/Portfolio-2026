@@ -1,0 +1,1190 @@
+@use '../_variables' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+
+
+.section-project {
+  &.project-blue {
+    background-color: $blue-light;
+
+    .contentbox {
+      background-color: $blue-light;
+    }
+
+    .project-screen {
+      background-color: $blue-light;
+    }
+  }
+
+  &.project-green {
+    background-color: $green-light;
+
+    .contentbox {
+      background-color: $green-light;
+    }
+
+    .project-screen {
+      background-color: $green-light;
+    }
+  }
+
+  &.project-neutral {
+    background-color: $color-cream;
+
+    .contentbox {
+      background-color: $color-cream;
+    }
+
+    .project-screen {
+      background-color: $color-cream;
+    }
+  }
+
+  h2{
+      font-weight: $weight-regular;
+
+  }
+}
+
+
+
+// Project Screen
+.project-screen {
+  width: 100%;
+  flex: 1;
+  padding: 100px 48px 24px 48px; // Extra top padding to account for navbar
+  display: flex;
+  flex-direction: column;
+
+  @include breakpoint(mobile) {
+    padding: $space-60 20px 20px;
+  }
+}
+
+.project-content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr; // 2 equal columns
+  gap: $space-80;
+  padding: $space-24 0 $space-24;
+
+  @include breakpoint(large-desktop, min) {
+    padding: $space-60 0 $space-30;
+  }
+
+  @include breakpoint(desktop) {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  @include breakpoint(tablet) {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  @include breakpoint(mobile) {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 20px 0;
+  }
+}
+
+// Left Column
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: space-between;
+  align-self: baseline;
+
+  @include breakpoint(desktop) {
+    .title-group .project-title {
+      font-size: 32px;
+    }
+  }
+
+  @include breakpoint(mobile) {
+    display: contents; // Remove the column wrapper on mobile
+  }
+
+  .title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    @include breakpoint(mobile) {
+      gap: 12px;
+      order: 1;
+    }
+
+    .project-title {
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      line-height: 95%;
+      color: $color-blue-darker;
+      text-transform: capitalize;
+      letter-spacing: -0.2px;
+      min-height: 4.5rem;
+      align-content: center;
+
+      @include breakpoint(mobile) {
+        font-size: 28px;
+        line-height: 110%;
+        min-height: auto;
+      }
+    }
+
+    .project-description {
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      letter-spacing: 0;
+
+      @include breakpoint(mobile) {
+        font-size: 14px;
+        line-height: 140%;
+      }
+
+      &.green {
+        color: $green;
+      }
+
+      &.neutral {
+        color: $neutral;
+      }
+    }
+  }
+
+  .meta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @include breakpoint(mobile) {
+      gap: 12px;
+      order: 5;
+    }
+
+    .project-meta {
+      font-family: $font-anonymous;
+      color: $color-blue-dark;
+      letter-spacing: -0.28px;
+
+      @include breakpoint(mobile) {
+        font-size: 13px;
+      }
+
+      &.green {
+        color: $green;
+      }
+
+      &.neutral {
+        color: $neutral;
+      }
+    }
+  }
+}
+
+
+// Metrics (inside left column)
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  gap: $space-12;
+  // width: 40vw;
+  flex-direction: row;
+
+  @include breakpoint(mobile) {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $space-8;
+    order: 4;
+    height: fit-content
+  }
+
+  .metric-card {
+    // @include metric-card();
+    flex: 1;
+    // min-width: 150px;
+    width: 30vw;
+    min-height: 5rem;
+    max-height: 8rem;
+    max-width: 19vw;
+
+    @include breakpoint(mobile) {
+      // flex: 1 1 calc(50% - 4px);
+      width: auto;
+      min-width: 0;
+      min-height: 4rem;
+      max-height: 5rem;
+     min-width: 30vw;
+     min-height: 7vh;
+    }
+
+    .cs-metric-content {
+      gap: $space-4;
+      padding: $space-12;
+      min-height: auto;
+      flex-direction: row;
+      justify-content: space-around;
+
+      @include breakpoint(mobile) {
+        padding: 8px;
+        gap: 4px;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+
+    .cs-metric-icon-wrapper {
+      width: 1.8rem;
+      height: 1.8rem;
+      margin:0;
+
+      @include breakpoint(mobile) {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+    }
+
+    .cs-metric-icon {
+      font-size: 1.7rem;
+      color: $blue;
+
+      @include breakpoint(mobile) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .cs-metric-value {
+      color: $blue;
+      font-size: $font-l;
+      width: auto;
+
+      @include breakpoint(mobile) {
+        font-size: 18px;
+        text-align: center;
+      }
+    }
+
+    .cs-metric-label {
+      font-size: $font-base;
+      color: $color-blue-400;
+      width: auto;
+
+      @include breakpoint(mobile) {
+        font-size: 12px;
+        text-align: center;
+      }
+    }
+
+    // Styles for Desktops and XLarge Screens (larger than MacBook Pro 16")
+    @include breakpoint(large-desktop, min) {
+      width: 20vw;
+      min-height: 8rem;
+      max-height: none;
+
+      .metric-card{
+        max-height: 9rem;
+      }
+
+      .cs-metric-content {
+        padding: $space-24;
+      }
+
+      .cs-metric-icon-wrapper {
+        width: 2.2rem;
+        height: 2.2rem;
+      }
+
+      .cs-metric-icon {
+        font-size: 2rem;
+      }
+
+      .cs-metric-value {
+        font-size: $font-2xl;
+      }
+    }
+  }
+}
+
+// Right Column
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: space-between;
+  width: 50vw;
+
+  @include breakpoint(desktop) {
+    width: 100%;
+
+    .storytelling-group {
+      max-width: 35vw;
+    }
+  }
+
+  @include breakpoint(tablet) {
+    .storytelling-group {
+      position: static;
+      max-width: 100%;
+      margin-top: 24px;
+    }
+  }
+
+  @include breakpoint(mobile) {
+    display: contents; // Remove the column wrapper on mobile
+  }
+
+  .storytelling-group {
+    position: absolute;
+    // right: 0;
+    bottom: 8vh;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+    background-color: $color-white;
+    border-radius: 0.25rem;
+    gap: 18px;
+    z-index: 1;
+    // max-width: 45vw;
+    max-width: 50vw;
+
+    padding: $space-24;
+
+    padding-left: 3vw;
+
+    // padding-right:3vw;
+    gap:$space-24;
+    box-shadow: -4px 4px 4px $color-shadows-dark;
+
+    @include breakpoint(mobile) {
+      background-color: transparent;
+      position: static;
+      max-width: 100%;
+      padding: 0;
+      gap: 0;
+      box-shadow: 0 2px 8px rgba(32, 58, 72, 0.15);
+      order: 2;
+      margin-top: 0;
+    }
+
+    .project-details {
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $neutral;
+      letter-spacing: 1;
+      font-size: $font-base;
+      line-height: 115%;
+      // font-style: italic;
+      position: relative;
+
+      @include breakpoint(mobile) {
+        font-size: $font-xs;
+        line-height: 130%;
+        display: none;
+      }
+    }
+
+    // Typing dots indicator
+    .typing-dots {
+      display: inline-flex;
+      gap: 3px;
+      margin-left: 8px;
+      align-items: center;
+      opacity: 0;
+
+      .dot {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background-color: $blue;
+        animation: typing-dot 2.8s infinite ease-in-out;
+
+        &:nth-child(1) {
+          animation-delay: 0s;
+        }
+        &:nth-child(2) {
+          animation-delay: 0.4s;
+        }
+        &:nth-child(3) {
+          animation-delay: 0.8s;
+        }
+      }
+    }
+  }
+
+  // Typing dots animation (2x slower)
+  @keyframes typing-dot {
+    0%, 60%, 100% {
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+    30% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  // Very slow pulsing shadow
+  @keyframes pulse-shadow-slow {
+    0%, 100% {
+      box-shadow: -4px 4px 4px $color-shadows-dark;
+    }
+    50% {
+      box-shadow: -4px 4px 20px rgba(57, 128, 170, 0.3),
+                  -2px 2px 8px rgba(57, 128, 170, 0.2);
+    }
+  }
+
+  @include breakpoint(large-desktop, min) {
+    width: 65vw;
+
+    .storytelling-group {
+      bottom: 9vh;
+      max-width: 25vw;
+      padding: $space-30;
+      padding-right: 3vw;
+      gap: $space-30;
+
+      .project-details {
+        font-size: $font-s;
+        line-height: 150%;
+      }
+    }
+  }
+}
+
+.project-image-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+
+  @include breakpoint(tablet) {
+    height: 350px;
+  }
+
+  @include breakpoint(mobile) {
+    height: 250px;
+    order: 3;
+  }
+
+  .background-gradient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    @include breakpoint(mobile) {
+      display: none;
+    }
+
+    &.blue-gradient {
+      background: radial-gradient(
+        circle at 0% 0%,
+        rgba(226, 238, 249, 1) 0%,
+        rgba(252, 253, 253, 1) 85%
+      );
+    }
+
+    &.green-gradient {
+      background: radial-gradient(
+        circle at 0% 0%,
+        $green 0%,
+        $color-green-alpha 42.5%,
+        rgba(252, 253, 253, 1) 85%
+      );
+    }
+     &.neutral-gradient {
+      background: radial-gradient(
+        circle at 0% 0%,
+        rgba(227, 221, 211, 0.4) 0%,
+        rgba(245, 243, 240, 1) 42.5%,
+        rgba(252, 253, 253, 1) 85%
+      );
+    }
+  }
+
+  .project-image {
+    position: absolute;
+    width: 650px;
+    // height: 299px;
+    height: auto;
+    object-fit: cover;
+    object-position: 50% 50%;
+    z-index: 2;
+    transition: opacity 0.4s ease;
+
+    @include breakpoint(tablet) {
+      width: 550px;
+      height: auto;
+
+      &.contain {
+        height: 350px;
+      }
+    }
+
+    @include breakpoint(mobile) {
+      position: static;
+      width: 100%;
+      height: auto;
+      max-height: 220px;
+      object-fit: contain;
+
+      &.contain {
+        height: auto;
+        max-height: 220px;
+      }
+    }
+
+    &.contain {
+      height: 400px;
+      object-fit: contain;
+    }
+
+    // Default image (visible by default)
+    &.project-image-default {
+      opacity: 1;
+    }
+
+    // Hover image (hidden by default)
+    &.project-image-hover {
+      opacity: 0;
+    }
+  }
+
+  // Hover state - show hover image, hide default image
+  &:hover {
+    .project-image-default {
+      opacity: 0;
+    }
+
+    .project-image-hover {
+      opacity: 1;
+    }
+  }
+
+  // Ensure videos inherit image styling
+  video.project-image {
+    display: block;
+    pointer-events: none; // Prevent video controls from interfering
+  }
+
+  // Carousel-specific styles
+  &[data-carousel="true"] {
+    // Disable hover effect when carousel is active
+    &:hover {
+      .project-image-default,
+      .project-image-hover {
+        opacity: 0; // Hide static images
+      }
+    }
+
+    .project-carousel-slide {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+
+      &.active {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
+
+// Carousel navigation dots
+.project-carousel-dots {
+  display: none; // Hidden on desktop by default
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  position: relative;
+  z-index: 3;
+
+  @include breakpoint(mobile) {
+    display: flex; // Show on mobile
+  }
+
+  .project-carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $color-blue-200;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 0.8;
+      transform: scale(1.2);
+    }
+
+    &.active {
+      background-color: $color-blue-400;
+      opacity: 1;
+      transform: scale(1.3);
+    }
+
+    // Accessible touch target
+    @include touch-device {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+// CTA Button
+// CTA buttons group container
+.cta-buttons-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.cta-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border-radius: 2px;
+      font-weight: 500;
+      font-size: $font-base;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      min-height:3rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+
+      background-color: transparent;
+      color: $blue;
+      border: 2px solid $blue;
+
+        
+      &:hover {
+        background-color: $blue;
+        color: $color-white;
+      }
+
+      // Secondary button variant
+      &.cta-button-secondary {
+        background-color: transparent;
+        color: $blue;
+        border: 2px solid $blue;
+
+        &:hover {
+          background-color: $blue-light;
+          color: $color-blue-400;
+          border-color: $blue-light;
+        }
+      }
+
+      @include breakpoint(large-desktop, min) {
+        min-height: 4rem;
+      }
+
+      @include breakpoint(mobile) {
+        font-size: 14px;
+        min-height: 44px;
+        padding: 8px 16px;
+        width: 100%;
+      }
+    }
+
+// Tags (styled like cs-tags from case-study)
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  @include breakpoint(mobile) {
+    gap: 6px;
+  }
+
+  .tag-label {
+    // Hidden in the new design, kept for backward compatibility
+    display: none;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    @include breakpoint(mobile) {
+      gap: 6px;
+    }
+
+    span {
+      font-family: $font-anonymous;
+      font-size: $font-xs;
+       padding: 4px 12px;
+       background-color: rgba(0, 102, 255, 0.1);
+       color: $blue-dark;
+       border-radius: 2px;
+    }
+  }
+
+  // Theme variations
+  &.green .tag-list span{
+    background-color: $color-green-alpha;
+    color: $green-dark;
+  }
+
+  &.neutral .tag-list span {
+    background-color: $color-cream-alpha;
+    color: $blue-dark;
+  }
+}
+
+// ============================================================================
+// EXPERIMENTAL LAYOUT STYLES
+// ============================================================================
+// Activated when .experimental-layout class is present on the section
+// This provides an alternative layout with:
+// - Single column flex layout instead of 2-column grid
+// - Marquee carousel on desktop / dot navigation on mobile
+// - Different content organization
+// ============================================================================
+
+.experimental-layout {
+  // Override project-content to use flexbox column layout
+  .project-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  // ============================================================================
+  // TEXT CONTENT SECTION
+  // ============================================================================
+
+  .text-content {
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+
+    @include breakpoint(mobile) {
+      flex-direction: column;
+    }
+
+    .title-group {
+      .project-title {
+        line-height: 130%;
+        margin: 0.5rem 0;
+
+        @include breakpoint(mobile) {
+          font-size: calc($font-3xl * 0.85);
+          line-height: 1;
+          margin: 0.25rem 0;
+        }
+      }
+
+      .type-label {
+        background: $blue-dark;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        width: fit-content;
+
+        @include breakpoint(mobile) {
+          font-size: $font-xs;
+          padding: 0.3rem 0.75rem;
+        }
+      }
+
+      .project-meta {
+        color: $neutral-light;
+        font-family: $font-anonymous;
+        margin-top: 0.5rem;
+
+        @include breakpoint(mobile) {
+          font-size: $font-xs;
+        }
+      }
+    }
+
+    .long-content {
+      display: flex;
+      flex-direction: column;
+      gap: $space-8;
+
+      .project-description {
+        line-height: 150%;
+        font-weight: $weight-medium;
+        color: $blue;
+
+        @include breakpoint(mobile) {
+          font-size: calc($font-base * 0.9);
+          line-height: 130%;
+          margin-top: 0.7rem;
+        }
+      }
+
+      @include breakpoint(laptop) {
+        max-width: 55vw;
+      }
+
+      @include breakpoint(mobile) {
+        max-width: initial;
+      }
+
+      .project-details {
+        font-variation-settings: 'opsz' 14, 'wdth' 100;
+        color:$neutral;
+        letter-spacing: 1;
+        font-size: $font-base;
+        line-height: 120%;
+        // font-style: italic;
+        position: relative;
+        height: 100%;
+
+        @include breakpoint(mobile) {
+          font-size: $font-xs;
+          line-height: 130%;
+          // display: none;
+        }
+      }
+
+      .meta-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+      }      
+    }
+  }
+
+  // ============================================================================
+  // SLIDESHOW CONTAINER - MARQUEE CAROUSEL (Desktop) / DOT CAROUSEL (Mobile)
+  // ============================================================================
+
+  .slideshow-container {
+    max-height: 40vh;
+    height: 40vh;
+    position: relative;
+    overflow: hidden; // Clip content to container bounds
+  }
+
+  .project-image-wrapper.slideshow {
+    height: 100%;
+    position: relative;
+    display: flex;
+    gap: 1.5rem;
+
+    // Make wrapper wide enough to hold all images side by side
+    width: max-content;
+
+    // Desktop: Infinite loop marquee with smooth continuous scroll
+    animation: marqueeScroll 30s linear infinite;
+
+    // Pause animation on hover
+    &:hover {
+      animation-play-state: paused;
+    }
+
+    @include breakpoint(mobile) {
+      // Mobile: Traditional carousel behavior
+      animation: none;
+      gap: 0;
+      width: 100%;
+      scroll-snap-type: x mandatory;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+
+      // Hide scrollbar
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .project-image {
+      // Desktop: Width determined by image aspect ratio at max 40vh height
+      max-height: 40vh;
+      height: 100%;
+      width: auto; // Let image maintain its natural aspect ratio
+      object-fit: contain; // Preserve aspect ratio
+      border-radius: 8px;
+      flex-shrink: 0;
+      position: relative;
+
+      // Override original hover behavior - keep images visible
+      opacity: 1 !important;
+
+      @include breakpoint(mobile) {
+        // Mobile: One image at a time, full width
+        width: 100%;
+        height: auto;
+        max-height: 60vh;
+        object-fit: cover;
+        scroll-snap-align: start;
+        border-radius: 4px;
+      }
+
+      // Hide duplicate images on mobile
+      &[aria-hidden="true"] {
+        @include breakpoint(mobile) {
+          display: none;
+        }
+      }
+    }
+
+    // Override default hover behavior for slideshow
+    &:hover .project-image {
+      opacity: 1 !important; // Keep all images visible on hover
+    }
+  }
+
+  // Carousel dots navigation (mobile only)
+  .carousel-dots {
+    display: none;
+
+    @include breakpoint(mobile) {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 0;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba($blue, 0.3);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.active {
+      background-color: $blue;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    &:hover {
+      background-color: rgba($blue, 0.6);
+    }
+  }
+
+  // Marquee scroll animation - infinite seamless loop (desktop only)
+  // Images are duplicated, so translating to -50% puts us at the start of duplicates
+  // Animation loops back to 0% seamlessly because duplicates match originals
+  @keyframes marqueeScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  // ============================================================================
+  // DATA SECTION (Metrics + Tags)
+  // ============================================================================
+
+  .data {
+    .metrics .metric-card {
+      max-height: 6rem;
+    }
+
+    .cs-metric-border {
+      display: none; // Hide decorative border in experimental layout
+    }
+
+    .tags {
+      align-items: flex-end;
+
+      .tag-list {
+        height: fit-content;
+        width: 100%;
+        justify-content: center;
+
+        span {
+          // Override original CSS that hides odd children (separators)
+          display: inline-block !important;
+        }
+      }
+    }
+  }
+
+ // ============================================================================
+  // Breadcumbs Nav
+  // ============================================================================
+
+.project-nav {
+  text-align: right;
+  text-transform: capitalize;
+  line-height: 1;
+  color: $color-blue-darker;
+  position: relative;
+  min-height: $font-base * 1.2; // Reserve space for one line
+
+  @include breakpoint(mobile) {
+    min-height: auto; // Remove reserved space on mobile
+    display: none;
+  }
+
+  // Button-specific styles
+  &.project-nav-button {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    min-height: 36px; // Touch target
+
+    @include breakpoint(mobile) {
+      padding: 4px 0; // Tighter padding on mobile
+      min-height: 44px; // Touch target
+      min-height: auto; // Remove fixed height on mobile
+
+    }
+
+    &:hover {
+      opacity: 0.7;
+      transform: translateX(-4px);
+
+      @include breakpoint(mobile) {
+        opacity: 1; // Disable hover opacity on mobile
+        transform: none; // Disable hover transform on mobile
+      }
+    }
+
+    &:focus {
+      outline: 2px solid $color-blue-main;
+      outline-offset: 4px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-blue-main;
+      outline-offset: 4px;
+    }
+
+    // Better touch feedback
+    @include touch-device {
+      padding: 12px 0;
+      min-height: 48px;
+    }
+  }
+
+  &.top {
+    margin-bottom: $space-12;
+
+    @include breakpoint(mobile) {
+      margin-bottom: 8px; // Tighter spacing on mobile
+    }
+  }
+
+  &.bottom {
+    margin-top: $space-12;
+    margin-bottom:$space-12;
+
+    @include breakpoint(mobile) {
+      margin-top: 8px; // Tighter spacing on mobile
+      margin-bottom: 4px;
+    }
+  }
+
+  .nav-title,
+  .nav-subtitle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: $font-base;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    letter-spacing: 0;
+    width: 100%;
+
+    @include breakpoint(mobile) {
+      font-size: 14px;
+    }
+  }
+
+  .nav-title {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+
+    @include breakpoint(mobile) {
+      position: static; // Make it flow naturally on mobile
+      transition: none; // Disable transitions on mobile
+    }
+  }
+
+  .nav-subtitle {
+    color: $color-blue-200; // Start with lighter accent color
+    opacity: 0;
+    transform: translateX(20px);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease;
+
+    @include breakpoint(mobile) {
+      display: none; // Completely hide subtitle on mobile
+    }
+  }
+
+  &:hover .nav-title {
+    opacity: 0;
+    transform: translateX(-20px);
+
+    @include breakpoint(mobile) {
+      opacity: 1; // Keep visible on mobile
+      transform: none; // No transform on mobile
+    }
+  }
+
+  &:hover .nav-subtitle {
+    color: $color-blue-500; // Transition to darker color
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+
+    @include breakpoint(mobile) {
+      display: none; // Keep hidden on mobile
+      opacity: 0;
+    }
+  }
+}
+
+
+
+
+
+
+  // ============================================================================
+  // ACCESSIBILITY - REDUCED MOTION
+  // ============================================================================
+
+  @include reduced-motion {
+    .project-image-wrapper.slideshow {
+      animation: none !important;
+    }
+
+    .carousel-dot {
+      transition: none;
+    }
+  }
+}
+
+
+
