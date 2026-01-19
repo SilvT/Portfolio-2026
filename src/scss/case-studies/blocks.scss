@@ -5,23 +5,151 @@
 @use '../typography' as *;
 
 
+// ============================================
+// PAGE BODY & THEME
+// ============================================
 
- body.project-page-body{
-   background: none;
+body.project-page-body {
+  background: none;
+  width: 100% !important;
+  overflow-x: hidden;
+
   &[data-theme="blue"] {
     background-color: $blue-light;
   }
   &[data-theme="green"] {
     background-color: $green-light;
- }
+  }
+  &.js-loaded {
+    width: 100% !important;
+    overflow-x: hidden;
+  }
+
+  .case-study-page.active {
+    width: 100% !important;
+  }
 }
 
-// Metrics Section (Key Achievements)
+
+// ============================================
+// CONTENT CONTAINERS & BASE BLOCKS
+// ============================================
+
+.cs-content-container {
+  position: relative;
+  background-color: white;
+  z-index: 10;
+}
+
+.cs-block {
+  position: relative;
+  background-color: white;
+}
+
+.cs-block p,
+.cs-section-text {
+  font-size: $font-base;
+
+  @include breakpoint(mobile) {
+    font-size: calc($font-base * 0.9);
+    line-height: 1.8;
+    color: $neutral;
+  }
+}
+
+
+// ============================================
+// TYPOGRAPHY & TEXT ELEMENTS
+// ============================================
+
+// Section Heading (unified)
+.cs-section-heading {
+  font-size: $font-xl;
+  font-weight: $weight-medium;
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  color: $blue;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid $blue;
+  width: 70%;
+  justify-self: center;
+  align-self: center;
+
+  .cs-block-two-column:nth-child(1) {
+    padding-top: 3rem;
+  }
+
+  @include breakpoint(mobile) {
+    width: 100%;
+    font-size: calc($font-l);
+  }
+}
+
+// Section Title (smaller, uppercase)
+.cs-section-title {
+  font-size: $font-xs;
+  font-weight: $weight-semibold;
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  color: $blue;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+// Image Captions
+.cs-images-caption,
+.cs-image-caption {
+  font-family: $font-anonymous;
+  font-size: $font-xs;
+  color: $color-neutral-light;
+  line-height: 121%;
+  margin-top: $space-4;
+  text-align: left;
+
+  @include breakpoint(mobile) {
+    font-size: calc($font-xs * 0.9);
+  }
+}
+
+// Paragraph
+.cs-paragraph {
+  margin-bottom: 1rem;
+}
+
+// Text Highlight
+.text-higlight {
+  margin: 0.7rem 0.7rem;
+
+  i {
+    color: $blue-dark;
+    font-size: $font-base;
+    font-style: italic;
+
+    @include breakpoint(mobile) {
+      font-size: calc($font-base * 0.8);
+    }
+  }
+}
+
+.text-higlight-center {
+  font-weight: $weight-bold;
+  color: $blue !important;
+  text-align: center;
+  font-style: italic;
+  padding-bottom: 0.5rem;
+}
+
+
+// ============================================
+// METRICS SECTION
+// ============================================
+
 .cs-metrics {
   position: relative;
   padding: 3rem 4rem;
   background-color: white;
-  z-index: 10; // Above hero image
+  z-index: 10;
 
   .cs-section-title {
     font-size: $font-xs;
@@ -40,133 +168,104 @@
 
     @include breakpoint(mobile) {
       grid-template-columns: 1fr;
+      gap: 1rem;
     }
   }
 
   .cs-metric-card {
-    // @include metric-card();
     height: 7.5rem;
+  }
+
+  @include breakpoint(mobile) {
+    padding: 2rem 1rem;
+
+    .cs-section-title {
+      font-size: 11px;
+      margin-bottom: 1rem;
+    }
   }
 }
 
-// Content Blocks Container
-.cs-content-container {
-  position: relative;
-  background-color: white;
-  z-index: 10; // Above hero image
-}
 
-// Block Base Styles
-.cs-block {
-  position: relative;
-  background-color: white;
-}
+// ============================================
+// LAYOUT GRID (Two-column with sidebar)
+// ============================================
 
-// General Section Heading (unified base styles)
-.cs-section-heading {
-  font-size: $font-xl;
-  font-weight: $weight-medium;
-  font-variation-settings: 'opsz' 14, 'wdth' 100;
-  color: $blue;
-  margin-bottom: 1rem;
-
-  text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid $blue;
-  width: 70%;
-  justify-self: center;
-  align-self: center;
-
-    .cs-block-two-column:nth-child(1){
-    padding-top:3rem;   
-    }
-
-    @include breakpoint(mobile){
-        width: 100%;
-        font-size: calc($font-l);
-    }
-
-}
-
-
-
-
-
-
-//General Image captions
-    .cs-images-caption, .cs-image-caption{
-      font-family: $font-anonymous;
-      font-size: $font-xs;
-      color: $color-neutral-light;
-      line-height: 121%;
-      margin-top: $space-4;
-      text-align: left;
-    }
-
-// Main Layout Grid (reusable for two-column blocks)
 .cs-layout-grid {
   position: relative;
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 4rem;
-  padding: 2rem 4rem;
+  padding: 2rem 4rem 0 0;
   align-items: start;
 
   @include breakpoint(mobile) {
     grid-template-columns: 1fr;
+    padding: 2rem 0 0 0;
+    gap: 1rem;
+    max-width: 100%;
+    overflow: hidden;
   }
 }
 
-// Main Content - Left Column
+
+// ============================================
+// MAIN CONTENT (Left Column)
+// ============================================
+
 .cs-content {
+  .cs-section-heading {
+    padding-bottom: 0.5rem;
+
+    @include breakpoint(mobile) {
+      font-size: $font-l;
+      margin-bottom: 0.75rem;
+    }
+  }
+
   .cs-content-section {
     margin-bottom: 3rem;
+    max-width: 47vw;
 
     &:last-child {
       margin-bottom: 0;
     }
-  }
 
-  .cs-section-heading {
-    padding-bottom: 0.5rem;
-  }
-
-  .cs-content-section {
-    max-width: 47vw;
-
-    & .cs-text-block-heading{
+    .cs-text-block-heading {
       font-size: $font-l;
       color: $color-blue-dark;
       margin-bottom: $space-12;
       line-height: 130%;
       margin-top: 1.2rem;
     }
-    & .subtit{
-      color:$color-blue-200;
+
+    .subtit {
+      color: $color-blue-200;
       font-size: $font-base;
       font-weight: $weight-light;
       line-height: 130%;
       margin-bottom: $space-12;
     }
-    & .cs-section-text{
+
+    .cs-section-text {
       font-size: $font-base;
       font-weight: $weight-light;
       line-height: 130%;
-      color:$color-neutral-light;
+      color: $color-neutral-light;
       margin-bottom: $space-4;
     }
-    & .callout{
+
+    // Callout box
+    .callout {
       background: $color-blue-light;
       border-radius: $space-20;
       padding: $space-20 $space-24;
       color: $color-blue-dark;
       font-family: $font-anonymous;
       font-style: italic;
-      font-size: calc($font-base*1.1);
+      font-size: calc($font-base * 1.1);
       font-weight: $weight-regular;
       line-height: 1.5;
-      // margin: $space-32 $space-40;
       margin: 2rem -3rem 2rem 4rem;
       position: relative;
 
@@ -189,27 +288,28 @@
         border-radius: 0.5rem;
         padding: $space-12 $space-16;
         font-size: $font-base;
-              &::before {
-        content: '';
-        position: absolute;
-        left: -18px;
-        bottom: 3.2rem;
-        width: 0;
-        height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-top: 16px solid $color-cream;
-        transform: rotate(90deg);
-      }
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: -18px;
+          bottom: 3.2rem;
+          width: 0;
+          height: 0;
+          border-left: 12px solid transparent;
+          border-right: 12px solid transparent;
+          border-top: 16px solid $color-cream;
+          transform: rotate(90deg);
+        }
       }
     }
 
-    // Text block list styling
+    // Text block list
     .cs-text-block-list {
       margin: $space-12 0;
       padding: 0;
 
-      li{
+      li {
         list-style: none;
         position: relative;
         padding-left: 1.5rem;
@@ -217,7 +317,7 @@
         font-size: $font-base;
         font-weight: $weight-light;
         line-height: 130%;
-        color:$color-neutral-light;
+        color: $color-neutral-light;
 
         &:before {
           content: '·';
@@ -229,286 +329,32 @@
           font-size: 1.1em;
         }
 
-        &:last-child{
+        &:last-child {
           margin-bottom: $space-20;
         }
       }
     }
-  }
 
-  // Inline images/graphs within content (left column only)
-  .cs-inline-image {
-    margin: 2rem 0;
-    width: 100%;
+    // Nested two-column block
+    &.cs-block.cs-block-two-column {
+      padding: 0;
+      margin: 2rem 0;
 
-    .cs-inline-img {
-      width: 100%;
-      height: auto;
-      border-radius: 4px;
-      // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      display: block;
-    }
-  }
-
-  // Full-width images that span both columns
-  .cs-inline-image-full {
-    grid-column: 1 / -1; // Span all columns
-    margin: 3rem 0;
-    width: 100%;
-
-    .cs-inline-img-full {
-      width: 100%;
-      height: auto;
-      border-radius: 4px;
-      // box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      display: block;
-    }
-  }
-}
-
-// Gallery Section (as a block)
-.cs-block-gallery {
-  padding: 3rem 4rem 4rem;
-
-  .cs-gallery {
-    .cs-section-title {
-      font-size: $font-l;
-      font-weight: $weight-semibold;
-      font-variation-settings: 'opsz' 14, 'wdth' 100;
-      color: $color-blue-dark;
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .cs-gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-
-    .cs-gallery-item {
-      border-radius: 4px;
-      overflow: hidden;
-      // background-color: $color-blue-light;
-      background-color: transparent;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      & p{
-        color: $color-blue-dark;
-        font-size: $font-s;
-        margin-top: auto;
-        margin-bottom: 0;
+      .cs-two-column-grid {
+        gap: 2rem;
       }
 
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      .cs-text-block-list {
+        padding: 0;
       }
     }
 
-    .cs-gallery-image {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-  }
-}
-
-// Responsive adjustments
-@include breakpoint(mobile) {
-  // Main page container
-  .case-study-page {
-    padding: 0 1rem 1rem;
-  }
-
-  .case-study-content {
-    padding: 1rem 0;
-  }
-
-  // Close button
-  .case-study-close {
-    top: 1rem;
-    right: 1rem;
-    width: 2.5rem;
-    height: 2.5rem;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
-
-  // Breadcrumbs
-  .cs-breadcrumbs {
-    padding: 1rem 0 0.5rem;
-    padding-right: 3.5rem; // Space for close button
-    gap: 1rem;
-    font-size: $font-xs;
-    max-width: 100%;
-    overflow: hidden;
-
-    .cs-sticky-header.scrolled & {
-      padding: 0.5rem 0 0.25rem;
-      padding-right: 3.5rem;
-    }
-
-    .cs-breadcrumb-nav {
-      min-height: $font-s * 1.2;
-      font-size: $font-xs;
-      max-width: calc(50% - 2rem);
-      overflow: hidden;
-
-      .cs-nav-label,
-      .cs-nav-title {
-        font-size: $font-xs;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        max-width: 100%;
-      }
-    }
-  }
-
-  // Hero section
-  .cs-hero {
-    padding: 0 1rem 2rem;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    overflow: hidden;
-    max-width: 100%;
-
-    .cs-sticky-header.scrolled & {
-      padding: 0 1rem 1rem;
-
-      .cs-hero-title {
-        font-size: 24px;
-        margin-top: 0.5rem;
-      }
-    }
-
-    .cs-hero-content {
-      grid-column: 1;
-      max-width: 100%;
-      min-width: 0;
-    }
-
-    .cs-hero-images {
-      grid-column: 1;
-      grid-row: 2;
-      margin-right: 0;
-      margin-left: 0;
-      max-width: 100%;
-      overflow: hidden;
-
-      img {
-        max-height: 300px;
-        max-width: 100%;
-        width: 100%;
-        transform: scale(1);
-        object-fit: cover;
-      }
-    }
-
-    .cs-hero-metrics {
-      position: static;
-      grid-column: 1;
-      grid-row: 3;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-      max-width: 100%;
-      margin-top: 1rem;
-
-      .cs-sticky-header.scrolled & {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    .cs-hero-company {
-      font-size: 11px;
-      margin-bottom: 0.25rem;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-    }
-
-    .cs-hero-title {
-      font-size: 28px;
-      margin-bottom: 0.5rem;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      hyphens: auto;
-    }
-
-    .cs-hero-subtitle {
-      font-size: $font-s;
-      margin-bottom: 0.75rem;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-    }
-
-    .cs-hero-tags {
-      margin-bottom: 1rem;
-      gap: 0.375rem;
-      max-width: 100%;
-    }
-
-    .cs-tag {
-      font-size: 11px;
-      padding: 0.25rem 0.5rem;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-    }
-
-    .cs-hero-overview {
-      font-size: $font-s;
-      line-height: 1.5;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-    }
-  }
-
-  // Metrics section
-  .cs-metrics {
-    padding: 2rem 1rem;
-
-    .cs-section-title {
-      font-size: 11px;
-      margin-bottom: 1rem;
-    }
-
-    .cs-metrics-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-  }
-
-  // Layout grid
-  .cs-layout-grid {
-    padding: 2rem 1rem;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  // Main content
-  .cs-content {
-    max-width: 100%;
-    min-width: 0;
-    overflow-wrap: break-word;
-
-    .cs-content-section {
+    @include breakpoint(mobile) {
       margin-bottom: 2rem;
       max-width: 100%;
       min-width: 0;
       overflow-wrap: break-word;
-    }
 
-    .cs-section-heading {
-      font-size: $font-l;
-      margin-bottom: 0.75rem;
-    }
-
-    .cs-content-section {
       .cs-text-block-heading {
         font-size: $font-base;
         margin-bottom: $space-8;
@@ -544,8 +390,21 @@
         }
       }
     }
+  }
 
-    .cs-inline-image {
+  // Inline images within content
+  .cs-inline-image {
+    margin: 2rem 0;
+    width: 100%;
+
+    .cs-inline-img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
+
+    @include breakpoint(mobile) {
       margin: 1rem 0;
       max-width: 100%;
       overflow: hidden;
@@ -563,8 +422,34 @@
     }
   }
 
-  // Sidebar
-  .cs-sidebar {
+  // Full-width images spanning both columns
+  .cs-inline-image-full {
+    grid-column: 1 / -1;
+    margin: 3rem 0;
+    width: 100%;
+
+    .cs-inline-img-full {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
+  }
+
+  @include breakpoint(mobile) {
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+}
+
+
+// ============================================
+// SIDEBAR
+// ============================================
+
+.cs-sidebar {
+  @include breakpoint(mobile) {
     position: static;
     margin-top: 2rem;
     background-color: $color-cream;
@@ -593,285 +478,66 @@
       }
     }
   }
-
-  // Block responsive padding
-  .cs-block-full-image,
-  .cs-block-image-grid,
-  .cs-block-metrics-inline,
-  .cs-block-full-text,
-  .cs-block-text-image,
-  .cs-block-gallery {
-    padding: 2rem 1rem;
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  // Image grid
-  .cs-block-image-grid {
-    .cs-image-grid {
-      gap: 1rem;
-      max-width: 100%;
-    }
-
-    .cs-image-grid-item {
-      max-width: 100%;
-      overflow: hidden;
-    }
-
-    .cs-grid-img,
-    .cs-grid-video {
-      max-width: 100%;
-      width: 100%;
-    }
-
-    .cs-image-caption {
-      font-size: 11px;
-      margin-top: $space-4;
-    }
-  }
-
-  // Inline metrics
-  .cs-block-metrics-inline {
-    .cs-metrics-inline-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-  }
-
-  // Text-image split
-  .cs-block-text-image {
-    .cs-text-image-grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .cs-text-side {
-      .cs-section-heading {
-        font-size: $font-l;
-      }
-
-      .cs-section-text {
-        font-size: $font-s;
-      }
-    }
-  }
-
-  // New blocks responsive
-  .cs-story-hook {
-    padding: 2rem 1rem;
-    margin-bottom: 2rem;
-
-    .cs-story-hook-content {
-      max-width: 100%;
-    }
-
-    .cs-story-hook-quote {
-      font-size: $font-l;
-      line-height: 1.3;
-      margin-bottom: 1rem;
-
-      &::before {
-        font-size: 3rem;
-        top: -0.5rem;
-        left: -1rem;
-      }
-    }
-
-    .cs-story-hook-context {
-      font-size: $font-s;
-    }
-
-    .cs-story-hook-image {
-      margin-top: 1.5rem;
-    }
-  }
-
-
-  // Gallery
-  .cs-block-gallery {
-    padding: 2rem 1rem;
-
-    .cs-gallery {
-      .cs-section-title {
-        font-size: $font-base;
-        margin-bottom: 1rem;
-      }
-
-      .cs-gallery-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-    }
-  }
 }
 
+// Side Resume (alternative sidebar)
+.side-resume {
+  display: flex;
+  flex-direction: column;
+  justify-self: right;
 
-// Block: Before/After Comparison - Impact visualization
-.cs-before-after {
-  padding: 4rem;
-  margin-bottom: 3rem;
-
-  .cs-before-after-heading {
-    font-size: $font-2xl;
-    font-weight: $weight-semibold;
-    font-variation-settings: 'opsz' 14, 'wdth' 100;
-    color: $color-blue-dark;
-    text-align: center;
-    margin-bottom: 3rem;
+  * {
+    width: 100%;
+    text-align: right;
   }
 
-  .cs-before-after-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+  &.long * {
+    width: auto;
+    text-align: left;
+  }
+
+  h4 {
+    @include breakpoint(mobile) {
+      font-size: $font-base;
+    }
+  }
+
+  p,
+  span {
+    color: $neutral;
+
+    &.arrows {
+      font-size: $font-l;
+      color: $blue;
+      vertical-align: -0.1em;
+
+      @include breakpoint(mobile) {
+        font-size: calc($font-l * 0.9);
+      }
+    }
 
     @include breakpoint(mobile) {
-      grid-template-columns: 1fr;
+      font-size: calc($font-s * 0.9);
     }
   }
 
-  .cs-before-after-col {
-    padding: 2rem;
-    // border-radius: 0.5rem;
-    position: relative;
-  }
+  @include breakpoint(mobile) {
+    background-color: $color-bg;
+    padding-left: 2rem;
 
-
-  .cs-after-col {
-    background: linear-gradient(135deg, rgba(57, 128, 170, 0.08) 0%, rgba(255, 255, 255, 0.6) 100%);
-  }
-
-  .cs-before-after-label {
-    font-size: $font-l;
-    font-weight: $weight-semibold;
-    font-variation-settings: 'opsz' 14, 'wdth' 100;
-    margin-bottom: 1.5rem;
-  }
-
-  .cs-before-col .cs-before-after-label {
-    color: $color-neutral;
-  }
-
-  .cs-after-col .cs-before-after-label {
-    color: $blue;
-  }
-
-  .cs-before-after-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 1.5rem 0;
-
-    li {
-      font-size: $font-base;
-      font-variation-settings: 'opsz' 14, 'wdth' 100;
-      color: $color-blue-dark;
-      line-height: 1.6;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-
-      i {
-        font-size: 1.2rem;
-        flex-shrink: 0;
-        margin-top: 0.1rem;
-      }
-
-      span {
-        flex: 1;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  .cs-before-list li i {
-    color: $color-red-main;
-  }
-
-  .cs-after-list li i {
-    color: $blue;
-  }
-
-  .cs-before-after-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 0.25rem;
-    margin-top: 1.5rem;
-  }
-}
-
-// Block: Key Insight - Callout/highlight moment
-.cs-key-insight {
-  padding: $space-40 0;
-  margin: $space-60 0;
-  background: transparent;
-  border-top: 1px solid rgba(92, 88, 79, 0.15);
-  border-bottom: 1px solid rgba(92, 88, 79, 0.15);
-  position: relative;
-
-  .cs-key-insight-content {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .cs-key-insight-header {
-    display: flex;
-    align-items: baseline;
-    gap: $space-12;
-    margin-bottom: $space-20;
-  }
-
-  .cs-key-insight-icon {
-    font-size: $font-l;
-    color: $blue;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-
-  .cs-key-insight-title {
-    font-size: $font-base;
-    font-weight: $weight-medium;
-    font-variation-settings: 'opsz' 14, 'wdth' 100;
-    color: $blue;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .cs-key-insight-text {
-    font-size: $font-xl;
-    font-variation-settings: 'opsz' 14, 'wdth' 100;
-    color: $color-neutral;
-    line-height: 1.4;
-    margin-bottom: $space-24;
-    font-weight: $weight-medium;
-  }
-
-  .cs-key-insight-result {
-    font-size: $font-base;
-    font-variation-settings: 'opsz' 14, 'wdth' 100;
-    color: $color-neutral-light;
-    line-height: 1.6;
-    margin: 0;
-
-    strong {
-      color: $blue;
-      font-weight: $weight-semibold;
+    * {
+      text-align: left;
     }
   }
 }
 
 
 // ============================================
-// LAYOUT BLOCKS
+// TWO COLUMN BLOCK
 // ============================================
 
-// Block: Two Column Text (no sidebar)
-.cs-block-two-column-text, .cs-block-two-column{
+.cs-block-two-column-text,
+.cs-block-two-column {
   padding: 1rem 4rem;
   margin-bottom: 1rem;
 
@@ -880,8 +546,16 @@
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
 
+    &.content-left {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    &.content-right {
+      grid-template-columns: 1fr 2fr;
+    }
+
     @include breakpoint(tablet) {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
       gap: 2rem;
     }
 
@@ -889,24 +563,10 @@
       grid-template-columns: 1fr;
       gap: 2rem;
     }
-
-
-    &.content-left{
-      grid-template-columns: 2fr 1fr;
-
-    }
-   &.content-right{
-      grid-template-columns: 1fr 2fr;
-
-    }
   }
 
-
-
-
-
-
-  .cs-text-column, .cs-column{
+  .cs-text-column,
+  .cs-column {
     .cs-column-heading {
       font-size: $font-l;
       font-weight: $weight-semibold;
@@ -960,18 +620,62 @@
         line-height: 1.6;
         margin-bottom: 0.5rem;
 
+        strong,
+        b {
+          color: $blue;
+        }
+
         &:last-child {
           margin-bottom: 0;
         }
       }
     }
-    .cs-column-img{
+
+    .cs-column-img {
       width: 100%;
     }
   }
 }
 
-// Block: Three Column Text
+// Two column specific overrides
+.cs-block-two-column .cs-column {
+  .cs-section-text {
+    color: $neutral;
+
+    @include breakpoint(mobile) {
+      font-size: calc($font-base * 0.9);
+      line-height: 1.8;
+    }
+  }
+
+  .cs-text-block-list li {
+    font-size: $font-base;
+    color: $blue-dark;
+
+    strong,
+    b {
+      color: $blue;
+    }
+
+    @include breakpoint(mobile) {
+      font-size: calc($font-base * 0.8);
+    }
+  }
+
+  .cs-column-heading {
+    font-size: $font-l;
+
+    @include breakpoint(mobile) {
+      font-size: calc($font-l * 0.9);
+    }
+  }
+}
+
+
+// ============================================
+// THREE COLUMN BLOCK
+// ============================================
+
 .cs-block-three-column-text {
   padding: 3rem 4rem;
   margin-bottom: 2rem;
@@ -1055,398 +759,440 @@
 }
 
 
-// updates for the testing new structure
+// ============================================
+// GALLERY BLOCK
+// ============================================
 
-.project-page-body{
-    width: 100% !important;
-    overflow-x: hidden;
-    &.js-loaded{
-        width: 100% !important;
-        overflow-x: hidden;
+.cs-block-gallery {
+  padding: 3rem 4rem 4rem;
+
+  .cs-gallery {
+    .cs-section-title {
+      font-size: $font-l;
+      font-weight: $weight-semibold;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .case-study-page.active{
-        width: 100% !important;
-    }
-}
-
-//text styles
-
-.cs-block p, .cs-section-text{
-    font-size: $font-base;
-            @include breakpoint(mobile){
-                 font-size: calc($font-base*0.9); 
-                 line-height: 1.8;
-                 color: $neutral;
-        }
-}
-
-.cs-block-two-column .cs-column {
-
-    .cs-section-text{
-        color: $neutral;
-         @include breakpoint(mobile){
-         font-size: calc($font-base*0.9);   
-         line-height: 1.8;
-        }  
+    .cs-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
     }
 
-    .cs-text-block-list li{
+    .cs-gallery-item {
+      border-radius: 4px;
+      overflow: hidden;
+      background-color: transparent;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      & p {
+        color: $color-blue-dark;
+        font-size: $font-s;
+        margin-top: auto;
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    .cs-gallery-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  @include breakpoint(mobile) {
+    padding: 2rem 1rem;
+
+    .cs-gallery {
+      .cs-section-title {
         font-size: $font-base;
-        color: $blue-dark;
-        strong, b{
-            color: $blue;
-        }
-        @include breakpoint(mobile){
-            font-size: calc($font-base*0.8);
-        }
-    }
+        margin-bottom: 1rem;
+      }
 
-    .cs-column-heading{
-        font-size: $font-l;
-        @include breakpoint(mobile){
-            font-size: calc($font-l*0.9);
-        }
-    }
-}
-
-.cs-images-caption, .cs-image-caption{
-    @include breakpoint(mobile){
-        font-size: calc($font-xs*0.9);
-    }
-}
-
-
-.text-higlight-center{
-  font-weight: $weight-bold;
-  color:$blue !important;
-  text-align: center;
-  font-style: italic;
-  padding-bottom: 0.5rem;
-}
-
-
-.cs-line-breaker{
-    height: 50vh;
-    background-color: rgba($blue, 0.2);
-    padding-right: 5rem;
-    overflow: hidden;
-        @include breakpoint(mobile){
-        overflow: hidden;
-        padding: 0;
-        height: 70vh;
-
-    }
-
-
-
-
-    .cs-landscape-cover{
-    padding: 1rem 10vh;
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    height: 100%;
-
-    // justify-content: space-between;
-    justify-content: center;
-    align-items: center;
-
-
-     @include breakpoint(mobile){
-        flex-direction: column; 
-        padding: 0.5rem 3rem;
-        width: 100%;
+      .cs-gallery-grid {
+        grid-template-columns: 1fr;
         gap: 1rem;
+      }
     }
-
-    img{
-        height: 100%;
-        &.before{
-            filter: grayscale(100%);
-            opacity: 0.50;
-        }
-         @include breakpoint(mobile){
-            // width: 100;
-            // height: auto;
-                width: auto;
-                max-width: 100%;
-         }
-    }
-     .cs-line-subhead{
-        color: $neutral-light;
-                &.arrow{
-            @include breakpoint(mobile){
-                transform: rotate(90deg);
-                display: none;
-               }
-        }
-    }
-
-    .floating-text{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    height: 100%;
-
-        @include breakpoint(mobile){
-            flex-direction: column-reverse;
-         }
-
-    .cs-line-heading {
-        font-size: 16px;
-        font-weight: 500;
-        font-variation-settings: "opsz" 14, "wdth" 100;
-        color: $color-bg;
-        margin: 0;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        text-align: left;
-        color: $blue;
-
-    }
-    .cs-line-subhead{
-        color: $neutral-light;
-
-        &.arrow{
-            @include breakpoint(mobile){
-                transform: rotate(90deg);
-               }
-        }
-    }
-
-    img.before{
-            height: 100%;
-            filter: grayscale(100%);
-            opacity: 0.50;
-
-            @include breakpoint(mobile){
-                // width: 100;
-                // height: auto;
-                width: auto;
-                max-width: 100%;
-         }
-        }
-    }
-    }
-
-
-}
-
-//inside two columns//
-.cs-content .cs-content-section .cs-block.cs-block-two-column{
-  padding: 0;
-  margin:2rem 0;
-  .cs-two-column-grid{
-    gap: 2rem;
-  }
-  .cs-text-block-list{
-    padding: 0;
   }
 }
 
 
+// ============================================
+// BEFORE/AFTER COMPARISON BLOCK
+// ============================================
 
+.cs-before-after {
+  padding: 4rem;
+  margin-bottom: 3rem;
 
-// NOT IN USE
-// .cs-large-image {
-// background-color: radial-gradient(circle, $blue-light 0%, $blue-soft 100%);
-// padding: 1rem 0;
-//     a{
-//         display: flex;
-//         flex-direction: row;
-//         height: 20vh;
-//         // justify-content: space-evenly;
-//         justify-content: center;
-//         gap: 1rem;
-//         background-color: white;
-//         margin: 0 5rem;
+  .cs-before-after-heading {
+    font-size: $font-2xl;
+    font-weight: $weight-semibold;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $color-blue-dark;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
 
-//         img{
-//             height: 100%;
-//         }
-//     }
-// }
+  .cs-before-after-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
 
-.cs-key-insight{
-border-color: rgba(57, 128, 170, 0.3);
-box-shadow: 4px 4px 4px rgba(57, 128, 170, 0.1), -4px -4px 4px rgba(57, 128, 170, 0.1);
-
-    @include breakpoint(mobile){
-        padding: 0;
-
-        box-shadow: 8px 8px 4px rgba(57, 128, 170, 0.1), -8px -8px 4px rgba(57, 128, 170, 0.1);
-
-
-        .cs-key-insight-content{
-            max-width: 100%;
-            padding: 4rem 2rem;
-
-            .cs-key-insight-title{
-                font-size: calc($font-base*0.8);
-            }
-
-            .cs-key-insight-text{
-                font-size: $font-l;
-            }
-            .cs-key-insight-result{
-                font-size: calc($font-s*0.9);
-            }
-        }
-
+    @include breakpoint(mobile) {
+      grid-template-columns: 1fr;
     }
+  }
 
+  .cs-before-after-col {
+    padding: 2rem;
+    position: relative;
 
-}
-
-
-.cs-layout-grid{
-        padding: 2rem 4rem 0 0;
-        @include breakpoint(mobile){
-            padding: 2rem 0 0 0;
-            gap: 1rem;
-        }
-}
-
-
-
-.cs-paragraph{
-    margin-bottom: 1rem;
-}
-
-.side-resume{
-    display: flex;
-    flex-direction: column;
-    // justify-items: left;
-    // justify-self: left;
-    // align-items: flex-start;
-    justify-self: right;
-    
-        @include breakpoint(mobile){
-         background-color: $color-bg;   
-         padding-left: 2rem;
-        }
-
-    
-    *{
-        width: 100%;
-        text-align: right; 
-        @include breakpoint(mobile){
-        text-align: left;
-        }
+    @include breakpoint(mobile) {
+      padding: 1rem;
     }
-    &.long *{
-            width: auto;
-            text-align: left;
-    }
+  }
 
+  .cs-after-col {
+    background: linear-gradient(135deg, rgba(57, 128, 170, 0.08) 0%, rgba(255, 255, 255, 0.6) 100%);
+  }
 
-
-
-    h4{
-        // text-align: center;
-        @include breakpoint(mobile){
-         font-size: $font-base;   
-        }
-    }
-    p, span{
-        color: $neutral;
-       &.arrows{
-            font-size: $font-l;
-            color: $blue;
-            vertical-align: -0.1em;
-        @include breakpoint(mobile){
-         font-size: calc($font-l*0.9);   
-        }
-
-        }
-        
-        @include breakpoint(mobile){
-        font-size: calc($font-s*0.9);    
-        }
-
-    }
-}
-
-.text-higlight {
-margin: 0.7rem 0.7rem;
-i{
+  .cs-before-after-label {
+    font-size: $font-l;
+    font-weight: $weight-semibold;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
     color: $blue-dark;
-    font-size: $font-base;
-    font-style: italic;
-    @include breakpoint(mobile){
-    font-size: calc($font-base*0.8);
+    margin-bottom: 1.5rem;
+
+    @include breakpoint(mobile) {
+      font-size: calc($font-l * 0.9);
+      margin-bottom: 1rem;
     }
-}}
+  }
 
+  .cs-before-col .cs-before-after-label {
+    color: $color-neutral;
+  }
 
+  .cs-after-col .cs-before-after-label {
+    color: $blue;
+  }
 
+  .cs-before-after-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
 
-// conclusions
-
-.conclusions .cs-paragraph p{
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
-}
-
-
-
-
-// ---
-.cs-text-image-grid{
-    color: $neutral;
-    h3{
-        color: $blue-dark;
-    }
     li {
-            color:$blue-dark;
-        b{
-            color:$blue;
-            font-weight:$weight-bold;
-            font-size: $font-base;
-            @include breakpoint (mobile){
-                font-size: calc($font-base*0.8);
-            }
-        }
+      font-size: $font-base;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+
+      i {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+      }
+
+      span {
+        flex: 1;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      @include breakpoint(mobile) {
+        font-size: $font-s;
+        margin-bottom: 0.5rem;
+      }
     }
-p{
+
+    @include breakpoint(mobile) {
+      margin: 0;
+    }
+  }
+
+  .cs-before-list li i {
+    color: $color-red-main;
+  }
+
+  .cs-after-list li i {
+    color: $blue;
+  }
+
+  .cs-before-after-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.25rem;
+    margin-top: 1.5rem;
+  }
+}
+
+
+// ============================================
+// KEY INSIGHT BLOCK
+// ============================================
+
+.cs-key-insight {
+  padding: $space-40 0;
+  margin: $space-60 0;
+  background: transparent;
+  border-top: 1px solid rgba(92, 88, 79, 0.15);
+  border-bottom: 1px solid rgba(92, 88, 79, 0.15);
+  border-color: rgba(57, 128, 170, 0.3);
+  box-shadow: 4px 4px 4px rgba(57, 128, 170, 0.1), -4px -4px 4px rgba(57, 128, 170, 0.1);
+  position: relative;
+
+  .cs-key-insight-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cs-key-insight-header {
+    display: flex;
+    align-items: baseline;
+    gap: $space-12;
+    margin-bottom: $space-20;
+  }
+
+  .cs-key-insight-icon {
+    font-size: $font-l;
+    color: $blue;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .cs-key-insight-title {
+    font-size: $font-base;
+    font-weight: $weight-medium;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $blue;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cs-key-insight-text {
+    font-size: $font-xl;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $color-neutral;
+    line-height: 1.4;
+    margin-bottom: $space-24;
+    font-weight: $weight-medium;
+  }
+
+  .cs-key-insight-result {
+    font-size: $font-base;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $color-neutral-light;
+    line-height: 1.6;
+    margin: 0;
+
+    strong {
+      color: $blue;
+      font-weight: $weight-semibold;
+    }
+  }
+
+  @include breakpoint(mobile) {
+    padding: 0;
+    box-shadow: 8px 8px 4px rgba(57, 128, 170, 0.1), -8px -8px 4px rgba(57, 128, 170, 0.1);
+
+    .cs-key-insight-content {
+      max-width: 100%;
+      padding: 4rem 2rem;
+
+      .cs-key-insight-title {
+        font-size: calc($font-base * 0.8);
+      }
+
+      .cs-key-insight-text {
+        font-size: $font-l;
+      }
+
+      .cs-key-insight-result {
+        font-size: calc($font-s * 0.9);
+      }
+    }
+  }
+}
+
+
+
+// ============================================
+// TEXT-IMAGE GRID
+// ============================================
+
+.cs-text-image-grid {
+  color: $neutral;
+
+  h3 {
+    color: $blue-dark;
+  }
+
+  li {
+    color: $blue-dark;
+
+    b {
+      color: $blue;
+      font-weight: $weight-bold;
+      font-size: $font-base;
+
+      @include breakpoint(mobile) {
+        font-size: calc($font-base * 0.8);
+      }
+    }
+  }
+
+  p {
     color: red;
+  }
 }
+// ============================================
+// CONCLUSIONS
+// ============================================
+
+.conclusions .cs-paragraph p {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
 }
 
 
+// ============================================
+// MOBILE RESPONSIVE - CASE STUDY PAGE ELEMENTS
+// ============================================
 
+@include breakpoint(mobile) {
+  .case-study-page {
+    padding: 0 1rem 1rem;
+  }
 
-// Before and After 
-.cs-before-after{
+  .case-study-content {
+    padding: 1rem 0;
+  }
 
-    .cs-before-after-col{
-        @include breakpoint(mobile){
-            padding:1rem;
-        }
-        .cs-before-after-label{
-            font-size: $font-l;
-            color: $blue-dark;
-            @include breakpoint(mobile){
-                font-size: calc($font-l*0.9);
-                margin-bottom: 1rem;
-            }
-        }
-        .cs-before-after-list{
+  .case-study-close {
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
 
-            @include breakpoint(mobile){
-                margin: 0
-            }
-
-            li{
-                font-size: $font-base;
-
-                @include breakpoint(mobile){
-                    font-size: $font-s;
-                    margin-bottom: 0.5rem;
-                }
-
-            }
-        }
+    svg {
+      width: 20px;
+      height: 20px;
     }
+  }
+
+  .cs-breadcrumbs {
+    padding: 1rem 0 0.5rem;
+    padding-right: 3.5rem;
+    gap: 1rem;
+    font-size: $font-xs;
+    max-width: 100%;
+    overflow: hidden;
+
+    .cs-sticky-header.scrolled & {
+      padding: 0.5rem 0 0.25rem;
+      padding-right: 3.5rem;
+    }
+
+    .cs-breadcrumb-nav {
+      min-height: $font-s * 1.2;
+      font-size: $font-xs;
+      max-width: calc(50% - 2rem);
+      overflow: hidden;
+
+      .cs-nav-label,
+      .cs-nav-title {
+        font-size: $font-xs;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100%;
+      }
+    }
+  }
+
+
+}
+
+
+// ============================================
+// MOBILE RESPONSIVE - BLOCK TYPES
+// ============================================
+
+@include breakpoint(mobile) {
+  .cs-block-full-image,
+  .cs-block-image-grid,
+  .cs-block-metrics-inline,
+  .cs-block-full-text,
+  .cs-block-text-image {
+    padding: 2rem 1rem;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .cs-block-image-grid {
+    .cs-image-grid {
+      gap: 1rem;
+      max-width: 100%;
+    }
+
+    .cs-image-grid-item {
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .cs-grid-img,
+    .cs-grid-video {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .cs-image-caption {
+      font-size: 11px;
+      margin-top: $space-4;
+    }
+  }
+
+  .cs-block-metrics-inline {
+    .cs-metrics-inline-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .cs-block-text-image {
+    .cs-text-image-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .cs-text-side {
+      .cs-section-heading {
+        font-size: $font-l;
+      }
+
+      .cs-section-text {
+        font-size: $font-s;
+      }
+    }
+  }
 }

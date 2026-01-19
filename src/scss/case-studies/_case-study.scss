@@ -6,7 +6,6 @@
 
 
 @use 'blocks' as *;
-// @use 'old-blocks' as *;
 @use 'breadcrumbs' as *;
 @use 'lightbox' as *;
 @use 'side-nav-bar' as *;
@@ -27,7 +26,7 @@
         color: $neutral;
 
         @include breakpoint(mobile){
-            font-size: calc($font-base*0.9) !important;
+            font-size: calc($font-base*0.9);
             line-height: 1.3;
         }
     }

@@ -20,9 +20,13 @@
 
 .lg-toolbar{
     .lg-close.lg-icon, .lg-counter{
-
         color: $color-bg;
     }
+     .lg-close.lg-icon{
+        @include breakpoint(mobile){
+            color: red;
+     }
+     }
 }
 
 
