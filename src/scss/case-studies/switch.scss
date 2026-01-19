@@ -1,0 +1,118 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use '../accesibility' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+
+// Toggle Switch Styling
+.switch-container {
+    display: flex;
+    align-items: center;
+    gap: $space-16;
+    margin-top: $space-24;
+
+    @include breakpoint(mobile) {
+        gap: $space-12;
+        margin-top: $space-16;
+    }
+
+    .switch-label {
+        font-family: $font-anonymous;
+        font-size: $font-s;
+        color: $neutral;
+        font-weight: 400;
+        transition: color 0.3s ease;
+
+        @include breakpoint(mobile) {
+            font-size: calc($font-s * 0.85);
+        }
+
+        &:first-child {
+            color: $blue;
+        }
+    }
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+
+    @include breakpoint(mobile) {
+        width: 44px;
+        height: 22px;
+    }
+
+    .switch-input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+
+        &:checked + .switch-slider {
+            background-color: $blue;
+        }
+
+        &:checked + .switch-slider:before {
+            transform: translateX(24px);
+
+            @include breakpoint(mobile) {
+                transform: translateX(22px);
+            }
+        }
+    }
+
+    .switch-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $neutral-light;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 26px;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+
+        &:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+            @include breakpoint(mobile) {
+                height: 16px;
+                width: 16px;
+            }
+        }
+
+        &:hover {
+            background-color: color.adjust($neutral-light, $lightness: -5%);
+        }
+    }
+
+    .switch-input:checked + .switch-slider:hover {
+        background-color: color.adjust($blue, $lightness: -5%);
+    }
+
+    .switch-input:focus + .switch-slider {
+        box-shadow: 0 0 0 3px rgba($blue, 0.2);
+    }
+}
+
+// Update label colors based on toggle state
+.switch-container:has(.switch-input:checked) {
+    .switch-label:first-child {
+        color: $neutral;
+    }
+
+    .switch-label:last-child {
+        color: $blue;
+    }
+}

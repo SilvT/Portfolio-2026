@@ -1,0 +1,397 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use '../accesibility' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+
+
+.full-width {
+    height: 35vh;
+    overflow: hidden;
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    @include breakpoint(mobile){
+        height: 70vh;
+        overflow: hidden;
+    }
+
+
+    .cs-three-column-grid{
+    height: 100%;
+
+        @include breakpoint(mobile){
+            display: flex;
+            flex-direction: column;
+            gap: 0rem;
+            padding: 1rem 3rem;
+            width: 100%;
+        }
+
+
+
+    .cs-text-column{
+        width: 33vw;
+        position: relative;
+
+        @include breakpoint(mobile){
+            width: 100%;
+        }
+
+        .content{
+            h4{
+            font-size: $font-base;
+            font-weight: 500;
+            font-variation-settings: "opsz" 14, "wdth" 100;
+            color: $blue-dark;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.7rem;
+                @include breakpoint(mobile){
+                    font-size: calc($font-base*0.8);
+                }
+
+            }
+            span{
+                color: $blue-dark;
+                @include breakpoint(mobile){
+                font-size: $font-xs;
+                }
+                i{
+                color: $blue-dark;
+                }
+             &.quote-author{
+                width: 100%;
+                text-align: right;
+             }
+            }
+            .big-commas{
+            font-size: 3rem;
+            color: $neutral;
+            opacity: .3;
+            vertical-align: -0.3em;
+            line-height: 0.8;
+            @include breakpoint(mobile){
+            font-size: 2rem;    
+            }
+            }
+        }
+        p.cs-images-caption{
+            padding-top: 20%;
+            text-align: right;
+
+            @include breakpoint(mobile){
+                padding-top:0;
+            font-size: calc($font-xs*0.8);
+            }
+        }
+    }
+    .cs-images-column{
+        // max-width: 33vw;
+        max-height: 20vh;
+
+        .cs-images-wrapper img{
+        width: 100%;
+        }
+    }
+}
+
+
+    // Accordion state
+    &.accordion {
+        position: relative;
+
+        &:hover {
+            background-color: rgba($blue, 0.05);
+        }
+
+        .cs-text-column{
+            p.cs-section-text{
+                font-size: calc($font-base*0.8);
+            }
+
+            // Arrow indicator for accordion
+            &::after {
+                content: '▼';
+                position: absolute;
+                right: 2rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: $blue;
+                font-size: $font-l;
+                transition: transform 0.3s ease;
+            }
+            
+            // When accordion is open
+            &.is-open {
+                height: auto;
+                overflow: visible;
+                background-color: rgba($blue, 0.1);
+                
+                .cs-text-column::after {
+                    transform: translateY(-50%) rotate(180deg);
+                }
+            }
+        }
+    }
+
+.cs-three-column-grid{
+    height: 100%;
+
+        @include breakpoint(mobile){
+            display: flex;
+            flex-direction: column;
+            gap: 0rem;
+            padding: 1rem 3rem;
+            width: 100%;
+        }
+
+
+
+    .cs-text-column{
+        width: 33vw;
+        position: relative;
+
+        @include breakpoint(mobile){
+            width: 100%;
+        }
+
+        .content{
+            h4{
+            font-size: $font-base;
+            font-weight: 500;
+            font-variation-settings: "opsz" 14, "wdth" 100;
+            color: $blue-dark;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.7rem;
+                @include breakpoint(mobile){
+                    font-size: calc($font-base*0.8);
+                }
+
+            }
+            span{
+                color: $blue-dark;
+                @include breakpoint(mobile){
+                font-size: $font-xs;
+                }
+                i{
+                color: $blue-dark;
+                }
+             &.quote-author{
+                width: 100%;
+                text-align: right;
+             }
+            }
+            .big-commas{
+            font-size: 3rem;
+            color: $neutral;
+            opacity: .3;
+            vertical-align: -0.3em;
+            line-height: 0.8;
+            @include breakpoint(mobile){
+            font-size: 2rem;    
+            }
+            }
+        }
+        p.cs-images-caption{
+            padding-top: 20%;
+            text-align: right;
+
+            @include breakpoint(mobile){
+                padding-top:0;
+            font-size: calc($font-xs*0.8);
+            }
+        }
+    }
+    .cs-images-column{
+        // max-width: 33vw;
+        max-height: 20vh;
+
+        .cs-images-wrapper img{
+        width: 100%;
+        }
+    }
+}
+
+// Accordion content styling
+.accordion-content {
+    // padding: 2rem 4rem;
+    // background-color: rgba($blue, 0.05);
+    // border-top: 1px solid $blue;
+    animation: fadeIn 0.3s ease-in-out;
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+}
+
+
+// Override the default arrow for line-breaker accordions
+.full-width.cs-line-breaker.accordion {
+    overflow: hidden;
+
+        @include breakpoint(mobile){
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+    .content{
+        @include breakpoint(mobile){
+        margin-bottom: 2rem;
+        }
+    }
+    .cs-text-column::after {
+        content: "See how it unfolded ▼";
+        font-size: $font-s;
+        font-family: $font-anonymous;
+        padding-top:20% ;
+        @include breakpoint(mobile){
+            padding-top: 0;
+            position: initial;
+            width: 100%;
+        }
+    }
+
+    &.is-open .cs-text-column::after {
+        content: "Collapse ▲";
+        transform: translateY(-50%);
+    }
+
+
+    &.is-open .cs-three-column-grid{
+        max-height: 20vh;
+    }
+
+    .cs-images-column .cs-images-wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+
+   
+}
+
+
+// Open accordion line-breaker
+
+.full-width.cs-line-breaker.accordion.is-open {
+    overflow: auto;
+    height: auto;
+
+.cs-three-column-grid{
+        @include breakpoint(mobile){
+        max-height: none;
+        }
+}
+
+    .cs-images-column{
+        @include breakpoint(mobile){
+        overflow: hidden;      
+    }
+    &.one-img, &.two-img .first{
+        @include breakpoint(mobile){
+        display: none;
+        }
+    }
+    &.two-img{
+        @include breakpoint(mobile){
+        max-height: none;
+        }
+    }
+    }
+
+ .accordion-content{
+        background-color: transparent;
+        border-top: none;
+        padding: 0;
+        padding-top: 3rem;
+        // position: relative;
+
+        @include breakpoint(mobile){
+        padding-top: 2rem;
+        }
+
+        .cs-block-one-column{
+            background-color: transparent;
+            padding: 0;
+            width: 40%;
+            padding-right: 3rem;
+
+            @include breakpoint(xl-desktop, min){
+            padding-right: 5rem;
+            }           
+            @include breakpoint(mobile){
+            width: 100%;
+            padding: 0 2rem;
+            }
+
+            .cs-text-block-section{
+                color: $neutral;
+                h3{
+                    margin-bottom: 0.3rem;
+                    margin-top: 2rem;
+                    color: $blue-dark;
+                }
+
+
+                .cs-text-block-list{
+                    margin: 1rem 0;
+                    padding-left: 1.5rem;
+                    // padding-right: 15rem;
+                    li{
+                        font-size: calc($font-base*0.9);
+                        font-variation-settings: "opsz" 14, "wdth" 100;
+                        color: $neutral;
+                        line-height: calc(1.6*0.9);
+                        margin-bottom: 0.5rem;
+                        
+                        @include breakpoint(mobile){
+                         font-size: calc($font-base*0.6);   
+                        }
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+
+}
+
+
+
+
+.cs-metrics .new .cs-metric-card {
+    border: solid $blue 1px;
+
+    .cs-metric-tag{
+        padding: 0.1rem 0.7rem;
+        border-radius: 0.2rem;
+        background: $color-green-alpha;
+        color:$green-dark;
+        
+        
+        &.org{
+        background: $color-blue-alpha;
+        color: $blue-dark;
+        }
+        &.bus{
+        background: $color-cream-alpha;
+        color:$neutral-dark;
+        }
+    }
+}

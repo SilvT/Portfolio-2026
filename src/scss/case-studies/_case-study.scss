@@ -6,10 +6,14 @@
 
 
 @use 'blocks' as *;
-@use 'old-blocks' as *;
+// @use 'old-blocks' as *;
 @use 'breadcrumbs' as *;
 @use 'lightbox' as *;
 @use 'side-nav-bar' as *;
+@use 'hero' as *;
+@use 'line-breaker' as *;
+@use 'carousel' as *;
+@use 'accordion' as *;
 
 // Only definition of blocks and columns and grids
 
@@ -20,7 +24,23 @@
     padding: 0 !important;
     margin:0 !important;
     p{
-        color: $color-neutral;
+        color: $neutral;
+
+        @include breakpoint(mobile){
+            font-size: calc($font-base*0.9) !important;
+            line-height: 1.3;
+        }
+    }
+    
+    .cs-text, .cs-text li{
+        font-size: $font-base !important;
+
+        @include breakpoint(mobile){
+            font-size: calc($font-base*0.9) !important;
+        }
+    }
+    .cs-subtext{
+
     }
 }
 
@@ -166,3 +186,90 @@ section.cs-section{
     }
 }
 
+
+
+
+//------------------
+// Color Themes
+//------------------
+
+
+.case-study-page {
+//   &.active {
+//     opacity: 1;
+//     pointer-events: all;
+//   }
+
+  // Theme variations (full page background)
+  &[data-theme="blue"] {
+    background-color: $blue-light;
+
+    .cs-tag {
+      background-color: $color-blue-alpha;
+      color: $blue-dark;
+    }
+
+    .cs-metric-card {
+      background-color: $color-bg;
+    }
+  }
+
+  &[data-theme="green"] {
+    background-color: $green-light;
+
+    .cs-breadcrumbs {
+      .cs-breadcrumb-nav {
+        color: $green-dark;
+
+        .cs-nav-title {
+          color: rgba($green, 0.6);
+        }
+
+        &:hover .cs-nav-title {
+          color: $green;
+        }
+      }
+    }
+
+    .cs-tag {
+      background-color: $color-green-alpha;
+      color: $green-dark;
+    }
+
+    .cs-metric-card {
+      background-color: $color-bg;
+    }
+  }
+
+  &[data-theme="neutral"] {
+    background-color: $cream;
+
+    .cs-breadcrumbs {
+      .cs-breadcrumb-nav {
+        color: $neutral;
+
+        .cs-nav-title {
+          color: rgba($blue-dark, 0.5);
+        }
+
+        &:hover .cs-nav-title {
+          color: $blue-dark;
+        }
+      }
+    }
+
+    .cs-tag {
+      background-color: $color-cream-alpha;
+      color: $blue-dark;
+    }
+
+    .cs-metric-card {
+      background-color: $color-bg;
+    }
+  }
+}
+
+
+.switch-container{
+    display: none;
+}

@@ -5,6 +5,1056 @@
 @use '../typography' as *;
 
 
+
+ body.project-page-body{
+   background: none;
+  &[data-theme="blue"] {
+    background-color: $blue-light;
+  }
+  &[data-theme="green"] {
+    background-color: $green-light;
+ }
+}
+
+// Metrics Section (Key Achievements)
+.cs-metrics {
+  position: relative;
+  padding: 3rem 4rem;
+  background-color: white;
+  z-index: 10; // Above hero image
+
+  .cs-section-title {
+    font-size: $font-xs;
+    font-weight: $weight-semibold;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $blue;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .cs-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+
+    @include breakpoint(mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cs-metric-card {
+    // @include metric-card();
+    height: 7.5rem;
+  }
+}
+
+// Content Blocks Container
+.cs-content-container {
+  position: relative;
+  background-color: white;
+  z-index: 10; // Above hero image
+}
+
+// Block Base Styles
+.cs-block {
+  position: relative;
+  background-color: white;
+}
+
+// General Section Heading (unified base styles)
+.cs-section-heading {
+  font-size: $font-xl;
+  font-weight: $weight-medium;
+  font-variation-settings: 'opsz' 14, 'wdth' 100;
+  color: $blue;
+  margin-bottom: 1rem;
+
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid $blue;
+  width: 70%;
+  justify-self: center;
+  align-self: center;
+
+    .cs-block-two-column:nth-child(1){
+    padding-top:3rem;   
+    }
+
+    @include breakpoint(mobile){
+        width: 100%;
+        font-size: calc($font-l);
+    }
+
+}
+
+
+
+
+
+
+//General Image captions
+    .cs-images-caption, .cs-image-caption{
+      font-family: $font-anonymous;
+      font-size: $font-xs;
+      color: $color-neutral-light;
+      line-height: 121%;
+      margin-top: $space-4;
+      text-align: left;
+    }
+
+// Main Layout Grid (reusable for two-column blocks)
+.cs-layout-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 4rem;
+  padding: 2rem 4rem;
+  align-items: start;
+
+  @include breakpoint(mobile) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Main Content - Left Column
+.cs-content {
+  .cs-content-section {
+    margin-bottom: 3rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .cs-section-heading {
+    padding-bottom: 0.5rem;
+  }
+
+  .cs-content-section {
+    max-width: 47vw;
+
+    & .cs-text-block-heading{
+      font-size: $font-l;
+      color: $color-blue-dark;
+      margin-bottom: $space-12;
+      line-height: 130%;
+      margin-top: 1.2rem;
+    }
+    & .subtit{
+      color:$color-blue-200;
+      font-size: $font-base;
+      font-weight: $weight-light;
+      line-height: 130%;
+      margin-bottom: $space-12;
+    }
+    & .cs-section-text{
+      font-size: $font-base;
+      font-weight: $weight-light;
+      line-height: 130%;
+      color:$color-neutral-light;
+      margin-bottom: $space-4;
+    }
+    & .callout{
+      background: $color-blue-light;
+      border-radius: $space-20;
+      padding: $space-20 $space-24;
+      color: $color-blue-dark;
+      font-family: $font-anonymous;
+      font-style: italic;
+      font-size: calc($font-base*1.1);
+      font-weight: $weight-regular;
+      line-height: 1.5;
+      // margin: $space-32 $space-40;
+      margin: 2rem -3rem 2rem 4rem;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: $space-32;
+        bottom: -12px;
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 12px solid $color-blue-light;
+      }
+
+      &.min {
+        background-color: $color-cream;
+        color: $color-neutral;
+        margin: 0;
+        border-radius: 0.5rem;
+        padding: $space-12 $space-16;
+        font-size: $font-base;
+              &::before {
+        content: '';
+        position: absolute;
+        left: -18px;
+        bottom: 3.2rem;
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-top: 16px solid $color-cream;
+        transform: rotate(90deg);
+      }
+      }
+    }
+
+    // Text block list styling
+    .cs-text-block-list {
+      margin: $space-12 0;
+      padding: 0;
+
+      li{
+        list-style: none;
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: $space-8;
+        font-size: $font-base;
+        font-weight: $weight-light;
+        line-height: 130%;
+        color:$color-neutral-light;
+
+        &:before {
+          content: '·';
+          position: absolute;
+          left: 0;
+          top: 0;
+          color: $color-blue-400;
+          font-weight: bold;
+          font-size: 1.1em;
+        }
+
+        &:last-child{
+          margin-bottom: $space-20;
+        }
+      }
+    }
+  }
+
+  // Inline images/graphs within content (left column only)
+  .cs-inline-image {
+    margin: 2rem 0;
+    width: 100%;
+
+    .cs-inline-img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: block;
+    }
+  }
+
+  // Full-width images that span both columns
+  .cs-inline-image-full {
+    grid-column: 1 / -1; // Span all columns
+    margin: 3rem 0;
+    width: 100%;
+
+    .cs-inline-img-full {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      // box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      display: block;
+    }
+  }
+}
+
+// Gallery Section (as a block)
+.cs-block-gallery {
+  padding: 3rem 4rem 4rem;
+
+  .cs-gallery {
+    .cs-section-title {
+      font-size: $font-l;
+      font-weight: $weight-semibold;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cs-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .cs-gallery-item {
+      border-radius: 4px;
+      overflow: hidden;
+      // background-color: $color-blue-light;
+      background-color: transparent;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      & p{
+        color: $color-blue-dark;
+        font-size: $font-s;
+        margin-top: auto;
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    .cs-gallery-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+}
+
+// Responsive adjustments
+@include breakpoint(mobile) {
+  // Main page container
+  .case-study-page {
+    padding: 0 1rem 1rem;
+  }
+
+  .case-study-content {
+    padding: 1rem 0;
+  }
+
+  // Close button
+  .case-study-close {
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  // Breadcrumbs
+  .cs-breadcrumbs {
+    padding: 1rem 0 0.5rem;
+    padding-right: 3.5rem; // Space for close button
+    gap: 1rem;
+    font-size: $font-xs;
+    max-width: 100%;
+    overflow: hidden;
+
+    .cs-sticky-header.scrolled & {
+      padding: 0.5rem 0 0.25rem;
+      padding-right: 3.5rem;
+    }
+
+    .cs-breadcrumb-nav {
+      min-height: $font-s * 1.2;
+      font-size: $font-xs;
+      max-width: calc(50% - 2rem);
+      overflow: hidden;
+
+      .cs-nav-label,
+      .cs-nav-title {
+        font-size: $font-xs;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 100%;
+      }
+    }
+  }
+
+  // Hero section
+  .cs-hero {
+    padding: 0 1rem 2rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    overflow: hidden;
+    max-width: 100%;
+
+    .cs-sticky-header.scrolled & {
+      padding: 0 1rem 1rem;
+
+      .cs-hero-title {
+        font-size: 24px;
+        margin-top: 0.5rem;
+      }
+    }
+
+    .cs-hero-content {
+      grid-column: 1;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .cs-hero-images {
+      grid-column: 1;
+      grid-row: 2;
+      margin-right: 0;
+      margin-left: 0;
+      max-width: 100%;
+      overflow: hidden;
+
+      img {
+        max-height: 300px;
+        max-width: 100%;
+        width: 100%;
+        transform: scale(1);
+        object-fit: cover;
+      }
+    }
+
+    .cs-hero-metrics {
+      position: static;
+      grid-column: 1;
+      grid-row: 3;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      max-width: 100%;
+      margin-top: 1rem;
+
+      .cs-sticky-header.scrolled & {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .cs-hero-company {
+      font-size: 11px;
+      margin-bottom: 0.25rem;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    .cs-hero-title {
+      font-size: 28px;
+      margin-bottom: 0.5rem;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      hyphens: auto;
+    }
+
+    .cs-hero-subtitle {
+      font-size: $font-s;
+      margin-bottom: 0.75rem;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    .cs-hero-tags {
+      margin-bottom: 1rem;
+      gap: 0.375rem;
+      max-width: 100%;
+    }
+
+    .cs-tag {
+      font-size: 11px;
+      padding: 0.25rem 0.5rem;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    .cs-hero-overview {
+      font-size: $font-s;
+      line-height: 1.5;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+  }
+
+  // Metrics section
+  .cs-metrics {
+    padding: 2rem 1rem;
+
+    .cs-section-title {
+      font-size: 11px;
+      margin-bottom: 1rem;
+    }
+
+    .cs-metrics-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  // Layout grid
+  .cs-layout-grid {
+    padding: 2rem 1rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  // Main content
+  .cs-content {
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
+
+    .cs-content-section {
+      margin-bottom: 2rem;
+      max-width: 100%;
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .cs-section-heading {
+      font-size: $font-l;
+      margin-bottom: 0.75rem;
+    }
+
+    .cs-content-section {
+      .cs-text-block-heading {
+        font-size: $font-base;
+        margin-bottom: $space-8;
+      }
+
+      .subtit {
+        font-size: $font-s;
+        margin-bottom: $space-8;
+      }
+
+      .cs-section-text {
+        font-size: $font-s;
+        margin-bottom: $space-8;
+      }
+
+      .callout {
+        padding: $space-12 $space-16;
+        margin: $space-24 0;
+        font-size: $font-base;
+      }
+
+      .cs-text-block-list {
+        margin: $space-8 0;
+
+        li {
+          font-size: $font-s;
+          margin-bottom: $space-4;
+          padding-left: 1rem;
+
+          &:last-child {
+            margin-bottom: $space-12;
+          }
+        }
+      }
+    }
+
+    .cs-inline-image {
+      margin: 1rem 0;
+      max-width: 100%;
+      overflow: hidden;
+
+      .cs-inline-img {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+      }
+
+      .cs-image-caption {
+        font-size: 11px;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+
+  // Sidebar
+  .cs-sidebar {
+    position: static;
+    margin-top: 2rem;
+    background-color: $color-cream;
+
+    .cs-sidebar-content {
+      padding: 1.5rem;
+    }
+
+    .cs-sidebar-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-sidebar-title {
+      font-size: $font-xs;
+      margin-bottom: $space-12;
+    }
+
+    .cs-sidebar-list {
+      dd {
+        font-size: $font-xs;
+        margin-bottom: $space-8;
+      }
+
+      li {
+        font-size: 11px;
+      }
+    }
+  }
+
+  // Block responsive padding
+  .cs-block-full-image,
+  .cs-block-image-grid,
+  .cs-block-metrics-inline,
+  .cs-block-full-text,
+  .cs-block-text-image,
+  .cs-block-gallery {
+    padding: 2rem 1rem;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  // Image grid
+  .cs-block-image-grid {
+    .cs-image-grid {
+      gap: 1rem;
+      max-width: 100%;
+    }
+
+    .cs-image-grid-item {
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .cs-grid-img,
+    .cs-grid-video {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .cs-image-caption {
+      font-size: 11px;
+      margin-top: $space-4;
+    }
+  }
+
+  // Inline metrics
+  .cs-block-metrics-inline {
+    .cs-metrics-inline-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  // Text-image split
+  .cs-block-text-image {
+    .cs-text-image-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .cs-text-side {
+      .cs-section-heading {
+        font-size: $font-l;
+      }
+
+      .cs-section-text {
+        font-size: $font-s;
+      }
+    }
+  }
+
+  // New blocks responsive
+  .cs-story-hook {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+
+    .cs-story-hook-content {
+      max-width: 100%;
+    }
+
+    .cs-story-hook-quote {
+      font-size: $font-l;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+
+      &::before {
+        font-size: 3rem;
+        top: -0.5rem;
+        left: -1rem;
+      }
+    }
+
+    .cs-story-hook-context {
+      font-size: $font-s;
+    }
+
+    .cs-story-hook-image {
+      margin-top: 1.5rem;
+    }
+  }
+
+
+  // Gallery
+  .cs-block-gallery {
+    padding: 2rem 1rem;
+
+    .cs-gallery {
+      .cs-section-title {
+        font-size: $font-base;
+        margin-bottom: 1rem;
+      }
+
+      .cs-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+  }
+}
+
+
+// Block: Before/After Comparison - Impact visualization
+.cs-before-after {
+  padding: 4rem;
+  margin-bottom: 3rem;
+
+  .cs-before-after-heading {
+    font-size: $font-2xl;
+    font-weight: $weight-semibold;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $color-blue-dark;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .cs-before-after-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+
+    @include breakpoint(mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cs-before-after-col {
+    padding: 2rem;
+    // border-radius: 0.5rem;
+    position: relative;
+  }
+
+
+  .cs-after-col {
+    background: linear-gradient(135deg, rgba(57, 128, 170, 0.08) 0%, rgba(255, 255, 255, 0.6) 100%);
+  }
+
+  .cs-before-after-label {
+    font-size: $font-l;
+    font-weight: $weight-semibold;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    margin-bottom: 1.5rem;
+  }
+
+  .cs-before-col .cs-before-after-label {
+    color: $color-neutral;
+  }
+
+  .cs-after-col .cs-before-after-label {
+    color: $blue;
+  }
+
+  .cs-before-after-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+
+    li {
+      font-size: $font-base;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+
+      i {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+      }
+
+      span {
+        flex: 1;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .cs-before-list li i {
+    color: $color-red-main;
+  }
+
+  .cs-after-list li i {
+    color: $blue;
+  }
+
+  .cs-before-after-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.25rem;
+    margin-top: 1.5rem;
+  }
+}
+
+// Block: Key Insight - Callout/highlight moment
+.cs-key-insight {
+  padding: $space-40 0;
+  margin: $space-60 0;
+  background: transparent;
+  border-top: 1px solid rgba(92, 88, 79, 0.15);
+  border-bottom: 1px solid rgba(92, 88, 79, 0.15);
+  position: relative;
+
+  .cs-key-insight-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cs-key-insight-header {
+    display: flex;
+    align-items: baseline;
+    gap: $space-12;
+    margin-bottom: $space-20;
+  }
+
+  .cs-key-insight-icon {
+    font-size: $font-l;
+    color: $blue;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .cs-key-insight-title {
+    font-size: $font-base;
+    font-weight: $weight-medium;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $blue;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cs-key-insight-text {
+    font-size: $font-xl;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $color-neutral;
+    line-height: 1.4;
+    margin-bottom: $space-24;
+    font-weight: $weight-medium;
+  }
+
+  .cs-key-insight-result {
+    font-size: $font-base;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $color-neutral-light;
+    line-height: 1.6;
+    margin: 0;
+
+    strong {
+      color: $blue;
+      font-weight: $weight-semibold;
+    }
+  }
+}
+
+
+// ============================================
+// LAYOUT BLOCKS
+// ============================================
+
+// Block: Two Column Text (no sidebar)
+.cs-block-two-column-text, .cs-block-two-column{
+  padding: 1rem 4rem;
+  margin-bottom: 1rem;
+
+  .cs-two-column-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+
+    @include breakpoint(tablet) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @include breakpoint(mobile) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+
+    &.content-left{
+      grid-template-columns: 2fr 1fr;
+
+    }
+   &.content-right{
+      grid-template-columns: 1fr 2fr;
+
+    }
+  }
+
+
+
+
+
+
+  .cs-text-column, .cs-column{
+    .cs-column-heading {
+      font-size: $font-l;
+      font-weight: $weight-semibold;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-text-block-heading {
+      font-size: $font-base;
+      font-weight: $weight-semibold;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      margin-bottom: 1rem;
+      margin-top: 1.5rem;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+
+    .cs-section-text {
+      font-size: $font-base;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.callout {
+        background: rgba(57, 128, 170, 0.08);
+        padding: 1rem 1.5rem;
+        border-radius: 0.25rem;
+        border-left: 3px solid $blue;
+        font-weight: $weight-medium;
+        margin: 1.5rem 0;
+      }
+    }
+
+    .cs-text-block-list {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+
+      li {
+        font-size: $font-base;
+        font-variation-settings: 'opsz' 14, 'wdth' 100;
+        color: $color-blue-dark;
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    .cs-column-img{
+      width: 100%;
+    }
+  }
+}
+
+// Block: Three Column Text
+.cs-block-three-column-text {
+  padding: 3rem 4rem;
+  margin-bottom: 2rem;
+
+  .cs-three-column-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+
+    @include breakpoint(tablet) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @include breakpoint(mobile) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .cs-text-column {
+    .cs-column-heading {
+      font-size: $font-l;
+      font-weight: $weight-semibold;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      margin-bottom: 1.5rem;
+    }
+
+    .cs-text-block-heading {
+      font-size: $font-base;
+      font-weight: $weight-semibold;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      margin-bottom: 1rem;
+      margin-top: 1.5rem;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+
+    .cs-section-text {
+      font-size: $font-base;
+      font-variation-settings: 'opsz' 14, 'wdth' 100;
+      color: $color-blue-dark;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.callout {
+        background: rgba(57, 128, 170, 0.08);
+        padding: 1rem 1.5rem;
+        border-radius: 0.25rem;
+        border-left: 3px solid $blue;
+        font-weight: $weight-medium;
+        margin: 1.5rem 0;
+      }
+    }
+
+    .cs-text-block-list {
+      margin: 1rem 0;
+      padding-left: 1.5rem;
+
+      li {
+        font-size: $font-base;
+        font-variation-settings: 'opsz' 14, 'wdth' 100;
+        color: $color-blue-dark;
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+
 // updates for the testing new structure
 
 .project-page-body{
@@ -67,451 +1117,13 @@
 }
 
 
-
-// Hero section animations
-.hero {
-    .cs-header {
-        @include fade-in-up($delay: 0.1s, $duration: 0.8s);
-    }
-
-    .cs-metrics {
-        @include fade-in-up($delay: 0.3s, $duration: 0.8s);
-    }
-
-    .cs.scroll-hinter {
-        @include fade-in-up($delay: 0.5s, $duration: 0.8s);
-    }
-
-    // Animate cs-hero child elements
-    .cs-hero {
-        .eyebrow {
-            @include fade-in-up($delay: 0.15s);
-        }
-
-        .cs-hero-title {
-            @include fade-in-up($delay: 0.25s);
-        }
-
-        .cs-story-hook-context {
-            @include fade-in-up($delay: 0.35s);
-        }
-
-        .switch-container {
-            @include fade-in-up($delay: 0.45s);
-        }
-
-        .cs-hero-images {
-            @include fade-in-up($delay: 0.55s);
-        }
-    }
-
-    // Animate metric card contents
-    .cs-metric-card {
-        // Stagger each card's animation
-        &:nth-child(1) {
-            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.4s, $duration: 0.6s); }
-            .cs-metric-value { @include fade-in-up($delay: 0.5s, $duration: 0.6s); }
-            .cs-metric-label { @include fade-in-up($delay: 0.6s, $duration: 0.6s); }
-        }
-
-        &:nth-child(2) {
-            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.5s, $duration: 0.6s); }
-            .cs-metric-value { @include fade-in-up($delay: 0.6s, $duration: 0.6s); }
-            .cs-metric-label { @include fade-in-up($delay: 0.7s, $duration: 0.6s); }
-        }
-
-        &:nth-child(3) {
-            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.6s, $duration: 0.6s); }
-            .cs-metric-value { @include fade-in-up($delay: 0.7s, $duration: 0.6s); }
-            .cs-metric-label { @include fade-in-up($delay: 0.8s, $duration: 0.6s); }
-        }
-
-        &:nth-child(4) {
-            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.7s, $duration: 0.6s); }
-            .cs-metric-value { @include fade-in-up($delay: 0.8s, $duration: 0.6s); }
-            .cs-metric-label { @include fade-in-up($delay: 0.9s, $duration: 0.6s); }
-        }
-    }
-
-    // Animate data-container items
-    .data-container {
-        .data-item {
-            opacity: 0;
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-
-            &:nth-child(1) {
-                animation-delay: 0.5s;
-            }
-
-            &:nth-child(2) {
-                animation-delay: 0.6s;
-            }
-
-            &:nth-child(3) {
-                animation-delay: 0.7s;
-            }
-
-            &:nth-child(4) {
-                animation-delay: 0.8s;
-            }
-        }
-    }
+.text-higlight-center{
+  font-weight: $weight-bold;
+  color:$blue !important;
+  text-align: center;
+  font-style: italic;
+  padding-bottom: 0.5rem;
 }
-
-// Toggle Switch Styling
-.switch-container {
-    display: flex;
-    align-items: center;
-    gap: $space-16;
-    margin-top: $space-24;
-
-    @include breakpoint(mobile) {
-        gap: $space-12;
-        margin-top: $space-16;
-    }
-
-    .switch-label {
-        font-family: $font-anonymous;
-        font-size: $font-s;
-        color: $neutral;
-        font-weight: 400;
-        transition: color 0.3s ease;
-
-        @include breakpoint(mobile) {
-            font-size: calc($font-s * 0.85);
-        }
-
-        &:first-child {
-            color: $blue;
-        }
-    }
-}
-
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 26px;
-
-    @include breakpoint(mobile) {
-        width: 44px;
-        height: 22px;
-    }
-
-    .switch-input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-
-        &:checked + .switch-slider {
-            background-color: $blue;
-        }
-
-        &:checked + .switch-slider:before {
-            transform: translateX(24px);
-
-            @include breakpoint(mobile) {
-                transform: translateX(22px);
-            }
-        }
-    }
-
-    .switch-slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: $neutral-light;
-        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border-radius: 26px;
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-
-        &:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
-            @include breakpoint(mobile) {
-                height: 16px;
-                width: 16px;
-            }
-        }
-
-        &:hover {
-            background-color: color.adjust($neutral-light, $lightness: -5%);
-        }
-    }
-
-    .switch-input:checked + .switch-slider:hover {
-        background-color: color.adjust($blue, $lightness: -5%);
-    }
-
-    .switch-input:focus + .switch-slider {
-        box-shadow: 0 0 0 3px rgba($blue, 0.2);
-    }
-}
-
-// Update label colors based on toggle state
-.switch-container:has(.switch-input:checked) {
-    .switch-label:first-child {
-        color: $neutral;
-    }
-
-    .switch-label:last-child {
-        color: $blue;
-    }
-}
-
-
-.cs-header {
-
-    .cs-hero-images{
-        display: block !important;
-        opacity: 1;
-    }
-
-
-
-    // position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: transparent;
-    transition: background-color 0.4s 
-    cubic-bezier(0.4, 0, 0.2, 1);
-
-
-     
-        .cs-hero{
-
-            @include breakpoint(mobile){
-                display: block;
-                padding: 0 1rem;
-            }
-        }
-
-
-        .cs-hero-title{
-            @include breakpoint(mobile){
-                margin-bottom: 1rem;
-            }
-        }
-
-    .eyebrow{
-        display: flex;
-        flex-direction: row;
-        gap: $space-24;
-        align-items: center;
-
-          @include breakpoint(mobile){
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            }
-
-        .cs-type-label{
-            color: rgb(255, 255, 255);
-            width: fit-content;
-            background: rgb(32, 58, 72);
-            padding: 0.3rem 1rem;
-            border-radius: 2rem;
-            font-size: $font-s;
-
-            @include breakpoint(mobile){
-             font-size: calc($font-s*0.8);   
-            }
-        }
-        .cs-hero-data{
-            display: flex;
-            flex-direction: row;
-            gap: 1.5rem;
-            span{
-                font-family: $font-anonymous;
-                color: $neutral;
-                font-size: $font-s;
-             @include breakpoint(mobile){
-             font-size: calc($font-s*0.8);   
-            }
-            }
-        }    
-    }
-    .cs-hero-images{
-        display: block !important;
-        opacity: 1;
-    }
-    .cs-hero .cs-hero-header{
-        margin-bottom: 1.5rem;
-       @include breakpoint(mobile){
-        margin-bottom: 1rem;
-        }
-    }
-
-     .cs-story-hook-context{
-        font-size: $font-base;
-        color:$blue-dark;
-        font-weight: light;
-        line-height:1.6;
-        margin:0;
-
-        em{
-            font-weight: 400;
-            font-size: calc($font-base*1.2);
-                  @include breakpoint(mobile){
-                    font-size: $font-base;
-                    line-height: 1.3;
-                  }
-        }
-
-      @include breakpoint(mobile){
-         font-size: calc($font-base*0.8);   
-         margin-bottom: 1rem;
-        }
-     }
-    
-    }
-
-
-
-.metrics-content{
-display: flex;
-flex-direction: row;
-gap: $space-30;
-justify-content: space-between;
-margin:0 $space-120 0 $space-60;
-
-       @include breakpoint(mobile){
-        flex-direction: column-reverse;
-        margin: 0 $space-24;
-        justify-self: center;
-        // width: 100%;
-    }
-}
-
-
-.cs-metrics{
-    display: block;
-
-    .cs-metric-dot{
-        display: none;
-    }
-
-    .cs-section-title{
-        margin-bottom: 2rem;
-        color: $blue-dark;
-    }
-
-    .new{
-        max-width: 30vw;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-
-            @include breakpoint(mobile){
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-    
-                max-width: none;
-                width: 100%;
-            }
-
-
-        .cs-metric-card {
-            min-height: 2rem;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 0.5rem;
-            height: 100%;
-            min-height: 2rem;
-            padding: 0.75rem;
-            // background-color: $neutral-lightest;
-            background-color: $color-bg;
-            overflow: hidden;
-            position: relative;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 4px 4px 4px $color-shadows-blue;
-            border: solid $blue 1px;
-
-            @include breakpoint(mobile){
-            min-height: fit-content;
-            width: 100%;
-            width: 47%;
-            min-width: auto;
-            min-height: 22vh;
-            justify-content: space-evenly;
-            }
-
-        &:hover{
-            transform: translateY(-1px);
-            background-color: $color-blue-alpha-soft;
-            box-shadow: 6px 6px 1px rgba(0, 102, 255, 0.1);
-        }
-        }
-        .cs-metric-value{
-                text-wrap: auto;
-                font-weight: 300;
-                @include breakpoint(mobile){
-                    font-size: calc($font-xs*0.9);
-                    font-weight: 600;
-                }
-                
-        }
-    }
-
-.data-container{
-    display: flex;
-    flex-direction: column;
-    min-width: 30vw;
-    // justify-content: space-between;
-    justify-content: center;
-    gap: 2rem;
-
-
-
-    .data-item{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        border-bottom:solid 1px $blue;
-
-        .left-data{
-            color: $blue;
-            font-size:$font-base;
-            $font-weigth: medium;
-            line-height: 121%;
-        @include breakpoint(mobile){
-            font-size:calc($font-base*0.7);
-        }
-        }
-        .right-data{
-            color: $neutral-light;
-            font-size:$font-base;
-            $font-weigth: 100;
-            line-height: 121%;
-
-            .em{
-                color: $blue;
-                font-weight: 500;
-                
-            }
-            @include breakpoint(mobile){
-            font-size:calc($font-base*0.7);
-        }
-        }
-
-    }
-}
-}
-
 
 
 .cs-line-breaker{
@@ -621,25 +1233,40 @@ margin:0 $space-120 0 $space-60;
 
 }
 
-
-.cs-large-image {
-background-color: radial-gradient(circle, $blue-light 0%, $blue-soft 100%);
-padding: 1rem 0;
-    a{
-        display: flex;
-        flex-direction: row;
-        height: 20vh;
-        // justify-content: space-evenly;
-        justify-content: center;
-        gap: 1rem;
-        background-color: white;
-        margin: 0 5rem;
-        
-        img{
-            height: 100%;    
-        }
-    }
+//inside two columns//
+.cs-content .cs-content-section .cs-block.cs-block-two-column{
+  padding: 0;
+  margin:2rem 0;
+  .cs-two-column-grid{
+    gap: 2rem;
+  }
+  .cs-text-block-list{
+    padding: 0;
+  }
 }
+
+
+
+
+// NOT IN USE
+// .cs-large-image {
+// background-color: radial-gradient(circle, $blue-light 0%, $blue-soft 100%);
+// padding: 1rem 0;
+//     a{
+//         display: flex;
+//         flex-direction: row;
+//         height: 20vh;
+//         // justify-content: space-evenly;
+//         justify-content: center;
+//         gap: 1rem;
+//         background-color: white;
+//         margin: 0 5rem;
+
+//         img{
+//             height: 100%;
+//         }
+//     }
+// }
 
 .cs-key-insight{
 border-color: rgba(57, 128, 170, 0.3);
@@ -672,35 +1299,6 @@ box-shadow: 4px 4px 4px rgba(57, 128, 170, 0.1), -4px -4px 4px rgba(57, 128, 170
 
 }
 
-.cs.scroll-hinter{
-    bottom: 3vh;
-    position: absolute;
-                @include breakpoint(mobile){
-                    display: none;
-                }
-}
-
-
-
-h2.cs-section-heading{
-    text-align: center;
-    margin-top: 2rem;
-    border-bottom: 1px solid $blue;
-    width: 70%;
-    justify-self: center;
-    align-self: center;
-
-    .cs-block-two-column:nth-child(1){
-    padding-top:3rem;   
-    }
-
-    @include breakpoint(mobile){
-        width: 100%;
-        font-size: calc($font-l);
-    }
-
-}
-
 
 .cs-layout-grid{
         padding: 2rem 4rem 0 0;
@@ -719,9 +1317,10 @@ h2.cs-section-heading{
 .side-resume{
     display: flex;
     flex-direction: column;
-    justify-items: left;
-    justify-self: left;
-    align-items: flex-start;
+    // justify-items: left;
+    // justify-self: left;
+    // align-items: flex-start;
+    justify-self: right;
     
         @include breakpoint(mobile){
          background-color: $color-bg;   
@@ -780,902 +1379,6 @@ i{
     }
 }}
 
-.full-width {
-    height: 35vh;
-    overflow: hidden;
-    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-    @include breakpoint(mobile){
-        height: 70vh;
-        overflow: hidden;
-    }
-
-
-    .cs-three-column-grid{
-    height: 100%;
-
-        @include breakpoint(mobile){
-            display: flex;
-            flex-direction: column;
-            gap: 0rem;
-            padding: 1rem 3rem;
-            width: 100%;
-        }
-
-
-
-    .cs-text-column{
-        width: 33vw;
-        position: relative;
-
-        @include breakpoint(mobile){
-            width: 100%;
-        }
-
-        .content{
-            h4{
-            font-size: $font-base;
-            font-weight: 500;
-            font-variation-settings: "opsz" 14, "wdth" 100;
-            color: $blue-dark;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.7rem;
-                @include breakpoint(mobile){
-                    font-size: calc($font-base*0.8);
-                }
-
-            }
-            span{
-                color: $blue-dark;
-                @include breakpoint(mobile){
-                font-size: $font-xs;
-                }
-                i{
-                color: $blue-dark;
-                }
-             &.quote-author{
-                width: 100%;
-                text-align: right;
-             }
-            }
-            .big-commas{
-            font-size: 3rem;
-            color: $neutral;
-            opacity: .3;
-            vertical-align: -0.3em;
-            line-height: 0.8;
-            @include breakpoint(mobile){
-            font-size: 2rem;    
-            }
-            }
-        }
-        p.cs-images-caption{
-            padding-top: 20%;
-            text-align: right;
-
-            @include breakpoint(mobile){
-                padding-top:0;
-            font-size: calc($font-xs*0.8);
-            }
-        }
-    }
-    .cs-images-column{
-        // max-width: 33vw;
-        max-height: 20vh;
-
-        .cs-images-wrapper img{
-        width: 100%;
-        }
-    }
-}
-
-
-    // Accordion state
-    &.accordion {
-        position: relative;
-
-        &:hover {
-            background-color: rgba($blue, 0.05);
-        }
-
-        .cs-text-column{
-            p.cs-section-text{
-                font-size: calc($font-base*0.8);
-            }
-
-            // Arrow indicator for accordion
-            &::after {
-                content: '▼';
-                position: absolute;
-                right: 2rem;
-                top: 50%;
-                transform: translateY(-50%);
-                color: $blue;
-                font-size: $font-l;
-                transition: transform 0.3s ease;
-            }
-            
-            // When accordion is open
-            &.is-open {
-                height: auto;
-                overflow: visible;
-                background-color: rgba($blue, 0.1);
-                
-                .cs-text-column::after {
-                    transform: translateY(-50%) rotate(180deg);
-                }
-            }
-        }
-    }
-
-.cs-three-column-grid{
-    height: 100%;
-
-        @include breakpoint(mobile){
-            display: flex;
-            flex-direction: column;
-            gap: 0rem;
-            padding: 1rem 3rem;
-            width: 100%;
-        }
-
-
-
-    .cs-text-column{
-        width: 33vw;
-        position: relative;
-
-        @include breakpoint(mobile){
-            width: 100%;
-        }
-
-        .content{
-            h4{
-            font-size: $font-base;
-            font-weight: 500;
-            font-variation-settings: "opsz" 14, "wdth" 100;
-            color: $blue-dark;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.7rem;
-                @include breakpoint(mobile){
-                    font-size: calc($font-base*0.8);
-                }
-
-            }
-            span{
-                color: $blue-dark;
-                @include breakpoint(mobile){
-                font-size: $font-xs;
-                }
-                i{
-                color: $blue-dark;
-                }
-             &.quote-author{
-                width: 100%;
-                text-align: right;
-             }
-            }
-            .big-commas{
-            font-size: 3rem;
-            color: $neutral;
-            opacity: .3;
-            vertical-align: -0.3em;
-            line-height: 0.8;
-            @include breakpoint(mobile){
-            font-size: 2rem;    
-            }
-            }
-        }
-        p.cs-images-caption{
-            padding-top: 20%;
-            text-align: right;
-
-            @include breakpoint(mobile){
-                padding-top:0;
-            font-size: calc($font-xs*0.8);
-            }
-        }
-    }
-    .cs-images-column{
-        // max-width: 33vw;
-        max-height: 20vh;
-
-        .cs-images-wrapper img{
-        width: 100%;
-        }
-    }
-}
-
-// Accordion content styling
-.accordion-content {
-    // padding: 2rem 4rem;
-    // background-color: rgba($blue, 0.05);
-    // border-top: 1px solid $blue;
-    animation: fadeIn 0.3s ease-in-out;
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-}
-}
-
-// ============================================
-// SWIPER CAROUSEL - Custom Integration
-// ============================================
-
-// Swiper-specific overrides (NO TRANSITIONS)
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-wrapper {
-  position: relative;
-  &.new-container{
-      height: auto;
-      width: 100%;
-    }
-}
-
-.swiper-slide {
-  // Disable ALL transitions and animations
-  transition: none !important;
-  animation: none !important;
-}
-
-// Custom pagination styling
-.swiper-pagination {
-  position: relative !important;
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-
-  .swiper-pagination-bullet {
-    width: 12px;
-    height: 12px;
-    background: $neutral-light;
-    opacity: 0.5;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &-active {
-      background: $blue;
-      opacity: 1;
-      transform: scale(1.3);
-
-      &:hover{
-        opacity: 0.7;
-        border: 2px solid $blue-dark;
-      }
-
-    }
-
-    &:hover{
-        background: $blue;
-    }
-   
-
-  }
-}
-
-
-
-// Main carousel wrapper
-.new-carousel {
-  width: 100%;
-  height: 100%;
-  min-height: 40vh;
-  position: relative;
-
-  @include breakpoint(mobile) {
-    min-height: 30vh;
-    padding: 0;
-    height: auto;
-  }
-}
-
-// Container (Swiper wrapper)
-.new-container {
-  min-height: 400px;
-  padding-right: 40px;
-  padding-bottom: 40px;
-  position: relative;
-
-  @include breakpoint(mobile) {
-    min-height: 30vh;
-    padding: 0;
-  }
-}
-
-// Individual slides
-.new-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-//   border-radius: 8px;
-  background: $color-bg;
-//   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-box-shadow: 0px 2px 26px $color-shadows-blue;
-  overflow: hidden;
-
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-}
-
-
-// ============================================
-// STACKED CAROUSEL FOR IMAGES (OLD - DISABLED FOR SWIPER)
-// ============================================
-// .images-carousel.stacked-carousel {
-//   position: relative;
-//   height: 100%;
-
-
-//   .cs-carousel-container {
-//     min-height: auto;
-//     position: relative;
-//     padding-right: 3.5rem; // Space for stacked cards peeking
-//     padding-bottom: 3.5rem;
-//     height: 100%;
-
-//     @include breakpoint(mobile){
-//         padding: 0;
-//         margin: 0;
-//         height: auto;
-//     }
-//   }
-
-//   .cs-carousel-track {
-//     position: relative;
-//     height: auto;
-//     min-height: 300px;
-//     @include breakpoint(mobile){
-//     min-height: 30vh;
-//     }
-//   }
-
-//   .cs-carousel-slide {
-//     // Override default carousel behavior - all slides always visible
-//     opacity: 1 !important;
-//     visibility: visible !important;
-//     position: absolute !important;
-//     padding: 0 !important;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     max-width: 100%;
-//     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-//     display: block !important;
-//     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-//     border-radius: 8px;
-//     // height: 100%;
-
-//     img {
-//       display: block;
-//       width: 100%;
-//       height: auto;
-//       border-radius: 8px;
-//     }
-
-//     // Position 1: Front and center
-//     &.slide-position-1 {
-//       z-index: 40;
-//       transform: translateX(0) translateY(0);
-//       opacity: 1 !important;
-//     }
-
-//     // Position 2: Slightly behind and offset
-//     &.slide-position-2 {
-//       z-index: 30;
-//       transform: translateX(1rem) translateY(1rem) scale(0.98);
-//       opacity: 0.9 !important;
-//     }
-
-//     // Position 3: Further behind
-//     &.slide-position-3 {
-//       z-index: 20;
-//       transform: translateX(2rem) translateY(2rem) scale(0.96);
-//       opacity: 0.7 !important;
-//     }
-
-//     // Position 4: Almost stacked (for 4+ slide carousels)
-//     &.slide-position-4 {
-//       z-index: 10;
-//       transform: translateX(3rem) translateY(3rem) scale(0.94);
-//       opacity: 0.5 !important;
-//     }
-
-//     // Stacked: Hidden behind (for 5+ slide carousels)
-//     &.slide-position-stacked {
-//       z-index: 5;
-//       transform: translateX(3rem) translateY(3rem) scale(0.92);
-//       opacity: 0.2 !important;
-//     }
-
-//     // Remove active state overrides
-//     &.active {
-//       position: absolute !important;
-//     }
-//   }
-
-//   figure {
-//     margin-top: 1.5rem;
-//   }
-
-//   .cs-carousel-indicators {
-//     margin-top: 1.5rem;
-//   }
-
-
-//   &.tight{
-//     margin-right: 4rem;
-
-//     .cs-carousel-container{
-//       height: 90% !important;
-//       min-height: 37vh;
-//     @include breakpoint(mobile){
-//         min-height: auto;
-//     }
-//       .cs-carousel-slide{
-//       height: 90%;
-//     }
-//     }
-//   }
-
-// }
-
-
-// ============================================
-// MILESTONES ACCORDIONS
-// ============================================
-.milestones {
-  max-width: 60vw;
-  margin: 0 auto;
-  padding: 4rem 1.5rem;
-
-  &-title {
-    font-size: 2rem;
-    margin-bottom: 3rem;
-  }
-  @include breakpoint(mobile){
-    max-width: 100%;
-    padding: 0;
-    margin: 0;
-  }
-}
-
-/* === Milestone container === */
-
-.milestone {
-  border-radius: 12px;
-  background: $color-bg;
-  margin-bottom: 1.25rem;
-  border: 1px solid #e5edf5;
-  overflow: hidden;
-  // opacity: .95;
-  filter: grayscale(1);
-
-  .milestone-period{
-    display: none;
-  }
-  .milestone-header{
-    padding: 0.5rem 1.5rem;
-    transition: padding 200ms ease;
-  }
-
-  &[open] {
-    background: $color-bg;
-    opacity: 1;
-    filter: none;
-    .milestone-period{
-      display: block;
-    }
-    .milestone-header{
-       padding: 2rem 1.5rem;
-    }
-    &:hover{
-      .milestone-header{
-        padding: 2rem 1.5rem;
-      }
-    }
-    }
-    &:hover{
-      background-color: $color-blue-alpha-soft;
-      box-shadow: 6px 6px 1px rgba(0, 102, 255, 0.1);
-      filter: none;
-      .milestone-header{
-          padding: 1.2rem 1.5rem;
-      }
-      }
-      
-    }
-
-/* === Header (always visible) === */
-
-.milestone-header {
-  list-style: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  position: relative;
-  padding: 0.5rem 1.5rem;
-  transition: padding 200ms ease;
-
-  &[open] {
-  padding: 2rem 1.5rem;
-    }
-
-  &::-webkit-details-marker {
-    display: none;
-  }
-
-  // Dropdown arrow indicator
-  &::after {
-    content: '';
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%) rotate(0deg);
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 8px solid $blue-dark;
-    transition: transform 0.5s ease-in-out;
-
-    @include breakpoint(mobile){
-        top: auto;
-        bottom: 10%;
-    }
-  }
-}
-
-// Rotate arrow when accordion is open
-.milestone[open] .milestone-header::after {
-  transform: translateY(-50%) rotate(180deg);
-}
-
-.milestone-meta {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-}
-
-.milestone-index {
-  // font-size: 0.875rem;
-  font-size: $font-s;
-  font-weight: 600;
-  color: #4a8fdc;
-  flex-shrink: 0;
-}
-
-.milestone-title {
-  // font-size: 1.1rem;
-  font-size: $font-base;
-  margin: 0;
-}
-
-.milestone-period {
-  // font-size: 0.85rem;
-  font-size: $font-xs;
-  color: #6b7c93;
-}
-
-/* === Outcome strip (critical) === */
-
-.milestone-outcome {
-  // font-size: 0.9rem;
-  font-size: $font-s;
-  color: $neutral-light;
-  padding-left: calc(1rem + 1.25rem);
-  background-color: $color-blue-alpha-soft;
-  margin-right: 2rem;
-  padding-bottom: 0.5rem;
-  border-radius: 1rem;
-  padding-right: 0.5rem;
-
-  strong {
-    font-weight: 600;
-  }
-@include breakpoint(mobile){
-    font-size: calc($font-s*0.9);
-    padding: 0.5rem 1rem;
-}
-
-}
-
-/* === Expanded content === */
-
-.milestone-body {
-  padding: 0 1.5rem 1.5rem;
-  display: grid;
-  gap: 1.5rem;
-
-
-&.with-cta{
-  display: flex;
-  flex-direction: row;
-  gap: 5rem;
-
-  .milestone-cta {
-    align-content: flex-end;
-    text-align: right;
-    
-    p{
-      font-size: $font-s;
-      padding-bottom: 0.5rem;
-      color: $neutral-light;
-      font-style: italic;
-    }
-    a.cta-button{
-    font-size: $font-s;
-    opacity: 0.7;
-    line-height: 140%;
-    text-align: left;
-    }
-  }
-}
-
-
-}
-
-.milestone-block {
-  h4 {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-bottom: 0.5rem;
-    color: $blue-dark;
-  }
-
-  ul {
-    // padding-left: 1.25rem;
-    // margin: 0;
-
-    // li {
-    //   font-size: 0.95rem;
-    //   margin-bottom: 0.4rem;
-    //   color: $neutral;
-    // }
-
-    // personalised icons on list
-
-    list-style: none;
-    padding-left: 0;
-
-    li{
-        position: relative;
-        padding-left: 1.75rem;
-        margin-bottom: 0.5rem;
-
-        &::before {
-          content: ">";
-          position: absolute;
-          left: 0;
-          color: $blue-dark;
-        }
-
-      &.milestone--shipped {
-        color: $blue;
-      &::before {
-        content: "★"; // or ✓ → ▶ → ⬤
-        color: $blue;
-        font-size: 0.9rem;
-      }
-    }
-      &.milestone--insight{
-        color: $blue;
-      &::before {
-        content: ">"; // or ✓ → ▶ → ⬤
-        color: $blue;
-        font-weight: bold;
-        // font-size: 1.1rem;
-      }
-    }
-  }
-  }
-
-  p {
-    margin: 0;
-    font-size: 0.95rem;
-  }
-}
-
-/* === Desktop refinements === */
-
-@media (min-width: 768px) {
-  .milestone-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .milestone-outcome {
-    max-width: 40%;
-    padding-left: 1rem;
-    border-left: none;
-    border-top: 2px solid #d6e4f2;
-    padding-top: 0.75rem;
-  }
-}
-
-// Override the default arrow for line-breaker accordions
-.full-width.cs-line-breaker.accordion {
-    overflow: hidden;
-
-        @include breakpoint(mobile){
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-    .content{
-        @include breakpoint(mobile){
-        margin-bottom: 2rem;
-        }
-    }
-    .cs-text-column::after {
-        content: "See how it unfolded ▼";
-        font-size: $font-s;
-        font-family: $font-anonymous;
-        padding-top:20% ;
-        @include breakpoint(mobile){
-            padding-top: 0;
-            position: initial;
-            width: 100%;
-        }
-    }
-
-    &.is-open .cs-text-column::after {
-        content: "Collapse ▲";
-        transform: translateY(-50%);
-    }
-
-
-    &.is-open .cs-three-column-grid{
-        max-height: 20vh;
-    }
-
-    .cs-images-column .cs-images-wrapper{
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-    }
-
-
-   
-}
-
-
-// Open accordion
-
-.full-width.cs-line-breaker.accordion.is-open {
-    overflow: auto;
-    height: auto;
-
-.cs-three-column-grid{
-        @include breakpoint(mobile){
-        max-height: none;
-        }
-}
-
-    .cs-images-column{
-        @include breakpoint(mobile){
-        overflow: hidden;      
-    }
-    &.one-img, &.two-img .first{
-        @include breakpoint(mobile){
-        display: none;
-        }
-    }
-    &.two-img{
-        @include breakpoint(mobile){
-        max-height: none;
-        }
-    }
-    }
-
- .accordion-content{
-        background-color: transparent;
-        border-top: none;
-        padding: 0;
-        padding-top: 3rem;
-        // position: relative;
-
-        @include breakpoint(mobile){
-        padding-top: 2rem;
-        }
-
-        .cs-block-one-column{
-            background-color: transparent;
-            padding: 0;
-            width: 40%;
-            padding-right: 3rem;
-
-            @include breakpoint(xl-desktop, min){
-            padding-right: 5rem;
-            }           
-            @include breakpoint(mobile){
-            width: 100%;
-            padding: 0 2rem;
-            }
-
-            .cs-text-block-section{
-                color: $neutral;
-                h3{
-                    margin-bottom: 0.3rem;
-                    margin-top: 2rem;
-                    color: $blue-dark;
-                }
-
-
-                .cs-text-block-list{
-                    margin: 1rem 0;
-                    padding-left: 1.5rem;
-                    // padding-right: 15rem;
-                    li{
-                        font-size: calc($font-base*0.9);
-                        font-variation-settings: "opsz" 14, "wdth" 100;
-                        color: $neutral;
-                        line-height: calc(1.6*0.9);
-                        margin-bottom: 0.5rem;
-                        
-                        @include breakpoint(mobile){
-                         font-size: calc($font-base*0.6);   
-                        }
-                    }
-                }
-
-
-            }
-
-
-        }
-    }
-
-}
-
-
-
-
-.cs-metrics .new .cs-metric-card {
-    border: solid $blue 1px;
-
-    .cs-metric-tag{
-        padding: 0.1rem 0.7rem;
-        border-radius: 0.2rem;
-        background: $color-green-alpha;
-        color:$green-dark;
-        
-        
-        &.org{
-        background: $color-blue-alpha;
-        color: $blue-dark;
-        }
-        &.bus{
-        background: $color-cream-alpha;
-        color:$neutral-dark;
-        }
-    }
-}
 
 
 
@@ -1687,12 +1390,6 @@ box-shadow: 0px 2px 26px $color-shadows-blue;
 }
 
 
-
-// ---
-
-.switch-container{
-    display: none;
-}
 
 
 // ---
@@ -1717,186 +1414,6 @@ p{
 }
 }
 
-// ============================================
-// STACKED METRICS SWIPER (EFFECTCARDS)
-// Custom styling to approximate original diagonal stacking
-// ============================================
-
-.cs-block.cs-block-two-column.metrics{
-    height: auto;
-    width: 100%;
-    max-width: none;
-    justify-content: center;
-    .cs-column{
-        width: auto;
-        
-    }
-}
-
-
-.stacked-metrics-swiper {
-  padding-right: 3.5rem;
-  padding-bottom: 3.5rem;
-  overflow: visible !important;
-  height: 280px;
-
-  .swiper-wrapper {
-    // height: 250px;
-    height: 20vh;
-    max-width: 50vw;
-    transform: none !important; // Prevent wrapper from moving
-    position: relative;
-
-    @include breakpoint(mobile){
-        max-width: 100vw;
-    }
-  }
-
-  .swiper-slide {
-    width: 90% !important;
-    max-width: 25vw !important;
-    position: absolute !important;
-    left: 0;
-    top: 0;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center center;
-
-
-        @include breakpoint(mobile){
-            max-width: 100% !important;
-            width: auto ;
-        }
-
-
-    // Active slide - front and center
-    &.stack-active {
-      z-index: 40;
-      transform: translate3d(0, 0, 0);
-      opacity: 1;
-    }
-
-    // First card behind - slight offset
-    &.stack-1 {
-      z-index: 30;
-      transform: translate3d(1rem, 1rem, -50px) scale(0.98);
-      opacity: 0.9;
-    }
-
-    // Second card behind
-    &.stack-2 {
-      z-index: 20;
-      transform: translate3d(2rem, 2rem, -100px) scale(0.96);
-      opacity: 0.7;
-    }
-
-    // Third card behind
-    &.stack-3 {
-      z-index: 10;
-      transform: translate3d(3rem, 3rem, -150px) scale(0.94);
-      opacity: 0.5;
-    }
-
-    // All remaining cards further back
-    &.stack-back {
-      z-index: 5;
-      transform: translate3d(3rem, 3rem, -200px) scale(0.92);
-      opacity: 0.2;
-    }
-
-    // Previous slides (before active) are hidden
-    &:not(.stack-active):not(.stack-1):not(.stack-2):not(.stack-3):not(.stack-back) {
-      opacity: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
-  }
-
-  // Style pagination to match original indicators
-  .swiper-pagination {
-    position: relative;
-    // margin-top: 1.5rem;
-    margin-top: 7vh;
-    bottom: auto;
-
-    .swiper-pagination-bullet {
-      width: 12px;
-      height: 12px;
-      margin: 0 6px;
-      background: $neutral-light;
-      opacity: 0.5;
-      transition: all 0.3s ease;
-      border: solid 1px $blue;
-
-      &.swiper-pagination-bullet-active {
-        background: $blue;
-        transform: scale(1.2);
-
-      background: $blue;
-      opacity: 1;
-      transform: scale(1.3);
-
-
-        &:hover{
-        background: $blue-dark;
-         opacity: 0.7;
-        border: 2px solid $blue-dark;
-        }
-      }
-
-      &:hover {
-
-        background: $blue;
-      }
-    }
-  }
-
-  // Match original card styling
-  .cs-carousel-metrics-grid {
-    height: 100%;
-  }
-
-  .cs-metric-card {
-    height: 100%;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-
-    &:hover {
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-  }
-
-  // Disable shadows that EffectCards adds (we use our own)
-  .swiper-slide-shadow {
-    display: none;
-  }
-}
-
-
-.stacked-metrics-swiper {
-    .metrics-content{
-        margin: 0;
-    }
-    .swiper-slide{
-        .cs-metric-card{
-            justify-content: space-evenly;
-            width: 100%;
-            
-            
-            @include breakpoint(mobile){
-                min-width: auto;
-                width: 100%;
-            }
-            &:hover{
-                background-color: $color-bg;
-            }
-            
-            
-            
-        }
-    }
-}
 
 
 

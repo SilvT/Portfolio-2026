@@ -1,0 +1,634 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use '../accesibility' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+
+// Hero Section with Hero Images
+.cs-hero {
+  position: relative;
+  padding: 0 4rem 3rem;
+  background-color: transparent;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  overflow: visible; // Allow image to bleed
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: clip;
+
+  // Scrolled state - shrink hero and make 50/50 split
+  .cs-sticky-header.scrolled & {
+    padding: 0 4rem 1rem;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr; // Equal 50/50 split
+    align-items: center; // Center align vertically
+
+    .cs-hero-content {
+      max-width: 90%;
+    }
+
+    .cs-hero-images {
+      opacity: 0;
+      pointer-events: none;
+      display: none;
+    }
+
+    .cs-hero-metrics {
+      opacity: 1;
+      pointer-events: all;
+      position: relative; // Change from absolute
+      right: 5vh; 
+      top: auto; 
+      width: 100%; 
+      max-width: 100%; 
+    }
+
+    .cs-hero-title {
+      font-size: $font-xl; 
+      margin-top: 1rem;
+    }
+
+    .cs-hero-subtitle,
+    .cs-hero-overview, .cs-hero-company {
+      opacity: 0;
+      max-height: 0;
+      margin: 0;
+      overflow: hidden;
+      display: none;
+    }
+  }
+
+  .cs-hero-content {
+    grid-column: 1;
+    transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cs-hero-images {
+    grid-column: 2;
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start; // Align to top
+    justify-content: flex-start;
+    margin-right: -4rem; // Extend beyond section padding to bleed right
+    overflow: visible;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    img {
+      max-width: none;
+      width: auto;
+      height: auto;
+      max-height: 350px;
+      border-radius: 4px;
+      transform: scale(1.3);
+      transform-origin: top left; // Anchor at top-left corner
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  .cs-hero-metrics {
+    grid-column: 2;
+    position: absolute;
+    right: 4rem;
+    top: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 600px;
+    align-items: start; // Align cards to top instead of stretch
+
+    .cs-metric-card {
+      padding: $space-12;
+      min-height: 4rem;
+      height: 4.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+      .cs-metric-content {
+        padding: 0;
+        height: auto;
+        min-height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 0.5rem;
+        box-shadow: 0 0 0 transparent;
+        &:hover{
+          transform: translate(0);
+          box-shadow: 0 0 0 transparent;
+        }
+      }
+
+      .cs-metric-value {
+        font-size: $font-s;
+        margin-bottom: 0;
+        line-height: 1;
+        width: auto; // Override full width from mixin
+        text-align: left;
+        transition: opacity 0.5s ease-in-out, font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .cs-metric-icon {
+        font-size: 1.25rem;
+        line-height: 1;
+        transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .cs-metric-icon-wrapper {
+        margin: 0; // Remove all margins from mixin
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto; // Override fixed 24px width from mixin
+        height: auto; // Override fixed 24px height from mixin
+        flex-shrink: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .cs-metric-label {
+        display: none; // Hide label by default
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        font-size: $font-xs;
+        color: $color-blue-400;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      // Hover interaction: show label, hide icon + value
+      &:hover {
+        .cs-metric-icon-wrapper,
+        .cs-metric-value {
+          opacity: 0;
+          display: none;
+        }
+
+        .cs-metric-label {
+          position: relative;
+          display: block;
+          opacity: 1;
+          box-shadow: 0 0 0 transparent;
+        }
+
+        .cs-metric-content {
+          transform: none !important;
+          box-shadow: none !important;
+        }
+      }
+    }
+  }
+
+  .cs-hero-header {
+    margin-bottom: $space-8;
+    transition: margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cs-hero-company {
+    font-family: $font-anonymous;
+    font-size: $font-xs;
+    color: $color-blue-dark;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cs-hero-title {
+    font-size: $font-3xl;
+    font-weight: $weight-semibold;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $color-blue-dark;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cs-hero-subtitle {
+    font-size: $font-base;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $color-blue-dark;
+    font-weight: $weight-regular;
+    opacity: 0.7;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cs-hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cs-tag {
+    font-family: $font-anonymous;
+    font-size: $font-xs;
+    padding: 0.25rem 0.75rem;
+    background-color: rgba(0, 102, 255, 0.1);
+    color: $color-blue-dark;
+    border-radius: 2px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cs-hero-overview {
+    font-size: $font-s;
+    font-variation-settings: 'opsz' 14, 'wdth' 100;
+    color: $color-blue-dark;
+    line-height: 1.6;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    // When populated with story-hook content
+    &.cs-story-hook-style {
+      padding:1rem 0 2rem 0;
+      .cs-story-hook-quote {
+        font-size: $font-l;
+        font-weight: $weight-medium;
+        font-style: italic;
+        color: $blue;
+        margin: 0 0 1rem 0;
+        line-height: 1.4;
+        position: relative;
+        padding-left: 1.5rem;
+
+        &::before {
+          content: '"';
+          position: absolute;
+          left: 0;
+          top: -0.5rem;
+          font-size: 3rem;
+          color: $color-blue-dark;
+          opacity: 0.3;
+          line-height: 1;
+        }
+      }
+
+      .cs-story-hook-context {
+        font-size: $font-s;
+        color: $color-blue-dark;
+        line-height: 1.6;
+        margin: 0;
+      }
+    }
+  }
+
+  @include breakpoint(mobile) {
+    grid-template-columns: 1fr;
+
+    .cs-hero-content {
+      grid-column: 1;
+    }
+
+    .cs-hero-images {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+}
+
+
+// Hero section animations
+.hero {
+    .cs-header {
+        @include fade-in-up($delay: 0.1s, $duration: 0.8s);
+    }
+
+    .cs-metrics {
+        @include fade-in-up($delay: 0.3s, $duration: 0.8s);
+    }
+
+    .cs.scroll-hinter {
+        @include fade-in-up($delay: 0.5s, $duration: 0.8s);
+    }
+
+    // Animate cs-hero child elements
+    .cs-hero {
+        .eyebrow {
+            @include fade-in-up($delay: 0.15s);
+        }
+
+        .cs-hero-title {
+            @include fade-in-up($delay: 0.25s);
+        }
+
+        .cs-story-hook-context {
+            @include fade-in-up($delay: 0.35s);
+        }
+
+        .switch-container {
+            @include fade-in-up($delay: 0.45s);
+        }
+
+        .cs-hero-images {
+            @include fade-in-up($delay: 0.55s);
+        }
+    }
+
+    // Animate metric card contents
+    .cs-metric-card {
+        // Stagger each card's animation
+        &:nth-child(1) {
+            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.4s, $duration: 0.6s); }
+            .cs-metric-value { @include fade-in-up($delay: 0.5s, $duration: 0.6s); }
+            .cs-metric-label { @include fade-in-up($delay: 0.6s, $duration: 0.6s); }
+        }
+
+        &:nth-child(2) {
+            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.5s, $duration: 0.6s); }
+            .cs-metric-value { @include fade-in-up($delay: 0.6s, $duration: 0.6s); }
+            .cs-metric-label { @include fade-in-up($delay: 0.7s, $duration: 0.6s); }
+        }
+
+        &:nth-child(3) {
+            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.6s, $duration: 0.6s); }
+            .cs-metric-value { @include fade-in-up($delay: 0.7s, $duration: 0.6s); }
+            .cs-metric-label { @include fade-in-up($delay: 0.8s, $duration: 0.6s); }
+        }
+
+        &:nth-child(4) {
+            .cs-metric-icon-wrapper { @include fade-in-up($delay: 0.7s, $duration: 0.6s); }
+            .cs-metric-value { @include fade-in-up($delay: 0.8s, $duration: 0.6s); }
+            .cs-metric-label { @include fade-in-up($delay: 0.9s, $duration: 0.6s); }
+        }
+    }
+
+    // Animate data-container items
+    .data-container {
+        .data-item {
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+            &:nth-child(1) {
+                animation-delay: 0.5s;
+            }
+
+            &:nth-child(2) {
+                animation-delay: 0.6s;
+            }
+
+            &:nth-child(3) {
+                animation-delay: 0.7s;
+            }
+
+            &:nth-child(4) {
+                animation-delay: 0.8s;
+            }
+        }
+    }
+}
+
+.cs-header {
+
+    .cs-hero-images{
+        display: block !important;
+        opacity: 1;
+    }
+
+    top: 0;
+    z-index: 1000;
+    background-color: transparent;
+    transition: background-color 0.4s 
+    cubic-bezier(0.4, 0, 0.2, 1);
+
+        .cs-hero{
+            @include breakpoint(mobile){
+                display: block;
+                padding: 0 1rem;
+            }
+        }
+
+
+        .cs-hero-title{
+            @include breakpoint(mobile){
+                margin-bottom: 1rem;
+            }
+        }
+
+    .eyebrow{
+        display: flex;
+        flex-direction: row;
+        gap: $space-24;
+        align-items: center;
+
+          @include breakpoint(mobile){
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            }
+
+        .cs-type-label{
+            color: rgb(255, 255, 255);
+            width: fit-content;
+            background: rgb(32, 58, 72);
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            font-size: $font-s;
+
+            @include breakpoint(mobile){
+             font-size: calc($font-s*0.8);   
+            }
+        }
+        .cs-hero-data{
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            span{
+                font-family: $font-anonymous;
+                color: $neutral;
+                font-size: $font-s;
+             @include breakpoint(mobile){
+             font-size: calc($font-s*0.8);   
+            }
+            }
+        }    
+    }
+    .cs-hero-images{
+        display: block !important;
+        opacity: 1;
+    }
+    .cs-hero .cs-hero-header{
+        margin-bottom: 1.5rem;
+       @include breakpoint(mobile){
+        margin-bottom: 1rem;
+        }
+    }
+
+     .cs-story-hook-context{
+        font-size: $font-base;
+        color:$blue-dark;
+        font-weight: light;
+        line-height:1.6;
+        margin:0;
+
+        em{
+            font-weight: 400;
+            font-size: calc($font-base*1.2);
+                  @include breakpoint(mobile){
+                    font-size: $font-base;
+                    line-height: 1.3;
+                  }
+        }
+
+      @include breakpoint(mobile){
+         font-size: calc($font-base*0.8);   
+         margin-bottom: 1rem;
+        }
+     }
+    
+    }
+
+
+
+.metrics-content{
+display: flex;
+flex-direction: row;
+gap: $space-30;
+justify-content: space-between;
+margin:0 $space-120 0 $space-60;
+
+       @include breakpoint(mobile){
+        flex-direction: column-reverse;
+        margin: 0 $space-24;
+        justify-self: center;
+        // width: 100%;
+    }
+}
+
+
+.cs-metrics{
+    display: block;
+
+    .cs-metric-dot{
+        display: none;
+    }
+
+    .cs-section-title{
+        margin-bottom: 2rem;
+        color: $blue-dark;
+    }
+
+    .new{
+        max-width: 30vw;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+
+            @include breakpoint(mobile){
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+    
+                max-width: none;
+                width: 100%;
+            }
+
+
+        .cs-metric-card {
+            min-height: 2rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            height: 100%;
+            min-height: 2rem;
+            padding: 0.75rem;
+            // background-color: $neutral-lightest;
+            background-color: $color-bg;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 4px 4px 4px $color-shadows-blue;
+            border: solid $blue 1px;
+
+            @include breakpoint(mobile){
+            min-height: fit-content;
+            width: 100%;
+            width: 47%;
+            min-width: auto;
+            min-height: 22vh;
+            justify-content: space-evenly;
+            }
+
+        &:hover{
+            transform: translateY(-1px);
+            background-color: $color-blue-alpha-soft;
+            box-shadow: 6px 6px 1px rgba(0, 102, 255, 0.1);
+        }
+        }
+        .cs-metric-value{
+                text-wrap: auto;
+                font-weight: 300;
+                @include breakpoint(mobile){
+                    font-size: calc($font-xs*0.9);
+                    font-weight: 600;
+                }
+                
+        }
+    }
+
+.data-container{
+    display: flex;
+    flex-direction: column;
+    min-width: 30vw;
+    // justify-content: space-between;
+    justify-content: center;
+    gap: 2rem;
+
+
+
+    .data-item{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border-bottom:solid 1px $blue;
+
+        .left-data{
+            color: $blue;
+            font-size:$font-base;
+            $font-weigth: medium;
+            line-height: 121%;
+        @include breakpoint(mobile){
+            font-size:calc($font-base*0.7);
+        }
+        }
+        .right-data{
+            color: $neutral-light;
+            font-size:$font-base;
+            $font-weigth: 100;
+            line-height: 121%;
+
+            .em{
+                color: $blue;
+                font-weight: 500;
+                
+            }
+            @include breakpoint(mobile){
+            font-size:calc($font-base*0.7);
+        }
+        }
+
+    }
+}
+}
+
+//----------------
+//Scroll hinter
+//----------------
+
+.cs.scroll-hinter{
+    bottom: 3vh;
+    position: absolute;
+                @include breakpoint(mobile){
+                    display: none;
+                }
+}
