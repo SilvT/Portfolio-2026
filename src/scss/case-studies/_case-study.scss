@@ -71,13 +71,16 @@
     
         &.inner{
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
+            
             @include breakpoint(mobile){
-            display: block;
+            // display: block;
+            flex-direction: column;
+            padding: 0;
             }
             
             .cs-column{
-                width: 50%;
+                // width: 50%;
             @include breakpoint(mobile){
                 width: auto;
             }

@@ -432,14 +432,13 @@
 
 
 
-.metrics-content{
+.hero .metrics-content{
 display: flex;
 flex-direction: row;
 gap: $space-30;
 justify-content: space-between;
 margin:0 $space-120 0 $space-60;
-
-       @include breakpoint(mobile){
+    @include breakpoint(mobile){
         flex-direction: column-reverse;
         margin: 0 $space-24;
         justify-self: center;

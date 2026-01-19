@@ -185,8 +185,8 @@
 }
 
 
-// Metrics (inside left column)
-.metrics {
+// Metrics (inside left column) - scoped to project cards only
+.project-content .metrics {
   display: flex;
   flex-wrap: wrap;
   height: 100%;

@@ -1,10 +1,8 @@
-import lightGallery from 'lightgallery';
-import lgVideo from 'lightgallery/plugins/video';
-import 'lightgallery/css/lightgallery.css';
-import 'lightgallery/css/lg-video.css';
+import GLightbox from 'glightbox';
+import 'glightbox/dist/css/glightbox.min.css';
 
 /**
- * Initialize lightGallery on Swiper carousels, standalone images, and gallery grids
+ * Initialize GLightbox on Swiper carousels, standalone images, and gallery grids
  */
 export function initLightGallery() {
   initCarouselGalleries();
@@ -14,37 +12,54 @@ export function initLightGallery() {
 }
 
 /**
- * Initialize lightGallery on all Swiper carousels
+ * Initialize GLightbox on all Swiper carousels
  * Each carousel becomes its own gallery
  */
 function initCarouselGalleries() {
   const carousels = document.querySelectorAll('.new-carousel.swiper');
 
-  carousels.forEach((carousel) => {
+  carousels.forEach((carousel, index) => {
+    const galleryName = `carousel-${index}`;
+
     // Get shared figcaption if present
     const figcaption = carousel.querySelector('.cs-image-caption');
     const sharedCaption = figcaption ? figcaption.textContent.trim() : '';
 
-    // Add data-sub-html to each image combining alt + figcaption
+    // Add data attributes to each image
     const images = carousel.querySelectorAll('.cs-carousel-img');
     images.forEach((img) => {
       const altText = img.alt || '';
-      const caption = altText && sharedCaption
-        ? `<p class="alt-content">${altText}</p><p class="lg-figcaption">${sharedCaption}</p>`
-        : altText ? `<p class="alt-content">${altText}</p>` : sharedCaption;
-      img.setAttribute('data-sub-html', caption);
+      const description = buildDescription(altText, sharedCaption);
+
+      img.setAttribute('data-gallery', galleryName);
+      img.setAttribute('data-glightbox', `description: ${description}`);
+      img.classList.add('glightbox');
     });
 
-    lightGallery(carousel, {
-      selector: '.cs-carousel-img',
-      download: false,
-      counter: true,
+    // Initialize GLightbox for this carousel
+    GLightbox({
+      selector: `.new-carousel.swiper:nth-of-type(${index + 1}) .glightbox`,
+      touchNavigation: true,
+      loop: true,
     });
   });
+
+  // Re-initialize with proper selector after all carousels are processed
+  if (carousels.length > 0) {
+    // Initialize separate galleries for each carousel using data-gallery attribute
+    const uniqueGalleries = [...new Set([...document.querySelectorAll('.new-carousel.swiper .glightbox')].map(el => el.dataset.gallery))];
+    uniqueGalleries.forEach(galleryName => {
+      GLightbox({
+        selector: `[data-gallery="${galleryName}"]`,
+        touchNavigation: true,
+        loop: true,
+      });
+    });
+  }
 }
 
 /**
- * Initialize lightGallery on standalone figure.cs-column-image elements
+ * Initialize GLightbox on standalone figure.cs-column-image elements
  */
 function initStandaloneImages() {
   const figures = document.querySelectorAll('figure.cs-column-image');
@@ -57,27 +72,33 @@ function initStandaloneImages() {
     const figcaption = figure.querySelector('.cs-image-caption');
     const sharedCaption = figcaption ? figcaption.textContent.trim() : '';
 
-    // Build caption from alt + figcaption
+    // Build description from alt + figcaption
     const altText = img.alt || '';
-    const caption = altText && sharedCaption
-      ? `<p class="alt-content">${altText}</p><p class="lg-figcaption">${sharedCaption}</p>`
-      : altText ? `<p class="alt-content">${altText}</p>` : sharedCaption;
+    const description = buildDescription(altText, sharedCaption);
 
     // Add data attributes to image
-    img.setAttribute('data-src', img.src);
-    img.setAttribute('data-sub-html', caption);
-    img.classList.add('lg-item');
+    img.setAttribute('href', img.src);
+    img.setAttribute('data-glightbox', `description: ${description}`);
+    img.classList.add('glightbox-standalone');
 
-    lightGallery(figure, {
-      selector: '.lg-item',
-      download: false,
-      counter: false,
-    });
+    // Wrap image in anchor for GLightbox
+    const anchor = document.createElement('a');
+    anchor.href = img.src;
+    anchor.className = 'glightbox-standalone';
+    anchor.setAttribute('data-glightbox', `description: ${description}`);
+    img.parentNode.insertBefore(anchor, img);
+    anchor.appendChild(img);
+  });
+
+  // Initialize GLightbox for standalone images (each opens individually)
+  GLightbox({
+    selector: '.glightbox-standalone',
+    touchNavigation: true,
   });
 }
 
 /**
- * Initialize lightGallery on gallery grid - all items as one group
+ * Initialize GLightbox on gallery grid - all items as one group
  */
 function initGalleryGrid() {
   const galleryGrid = document.querySelector('.cs-gallery-grid');
@@ -93,43 +114,48 @@ function initGalleryGrid() {
 
     if (img) {
       const altText = img.alt || '';
-      const subHtml = altText && captionText
-        ? `<p class="alt-content">${altText}</p><p class="lg-figcaption">${captionText}</p>`
-        : altText ? `<p class="alt-content">${altText}</p>` : captionText;
+      const description = buildDescription(altText, captionText);
 
-      img.setAttribute('data-src', img.src);
-      img.setAttribute('data-sub-html', subHtml);
-      img.classList.add('lg-gallery-item');
+      img.setAttribute('data-glightbox', `description: ${description}`);
+      img.setAttribute('data-gallery', 'gallery-grid');
+      img.classList.add('glightbox-gallery');
+
+      // Wrap in anchor
+      const anchor = document.createElement('a');
+      anchor.href = img.src;
+      anchor.className = 'glightbox-gallery';
+      anchor.setAttribute('data-gallery', 'gallery-grid');
+      anchor.setAttribute('data-glightbox', `description: ${description}`);
+      img.parentNode.insertBefore(anchor, img);
+      anchor.appendChild(img);
     }
 
     if (video) {
       const altText = video.getAttribute('aria-label') || '';
-      const subHtml = altText && captionText
-        ? `<p class="alt-content">${altText}</p><p class="lg-figcaption">${captionText}</p>`
-        : altText ? `<p class="alt-content">${altText}</p>` : captionText;
-
-      // For HTML5 videos, use data-video attribute with source object
+      const description = buildDescription(altText, captionText);
       const videoSrc = video.src || video.querySelector('source')?.src;
-      video.setAttribute('data-video', JSON.stringify({
-        source: [{ src: videoSrc, type: 'video/mp4' }],
-        attributes: { preload: 'none', controls: true, playsinline: true }
-      }));
-      video.setAttribute('data-sub-html', subHtml);
-      video.classList.add('lg-gallery-item');
+
+      // Wrap video in anchor for GLightbox
+      const anchor = document.createElement('a');
+      anchor.href = videoSrc;
+      anchor.className = 'glightbox-gallery';
+      anchor.setAttribute('data-gallery', 'gallery-grid');
+      anchor.setAttribute('data-glightbox', `description: ${description}`);
+      video.parentNode.insertBefore(anchor, video);
+      anchor.appendChild(video);
     }
   });
 
-  lightGallery(galleryGrid, {
-    selector: '.lg-gallery-item',
-    download: false,
-    counter: true,
-    plugins: [lgVideo],
-    videojs: false,
+  // Initialize GLightbox for gallery grid
+  GLightbox({
+    selector: '.glightbox-gallery',
+    touchNavigation: true,
+    loop: true,
   });
 }
 
 /**
- * Initialize lightGallery on accordion images as a group
+ * Initialize GLightbox on accordion images as a group
  */
 function initAccordionImages() {
   const accordion = document.querySelector('.accordion .cs-three-column-grid');
@@ -138,16 +164,36 @@ function initAccordionImages() {
   const images = accordion.querySelectorAll('.cs-images-wrapper img');
   images.forEach((img) => {
     const altText = img.alt || '';
-    const subHtml = altText ? `<p class="alt-content">${altText}</p>` : '';
+    const description = altText ? `<p class="alt-content">${altText}</p>` : '';
 
-    img.setAttribute('data-src', img.src);
-    img.setAttribute('data-sub-html', subHtml);
-    img.classList.add('lg-accordion-item');
+    // Wrap in anchor
+    const anchor = document.createElement('a');
+    anchor.href = img.src;
+    anchor.className = 'glightbox-accordion';
+    anchor.setAttribute('data-gallery', 'accordion-gallery');
+    anchor.setAttribute('data-glightbox', `description: ${description}`);
+    img.parentNode.insertBefore(anchor, img);
+    anchor.appendChild(img);
   });
 
-  lightGallery(accordion, {
-    selector: '.lg-accordion-item',
-    download: false,
-    counter: true,
+  // Initialize GLightbox for accordion
+  GLightbox({
+    selector: '.glightbox-accordion',
+    touchNavigation: true,
+    loop: true,
   });
+}
+
+/**
+ * Build HTML description from alt text and caption
+ */
+function buildDescription(altText, captionText) {
+  if (altText && captionText) {
+    return `<p class="alt-content">${altText}</p><p class="lg-figcaption">${captionText}</p>`;
+  } else if (altText) {
+    return `<p class="alt-content">${altText}</p>`;
+  } else if (captionText) {
+    return captionText;
+  }
+  return '';
 }
