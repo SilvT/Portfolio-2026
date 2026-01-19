@@ -3,15 +3,8 @@
 @use 'typography' ;
 @use 'accesibility';
 
-
-
-
-
-@use 'landing-page/about';
-@use 'landing-page/nav-bar';
-@use 'landing-page/project-cards';
-@use 'landing-page/footer';
-@use 'landing-page/scroll-hinter';
 @use 'landing-page/_landing-page';
+@use 'case-studies/case-study';
 
-@use 'case-studies/blocks';
+// Iconoir Icons (must come after @use rules)
+@import 'iconoir/css/iconoir.css';

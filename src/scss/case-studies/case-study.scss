@@ -1,0 +1,167 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use '../accesibility' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+
+
+@use 'blocks' as *;
+@use 'old-blocks' as *;
+@use 'breadcrumbs' as *;
+@use 'lightbox' as *;
+
+// Only definition of blocks and columns and grids
+
+//------------------
+// General structure
+//------------------
+.case-study-page{
+    padding: 0 !important;
+    margin:0 !important;
+    p{
+        color: $color-neutral;
+    }
+}
+
+.cs-block{
+    &.cs-block-one-column{
+        padding: 1rem 4rem;
+        margin-bottom: 1rem;
+
+        & * {
+        // max-width: 70vw;
+        @include breakpoint(mobile){
+            max-width: 100%;
+        }
+        }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        
+        @include breakpoint(mobile){
+            padding: 1rem 2rem;
+
+        }
+    }
+
+    &.cs-block-two-column{
+        // display: flex;
+        // flex-direction: row;
+    
+        &.inner{
+            display: flex;
+            flex-direction: row;
+            @include breakpoint(mobile){
+            display: block;
+            }
+            
+            .cs-column{
+                width: 50%;
+            @include breakpoint(mobile){
+                width: auto;
+            }
+            &.tight{
+                padding-right: 4rem;
+                @include breakpoint(mobile){
+                    padding-right:0;
+                }
+            }
+
+            }
+        }
+    }
+
+
+
+
+&.cs-block-two-column-text, &.cs-block-two-column{
+    padding: 1rem 4rem;
+    margin-bottom: 1rem;
+
+    @include breakpoint(mobile){
+        padding: 1rem 2rem;
+    }
+    .two-column-grid{
+        gap: 5rem;
+    }
+    &.inversed .two-column-grid{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .cs-block-text-image{
+        padding: 0;
+    }
+}
+
+}
+
+section.cs-section{
+  margin-bottom: 3rem;
+}
+
+
+
+
+// Before and After 
+
+.cs-block.cs-before-after{
+
+    @include breakpoint(mobile){
+        padding: 1rem 2rem;
+    }
+
+    .cs-before-after-grid{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 3rem;
+
+        @include breakpoint(mobile){
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+}
+
+
+// Gallery block
+.cs-block.cs-block-gallery{
+    .cs-gallery-grid{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+
+        @include breakpoint(mobile){
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+    }
+}
+
+
+
+//------------------
+// TOP NAV - CASE STUDIES
+//------------------
+.cs-breadcrumbs{
+        @include breakpoint(mobile){
+            width: 100%;
+            max-width: none;
+            padding: 1rem 2rem 1rem 2rem;
+
+        }
+    .cs-breadcrumb-nav{
+        @include breakpoint(mobile){
+            max-width: none;
+            width: auto;
+
+            .cs-nav-label{
+                position: relative;
+                min-width: 100px;
+            }
+        }
+
+    }
+}
+

@@ -1,50 +1,80 @@
 /**
  * Accordion Module
- * Handles accordion interactions for case study pages
+ * Ensures only one accordion can be open at a time using class switching
  */
 
 /**
- * Initialize standard accordions
+ * Initialize accordion behavior for milestone details elements
  */
 export function initAccordions() {
-  const accordions = document.querySelectorAll('.accordion');
+  const milestones = document.querySelectorAll('.milestone');
 
-  accordions.forEach(accordion => {
-    const header = accordion.querySelector('.accordion-header');
-    const content = accordion.querySelector('.accordion-content');
+  if (milestones.length === 0) return;
 
-    if (header && content) {
-      header.addEventListener('click', () => {
-        const isOpen = accordion.classList.contains('active');
+  milestones.forEach(accordion => {
+    const header = accordion.querySelector('.milestone-header');
 
-        // Close all other accordions (optional - remove if you want multiple open)
-        document.querySelectorAll('.accordion.active').forEach(item => {
-          if (item !== accordion) {
-            item.classList.remove('active');
-          }
-        });
+    if (!header) return;
 
-        // Toggle current accordion
-        accordion.classList.toggle('active');
+    header.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      const isCurrentlyOpen = accordion.classList.contains('is-open');
+
+      // Close all accordions
+      milestones.forEach(item => {
+        item.classList.remove('is-open');
+        item.removeAttribute('open');
       });
-    }
+
+      // If this one wasn't open, open it
+      if (!isCurrentlyOpen) {
+        accordion.classList.add('is-open');
+        accordion.setAttribute('open', '');
+      }
+    });
   });
 }
 
 /**
- * Initialize case study specific accordions
+ * Initialize generic accordion behavior for case study sections
+ * Uses .accordion class and .accordion-content for expandable content
  */
 export function initCaseStudyAccordions() {
-  const csAccordions = document.querySelectorAll('.cs-accordion');
+  const accordions = document.querySelectorAll('.cs-line-breaker.accordion');
 
-  csAccordions.forEach(accordion => {
-    const trigger = accordion.querySelector('.cs-accordion-trigger');
-    const content = accordion.querySelector('.cs-accordion-content');
+  if (accordions.length === 0) return;
 
-    if (trigger && content) {
-      trigger.addEventListener('click', () => {
-        accordion.classList.toggle('open');
+  accordions.forEach(accordion => {
+    const content = accordion.querySelector('.accordion-content');
+
+    if (!content) return;
+
+    // Initially hide the content
+    content.style.display = 'none';
+
+    // Make the whole accordion clickable
+    accordion.style.cursor = 'pointer';
+
+    accordion.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      const isCurrentlyOpen = accordion.classList.contains('is-open');
+
+      // Close all case study accordions
+      accordions.forEach(item => {
+        const itemContent = item.querySelector('.accordion-content');
+        if (itemContent) {
+          itemContent.style.display = 'none';
+        }
+        item.classList.remove('is-open');
       });
-    }
+
+      // If this one wasn't open, open it
+      if (!isCurrentlyOpen) {
+        content.style.display = 'block';
+        accordion.classList.add('is-open');
+      }
+    });
   });
 }

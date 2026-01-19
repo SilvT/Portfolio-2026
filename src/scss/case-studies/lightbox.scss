@@ -1,0 +1,61 @@
+@use 'sass:color';
+@use '../variables' as *;
+@use '../accesibility' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+
+
+
+.lg-backdrop{
+    background-color: $blue-dark !important;
+}
+
+.lg-content{
+    .lg-next, .lg-prev{
+    background-color: $color-blue-alpha;
+    color: $blue-dark;
+    color: $color-white-alpha;
+    }
+}
+
+.lg-toolbar{
+    .lg-close.lg-icon, .lg-counter{
+
+        color: $color-bg;
+    }
+}
+
+
+.lg-sub-html {
+
+//  margin-bottom: 1rem;
+     @include breakpoint(mobile){
+        margin-bottom: auto;
+    }
+    
+    p{
+        text-align: left;
+        @include breakpoint(mobile){
+        width: 100%;        
+    }
+        &.alt-content{
+            font-size: $font-base;
+            // color: $blue;
+
+            @include breakpoint(mobile){
+                font-size: calc($font-base*0.8);
+            }
+        }
+
+        &.lg-figcaption{
+            font-size: $font-s;
+            color:$color-white-alpha;
+            // color: $neutral;
+            font-family: $font-anonymous;
+            line-height: 1.2;
+            @include breakpoint(mobile){
+                font-size: calc($font-s*0.8);
+            }
+        }
+    }
+}

@@ -2,6 +2,8 @@
 
 import { initFlipBoardAnimation } from './modules/flipBoardAnimation.js';
 import { initScrollHint } from './modules/scroll-hinter.js';
+import { initNavigation } from './modules/navigation.js';
+import { initLightGallery } from './modules/lightgallery.js';
 
 /**
  * Initializes passive / visual-only effects.
@@ -17,10 +19,13 @@ export function initVisualEffects() {
  */
 document.addEventListener('DOMContentLoaded', async () => {
   // Core features first
+  initNavigation();
 
   // UI features
   initVisualEffects();
 
+  // Lightbox for galleries
+  initLightGallery();
 });
 
 

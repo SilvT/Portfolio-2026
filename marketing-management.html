@@ -53,11 +53,12 @@
          }
       </script>
       <!-- Load source files for dev mode -->
-      <link rel="stylesheet" href="/src/scss/main.scss">
+      <link rel="stylesheet" href="/src/scss/_main.scss">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
       <script type="module">
         // Import modules
         import { initAccordions, initCaseStudyAccordions } from '/src/js/modules/accordion.js';
+        import { initLightGallery } from '/src/js/modules/lightgallery.js';
         import Swiper from 'swiper';
         import { Pagination } from 'swiper/modules';
 
@@ -179,12 +180,17 @@
               speed: 0, // Instant transitions
               slidesPerView: 1,
               spaceBetween: 0,
+              preventClicks: false,
+              preventClicksPropagation: false,
               pagination: {
                 el: '.swiper-pagination',
                 clickable: true
               }
             });
           });
+
+          // Initialize lightGallery after Swiper
+          initLightGallery();
         }
 
         if (document.readyState === 'loading') {
@@ -195,19 +201,6 @@
       </script>
    </head>
    <body class="project-page-body js-loaded" data-theme="blue">
-      <!-- Sticky Navigation -->
-      <nav class="top-nav" role="navigation" aria-label="Main navigation">
-         <div class="nav-wrapper">
-            <div class="navigation">
-               <a href="/" class="nav-item">Home</a>
-               <a href="/#about-landing" class="nav-item">About</a>
-               <a href="/#contact" class="nav-item">Contact</a>
-            </div>
-            <div class="logo">
-               <img src="/logo-filled.svg" alt="Silvia Travieso Logo">
-            </div>
-         </div>
-      </nav>
       <!-- Project Breadcrumbs Navigation (outside of case-study-page for sticky positioning) -->
       <nav class="cs-breadcrumbs cs-breadcrumbs-standalone" aria-label="Case study navigation"><a class="cs-breadcrumb-nav cs-breadcrumb-prev" href="/figma-plugin.html">
          <span class="cs-nav-label">← Previous</span>
@@ -262,7 +255,7 @@
                            <span class="switch-label">Case study</span>
                         </div>                  
                         </div>
-                     <div class="cs-hero-images"><a href="/mkm/mkm-large hero.png" class="glightbox" data-gallery="case-study-gallery" data-title="Marketing Management"><img src="/mkm/mkm-large hero.png" alt="Marketing Management preview" loading="eager"></a></div>
+                     <div class="cs-hero-images"><a href="/mkm/mkm-large hero.png" class="" data-gallery="case-study-gallery" data-title="Marketing Management"><img src="/mkm/mkm-large hero.png" alt="Marketing Management preview" loading="eager"></a></div>
                   </section>
                </div>
                <!-- Metrics Section -->
@@ -358,18 +351,18 @@
                   <div class="floating-text">
                      <span class="cs-line-heading"> From Excel to UI</span>
                      <span class="cs-line-subhead">Replaced manually-maintained Excel dashboards with unified automation platform</span>
-                     <img class="before" src="/mkm/Excel dashboard.png" alt="Previous Excel dashboard" data-has-hover="true">
+                     <img class="before" src="/mkm/Excel dashboard.png" alt="Previous Excel dashboard">
                   </div>
                   
                   <span class="cs-line-subhead arrow"> → </span>
-                  <img class="after" src="/mkm/UI-Leads-dashboard.png" alt="Leads dashboard" data-has-hover="true">
+                  <img class="after" src="/mkm/UI-Leads-dashboard.png" alt="Leads dashboard">
                </div>
             </div>
             
             
             <!-- SECTION 1: MY ROLE -->
             <section class="cs-block cs-section" data-section-title="My Role" id="cs-section-1">
-               <div class="cs-block cs-block-two-column with-header">
+               <div class="cs-block cs-block-one-column with-header">
                   <h2 class="cs-section-heading">Beyond UI - Into Product Ownership</h2>
               <div class="cs-layout-grid">
                   <div class="cs-main-content">
@@ -405,7 +398,7 @@
                         </div>
                         <div class="cs-column">
                         <figure class="cs-column-image">
-                           <a href="/mkm/collaboration-model.png" class="glightbox" data-gallery="case-study-gallery" data-title="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" data-description="Co-product ownership model: separate technical domains, shared strategic decisions"><img src="/mkm/collaboration-model.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img"></a>
+                           <img src="/mkm/collaboration-model.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img">
                            <figcaption class="cs-image-caption">Co-product ownership model: separate technical domains, shared strategic decisions</figcaption>
                         </figure>
                      </div>
@@ -447,7 +440,7 @@
                <div class="cs-two-column-grid">
                   <div class="cs-column">
                      <figure class="cs-column-image">
-                        <a href="/mkm/decisions-framework.png" class="glightbox" data-gallery="case-study-gallery" data-title="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" data-description="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together"><img src="/mkm/decisions-framework.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img"></a>
+                        <img src="/mkm/decisions-framework.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img">
                         <figcaption class="cs-image-caption">Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together</figcaption>
                      </figure>
                   </div>
@@ -470,7 +463,7 @@
 <!-- SECTION 2 - THE PROBLEM -->
 
 <section class="cs-block cs-section" data-section-title="The Problem" id="cs-section-2">
- <div class="cs-block cs-block-two-column">
+ <div class="cs-block cs-block-one-column">
     <h2 class="cs-section-heading">The problem: Fragmented data, Blind decisions</h2>
               <div class="cs-layout-grid">
                   <div class="cs-main-content">
@@ -483,7 +476,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="cs-text-column side-resume">
+                  <div class="cs-text-column side-resume long">
                      <h4> Constraints </h4>
                      <p><span class="arrows"> > </span> <em>Results; not process</em><span class="arrows"> → </span> CEO's priority</p>
                      <p><span class="arrows"> > </span></em>No precedents</em> <span class="arrows"> : </span> No component libraries, no patterns</p>
@@ -515,15 +508,13 @@
                   <div class="new-carousel swiper">
                      <div class="new-container swiper-wrapper">
                         <div class="new-slide swiper-slide">
-                           <img src="/mkm/Excel dashboard.png" alt="Excel dashboard" class="cs-split-img">
+                           <img src="/mkm/Excel dashboard.png" data-src="/mkm/Excel dashboard.png" alt="Excel dashboard, manually updated" class="cs-carousel-img">
                         </div>
                         <div class="new-slide swiper-slide">
-                           <img src="/mkm/Excel dashboard-hover.png" alt="Excel dashboard hover state" class="cs-split-img">
+                           <img src="/mkm/Excel dashboard-hover.png" data-src="/mkm/Excel dashboard-hover.png" alt="Manual track of cohorts " class="cs-carousel-img">
                         </div>
                      </div>
-                     <figure>
-                        <figcaption class="cs-image-caption">Original Excel-based tracking system</figcaption>
-                     </figure>
+                     <figcaption class="cs-image-caption">Original Excel-based tracking system</figcaption>
                      <div class="swiper-pagination"></div>
                   </div>
                </div>
@@ -785,10 +776,10 @@
                   <div class="cs-column tight">
                      <div class="new-carousel swiper tight">
                         <div class="new-container swiper-wrapper">
-                           <div class="new-slide swiper-slide"><a href="/mkm/UX-0.png" class="glightbox" data-gallery="case-study-gallery" data-title="Initial UX draft for Marketing Management dashboard showing early information architecture"><img src="/mkm/UX-0.png" alt="Initial UX draft for Marketing Management dashboard showing early information architecture" class="cs-carousel-img"></a></div>
-                           <div class="new-slide swiper-slide"><a href="/mkm/UX-1.png" class="glightbox" data-gallery="case-study-gallery" data-title="UX design iteration incorporating backend requirements and data structure feedback"><img src="/mkm/UX-1.png" alt="UX design iteration incorporating backend requirements and data structure feedback" class="cs-carousel-img"></a></div>
-                           <div class="new-slide swiper-slide"><a href="/mkm/UX-2.png" class="glightbox" data-gallery="case-study-gallery" data-title="Low-fidelity wireframes translating UX concepts into layout structure"><img src="/mkm/UX-2.png" alt="Low-fidelity wireframes translating UX concepts into layout structure" class="cs-carousel-img"></a></div>
-                           <div class="new-slide swiper-slide"><a href="/mkm/UX-3.png" class="glightbox" data-gallery="case-study-gallery" data-title="Final UI deliverables with complete visual design and component specifications"><img src="/mkm/UX-3.png" alt="Final UI deliverables with complete visual design and component specifications" class="cs-carousel-img"></a></div>
+                           <div class="new-slide swiper-slide"><img src="/mkm/UX-0.png" data-src="/mkm/UX-0.png" alt="Initial UX draft for Marketing Management dashboard showing early information architecture" class="cs-carousel-img"></div>
+                           <div class="new-slide swiper-slide"><img src="/mkm/UX-1.png" data-src="/mkm/UX-1.png" alt="UX design iteration incorporating backend requirements and data structure feedback" class="cs-carousel-img"></div>
+                           <div class="new-slide swiper-slide"><img src="/mkm/UX-2.png" data-src="/mkm/UX-2.png" alt="Low-fidelity wireframes translating UX concepts into layout structure" class="cs-carousel-img"></div>
+                           <div class="new-slide swiper-slide"><img src="/mkm/UX-3.png" data-src="/mkm/UX-3.png" alt="Final UI deliverables with complete visual design and component specifications" class="cs-carousel-img"></div>
                         </div>
                         <figcaption class="cs-image-caption">Full cycle evolution: From original UX draft, to Ux with backend input, transfer to wireframes, until final UI deliverables</figcaption>
                         <div class="swiper-pagination"></div>
@@ -815,13 +806,13 @@
                   </div>
                   <div class="cs-images-column two-img">
                          <div class="cs-images-wrapper">
-                           <img class="first" src="/mkm/CRM-UI-2.png" alt="Brief sketch">
-                           <img class="second" src="/mkm/CRM-idea--2.png" alt="Brief sketch">
+                           <img class="first" src="/mkm/CRM-UI-2.png" alt="Visual display: Customer has been located and connected with Bussiness internal profile. Now Support can see the conversation">
+                           <img class="second" src="/mkm/CRM-idea--2.png" alt="UX rough graph of problem solution - Used while brainstorming with backend">
                      </div>
                   </div>
                   <div class="cs-images-column one-img">
                      <div class="cs-images-wrapper">
-                        <img src="/mkm/CRM-UI.png" alt="Brief sketch 2">
+                        <img src="/mkm/CRM-UI.png" alt="Visual alert indicates conversation has been identified as potential Support issue (ID has been provided by customer) ">
                      </div>
                    </div>
                </div>
@@ -871,7 +862,7 @@
 <!-- Line breaker -->
 
 <!-- SECTION 4 - THE OUTCOME -->
- <section class="cs-block  cs-block-one-co" data-section-title="The Outcome" id="cs-section-4">
+ <section class="cs-block  cs-block-one-column" data-section-title="The Outcome" id="cs-section-4">
       <h2 class="cs-section-heading">Outcome and Impact</h2>
                <div class="cs-block cs-block-two-column metrics" data-section-title="Metrics" id="cs-section-5">
                <div class="cs-two-column-grid">
@@ -965,7 +956,6 @@
             </div>
 
 
-
 <!-- before and after -->
             <div class="cs-block cs-before-after">
                <h2 class="cs-text-block-heading">The Change</h2>
@@ -995,7 +985,7 @@
 
 
 <!-- conclusiones -->
-               <div class="cs-block cs-block-two-column conclusions">
+               <div class="cs-block cs-block-one-column conclusions">
                   <h2 class="cs-section-heading">Looking back</h2>
               <div class="cs-layout-grid">
                   <div class="cs-main-content">
@@ -1052,7 +1042,7 @@
                   <h3 class="cs-section-title">Gallery</h3>
                   <div class="cs-gallery-grid">
                      <div class="cs-gallery-item">
-                        <a href="/mkm/Look-and-feel-first-screen.png" class="glightbox" data-gallery="case-study-gallery" data-title="Approved look &amp; feel - First screen design"><img src="/mkm/Look-and-feel-first-screen.png" alt="Marketing Management platform dashboard showing the approved look and feel for the first screen" class="cs-gallery-image"></a>
+                        <img src="/mkm/Look-and-feel-first-screen.png" alt="Marketing Management platform dashboard showing the approved look and feel for the first screen" class="cs-gallery-image">
                         <p class="cs-gallery-caption">Approved look &amp; feel - First screen design</p>
                      </div>
                      <div class="cs-gallery-item">
@@ -1064,31 +1054,31 @@
                         <p class="cs-gallery-caption">Card hover interactions</p>
                      </div>
                      <div class="cs-gallery-item">
-                        <a href="/mkm/Socials-0-UX-Interactions.png" class="glightbox" data-gallery="case-study-gallery" data-title="Social inbox UX - Interaction patterns"><img src="/mkm/Socials-0-UX-Interactions.png" alt="UX wireframes showing social media inbox interaction patterns and user flows" class="cs-gallery-image"></a>
+                        <img src="/mkm/Socials-0-UX-Interactions.png" alt="UX wireframes showing social media inbox interaction patterns and user flows" class="cs-gallery-image">
                         <p class="cs-gallery-caption">Social inbox UX - Interaction patterns</p>
                      </div>
                      <div class="cs-gallery-item">
-                        <a href="/mkm/Socials-1-UI-Interactions.png" class="glightbox" data-gallery="case-study-gallery" data-title="Social inbox UI - Interaction design"><img src="/mkm/Socials-1-UI-Interactions.png" alt="High-fidelity UI design for social media inbox with complete interaction states" class="cs-gallery-image"></a>
+                        <img src="/mkm/Socials-1-UI-Interactions.png" alt="High-fidelity UI design for social media inbox with complete interaction states" class="cs-gallery-image">
                         <p class="cs-gallery-caption">Social inbox UI - Interaction design</p>
                      </div>
                      <div class="cs-gallery-item">
-                        <a href="/mkm/Socials-2-HO-Interactions.png" class="glightbox" data-gallery="case-study-gallery" data-title="Social inbox - Handoff documentation"><img src="/mkm/Socials-2-HO-Interactions.png" alt="Developer handoff documentation for social media inbox showing all interaction specifications" class="cs-gallery-image"></a>
+                        <img src="/mkm/Socials-2-HO-Interactions.png" alt="Developer handoff documentation for social media inbox showing all interaction specifications" class="cs-gallery-image">
                         <p class="cs-gallery-caption">Social inbox - Handoff documentation</p>
                      </div>
                      <div class="cs-gallery-item">
-                        <a href="/mkm/Identity-excerpt.png" class="glightbox" data-gallery="case-study-gallery" data-title="Brand identity excerpt"><img src="/mkm/Identity-excerpt.png" alt="Brand identity system excerpt showing color palette, typography, and visual design principles" class="cs-gallery-image"></a>
+                        <img src="/mkm/Identity-excerpt.png" alt="Brand identity system excerpt showing color palette, typography, and visual design principles" class="cs-gallery-image">
                         <p class="cs-gallery-caption">Brand identity excerpt</p>
                      </div>
                      <div class="cs-gallery-item">
-                        <a href="/mkm/UI-Campaigns-dashboard.png" class="glightbox" data-gallery="case-study-gallery" data-title="Campaigns dashboard UI"><img src="/mkm/UI-Campaigns-dashboard.png" alt="Campaigns dashboard UI showing active marketing campaigns with performance metrics and controls" class="cs-gallery-image"></a>
+                        <img src="/mkm/UI-Campaigns-dashboard.png" alt="Campaigns dashboard UI showing active marketing campaigns with performance metrics and controls" class="cs-gallery-image">
                         <p class="cs-gallery-caption">Campaigns dashboard UI</p>
                      </div>
                      <div class="cs-gallery-item">
-                        <a href="/mkm/UI-createcamp-resume.png" class="glightbox" data-gallery="case-study-gallery" data-title="Create campaign - Review summary"><img src="/mkm/UI-createcamp-resume.png" alt="Campaign creation flow summary screen showing configured settings and review before launch" class="cs-gallery-image"></a>
+                        <img src="/mkm/UI-createcamp-resume.png" alt="Campaign creation flow summary screen showing configured settings and review before launch" class="cs-gallery-image">
                         <p class="cs-gallery-caption">Create campaign - Review summary</p>
                      </div>
                      <div class="cs-gallery-item">
-                        <a href="/mkm/UI-energyl-lead.png" class="glightbox" data-gallery="case-study-gallery" data-title="Energy sector lead details"><img src="/mkm/UI-energyl-lead.png" alt="Lead management interface for energy sector showing customer details and interaction history" class="cs-gallery-image"></a>
+                        <img src="/mkm/UI-energyl-lead.png" alt="Lead management interface for energy sector showing customer details and interaction history" class="cs-gallery-image">
                         <p class="cs-gallery-caption">Energy sector lead details</p>
                      </div>
                      <div class="cs-gallery-item">

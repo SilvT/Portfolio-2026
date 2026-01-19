@@ -1,7 +1,9 @@
 @use 'sass:color';
 @use '../variables' as *;
+@use '../accesibility' as *;
 @use '../breakpoints' as *;
 @use '../typography' as *;
+
 
 // updates for the testing new structure
 
@@ -432,7 +434,7 @@ margin:0 $space-120 0 $space-60;
             min-height: 2rem;
             padding: 0.75rem;
             // background-color: $neutral-lightest;
-            background-color: $color-white;
+            background-color: $color-bg;
             overflow: hidden;
             position: relative;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -516,7 +518,7 @@ margin:0 $space-120 0 $space-60;
     height: 50vh;
     background-color: rgba($blue, 0.2);
     padding-right: 5rem;
-    
+    overflow: hidden;
         @include breakpoint(mobile){
         overflow: hidden;
         padding: 0;
@@ -583,7 +585,7 @@ margin:0 $space-120 0 $space-60;
         font-size: 16px;
         font-weight: 500;
         font-variation-settings: "opsz" 14, "wdth" 100;
-        color: $color-white;
+        color: $color-bg;
         margin: 0;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -686,6 +688,7 @@ h2.cs-section-heading{
     border-bottom: 1px solid $blue;
     width: 70%;
     justify-self: center;
+    align-self: center;
 
     .cs-block-two-column:nth-child(1){
     padding-top:3rem;   
@@ -714,20 +717,33 @@ h2.cs-section-heading{
 }
 
 .side-resume{
+    display: flex;
+    flex-direction: column;
     justify-items: left;
+    justify-self: left;
+    align-items: flex-start;
     
         @include breakpoint(mobile){
-         background-color: $color-white;   
+         background-color: $color-bg;   
          padding-left: 2rem;
         }
 
     
     *{
-        text-align: right;
+        width: 100%;
+        text-align: right; 
         @include breakpoint(mobile){
         text-align: left;
         }
     }
+    &.long *{
+            width: auto;
+            text-align: left;
+    }
+
+
+
+
     h4{
         // text-align: center;
         @include breakpoint(mobile){
@@ -1090,7 +1106,7 @@ i{
   align-items: center;
   justify-content: center;
 //   border-radius: 8px;
-  background: $color-white;
+  background: $color-bg;
 //   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 box-shadow: 0px 2px 26px $color-shadows-blue;
   overflow: hidden;
@@ -1249,7 +1265,7 @@ box-shadow: 0px 2px 26px $color-shadows-blue;
 
 .milestone {
   border-radius: 12px;
-  background: $color-white;
+  background: $color-bg;
   margin-bottom: 1.25rem;
   border: 1px solid #e5edf5;
   overflow: hidden;
@@ -1265,7 +1281,7 @@ box-shadow: 0px 2px 26px $color-shadows-blue;
   }
 
   &[open] {
-    background: $color-white;
+    background: $color-bg;
     opacity: 1;
     filter: none;
     .milestone-period{
@@ -1708,8 +1724,12 @@ p{
 
 .cs-block.cs-block-two-column.metrics{
     height: auto;
+    width: 100%;
+    max-width: none;
+    justify-content: center;
     .cs-column{
         width: auto;
+        
     }
 }
 
@@ -1869,7 +1889,7 @@ p{
                 width: 100%;
             }
             &:hover{
-                background-color: $color-white;
+                background-color: $color-bg;
             }
             
             
