@@ -1,6 +1,7 @@
 @use '../_variables' as *;
 @use '../breakpoints' as *;
 @use '../typography' as *;
+@use 'animations' as *;
 
 
 .section-project {
@@ -779,6 +780,8 @@
       flex-direction: column;
     }
 
+    @include stagger-fade-in;
+
     .title-group {
       .project-title {
         line-height: 130%;
@@ -1183,6 +1186,8 @@
     .carousel-dot {
       transition: none;
     }
+
+    @include stagger-fade-in-reduced-motion;
   }
 }
 

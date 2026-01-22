@@ -4,6 +4,8 @@ import { initFlipBoardAnimation } from './modules/flipBoardAnimation.js';
 import { initScrollHint } from './modules/scroll-hinter.js';
 import { initNavigation } from './modules/navigation.js';
 import { initLightGallery } from './modules/lightgallery.js';
+import { initIconAnimation } from "./modules/icon-animation.js";
+
 
 /**
  * Initializes passive / visual-only effects.
@@ -58,3 +60,9 @@ function initLazyLoading() {
     imageObserver.observe(img);
   });
 }
+
+
+// Initialize icon-animation
+document.addEventListener("DOMContentLoaded", () => {
+  initIconAnimation();
+});

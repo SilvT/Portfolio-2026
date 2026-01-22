@@ -1,0 +1,83 @@
+@use '../breakpoints' as *;
+
+// ============================================================================
+// STAGGERED FADE-IN ANIMATION MIXIN
+// ============================================================================
+// Creates a staggered fade-in/move-up effect for child elements
+// Usage: @include stagger-fade-in;
+// ============================================================================
+
+@mixin stagger-fade-in($distance: 20px, $duration: 0.6s, $stagger: 0.15s) {
+  // Direct children animation
+  > * {
+    opacity: 0;
+    transform: translateY($distance);
+    animation: fadeInUp $duration ease-out forwards;
+  }
+
+  // Stagger delays for direct children
+  @for $i from 1 through 4 {
+    > *:nth-child(#{$i}) {
+      animation-delay: calc(#{$stagger} * #{$i - 1} + 0.1s);
+    }
+  }
+
+  // Nested elements inside title-group
+  .title-group > * {
+    opacity: 0;
+    transform: translateY(calc($distance * 0.75));
+    animation: fadeInUp calc($duration * 0.85) ease-out forwards;
+  }
+
+  @for $i from 1 through 4 {
+    .title-group > *:nth-child(#{$i}) {
+      animation-delay: calc(#{$stagger} * #{$i - 1} + 0.15s);
+    }
+  }
+
+  // Nested elements inside long-content
+  .long-content > * {
+    opacity: 0;
+    transform: translateY(calc($distance * 0.75));
+    animation: fadeInUp calc($duration * 0.85) ease-out forwards;
+  }
+
+  @for $i from 1 through 4 {
+    .long-content > *:nth-child(#{$i}) {
+      animation-delay: calc(#{$stagger} * #{$i - 1} + 0.35s);
+    }
+  }
+}
+
+// Keyframe animation
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Reduced motion support mixin
+@mixin stagger-fade-in-reduced-motion {
+  .text-content {
+    > *,
+    .title-group > *,
+    .long-content > * {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+}
+
+
+
+
+// Icon-animation
+svg.icon-animation {
+  overflow: visible;
+}
