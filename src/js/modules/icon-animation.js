@@ -124,11 +124,11 @@ export function initIconAnimation() {
     duration: 2.5
   });
 
-  // 4. Bounce launches DOWN (rebounds from top impact), 6 seconds, 5 bounces
+  // 5. Bounce launches DOWN (rebounds from top impact), 6 seconds, 5 bounces
   addSmoothBounce(tl, dot, {
     totalDuration: 6,
     distance: 25,
-    reboundDirection: "up",
+    reboundDirection: "down",
     bounces: 5,
     energyRetention: 0.5
   });
