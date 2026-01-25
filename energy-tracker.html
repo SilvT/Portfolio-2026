@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en" data-project-id="1">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Energy Switching Tracker | Silvia Travieso - Product Designer</title>
+      <meta name="description" content="After hunting down backend engineers to map a process no one fully understood, I built a customer-facing tracker that replaced reactive 'we'll email you' communication with proactive self-service, saving CS from a lot of anxious phone calls.">
+      <meta name="keywords" content="Product Design, UI/UX, B2C, Mobile-First, Data Visualization">
+      <!-- Open Graph -->
+      <meta property="og:type" content="article">
+      <meta property="og:url" content="https://silviatravieso.com/energy-tracker">
+      <meta property="og:title" content="Energy Switching Tracker - Product Design Case Study">
+      <meta property="og:description" content="Helping customers understand their energy journey">
+      <meta property="og:image" content="https://silviatravieso.com/microsite/tomato microsite screens.png">
+      <!-- Twitter -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="Energy Switching Tracker - Product Design Case Study">
+      <meta name="twitter:description" content="Helping customers understand their energy journey">
+      <meta name="twitter:image" content="https://silviatravieso.com/microsite/tomato microsite screens.png">
+      <!-- Canonical URL -->
+      <link rel="canonical" href="https://silviatravieso.com/energy-tracker">
+      <!-- Favicon -->
+      <link rel="icon" type="image/png" href="/favicon.png">
+      <!-- Google Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+      <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&amp;family=Fascinate&amp;family=Anonymous+Pro:wght@400;700&amp;family=Noto+Sans:wght@100..900&amp;display=swap" rel="stylesheet">
+      <!-- Schema.org Structured Data -->
+      <script type="application/ld+json">
+         {
+           "@context": "https://schema.org",
+           "@type": "Article",
+           "headline": "Energy Switching Tracker",
+           "description": "Helping customers understand their energy journey with real-time tracking",
+           "image": "https://silviatravieso.com/energy/energy-large-hero.png",
+           "author": {
+             "@type": "Person",
+             "name": "Silvia Travieso",
+             "url": "https://www.silviatravieso.com",
+             "jobTitle": "Senior UI/UX Designer"
+           },
+           "publisher": {
+             "@type": "Person",
+             "name": "Silvia Travieso"
+           },
+           "datePublished": "2025-01-01",
+           "dateModified": "2025-12-31",
+           "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https://silviatravieso.com/energy-tracker.html"
+           },
+           "keywords": "Product Design, UI/UX, B2C, Mobile-First, Data Visualization, Customer Journey",
+           "articleSection": "Product Design Case Study"
+         }
+      </script>
+      <!-- Load source files for dev mode -->
+      <link rel="stylesheet" href="/src/scss/_main.scss">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+      <script type="module">
+        // Import modules
+        import { initAccordions, initCaseStudyAccordions } from '/src/js/modules/accordion.js';
+        import { initLightGallery } from '/src/js/modules/lightgallery.js';
+        import { initSideNavBar } from '/src/js/modules/side-nav-bar.js';
+        import Swiper from 'swiper';
+        import { Pagination } from 'swiper/modules';
+
+        // Initialize when DOM is ready
+        function initialize() {
+          initAccordions();
+          initCaseStudyAccordions();
+          initSideNavBar();
+
+          // Initialize stacked metrics swiper with custom stacking behavior
+          const stackedSwiper = document.querySelector('.stacked-metrics-swiper');
+          if (stackedSwiper) {
+            new Swiper(stackedSwiper, {
+              modules: [Pagination],
+              grabCursor: true,
+              slidesPerView: 1,
+              slidesPerGroup: 1,
+              speed: 600,
+              loop: false,
+              watchSlidesProgress: true,
+              allowTouchMove: true,
+              virtualTranslate: true,
+              pagination: {
+                el: '.stacked-metrics-swiper .swiper-pagination',
+                clickable: true,
+              },
+              on: {
+                init: function() {
+                  clearSwiperInlineStyles(this);
+                  updateStackClasses(this);
+                },
+                slideChange: function() {
+                  updateStackClasses(this);
+                },
+                setTranslate: function() {
+                  clearSwiperInlineStyles(this);
+                }
+              }
+            });
+          }
+
+          // Clear Swiper's inline styles that interfere with custom positioning
+          function clearSwiperInlineStyles(swiperInstance) {
+            swiperInstance.slides.forEach((slide) => {
+              slide.style.transform = '';
+              slide.style.width = '';
+              slide.style.height = '';
+              slide.style.marginRight = '';
+            });
+          }
+
+          // Update stacking classes based on distance from active slide
+          function updateStackClasses(swiperInstance) {
+            swiperInstance.slides.forEach((slide, index) => {
+              slide.classList.remove('stack-active', 'stack-1', 'stack-2', 'stack-3', 'stack-back');
+              const distance = index - swiperInstance.activeIndex;
+              if (distance === 0) {
+                slide.classList.add('stack-active');
+              } else if (distance === 1) {
+                slide.classList.add('stack-1');
+              } else if (distance === 2) {
+                slide.classList.add('stack-2');
+              } else if (distance === 3) {
+                slide.classList.add('stack-3');
+              } else if (distance > 3) {
+                slide.classList.add('stack-back');
+              }
+            });
+          }
+
+          // Initialize all other Swiper carousels (excluding stacked metrics)
+          const swiperElements = document.querySelectorAll('.swiper:not(.stacked-metrics-swiper)');
+          swiperElements.forEach((swiperEl) => {
+            new Swiper(swiperEl, {
+              modules: [Pagination],
+              grabCursor: true,
+              autoplay: false,
+              speed: 0,
+              slidesPerView: 1,
+              slidesPerGroup: 1,
+              pagination: {
+                el: swiperEl.querySelector('.swiper-pagination'),
+                clickable: true,
+              },
+            });
+          });
+
+          // Initialize lightGallery after Swiper
+          initLightGallery();
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+          initialize();
+        }
+      </script>
+   </head>
+   <body class="project-page-body js-loaded" data-theme="neutral">
+      <nav class="cs-breadcrumbs cs-breadcrumbs-standalone" aria-label="Case study navigation"><a class="cs-breadcrumb-nav cs-breadcrumb-prev" href="/design-system.html">
+         <span class="cs-nav-label">← Previous</span>
+         <span class="cs-nav-title">Design System from Scratch</span>
+         </a><a class="cs-breadcrumb-logo" href="/" aria-label="Back to home">
+         <img src="/logo-filled.svg" alt="Silvia Travieso Logo">
+         </a><a class="cs-breadcrumb-nav cs-breadcrumb-next" href="/token-launch.html">
+         <span class="cs-nav-label">Next →</span>
+         <span class="cs-nav-title">Token Launch</span>
+         </a>
+      </nav>
+
+    <div class="case-study-page active" id="project-content" data-theme="neutral" data-project-id="1">
+
+      <section class = "hero">
+         <!-- Hero Section -->
+               <div class="cs-header ">
+                  <section class="cs-hero">
+                     <div class="cs-hero-content">
+                        <div class="cs-hero-header">
+                           <div class="eyebrow">
+                              <p class="cs-type-label">B2C · Web</p>
+                              <div class="cs-hero-data">
+                                 <span>UI/UX Designer</span>
+                              </div>
+                           </div>
+                           <h1 class="cs-hero-title">Energy Switching Tracker</h1>
+                        </div>
+                     <p class="cs-hero-subtitle"> 
+                        <em> Helping customers understand their energy journey.</em></p>
+                       <p class="cs-story-hook-context"> After hunting down backend engineers to map a process no one fully understood, I built a customer-facing tracker that replaced reactive 'we'll email you' communication with proactive self-service, saving CS from a lot of anxious phone calls.
+                        </p>            
+                        </div>
+                     <div class="cs-hero-images"><img src="/microsite/tomato microsite screens.png" alt="Marketing Management preview" loading="eager"></div>
+                  </section>
+               </div>
+               <!-- At glance Section -->
+               <div class="cs-metrics">
+                  <h3 class="cs-section-title">At Glance</h3>
+                  <div class="metrics-content">
+            
+                  <div class="cs-metrics-grid new">
+                     <div class="cs-metric-card ">
+                              <div class="cs-metric-icon-wrapper">
+                              <span class="cs-metric-icon"><i class="iconoir-eye"></i></span>
+                              </div>
+                              <div class="cs-metric-value">Real Time<br>
+                              </div>
+                              <div class="cs-metric-label"> Transparent journey</div> 
+                     </div>
+
+                     <div class="cs-metric-card ">
+                              <div class="cs-metric-icon-wrapper">
+                              <span class="cs-metric-icon"><i class="iconoir-link"></i></span>
+                              </div>
+                              <div class="cs-metric-value">1 Magic link<br>
+                              </div>
+                              <div class="cs-metric-label"> From unreliable email system to just one click</div> 
+                     </div>
+
+                     <div class="cs-metric-card ">
+                              <div class="cs-metric-icon-wrapper">
+                              <span class="cs-metric-icon"><i class="iconoir-combine"></i></span>
+                              </div>
+                              <div class="cs-metric-value">Consolitated <br>
+                              </div>
+                              <div class="cs-metric-label">+15 states into human language</div> 
+                     </div>
+                     <div class="cs-metric-card ">
+                              <div class="cs-metric-icon-wrapper">
+                              <span class="cs-metric-icon"><i class="iconoir-hammer"></i></span>
+                              </div>
+                              <div class="cs-metric-value">Self-diagnosis tool <br>
+                              </div>
+                              <div class="cs-metric-label">give the power back to the customer</div> 
+                     </div>
+                  </div>
+
+                  <div class="data-container">
+                     <div class="data-item">
+                        <span class="left-data">
+                           Timeline
+                        </span>
+                        <span class="right-data">
+                           4 weeks
+                        </span>
+                     </div>
+                     <div class="data-item">
+                        <span class="left-data">
+                           Company
+                        </span>
+                        <span class="right-data">
+                           Tomato Energy
+                        </span>
+                     </div>   <div class="data-item">
+                        <span class="left-data">
+                           Team
+                        </span>
+                        <span class="right-data">
+                           Solo Designer
+                        </span>
+                     </div>
+                     <div class="data-item">
+                        <span class="left-data">
+                           Tech Stack
+                        </span>
+                        <span class="right-data">
+                           Nuxt - Mobile First
+                        </span>
+                     </div>
+                     </div>
+                  </div>
+               </div>
+         <div class="cs scroll-hinter">
+            <span class="scroll-text">READ</span>
+            <span class="scroll-line"></span>
+            </div>
+      </section>
+
+         <!-- Content Blocks Section -->
+         <div class="cs-content-container">
+
+<!-- SECTION 1: THE PROBLEM -->
+<section class="cs-block cs-section" data-section-title="The problem" id="cs-section-1">
+               <div class="cs-block cs-block-two-column">
+                  <h2 class="cs-section-heading">The problem: Confusion for everybody</h2>
+              <div class="cs-block cs-two-column-grid content-left">
+                     <div class="cs-content-section cs-column">
+                        <div class="cs-paragraph">
+                           <p class="cs-text">
+                              Switching energy suppliers in the UK can take <i>weeks:</i> That's just how it works.<br>
+                              So many cogs have to turn for things to happen <i>(old supplier approves the transfer, industry databases get updated, meter readings verified...)</i> and all needs to happen in the right order.</p>
+                           <p class="cs-text">
+                              Most energy companies handle this by <em>sending occasional email updates</em> when customers hit major milestones. Simple enough, right?</p>
+                           <p class="cs-text">
+                              But then something gets stuck and the time between emails stretches. Customers grow anxious flooding support lines (often for bottlenecks that aren't even the company's fault).
+                           </p>
+                        </div>
+                     </div>
+                  <div class="cs-text-column side-resume cs-column">
+                     <h4 class="cs-subhead"> Tomato's problem</h4>
+                     <p class="cs-subtext">unrealiable emailing system</p>
+                     <p class="arrows"> ↓ ↓ ↓ </p>
+                     <h4 class="cs-subhead"> Proposed solution</h4>
+                     <p class="cs-subtext"> Microsite</p>
+                  </div>
+
+               </div>
+              </div>
+
+               <div class="cs-block cs-block-two-column">
+                  <div class="cs-two-column-grid">           
+                        <div class="cs-column">
+                        <h3 class="cs-column-heading">Tomato's particular issues</h3>
+                        <p class="cs-section-text cs-text">Their email system was unreliable, and nobody could explain how the switching process actually worked.</p>
+                        <ul class="cs-text-block-list cs-text">
+                           <li>Email notifications <strong>often </strong>failed to send</li>
+                           <li>Customers had <strong>no way to check status</strong> except via direct contact</li>
+                           <li>Support couldn't say <i>"check your email"</i> when emails weren't arriving</li>
+                           <li><strong>No documentation existed</strong>. Not for customer service, not for the rest of the company except backend</li>
+                        </ul>
+                        </div>
+                        <!-- <div class="cs-column">
+                        <figure class="cs-column-image">
+                           <img src="/mkm/collaboration-model.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img">
+                           <figcaption class="cs-image-caption">Co-product ownership model: separate technical domains, shared strategic decisions</figcaption>
+                        </figure>
+                     </div> -->
+                  </div>
+               </div>
+
+
+<!-- Line-break -->
+            <div class="cs-line-breaker ">
+               <div class="cs-landscape-cover">
+                  <div class="floating-text">
+                     <span class="cs-line-heading"> What I was given</span>
+                     <span class="cs-line-subhead">A long-winded technical flow diagram that on one could fully explain.</span>
+                     <img class="before" src="/microsite/backendflow.png" alt="Backend flow chaos">
+                  </div>
+                  
+                  <!-- MAYBE INCLUDE HERE NEW DIAGRAM OF MY FLOW - TBD -->
+                  <!-- <span class="cs-line-subhead arrow"> → </span>
+                  <img class="after" src="/mkm/UI-Leads-dashboard.png" alt="Leads dashboard"> -->
+               </div>
+            </div>
+
+<!-- Line break -->
+
+</section>
+
+ <!-- SECTION 2 - THE JOURNEY -->
+<section class="cs-block cs-section" data-section-title="The Journey" id="cs-section-2">
+  <div class="cs-block cs-block-one-column">
+    <h2 class="cs-section-heading">The Journey: Milestones</h2>
+
+    <div class="milestones">
+
+      <!-- Milestone 01 -->
+      <details class="milestone is-open" open>
+        <summary class="milestone-header">
+          <div class="milestone-meta">
+            <span class="milestone-index">01</span>
+            <div>
+              <h3 class="milestone-title">Discovery Without a Map</h3>
+              <p class="milestone-period">Week 1</p>
+            </div>
+          </div>
+
+          <div class="milestone-outcome">
+            <strong>Outcome:</strong> Foundational understanding built from zero
+          </div>
+        </summary>
+
+        <div class="milestone-body">
+          <div class="milestone-block">
+            <h4>The challenges</h4>
+            <ul>
+              <li>Non-UK resident learning the British energy market from scratch</li>
+              <li>No one internally could explain the full switching process</li>
+              <li>Customer support redirected questions to backend engineers</li>
+              <li>Only artefact available was a technical flow diagram with no customer meaning</li>
+            </ul>
+          </div>
+
+          <div class="milestone-block">
+            <h4>Key learning</h4>
+            <p>You can’t design clarity without first creating shared understanding.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Milestone 02 -->
+      <details class="milestone">
+        <summary class="milestone-header">
+          <div class="milestone-meta">
+            <span class="milestone-index">02</span>
+            <div>
+              <h3 class="milestone-title">Translation & System Mapping</h3>
+              <p class="milestone-period">Week 2</p>
+            </div>
+          </div>
+
+          <div class="milestone-outcome">
+            <strong>Outcome:</strong> Backend logic translated into human language
+          </div>
+        </summary>
+
+        <div class="milestone-body">
+          <div class="milestone-block">
+            <h4>Milestones</h4>
+            <ul>
+              <li>Translated 15+ backend states into customer-readable language</li>
+              <li>Identified two distinct journeys: smart vs traditional meters</li>
+              <li>Categorised errors into application, switching, and technical</li>
+              <li>Re-aligned with Tomato’s playful tone and brand constraints</li>
+            </ul>
+          </div>
+
+          <div class="milestone-block">
+            <h4>Key learning</h4>
+            <p>Design becomes the fastest way to document systems no one can explain.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Milestone 03 -->
+      <details class="milestone">
+        <summary class="milestone-header">
+          <div class="milestone-meta">
+            <span class="milestone-index">03</span>
+            <div>
+              <h3 class="milestone-title">Designing the Tracking Experience</h3>
+              <p class="milestone-period">Weeks 2–3</p>
+            </div>
+          </div>
+
+          <div class="milestone-outcome">
+            <strong>Outcome:</strong> End-to-end journey prototypes covering all states
+          </div>
+        </summary>
+
+        <div class="milestone-body">
+          <div class="milestone-block">
+            <h4>Milestones</h4>
+            <ul>
+              <li>Designed mobile-first self-service tracking microsite</li>
+              <li>Built parallel prototypes for both meter journeys</li>
+              <li>Introduced magic-link access to bypass unreliable emails</li>
+              <li>Documented micro-interactions and error states in detail</li>
+              <li>Added brand-driven loading animations to reduce anxiety</li>
+            </ul>
+          </div>
+
+          <div class="milestone-block">
+            <h4>Key learning</h4>
+            <p>Constraints force better system decisions.</p>
+          </div>
+        </div>
+      </details>
+
+      <!-- Milestone 04 -->
+      <details class="milestone">
+        <summary class="milestone-header">
+          <div class="milestone-meta">
+            <span class="milestone-index">04</span>
+            <div>
+              <h3 class="milestone-title">Handoff, Alignment & Launch</h3>
+              <p class="milestone-period">Week 4</p>
+            </div>
+          </div>
+
+          <div class="milestone-outcome">
+            <strong>Outcome:</strong> Clean handoff and shared internal clarity
+          </div>
+        </summary>
+
+        <div class="milestone-body">
+          <div class="milestone-block">
+            <h4>Milestones</h4>
+            <ul>
+              <li>Stakeholder approval secured</li>
+              <li>Comprehensive documentation prepared for future frontend team</li>
+              <li>Prototype became single source of truth for switching logic</li>
+              <li>Returned to main project after successful delivery</li>
+            </ul>
+          </div>
+
+          <div class="milestone-block">
+            <h4>Key learning</h4>
+            <p>Sometimes the most valuable output isn’t UI — it’s shared understanding.</p>
+          </div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+         <div class="cs-block cs-block-two-column">
+         <div class="cs-two-column-grid">
+            <div class="cs-column">
+               <h3 class="cs-column-heading">Building Knowledge from Fragments</h3>
+               <p class="cs-text">
+                  No one could explain the full switching process; not customer service, not the backend team. As a <em>non-UK native</em>, I had to learn to understand the market from scratch while piecing together system knowledge that even the engineers couldn't articulate.
+               </p>
+               <p class="cs-text">I created a comprehensive documentation for the company of their own switching process.</p>
+
+            </div>
+               <div class="new-carousel swiper tight height">
+                  <div class="new-container swiper-wrapper">
+                     <div class="new-slide swiper-slide"><img src="/microsite/backendflow.png" data-src="/microsite/ux-translate-0.png" alt="Broad and complex backend diagram with flows that didn't align with customer flows" class="cs-carousel-img"></div>
+                     <div class="new-slide swiper-slide"><img src="/microsite/first draft by stakeholders.png" data-src="microsite/first draft by stakeholders.png" alt="Initial draft by stakeholders outlining a tacker/stepper wireframe" class="cs-carousel-img"></div>
+                     <div class="new-slide swiper-slide"><img src="/microsite/ux-customer journey.png" data-src="/microsite/ux-customer journey.png" alt="Initial customer journey" class="cs-carousel-img"></div>
+                  </div>
+                  <figcaption class="cs-image-caption">Trying to combine backend scatered data with stakeholders view and needs of the product.</figcaption>
+                  <div class="swiper-pagination"></div>
+               </div>
+         </div>
+      </div>
+
+<!-- Line breaker -->
+            <div class="cs-block cs-key-insight">
+               <div class="cs-key-insight-content">
+                  <div class="cs-key-insight-header">
+                     <h3 class="cs-key-insight-title">Building Knowledge from Fragments</h3>
+                  </div>
+                  <p class="cs-key-insight-text"> No one could explain the full switching process; not customer service, not the backend team. As a non-UK resident, I had to learn the market from scratch while piecing together system knowledge that even the engineers couldn't articulate.</p>
+                  <p class="cs-key-insight-result"><strong>→ Result:</strong> Created acomprehensive documentation for the company of their own switching process.</p>
+               </div>
+            </div>
+<!-- Line breaker -->
+
+<div class="cs-block cs-section">
+               <div class="cs-block cs-block-two-column">
+                  <h2 class="cs-section-heading">Design Explorations and Outcome</h2>
+              <div class="cs-block cs-two-column-grid content-left">
+                     <div class="cs-content-section cs-column">
+                        <div class="cs-paragraph">
+                           <p class="cs-text">
+                            Stakeholders provided an initial draft showing their vision for the tracker—a simple vertical progress indicator. This became the foundation I built upon, adding error handling, dual journey paths, and brand personality.
+                           </p>
+                        </div>
+                     </div>
+                  <div class="cs-text-column side-resume cs-column long">
+                     <h4 class="cs-subhead">How much information upfront</h4>
+                     <p class="cs-subtext"><span class="arrows"> > </span> Vertical vs horizontal</p>
+                     <p class="cs-subtext"><span class="arrows"> > </span> Dropdown vs always visible</p>
+                     <p class="cs-subtext"><span class="arrows"> > </span> Balancing visual weight</p>
+                     <p class="cs-subtext"><span class="arrows"> > </span> Maintain playfulness brand</p>
+                  </div>
+
+               </div>
+              </div>
+
+               <!-- <div class="cs-block cs-block-two-column">
+                  <div class="cs-two-column-grid">           
+                        <div class="cs-column">
+                        <h3 class="cs-column-heading">One Email, One link</h3> 
+                        <p class="cs-section-text cs-text">Bypassed company's unreliable email system entirely. <br>Instead of multiple (often failed) notifications throughout the journey, <b>customers received one magic link </b>to access their <strong>personalised tracking microsite—directly</strong> connected to the backend, always up to date.</p>
+                        <ul class="cs-text-block-list cs-text">
+                           <li>How much information upfront</li>
+                           <li>Vertical vs horizontal</li>
+                           <li>Dropdown vs always visible</li>
+                           <li>Balancing visual weight</li>
+                           <li>Maintain playfulness brand</li>
+                        </ul>
+                         <h3 class="cs-column-heading">One Email, One link</h3> 
+                        <p class="cs-section-text cs-text">Bypassed company's unreliable email system entirely. <br>Instead of multiple (often failed) notifications throughout the journey, <b>customers received one magic link </b>to access their <strong>personalised tracking microsite—directly</strong> connected to the backend, always up to date.</p>
+                        <ul class="cs-text-block-list cs-text">
+                           <li>How much information upfront</li>
+                           <li>Vertical vs horizontal</li>
+                           <li>Dropdown vs always visible</li>
+                           <li>Balancing visual weight</li>
+                           <li>Maintain playfulness brand</li>
+                        </ul>
+                        </div>
+                        <div class="cs-column">
+                        <figure class="cs-column-image">
+                           <img src="/microsite/first playground ui iterations.png" alt="Multiple UI tests and High-fidelity wireframes" class="cs-column-img">
+                           <figcaption class="cs-image-caption">finding the equilibrium between playfulness and most effective UX</figcaption>
+                        </figure>
+                     </div>
+                  </div>
+               </div> -->
+
+
+</section>
+ <!-- SECTION 3 - Design Decisions -->
+ 
+<section class="cs-block  cs-block-one-column" data-section-title="Design Decisions" id="cs-section-3">
+      <h3 class="cs-column-heading">Key design decisions</h3>
+               <div class="cs-block cs-block-two-column metrics inner">
+               <div class="cs-two-column-grid">
+                  <div class="cs-column">
+                     <p class="cs-section-text cs-text">
+                      Stakeholders provided an initial draft showing their vision for the tracker: a simple vertical progress indicator. This became the foundation I built upon, adding error handling, dual journey paths, and brand personality.
+                     </p>
+                     
+                     <h4 class="cs-column-heading">Brand personality</h4>
+                     
+                     <p class="cs-section-text cs-text">
+                        <em>Tomato Energy's identity</em> revolves around being <strong>bold and playfull.</strong><br>
+                        In order to preserver those values, and add some visual interest, the design included loading animations — tomatoes falling from the top + a small bouncing tomato at the bottom — to keep personality and attention alive during data fetches and reducing waiting anxiety.
+                     </p>                
+                  </div>
+
+                  <div class="cs-column">
+                     <div class="stacked-metrics-swiper swiper cs-metrics large">
+                        <div class="swiper-wrapper metrics-content">
+                           <div class="swiper-slide new" id="card-1">
+                                 <div class="cs-metric-card">
+                                          <div class="cs-metric-icon-wrapper">
+                                             <span class="cs-metric-icon"><i class="iconoir-link"></i></span>
+                                          </div>
+                                          <div class="cs-metric-value">One Email, One Link</div>
+                                       <div class="cs-metric-label">
+                                          <p class="cs-metric-text">
+                                          Instead of multiple notifications <b>customers received one magic link </b>to access their <strong>personalised tracking microsite—directly</strong> connected to the backend, always up to date.</p>
+                                    </div>
+                                       <div class="cs-metric-tag prod">UX</div>
+                                 </div>
+                           </div>
+                           
+                           <div class="swiper-slide new" id="card-2">
+                                 <div class="cs-metric-card">
+                                          <div class="cs-metric-icon-wrapper">
+                                             <span class="cs-metric-icon"><i class="iconoir-network-right"></i></span>
+                                          </div>
+                                          <div class="cs-metric-value">Status Communication</div>
+                                       <div class="cs-metric-label">
+                                          <p class="cs-metric-text">From 15+ technical states into 5</p>
+                                          <p class="cs-metric-text"><strong><br>1.Application → 2.Switch initiation → 3. Approval → 4.Meter reading → 5.Completed</strong></p>
+                                       </div>
+                                       <div class="cs-metric-tag prod">UX/UI</div>
+                                 </div>
+                           </div>
+                           <div class="swiper-slide new" id="card-3">
+                                 <div class="cs-metric-card">
+                                          <div class="cs-metric-icon-wrapper">
+                                             <span class="cs-metric-icon"><i class="iconoir-eye"></i></span>
+                                          </div>
+                                          <div class="cs-metric-value">Identify bottleneck</div>
+                                       <div class="cs-metric-label">
+                                       <p class="cs-metric-text">UI focus on showing and explaining where delays were happening so <strong>client could take action</strong> if needed.</p>   
+                                       </div>
+                                       <div class="cs-metric-tag org">UI</div>
+                              </div>
+                           </div>
+                           <div class="swiper-slide new" id="card-4">
+                                 <div class="cs-metric-card">
+                                          <div class="cs-metric-icon-wrapper">
+                                             <span class="cs-metric-icon"><i class="iconoir-message-alert"></i></span>
+                                          </div>
+                                          <div class="cs-metric-value">Error categorisation</div>
+                                       <div class="cs-metric-label">
+                                          <p class="cs-metric-text">
+                                             <strong>Application errors:</strong> <small>Wrong MPAN, incorrect address, missing information</small>
+                                          </p><br>
+                                          <p class="cs-metric-text">
+                                             <strong>Switching errors:</strong><small> objections, contract disputes, supplier blocking</small>
+                                          </p><br>
+                                          <p class="cs-metric-text">
+                                             <strong>Technical issues:</strong><small> access problems, database mismatches, system failures</small>
+                                          </p>
+
+                                       </div>
+                                       <div class="cs-metric-tag org">UX</div>
+                              </div>
+                           </div>
+                           <div class="swiper-slide new" id="card-5">
+                                 <div class="cs-metric-card">
+                                          <div class="cs-metric-icon-wrapper">
+                                             <span class="cs-metric-icon"><i class="iconoir-check-square"></i></span>
+                                          </div>
+                                          <div class="cs-metric-value">Two journeys</div>
+                                       <div class="cs-metric-label">
+                                          <p class="cs-metric-text">
+                                             <strong>Smart meters:</strong> Automated reading collection, fewer manual steps
+                                          </p><br>
+                                          <p class="cs-metric-text">
+                                             <strong>Traditional meters:</strong>Clear callouts when manual readings were required
+                                          </p>
+                                       </div>
+                                       <div class="cs-metric-tag bus">Business</div>
+                                 </div>
+                           </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+      <div class="cs-block cs-block-one-column cs-full-width image">
+            <figure class="cs-column-image">
+            <img src="/microsite/micro animations.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img">
+            <figcaption class="cs-image-caption">Step by step visual definition of loading frame</figcaption>
+            </figure>
+      </div>
+
+</section>
+
+<section class="cs-block  cs-block-one-column" data-section-title="Outcome" id="cs-section-4">
+
+
+<!-- before and after -->
+            <div class="cs-block cs-block-two-column inner cs-before-after">
+               <h2 class="cs-section-heading">The Change:</h2>
+               <div class="cs-before-after-grid">
+                  <div class="cs-before-after-col cs-before-col cs-column">
+                     <h3 class="cs-before-after-label">Before: Unreliable and Manual</h3>
+                     <ul class="cs-before-after-list cs-before-list cs-text">
+                        <li><i class="iconoir-xmark"></i><span>Multiple (often failed) email notifications</span></li>
+                        <li><i class="iconoir-xmark"></i><span>"Did you get our email?" support tickets</span></li>
+                        <li><i class="iconoir-xmark"></i><span>No visibility into delays or bottlenecks</span></li>
+                        <li><i class="iconoir-xmark"></i><span>Customers in the dark about who was responsible for delays</span></li>
+                     </ul>
+                  </div>
+                  <div class="cs-before-after-col cs-after-col  cs-column">
+                     <h3 class="cs-before-after-label">After: Self-Diagnosis</h3>
+                     <ul class="cs-before-after-list cs-after-list cs-text">
+                        <li><i class="iconoir-check"></i><span>One magic link email to personalised microsite</span></li>
+                        <li><i class="iconoir-check"></i><span>Direct real-time backend connection</span></li>
+                        <li><i class="iconoir-check"></i><span>Clear bottleneck diagnosis showing whose fault and why</span></li>
+                        <li><i class="iconoir-check"></i><span>Contextual actions for each state</span></li>
+                     </ul>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+
+
+<!-- conclusiones -->
+               <div class="cs-block cs-block-two-column conclusions inner">
+                  <h2 class="cs-section-heading">Wins & Learnings</h2>
+              <div class="cs-two-column-grid content-left ">
+                     <div class="cs-content-section cs-column">
+                        <div class="cs-paragraph">
+                        <p class="cs-text"><strong>Solved an Invisible Problem</strong></p>
+                        <p class="cs-text">Created a customer touchpoint that didn't exist before, turning an opaque industry process into something transparent and manageable.</p>
+                        <p class="cs-text"><strong>Bypassed a Broken System</strong></p>
+                        <p class="cs-text">Worked around unreliable email infrastructure by designing a single-link solution that gave customers direct backend access—no more "did you get our email?" support tickets.</p>
+                        <p class="cs-text"><strong>Empowered Customer Self-Diagnosis</strong></p>
+                        <p class="cs-text">Let customers see exactly where bottlenecks were and whose responsibility they were, eliminating unnecessary "where's my switch?" queries and reducing support burden.</p>
+                        <p class="cs-text"><strong>Solo Information Gathering</strong></p>
+                        <p class="cs-text">Pieced together a complex system flow that no single person at the company could explain—starting from ground zero as a non-UK resident learning the British energy market.</p>
+                        <p class="cs-text"><strong>Brand Extension</strong></p>
+                        <p class="cs-text">Took scattered brand materials and evolved them into a cohesive, delightful tracking experience that felt unmistakably "Tomato."</p>
+                        <p class="cs-text"><strong>Fast, Mobile-First Deployment</strong></p>
+                        <p class="cs-text">Designed for mobile-only launch to get value in customers' hands quickly, proving that strategic constraints can accelerate delivery.</p>
+                        </div>
+                     </div>
+                  <!-- <div class="cs-text-column side-resume">
+                     <h4 class="cs-subhead"> Related case</h4>
+                     <<p>UI Designer</p>
+                     <p class="arrows"> ↓ ↓ ↓ </p>
+                     <h4> Reality</h4>
+                     <a class="cta-button" href="/design-system.html"> Design System from Scratch</a>
+                  </div> -->
+
+               </div>
+              </div>
+</section>
+
+<section class="cs-block cs-block-gallery" data-section-title="Gallery" id="cs-section-5">
+               <div class="cs-gallery">
+                  <h3 class="cs-section-title">Gallery</h3>
+                  <div class="cs-gallery-grid">
+                     <div class="cs-gallery-item">
+                     <video src="/microsite/application.mov" class="cs-grid-video" autoplay="" loop="" playsinline="" muted="" aria-label="Smart meter journey - Application stage"></video>
+                        <p class="cs-gallery-caption">Application received - Smart meter journey</p>
+                     </div>
+                     <div class="cs-gallery-item">
+                     <video src="/microsite/switching-smart.mov" class="cs-grid-video" autoplay="" loop="" playsinline="" muted="" aria-label="Smart meter journey - Switch initiated"></video>
+                        <p class="cs-gallery-caption">Switch initiation - Smart meter flow</p>
+                     </div>
+                     <div class="cs-gallery-item">
+                     <video src="/microsite/trad meter and end.mov" class="cs-grid-video" autoplay="" loop="" playsinline="" muted="" aria-label="Traditional meter journey - Manual reading required"></video>
+                        <p class="cs-gallery-caption">Traditional meter with manual reading callout</p>
+                     </div>
+                     <div class="cs-gallery-item">
+                     <video src="/microsite/payment error.mov" class="cs-grid-video" autoplay="" loop="" playsinline="" muted="" aria-label="Error state - Application error"></video>
+                        <p class="cs-gallery-caption">Application error with actionable next steps </p>
+                     </div>
+                     <div class="cs-gallery-item">
+                     <video src="/microsite/errores.mov" class="cs-grid-video" autoplay="" loop="" playsinline="" muted="" aria-label="Error state - Switching error"></video>
+                        <p class="cs-gallery-caption">Switching error showing bottleneck source</p>
+                     </div>
+                     <div class="cs-gallery-item">
+                        <img src="/microsite/sunny.gif" alt="Brand reference materials showing Tomato's playful personality and visual language" class="cs-gallery-image">
+                        <p class="cs-gallery-caption">Brand reference materials showing Tomato's playful personality and visual language </p>
+                     </div>
+                     <div class="cs-gallery-item">
+                        <img src="/microsite/tomatoend.gif" alt="Brand reference materials showing Tomato's playful personality and visual language" class="cs-gallery-image">
+                        <p class="cs-gallery-caption">Brand reference materials showing Tomato's playful personality and visual language </p>
+                     </div>
+                     <div class="cs-gallery-item">
+                        <img src="/microsite/ui designs.png" alt="Complete UI design system showing all screens and states" class="cs-gallery-image">
+                        <p class="cs-gallery-caption">Full UI system: Both journey types with all states and error scenarios </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+</section>
+         </div><!-- /.cs-content-container -->

@@ -1,0 +1,318 @@
+<html lang="en" data-project-id="2">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Design System from Scratch | Silvia Travieso - Product Designer</title>
+      <meta name="description" content="Built a production-ready design system from scratch as a solo mid-level designer in an engineer-first startup. Solved JavaFX (zero references), 8-hour timezone gaps, and CEO resistance. Result: 90% QA reduction, company-wide adoption, and 1,920 hours saved through systematic reuse.">
+      <meta name="keywords" content="Design Systems, Token Architecture, JavaFX, GitHub Actions, Greenfield 0 → 1">
+      <!-- Open Graph -->
+      <meta property="og:type" content="article">
+      <meta property="og:url" content="https://silviatravieso.com/design-system">
+      <meta property="og:title" content="Design System from Scratch - Product Design Case Study">
+      <meta property="og:description" content="Building design infrastructure in an engineer-first startup with zero precedent">
+      <meta property="og:image" content="https://silviatravieso.com/ds/ds-hero.png">
+      <!-- Twitter -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="Design System from Scratch - Product Design Case Study">
+      <meta name="twitter:description" content="Building design infrastructure in an engineer-first startup with zero precedent">
+      <meta name="twitter:image" content="https://silviatravieso.com/ds/ds-hero.png">
+      <!-- Canonical URL -->
+      <link rel="canonical" href="https://silviatravieso.com/design-system">
+      <!-- Favicon -->
+      <link rel="icon" type="image/png" href="/favicon.png">
+      <!-- Google Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+      <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&amp;family=Fascinate&amp;family=Anonymous+Pro:wght@400;700&amp;family=Noto+Sans:wght@100..900&amp;display=swap" rel="stylesheet">
+      <!-- Schema.org Structured Data -->
+      <script type="application/ld+json">
+         {
+           "@context": "https://schema.org",
+           "@type": "Article",
+           "headline": "Design System from Scratch",
+           "description": "Building design infrastructure in an engineer-first startup with zero precedent",
+           "image": "https://silviatravieso.com/ds/ds-large-hero.png",
+           "author": {
+             "@type": "Person",
+             "name": "Silvia Travieso",
+             "url": "https://www.silviatravieso.com",
+             "jobTitle": "Senior UI/UX Designer"
+           },
+           "publisher": {
+             "@type": "Person",
+             "name": "Silvia Travieso"
+           },
+           "datePublished": "2024-01-01",
+           "dateModified": "2024-12-31",
+           "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https://silviatravieso.com/design-system.html"
+           },
+           "keywords": "Design Systems, Token Architecture, JavaFX, GitHub Actions, Component Libraries",
+           "articleSection": "Product Design Case Study"
+         }
+           </script>
+      <!-- Load source files for dev mode -->
+      <link rel="stylesheet" href="/src/scss/_main.scss">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+      <script type="module">
+        // Import modules
+        import { initAccordions, initCaseStudyAccordions } from '/src/js/modules/accordion.js';
+        import { initLightGallery } from '/src/js/modules/lightgallery.js';
+        import Swiper from 'swiper';
+        import { Pagination } from 'swiper/modules';
+
+        import { initSideNavBar } from '/src/js/modules/side-nav-bar.js';
+
+        // Initialize when DOM is ready
+        function initialize() {
+          initAccordions();
+          initCaseStudyAccordions();
+          initSideNavBar();
+
+
+               // Standard Swiper with custom CSS stacking (no effect module)
+               const swiper = new Swiper('.stacked-metrics-swiper', {
+               modules: [Pagination],
+               // No effect - using custom CSS transforms
+               grabCursor: true,
+               slidesPerView: 1,
+               slidesPerGroup: 1,
+               speed: 600,
+               loop: false,
+               watchSlidesProgress: true,
+               allowTouchMove: true,
+               virtualTranslate: true, // Disable default slide positioning
+               pagination: {
+                  el: '.stacked-metrics-swiper .swiper-pagination',
+                  clickable: true,
+               },
+               on: {
+                  init: function() {
+                     clearSwiperInlineStyles(this);
+                     updateStackClasses(this);
+                  },
+                  slideChange: function() {
+                     updateStackClasses(this);
+                  },
+                  setTranslate: function() {
+                     clearSwiperInlineStyles(this);
+                  }
+               }
+               });
+
+               // Clear Swiper's inline styles that interfere with our custom positioning
+               function clearSwiperInlineStyles(swiperInstance) {
+                  swiperInstance.slides.forEach((slide) => {
+                     slide.style.transform = '';
+                     slide.style.width = '';
+                     slide.style.height = '';
+                     slide.style.marginRight = '';
+                  });
+               }
+
+               // Update stacking classes based on distance from active slide
+               function updateStackClasses(swiperInstance) {
+                  swiperInstance.slides.forEach((slide, index) => {
+                     // Remove all position classes
+                     slide.classList.remove('stack-active', 'stack-1', 'stack-2', 'stack-3', 'stack-back');
+
+                     const distance = index - swiperInstance.activeIndex;
+
+                     if (distance === 0) {
+                        slide.classList.add('stack-active');
+                     } else if (distance === 1) {
+                        slide.classList.add('stack-1');
+                     } else if (distance === 2) {
+                        slide.classList.add('stack-2');
+                     } else if (distance === 3) {
+                        slide.classList.add('stack-3');
+                     } else if (distance > 3) {
+                        slide.classList.add('stack-back');
+                     }
+                     // Slides before active (distance < 0) get no class = hidden
+                  });
+               }
+          // Initialize all other Swiper carousels - basic slide mode
+          const swiperElements = document.querySelectorAll('.swiper:not(.stacked-metrics-swiper)');
+          swiperElements.forEach((swiperEl) => {
+            new Swiper(swiperEl, {
+              // No effect - basic slide behavior
+              modules: [Pagination],
+              grabCursor: true,
+              autoplay: false,
+              speed: 0, // Instant transitions
+              slidesPerView: 1,
+              spaceBetween: 0,
+              preventClicks: false,
+              preventClicksPropagation: false,
+              pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+              }
+            });
+          });
+
+          // Initialize lightGallery after Swiper
+          initLightGallery();
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+          initialize();
+        }
+      </script>
+   </head>
+   <body class="project-page-body js-loaded" data-theme="green">
+      <nav class="cs-breadcrumbs cs-breadcrumbs-standalone" aria-label="Case study navigation"><a class="cs-breadcrumb-nav cs-breadcrumb-prev" href="/marketing-management.html">
+         <span class="cs-nav-label">← Previous</span>
+         <span class="cs-nav-title">Marketing Management</span>
+         </a><a class="cs-breadcrumb-logo" href="/" aria-label="Back to home">
+         <img src="/logo-filled.svg" alt="Silvia Travieso Logo">
+         </a><a class="cs-breadcrumb-nav cs-breadcrumb-next" href="/energy-tracker.html">
+         <span class="cs-nav-label">Next →</span>
+         <span class="cs-nav-title">Energy Switching Tracker</span>
+         </a>
+      </nav>
+      <!-- Case Study Content Container -->
+      <div class="case-study-page active" id="project-content" data-theme="green" data-project-id="1">
+ 
+      <section class = "hero">
+         <!-- Hero Section -->
+               <div class="cs-header ">
+                  <section class="cs-hero">
+                     <div class="cs-hero-content">
+                        <div class="cs-hero-header">
+                           <div class="eyebrow">
+                              <p class="cs-type-label">SYSTEMS</p>
+                              <div class="cs-hero-data">
+                                 <span>Product Designer → Design System Lead</span>
+                              </div>
+                           </div>
+                           <h1 class="cs-hero-title">Design System at Scale</h1>
+                        </div>
+                     <p class="cs-hero-subtitle"> 
+                        <em> Built a production-ready design system in an engineer-first startup</em></p>
+                       <p class="cs-story-hook-context">  With no precedent, no tooling and no initial buy-in. What started as a rejected pitch became a company culture switch with an adoption program in development.
+                        </p>               
+                        </div>
+                     <div class="cs-hero-images"><img src="/ds/ds-hero.png" alt="UI kit extract" loading="eager"></div>
+                  </section>
+               </div>
+               <!-- Metrics Section -->
+               <div class="cs-metrics">
+                  <h3 class="cs-section-title">At Glance</h3>
+                  <div class="metrics-content">
+            
+                  <div class="cs-metrics-grid new">
+                     <div class="cs-metric-card ">
+                              <div class="cs-metric-icon-wrapper">
+                              <span class="cs-metric-icon"><i class="iconoir-refresh-double"></i></span>
+                              </div>
+                              <div class="cs-metric-value">90%<br>
+                              </div>
+                              <div class="cs-metric-label"> Reduction in QA cycles </div> 
+                     </div>
+
+                     <div class="cs-metric-card ">
+                              <div class="cs-metric-icon-wrapper">
+                              <span class="cs-metric-icon"><i class="iconoir-timer"></i></span>
+                              </div>
+                              <div class="cs-metric-value"> 2K hours<br>
+                              </div>
+                              <div class="cs-metric-label"> Saved through systematic approach </div> 
+                     </div>
+
+                     <div class="cs-metric-card ">
+                              <div class="cs-metric-icon-wrapper">
+                              <span class="cs-metric-icon"><i class="iconoir-stackoverflow"></i></span>
+                              </div>
+                              <div class="cs-metric-value">0 → 850 <br>
+                              </div>
+                              <div class="cs-metric-label">production tokens in 4-layered system</div> 
+                     </div>
+                     <div class="cs-metric-card ">
+                              <div class="cs-metric-icon-wrapper">
+                              <span class="cs-metric-icon"><i class="iconoir-send-diagonal"></i></span>
+                              </div>
+                              <div class="cs-metric-value"> 80% <br>
+                              </div>
+                              <div class="cs-metric-label">Clean handoffs</div> 
+                              <!-- Greenfield project and/or no system culture previous? -->
+                     </div>
+                  </div>
+
+                  <div class="data-container">
+                     <div class="data-item">
+                        <span class="left-data">
+                           Timeline
+                        </span>
+                        <span class="right-data">
+                           Feb 24 - Dec 25
+                        </span>
+                     </div>
+                     <div class="data-item">
+                        <span class="left-data">
+                           Company
+                        </span>
+                        <span class="right-data">
+                           Senapt LTD (Startup)
+                        </span>
+                     </div>   <div class="data-item">
+                        <span class="left-data">
+                           Role
+                        </span>
+                        <span class="right-data">
+                           Design System Lead (self-initiated)
+                        </span>
+                     </div>
+                     <div class="data-item">
+                        <span class="left-data">
+                           Tech Stack
+                        </span>
+                        <span class="right-data">
+                           Java FX 
+                        </span>
+                     </div>
+                     </div>
+                  </div>
+               </div>
+         <div class="cs scroll-hinter">
+            <span class="scroll-text">READ</span>
+            <span class="scroll-line"></span>
+            </div>
+      </section>       
+
+
+      <div class="cs-content-container">
+         <div class="cs-block cs-key-insight">
+            <div class="cs-key-insight-content">
+               <div class="cs-key-insight-header">
+                  <h3 class="cs-key-insight-title">Work in Progress</h3>
+               </div>
+               <p class="cs-text">This project is currently being documented. Feel free to reach out directly if you'd like to learn more about it in the meantime.</p>
+            </div>
+         </div>
+      </div>
+   </div>
+        <!-- Project Navigation Footer -->
+      <footer class="project-navigation-footer">
+         <div class="project-nav-container">
+            <a href="/figma-plugin" class="project-nav-link prev-project">
+            <span class="nav-arrow">←</span>
+            <span class="nav-label">Previous</span>
+            <span class="nav-title">Figma Design Distributor Plugin</span>
+            </a>
+            <a href="/" class="project-nav-link back-home">
+            <span class="nav-label">All Projects</span>
+            </a>
+            <a href="/design-system" class="project-nav-link next-project">
+            <span class="nav-label">Next</span>
+            <span class="nav-title">Design System from Scratch</span>
+            <span class="nav-arrow">→</span>
+            </a>
+         </div>
+      </footer>
+</body>
+</html>

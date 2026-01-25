@@ -121,6 +121,7 @@
 
 section.cs-section{
   margin-bottom: 3rem;
+  background-color: white;
 }
 
 
@@ -196,81 +197,73 @@ section.cs-section{
 //------------------
 
 
-.case-study-page {
-//   &.active {
-//     opacity: 1;
-//     pointer-events: all;
-//   }
+// Theme variations - targeting .cs-header when theme is on parent .case-study-page
+.case-study-page[data-theme="blue"] .cs-header {
+  background-color: $blue-light;
 
-  // Theme variations (full page background)
-  &[data-theme="blue"] {
-    background-color: $blue-light;
-
-    .cs-tag {
-      background-color: $color-blue-alpha;
-      color: $blue-dark;
-    }
-
-    .cs-metric-card {
-      background-color: $color-bg;
-    }
+  .cs-tag {
+    background-color: $color-blue-alpha;
+    color: $blue-dark;
   }
 
-  &[data-theme="green"] {
-    background-color: $green-light;
-
-    .cs-breadcrumbs {
-      .cs-breadcrumb-nav {
-        color: $green-dark;
-
-        .cs-nav-title {
-          color: rgba($green, 0.6);
-        }
-
-        &:hover .cs-nav-title {
-          color: $green;
-        }
-      }
-    }
-
-    .cs-tag {
-      background-color: $color-green-alpha;
-      color: $green-dark;
-    }
-
-    .cs-metric-card {
-      background-color: $color-bg;
-    }
-  }
-
-  &[data-theme="neutral"] {
-    background-color: $cream;
-
-    .cs-breadcrumbs {
-      .cs-breadcrumb-nav {
-        color: $neutral;
-
-        .cs-nav-title {
-          color: rgba($blue-dark, 0.5);
-        }
-
-        &:hover .cs-nav-title {
-          color: $blue-dark;
-        }
-      }
-    }
-
-    .cs-tag {
-      background-color: $color-cream-alpha;
-      color: $blue-dark;
-    }
-
-    .cs-metric-card {
-      background-color: $color-bg;
-    }
+  .cs-metric-card {
+    background-color: $color-bg;
   }
 }
 
+.case-study-page[data-theme="green"] .cs-header {
+  background-color: $green-light;
+
+  .cs-breadcrumbs {
+    .cs-breadcrumb-nav {
+      color: $green-dark;
+
+      .cs-nav-title {
+        color: rgba($green, 0.6);
+      }
+
+      &:hover .cs-nav-title {
+        color: $green;
+      }
+    }
+  }
+
+  .cs-tag {
+    background-color: $color-green-alpha;
+    color: $green-dark;
+  }
+
+  .cs-metric-card {
+    background-color: $color-bg;
+  }
+}
+
+.case-study-page[data-theme="neutral"] .cs-header {
+  background-color: $cream;
+
+  .cs-breadcrumbs {
+    .cs-breadcrumb-nav {
+      color: $neutral;
+
+      .cs-nav-title {
+        color: rgba($blue-dark, 0.5);
+      }
+
+      &:hover .cs-nav-title {
+        color: $blue-dark;
+      }
+    }
+  }
+
+  .cs-tag {
+    background-color: $color-cream-alpha;
+    color: $blue-dark;
+  }
+
+  .cs-metric-card {
+    background-color: $color-bg;
+  }
+}
 
 .switch-container{
     display: none;

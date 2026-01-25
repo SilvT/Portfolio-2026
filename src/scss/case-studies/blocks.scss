@@ -20,6 +20,9 @@ body.project-page-body {
   &[data-theme="green"] {
     background-color: $green-light;
   }
+  &[data-theme="neutral"] {
+    background-color: $cream;
+  }
   &.js-loaded {
     width: 100% !important;
     overflow-x: hidden;
@@ -800,6 +803,10 @@ body.project-page-body {
         transform: translateY(-4px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
+      video{
+        height: auto;
+        width: 100%;
+      }
     }
 
     .cs-gallery-image {
@@ -1195,4 +1202,14 @@ body.project-page-body {
       }
     }
   }
+}
+
+
+
+//------
+.cs-full-width.image{
+img{
+  width: 100%;
+  height: auto;
+}
 }

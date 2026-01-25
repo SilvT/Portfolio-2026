@@ -1,23 +1,23 @@
-<html lang="en" data-project-id="1">
+<html lang="en" data-project-id="2">
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Marketing Management-NEW | Silvia Travieso - Product Designer</title>
-      <meta name="description" content="Built from scratch to unify fragmented marketing operations across 4 departments, replacing manual Excel workflows with real-time data visibility. Grew from Mid UI Designer to co-owning product strategy">
-      <meta name="keywords" content="Product Design, UI/UX, Design Systems, B2B, 0→1, Co-ownership">
+      <title>Design System from Scratch | Silvia Travieso - Product Designer</title>
+      <meta name="description" content="Built a production-ready design system from scratch as a solo mid-level designer in an engineer-first startup. Solved JavaFX (zero references), 8-hour timezone gaps, and CEO resistance. Result: 90% QA reduction, company-wide adoption, and 1,920 hours saved through systematic reuse.">
+      <meta name="keywords" content="Design Systems, Token Architecture, JavaFX, GitHub Actions, Greenfield 0 → 1">
       <!-- Open Graph -->
       <meta property="og:type" content="article">
-      <meta property="og:url" content="https://silviatravieso.com/marketing-management">
-      <meta property="og:title" content="Marketing Management-NEW - Product Design Case Study">
-      <meta property="og:description" content="From Mid UI to Product Design Lead: Building Enterprise Software in a Startup">
-      <meta property="og:image" content="https://silviatravieso.com/mkm/mkm-large hero.png">
+      <meta property="og:url" content="https://silviatravieso.com/design-system">
+      <meta property="og:title" content="Design System from Scratch - Product Design Case Study">
+      <meta property="og:description" content="Building design infrastructure in an engineer-first startup with zero precedent">
+      <meta property="og:image" content="https://silviatravieso.com/ds/ds-hero.png">
       <!-- Twitter -->
       <meta name="twitter:card" content="summary_large_image">
-      <meta name="twitter:title" content="Marketing Management-NEW - Product Design Case Study">
-      <meta name="twitter:description" content="From Mid UI to Product Design Lead: Building Enterprise Software in a Startup">
-      <meta name="twitter:image" content="https://silviatravieso.com/mkm/mkm-large hero.png">
+      <meta name="twitter:title" content="Design System from Scratch - Product Design Case Study">
+      <meta name="twitter:description" content="Building design infrastructure in an engineer-first startup with zero precedent">
+      <meta name="twitter:image" content="https://silviatravieso.com/ds/ds-hero.png">
       <!-- Canonical URL -->
-      <link rel="canonical" href="https://silviatravieso.com/marketing-management">
+      <link rel="canonical" href="https://silviatravieso.com/design-system">
       <!-- Favicon -->
       <link rel="icon" type="image/png" href="/favicon.png">
       <!-- Google Fonts -->
@@ -29,9 +29,9 @@
          {
            "@context": "https://schema.org",
            "@type": "Article",
-           "headline": "Marketing Management Platform",
-           "description": "Built from scratch to unify fragmented marketing operations across 4 departments, replacing manual Excel workflows with real-time data visibility",
-           "image": "https://silviatravieso.com/mkm/mkm-large hero.png",
+           "headline": "Design System from Scratch",
+           "description": "Building design infrastructure in an engineer-first startup with zero precedent",
+           "image": "https://silviatravieso.com/ds/ds-large-hero.png",
            "author": {
              "@type": "Person",
              "name": "Silvia Travieso",
@@ -46,12 +46,12 @@
            "dateModified": "2024-12-31",
            "mainEntityOfPage": {
              "@type": "WebPage",
-             "@id": "https://silviatravieso.com/marketing-management.html"
+             "@id": "https://silviatravieso.com/design-system.html"
            },
-           "keywords": "Product Design, UI/UX, Design Systems, B2B, CRM, Marketing Platform",
+           "keywords": "Design Systems, Token Architecture, JavaFX, GitHub Actions, Component Libraries",
            "articleSection": "Product Design Case Study"
          }
-      </script>
+           </script>
       <!-- Load source files for dev mode -->
       <link rel="stylesheet" href="/src/scss/_main.scss">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
@@ -133,11 +133,6 @@
                      // Slides before active (distance < 0) get no class = hidden
                   });
                }
-
-
-
-
-
           // Initialize all other Swiper carousels - basic slide mode
           const swiperElements = document.querySelectorAll('.swiper:not(.stacked-metrics-swiper)');
           swiperElements.forEach((swiperEl) => {
@@ -169,21 +164,19 @@
         }
       </script>
    </head>
-   <body class="project-page-body js-loaded" data-theme="blue">
-      <!-- Project Breadcrumbs Navigation (outside of case-study-page for sticky positioning) -->
-      <nav class="cs-breadcrumbs cs-breadcrumbs-standalone" aria-label="Case study navigation"><a class="cs-breadcrumb-nav cs-breadcrumb-prev" href="/token-launch.html">
+   <body class="project-page-body js-loaded" data-theme="green">
+      <nav class="cs-breadcrumbs cs-breadcrumbs-standalone" aria-label="Case study navigation"><a class="cs-breadcrumb-nav cs-breadcrumb-prev" href="/marketing-management.html">
          <span class="cs-nav-label">← Previous</span>
-         <span class="cs-nav-title">Token Launch</span>
+         <span class="cs-nav-title">Marketing Management</span>
          </a><a class="cs-breadcrumb-logo" href="/" aria-label="Back to home">
          <img src="/logo-filled.svg" alt="Silvia Travieso Logo">
-         </a><a class="cs-breadcrumb-nav cs-breadcrumb-next" href="/design-system.html">
+         </a><a class="cs-breadcrumb-nav cs-breadcrumb-next" href="/energy-tracker.html">
          <span class="cs-nav-label">Next →</span>
-         <span class="cs-nav-title">Design System from Scratch</span>
+         <span class="cs-nav-title">Energy Switching Tracker</span>
          </a>
       </nav>
-      <!-- Side Navigation is dynamically generated by side-nav-bar.js from data-section-title attributes -->
       <!-- Case Study Content Container -->
-      <div class="case-study-page active" id="project-content" data-theme="blue" data-project-id="1">
+      <div class="case-study-page active" id="project-content" data-theme="green" data-project-id="1">
  
       <section class = "hero">
          <!-- Hero Section -->
@@ -192,27 +185,19 @@
                      <div class="cs-hero-content">
                         <div class="cs-hero-header">
                            <div class="eyebrow">
-                              <p class="cs-type-label">B2B · SasS</p>
+                              <p class="cs-type-label">SYSTEMS</p>
                               <div class="cs-hero-data">
-                                 <span>Mid UI >  Product + Co-owner</span>
+                                 <span>Product Designer → Design System Lead</span>
                               </div>
                            </div>
-                           <h1 class="cs-hero-title">Marketing Management</h1>
+                           <h1 class="cs-hero-title">Design System at Scale</h1>
                         </div>
                      <p class="cs-hero-subtitle"> 
-                        <em> Co-owned product scope, strategy, and delivery in a 3-person team.</em></p>
-                       <p class="cs-story-hook-context">  Built a marketing automation platform from scratch able to handle campaigns, leads and channels across 4 user bases. Evolved from UI designer to product co-owner, making strategic decisions alongside backend lead and CEO.
-                        </p>
-                        <div class="switch-container">
-                           <span class="switch-label">TL;DR</span>
-                           <label class="switch">
-                              <input type="checkbox" class="switch-input">
-                              <span class="switch-slider"></span>
-                           </label>
-                           <span class="switch-label">Case study</span>
-                        </div>                  
+                        <em> Built a production-ready design system in an engineer-first startup</em></p>
+                       <p class="cs-story-hook-context">  With no precedent, no tooling and no initial buy-in. What started as a rejected pitch became a company culture switch with an adoption program in development.
+                        </p>               
                         </div>
-                     <div class="cs-hero-images"><img src="/mkm/mkm-large hero.png" alt="Marketing Management preview" loading="eager"></div>
+                     <div class="cs-hero-images"><img src="/ds/ds-hero.png" alt="UI kit extract" loading="eager"></div>
                   </section>
                </div>
                <!-- Metrics Section -->
@@ -223,37 +208,38 @@
                   <div class="cs-metrics-grid new">
                      <div class="cs-metric-card ">
                               <div class="cs-metric-icon-wrapper">
-                              <span class="cs-metric-icon"><i class="iconoir-leaf"></i></span>
+                              <span class="cs-metric-icon"><i class="iconoir-refresh-double"></i></span>
                               </div>
-                              <div class="cs-metric-value">Greenfield project:<br>
+                              <div class="cs-metric-value">90%<br>
                               </div>
-                              <div class="cs-metric-label"> 0 to MVP in 18 months</div> 
+                              <div class="cs-metric-label"> Reduction in QA cycles </div> 
                      </div>
 
                      <div class="cs-metric-card ">
                               <div class="cs-metric-icon-wrapper">
-                              <span class="cs-metric-icon"><i class="iconoir-translate"></i></span>
+                              <span class="cs-metric-icon"><i class="iconoir-timer"></i></span>
                               </div>
-                              <div class="cs-metric-value">+8hrs and language gap<br>
+                              <div class="cs-metric-value"> 2K hours<br>
                               </div>
-                              <div class="cs-metric-label"> Coordinated UK backend + Japan frontend </div> 
+                              <div class="cs-metric-label"> Saved through systematic approach </div> 
                      </div>
 
                      <div class="cs-metric-card ">
                               <div class="cs-metric-icon-wrapper">
-                              <span class="cs-metric-icon"><i class="iconoir-collapse"></i></span>
+                              <span class="cs-metric-icon"><i class="iconoir-stackoverflow"></i></span>
                               </div>
-                              <div class="cs-metric-value">Consolitated <br>
+                              <div class="cs-metric-value">0 → 850 <br>
                               </div>
-                              <div class="cs-metric-label">+4 data sources and departments</div> 
+                              <div class="cs-metric-label">production tokens in 4-layered system</div> 
                      </div>
                      <div class="cs-metric-card ">
                               <div class="cs-metric-icon-wrapper">
-                              <span class="cs-metric-icon"><i class="iconoir-bridge-3d"></i></span>
+                              <span class="cs-metric-icon"><i class="iconoir-send-diagonal"></i></span>
                               </div>
-                              <div class="cs-metric-value">Translated workflows <br>
+                              <div class="cs-metric-value"> 80% <br>
                               </div>
-                              <div class="cs-metric-label">into technical architecture with engineers</div> 
+                              <div class="cs-metric-label">Clean handoffs</div> 
+                              <!-- Greenfield project and/or no system culture previous? -->
                      </div>
                   </div>
 
@@ -263,7 +249,7 @@
                            Timeline
                         </span>
                         <span class="right-data">
-                           Jan 24 - Dec 25
+                           Feb 24 - Dec 25
                         </span>
                      </div>
                      <div class="data-item">
@@ -275,10 +261,10 @@
                         </span>
                      </div>   <div class="data-item">
                         <span class="left-data">
-                           Team
+                           Role
                         </span>
                         <span class="right-data">
-                           1 Backend + 1 Frontend + Mid UI <em>(Me)</em>
+                           Design System Lead (self-initiated)
                         </span>
                      </div>
                      <div class="data-item">
@@ -286,7 +272,7 @@
                            Tech Stack
                         </span>
                         <span class="right-data">
-                           Java FX
+                           Java FX 
                         </span>
                      </div>
                      </div>
@@ -306,13 +292,13 @@
             <div class="cs-line-breaker ">
                <div class="cs-landscape-cover">
                   <div class="floating-text">
-                     <span class="cs-line-heading"> From Excel to UI</span>
-                     <span class="cs-line-subhead">Replaced manually-maintained Excel dashboards with unified automation platform</span>
-                     <img class="before" src="/mkm/Excel dashboard.png" alt="Previous Excel dashboard">
+                     <span class="cs-line-heading"> From Zero to Structure</span>
+                     <!-- <span class="cs-line-subhead">Include diagram showing my new workflow</span> -->
+                     <img class="before" src="/ds/prev-state.png" alt="Previous Figma file and component structure">
                   </div>
                   
                   <span class="cs-line-subhead arrow"> → </span>
-                  <img class="after" src="/mkm/UI-Leads-dashboard.png" alt="Leads dashboard">
+                  <img class="after" src="/ds/ds-card-hover.png" alt="Leads dashboard">
                </div>
             </div>
             
@@ -320,126 +306,94 @@
             <!-- SECTION 1: MY ROLE -->
             <section class="cs-block cs-section" data-section-title="My Role" id="cs-section-1">
                <div class="cs-block cs-block-two-column">
-                  <h2 class="cs-section-heading">Beyond UI - Into Product Ownership</h2>
+                  <h2 class="cs-section-heading">Becoming a System Builder</h2>
               <div class="cs-block cs-two-column-grid content-left">
                      <div class="cs-content-section cs-column">
                         <div class="cs-paragraph">
-                           <p class="cs-text">I was hired as a UI designer. But one month in, faced with three section names, no feature definitions, and a backend engineer who also needed directions... someone had to answer:</p>
-                           <p class="cs-text text-higlight"><i>What actually goes in "Campaigns"? How deep does each section go? What is v1? and v2?<br>Who decides all this?</i></p>
+                            <p class="cs-text">
+                                I was hired as a <em>UI Designer</em> on a <b>greenfield product</b>: <a href="/marketing-management.html">a Marketing Desktop CRM</a> ∂that was to become the company's second pillar of their product suite.
+                            </p>
+                            <p class="cs-text">
+                                Within the first weeks, it became clear there was no existing product definition: no UX, no feature scope, no patterns: just a rough direction and a proof-of-concept deadline.</p>
+                            <p class="cs-text">
+                                During onboarding, I went throught the company’s existing first CRM product. What I found wasn’t a rough design system: it wasn’t even a component library.</p>
+                            <br>
+                                <p class="cs-text">With a new clean product starting from zero, this felt like a <em>rare opportunity to build things the right way</em> from the start at a system level.
+                                That’s where the idea of a design system originated.</p>
                         </div>
                      </div>
-                  <div class="cs-text-column side-resume cs-column">
-                     <h4 class="cs-subhead"> Hired as</h4>
-                     <p class="cs-subtext">UI Designer</p>
+                     <div class="cs-text-column side-resume cs-column">
+                     <h4 class="cs-subhead"> Pitched to Stakeholders</h4>
+                     <p class="cs-subtext">Partial backing by VP</p>
                      <p class="arrows"> ↓ ↓ ↓ </p>
-                     <h4 class="cs-subhead"> Reality</h4>
-                     <p class="cs-subtext"> No Product team. No UX. No definition.</p>
+                     <h4 class="cs-subhead"> Proof-of-concept</h4>
+                     <p class="cs-subtext"> Company-wide rollout</p>
                   </div>
+                 <!-- <div class="cs-text-column side-resume cs-column long">
+                     <h4 class="cs-subhead"> Precedents</h4>
+                     <p class="cs-subtext"><span class="arrows"> > </span> No UI standards</p>
+                     <p class="cs-subtext"><span class="arrows"> > </span> No Figma libraries</p>
+                     <p class="cs-subtext"><span class="arrows"> > </span> No Design System culture</p>
+                     <p class="cs-subtext"><span class="arrows"> > </span> No Documentation</p>
+
+                  </div> -->
 
                </div>
               </div>
 
-               <div class="cs-block cs-block-two-column">
+              <div class="cs-block cs-block-two-column">
                   <div class="cs-two-column-grid">           
                         <div class="cs-column">
-                        <h3 class="cs-column-heading">The Shift: Becoming Co-Owners</h3>
-                        <p class="cs-section-text cs-text">Backend Lead and I became <em>de facto co-owners</em>, not by choice, but by necessity. No one else was defining scope.<br>We operated as a hub: each handled our technical domains, but co-owned everything strategic.</p>
-                        <ul class="cs-text-block-list cs-text">
-                           <li><strong> Backend Lead </strong> → All technical architecture, data models, APIs</li>
-                           <li><strong> Me </strong> → Design, research, specs, QA</li>
-                           <li><strong> Marketing Lead </strong> → provided user validation and domain knowledge (to me)</li>
-                           <li><strong> CEO </strong> →  received results-based check-ins (from both of us)</li>
-                        </ul>
+                        <h3 class="cs-column-heading">Scope vs Reality</h3>
+                        <p class="cs-section-text cs-text">
+                            The design system was not part of the projects initial scope.<br>
+                            I pitched it early, but was <b>rejected by CEO;</b>the priority was shipping features, and design infrastructure was not seen as a potential improvement.</p>
+                        <p class="cs-section-text cs-text">
+                            However, the proposal did resonate with the VP of Engineering, who was acting as frontend coordinator and JavaFX specialist; this gave me technical backing and a clear signal - the system could exist as long as it helped delivery and didn’t slow the product down - </p>
                         </div>
-                        <div class="cs-column">
+                        <!-- <div class="cs-column">
                         <figure class="cs-column-image">
                            <img src="/mkm/collaboration-model.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img">
                            <figcaption class="cs-image-caption">Co-product ownership model: separate technical domains, shared strategic decisions</figcaption>
                         </figure>
-                     </div>
+                     </div> -->
                   </div>
                </div>
-
+</section>
 
 <!-- Line-break -->
-   <div class="cs-block cs-block-three-column-text full-width cs-line-breaker">
-               <div class="cs-three-column-grid">
-                  <div class="cs-text-column">
-                     <div class="content">
-                        <h4>The brief: Direction, Not Definition</h4>
-                        <p class="cs-section-text">
-                           <span class="big-commas">"</span>
-                           <span>
-                              <i>Campaigns. Leads. Unify the data. Make it work</i>
-                           </span> 
-                               <span class="big-commas">"</span><br> 
-                           <span class="quote-author">- CEO, Jan 24</span>
-                        </p>
-                     </div>
-                  <p class="cs-images-caption cs-subtext">A very brief Brief</p>
+            <div class="cs-block cs-key-insight">
+               <div class="cs-key-insight-content">
+                  <div class="cs-key-insight-header">
+                     <h3 class="cs-key-insight-title">Key Learning: Inconsistency was not an option</h3>
                   </div>
-                  <div class="cs-images-column">
-                         <div class="cs-images-wrapper">
-                        <img src="/mkm/brief-sketch.png" alt="Brief sketch">
-                     </div>
-                  </div>
-                  <div class="cs-images-column">
-                     <div class="cs-images-wrapper">
-                        <img src="/mkm/brief-sketch-2.png" alt="Brief sketch 2">
-                     </div>
-                   </div>
-               </div>
-   </div>
-<!-- Line break -->
-               <div class="cs-block cs-block-two-column">
-               <div class="cs-two-column-grid">
-                  <div class="cs-column">
-                     <figure class="cs-column-image">
-                        <img src="/mkm/decisions-framework.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img">
-                        <figcaption class="cs-image-caption">Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together</figcaption>
-                     </figure>
-                  </div>
-                  <div class="cs-column">
-                        <h3 class="cs-column-heading">Why This Worked</h3>
-                        <p class="cs-section-text cs-text">Backend had the CEO's ear. Rather than compete for access, we aligned on ownership.
-                            We made decisions by combining both our knowledges:
-                            I'd propose features based on user research and real workflows; Backend validated them against available data, architecture, constraints...  
-                            Many ideas didn't survive the process; the ones that did became the roadmap.<br>
-                            This approach ensured every feature had a solid backing long before reaching executives reviews.
-                            </p>
-                     </div>
+                  <p class="cs-key-insight-text"> Japan timezone and only written english </p>
+                  <p class="cs-key-insight-result"><strong>→ Result:</strong> Full async methods pushed to the test. Building the system incrementally alongside design work made friction areas smaller and easier to deal with.</p>
                </div>
             </div>
 <!-- Line break -->
-
-</section>
-
 
 <!-- SECTION 2 - THE PROBLEM -->
 
 <section class="cs-block cs-section" data-section-title="The Problem" id="cs-section-2">
  <div class="cs-block cs-block-two-column">
-    <h2 class="cs-section-heading">The problem: Fragmented data, Blind decisions</h2>
+    <h2 class="cs-section-heading">The key: Avoid Long-Term Risks</h2>
               <div class="cs-two-column-grid content-left">
                   <div class="cs-main-content cs-column">
                      <div class="cs-content-section">
                         <div class="cs-paragraph">
-                           <p class="cs-text">When I joined in, the marketing team was flying blind.
-                              Campaigns performance was spread across multiple manually maintained Excel files, updated when time allowed. 
-                              By the time they caught something that wasn't working, they'd already spent too much and missed many opportunities. 
-                              CEO saw the inefficiency: fragmented data,slow feedback loops, and no shared view of performances across teams.</p>
+                           <p class="cs-text"> The product was starting from zero, but it wasn't in a vacuum. Senapt already had a in-production CRM product. During onboarding, and first small tasks, I got to interact with it and understand how design and development worked. What I found was a warning sign:</p>
+                        <p class="cs-text"> No design system, no unified filing systems, libraries, styles or components. This was the outcome of years of designers coming and going and accumulating legacy and perferences one on top of each others.</p>
                         </div>
                      </div>
                   </div>
                   <div class="cs-text-column side-resume long">
                      <h4> Constraints </h4>
-                     <p class="cs-subtext"><span class="arrows"> > </span> <em>Results; not process</em><span class="arrows"> → </span> CEO's priority</p>
-                     <p class="cs-subtext"><span class="arrows"> > </span></em>No precedents</em> <span class="arrows"> : </span> No component libraries, no patterns</p>
-                     <p class="cs-subtext"><span class="arrows"> > </span> <em>Java FX</em><span class="arrows"> : </span> limited documentation and tools</p>
-                     <p class="cs-subtext"><span class="arrows"> > </span> Frontend onboarded with <em>only 1 approved screen</em></p>
-                     <p class="cs-subtext"><span class="arrows"> > </span> <em>Full ansyc</em> with Front-end</p>
-                     <p class="cs-subtext"><span class="arrows"> > </span> No PM, no UX</p>
-                  </div>
+                     <p class="cs-subtext"><span class="arrows"> > </span> Scattered components and styles</p>
+                     <p class="cs-subtext"><span class="arrows"> > </span> No use of variables</p>
+                     <p class="cs-subtext"><span class="arrows"> > </span> No Styleguide or library</p>
+                     <p class="cs-subtext"><span class="arrows"> > </span> No single source of truth</p>
+                     </div>
 
                </div>
             </div>

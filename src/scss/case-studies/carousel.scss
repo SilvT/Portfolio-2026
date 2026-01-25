@@ -116,126 +116,21 @@ box-shadow: 0px 2px 26px $color-shadows-blue;
 }
 
 
+
+
 // ============================================
-// STACKED CAROUSEL FOR IMAGES (OLD - DISABLED FOR SWIPER)
+// BLOCKED height carousel - height
 // ============================================
-// .images-carousel.stacked-carousel {
-//   position: relative;
-//   height: 100%;
 
+.new-carousel.height{
+  .new-slide{
+    img{
+      max-height: 45vh;
+      width: auto;
+    }
+  }
+}
 
-//   .cs-carousel-container {
-//     min-height: auto;
-//     position: relative;
-//     padding-right: 3.5rem; // Space for stacked cards peeking
-//     padding-bottom: 3.5rem;
-//     height: 100%;
-
-//     @include breakpoint(mobile){
-//         padding: 0;
-//         margin: 0;
-//         height: auto;
-//     }
-//   }
-
-//   .cs-carousel-track {
-//     position: relative;
-//     height: auto;
-//     min-height: 300px;
-//     @include breakpoint(mobile){
-//     min-height: 30vh;
-//     }
-//   }
-
-//   .cs-carousel-slide {
-//     // Override default carousel behavior - all slides always visible
-//     opacity: 1 !important;
-//     visibility: visible !important;
-//     position: absolute !important;
-//     padding: 0 !important;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     max-width: 100%;
-//     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-//     display: block !important;
-//     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-//     border-radius: 8px;
-//     // height: 100%;
-
-//     img {
-//       display: block;
-//       width: 100%;
-//       height: auto;
-//       border-radius: 8px;
-//     }
-
-//     // Position 1: Front and center
-//     &.slide-position-1 {
-//       z-index: 40;
-//       transform: translateX(0) translateY(0);
-//       opacity: 1 !important;
-//     }
-
-//     // Position 2: Slightly behind and offset
-//     &.slide-position-2 {
-//       z-index: 30;
-//       transform: translateX(1rem) translateY(1rem) scale(0.98);
-//       opacity: 0.9 !important;
-//     }
-
-//     // Position 3: Further behind
-//     &.slide-position-3 {
-//       z-index: 20;
-//       transform: translateX(2rem) translateY(2rem) scale(0.96);
-//       opacity: 0.7 !important;
-//     }
-
-//     // Position 4: Almost stacked (for 4+ slide carousels)
-//     &.slide-position-4 {
-//       z-index: 10;
-//       transform: translateX(3rem) translateY(3rem) scale(0.94);
-//       opacity: 0.5 !important;
-//     }
-
-//     // Stacked: Hidden behind (for 5+ slide carousels)
-//     &.slide-position-stacked {
-//       z-index: 5;
-//       transform: translateX(3rem) translateY(3rem) scale(0.92);
-//       opacity: 0.2 !important;
-//     }
-
-//     // Remove active state overrides
-//     &.active {
-//       position: absolute !important;
-//     }
-//   }
-
-//   figure {
-//     margin-top: 1.5rem;
-//   }
-
-//   .cs-carousel-indicators {
-//     margin-top: 1.5rem;
-//   }
-
-
-//   &.tight{
-//     margin-right: 4rem;
-
-//     .cs-carousel-container{
-//       height: 90% !important;
-//       min-height: 37vh;
-//     @include breakpoint(mobile){
-//         min-height: auto;
-//     }
-//       .cs-carousel-slide{
-//       height: 90%;
-//     }
-//     }
-//   }
-
-// }
 
 
 
@@ -426,4 +321,22 @@ box-shadow: 0px 2px 26px $color-shadows-blue;
             
         }
     }
+}
+
+
+// ============================================
+// BIG CARDS (for larger content)
+// ============================================
+.stacked-metrics-swiper.large{
+  height: auto;
+  .swiper-wrapper.metrics-content{
+    height: 37vh;
+  }
+  .swiper-slide {
+    height: 35vh;
+    .cs-metric-text{
+      font-size: $font-base;
+      text-align: left;
+    }
+  }
 }

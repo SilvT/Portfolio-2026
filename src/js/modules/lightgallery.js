@@ -76,10 +76,8 @@ function initStandaloneImages() {
     const altText = img.alt || '';
     const description = buildDescription(altText, sharedCaption);
 
-    // Add data attributes to image
-    img.setAttribute('href', img.src);
-    img.setAttribute('data-glightbox', `description: ${description}`);
-    img.classList.add('glightbox-standalone');
+    // Build description for anchor wrapper
+    // Note: Don't add glightbox class to img, only to the anchor wrapper
 
     // Wrap image in anchor for GLightbox
     const anchor = document.createElement('a');
