@@ -10,6 +10,19 @@ Vercel deployment finalized with analytics and speed insights integration. New c
 - Both initialized in `src/js/main.js` via `inject()` and `injectSpeedInsights()`
 - `vercel.json` configured: Vite framework, build to `dist/`, URL rewrites for clean paths
 - Deployment is automatic on git push to main
+Problem: Analytics was only running on index.html (via main.js + a redundant inline script). The 5 case study pages had no analytics at all.
+
+Changes:
+
+Removed the duplicate inline analytics script from index.html (already covered by main.js)
+Added inject() and injectSpeedInsights() to the inline <script type="module"> in all 5 case study pages:
+marketing-management.html
+energy-tracker.html
+design-system.html
+design-system-wip.html
+token-launch.html
+Coverage now: All 6 pages have Vercel Analytics and Speed Insights. Build passes cleanly.
+
 
 ### New Pages & Content (Jan 25–26)
 - **`design-system.html`** — Full design system case study (1000+ lines)
