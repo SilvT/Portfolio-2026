@@ -62,6 +62,12 @@
   <link rel="stylesheet" href="/src/scss/_main.scss">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
   <script type="module">
+    // Vercel Analytics & Speed Insights
+    import { inject } from '@vercel/analytics';
+    import { injectSpeedInsights } from '@vercel/speed-insights';
+    inject();
+    injectSpeedInsights();
+
     // Import modules
     import { initAccordions, initCaseStudyAccordions } from '/src/js/modules/accordion.js';
     import { initLightGallery } from '/src/js/modules/lightgallery.js';
