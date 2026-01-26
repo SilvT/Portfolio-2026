@@ -613,5 +613,13 @@
 
    <script type="module" src="/src/js/main.js"></script>
 
+  <!-- Vercel Analytics & Speed Insights -->
+  <script type="module">
+    import { inject } from '@vercel/analytics';
+    import { injectSpeedInsights } from '@vercel/speed-insights';
+
+    inject();
+    injectSpeedInsights();
+  </script>
    </body>
 </html>
