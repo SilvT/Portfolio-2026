@@ -1,10 +1,16 @@
 // js/ Visual Effects
 
+import { inject } from '@vercel/analytics';
+import { injectSpeedInsights } from '@vercel/speed-insights';
 import { initFlipBoardAnimation } from './modules/flipBoardAnimation.js';
 import { initScrollHint } from './modules/scroll-hinter.js';
 import { initNavigation } from './modules/navigation.js';
 import { initLightGallery } from './modules/lightgallery.js';
 import { initIconAnimation } from "./modules/icon-animation.js";
+
+// Vercel Analytics & Speed Insights
+inject();
+injectSpeedInsights();
 
 
 /**
