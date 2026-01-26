@@ -16,6 +16,10 @@
     justify-content: flex-end;
     width: 100%;
     height: 100%;
+    @include breakpoint(mobile){
+      width: 100dvw;
+      height: 100dvh;
+    }
   }
 
   .contact__content{
@@ -30,6 +34,11 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+    @include breakpoint(mobile){
+      padding: 4rem;
+      gap: 0;
+    }
+
   }
     & .icon {
     text-transform: capitalize;
@@ -51,6 +60,9 @@
   width: fit-content;
   width: 100%;
   justify-content: space-between;
+  @include breakpoint(mobile){
+    gap: 0;
+  }
 }
 
 // Social link blocks
@@ -106,6 +118,9 @@
       z-index: 10;
       // text-wrap: wrap;
       min-width: 10vw;
+      @include breakpoint(mobile){
+        display: none;
+       }
     }
 
     }
@@ -115,7 +130,6 @@
       visibility: visible;
       transform: translateX(-60%) translateY($space-32);
     }
-
 }
 
 // CV Download Button
@@ -173,6 +187,10 @@
       transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
       pointer-events: none;
       z-index: 1000;
+
+    @include breakpoint(mobile){
+      display: none;
+    }
     }
 
     // Tooltip arrow
@@ -190,6 +208,10 @@
       transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
       pointer-events: none;
       z-index: 1000;
+
+    @include breakpoint(mobile){
+      display: none;
+    }
     }
 
     &:hover::before {
@@ -203,6 +225,7 @@
       visibility: visible;
       transform: translateX(6px) translateY(-50%);
     }
+
   }
 }
 
@@ -224,18 +247,28 @@
     // height: 80dvh;
    margin:5rem 0;
    padding-bottom: 10rem;
+
+   @include breakpoint(mobile){
+    margin: 0;
+    padding: 0;
+   }
   }
   .contact__content {
     padding: 40px;
     justify-content: flex-start;
     height: 80%;
-
+   @include breakpoint(mobile){
+   padding: 4rem;
+  }
   }
 
   .social-link {
     flex-direction: column;
     align-items: flex-start;
     gap: $space-4;
+    width: auto;
+    flex-shrink: 1;
+    white-space: normal;
 
     &__icon {
       font-size: $font-xl;
@@ -244,5 +277,20 @@
     &__text {
       font-size: $font-s;
     }
+  }
+}
+
+.icon-animation-container{
+    @include breakpoint(mobile){
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      
+    }
+  .icon-animation{
+    @include breakpoint(mobile){
+      width: 25dvw;
+    }
+    
   }
 }

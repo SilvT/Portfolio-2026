@@ -7,6 +7,7 @@ import { initScrollHint } from './modules/scroll-hinter.js';
 import { initNavigation } from './modules/navigation.js';
 import { initLightGallery } from './modules/lightgallery.js';
 import { initIconAnimation } from "./modules/icon-animation.js";
+import { initCarouselDots } from "./modules/carousel-dots.js";
 
 // Vercel Analytics & Speed Insights
 inject();
@@ -34,6 +35,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Lightbox for galleries
   initLightGallery();
+
+  // Carousel dot navigation
+  initCarouselDots();
 });
 
 

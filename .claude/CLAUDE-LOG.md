@@ -3,7 +3,23 @@
 ## 2026-01-26
 
 ### Session Summary
-Vercel deployment finalized with analytics and speed insights integration. New case study pages added and design system WIP page created.
+Vercel deployment finalized with analytics and speed insights integration. New case study pages added and design system WIP page created. Marquee animation unified across all viewports and carousel dot navigation made functional.
+
+### Slideshow: Marquee on Mobile + Carousel Dots
+- **Marquee kept on mobile** — Removed the `@include breakpoint(mobile)` override in `project-cards.scss` that disabled the marquee animation (`animation: none`, `scroll-snap-type`, `overflow-x: auto`). Mobile now inherits the same continuous marquee as desktop.
+- **Mobile image overrides removed** — Removed `width: 100%`, `object-fit: cover`, `scroll-snap-align: start` mobile overrides on `.project-image`. Images now display at natural aspect ratio (same as desktop) with `border-radius: 4px` on mobile.
+- **Duplicate images visible on mobile** — Removed `display: none` rule for `aria-hidden="true"` images on mobile, since they're needed for the seamless marquee loop.
+- **New module: `carousel-dots.js`** — Created JS to make dot navigation functional:
+  - `requestAnimationFrame` loop reads the CSS `transform` matrix to determine which slide is at the left edge
+  - Updates `.active` class on the corresponding dot in real-time
+  - Clicking a dot pauses the marquee, jumps to that slide via `translateX`, resumes after 3s with correct `animationDelay`
+- **Wired up in `main.js`** — `initCarouselDots()` added to `DOMContentLoaded` handler
+- Dots remain **mobile-only** (`display: none` on desktop, `display: flex` at `max-width: 768px`)
+
+#### Files Modified
+- `src/scss/landing-page/project-cards.scss` — Removed mobile scroll-snap overrides, kept marquee everywhere
+- `src/js/modules/carousel-dots.js` — New module
+- `src/js/main.js` — Import + init carousel dots
 
 ### Vercel Deployment & Analytics
 - **`@vercel/analytics` (v1.6.1)** and **`@vercel/speed-insights` (v1.3.1)** added as dependencies

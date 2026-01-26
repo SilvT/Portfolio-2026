@@ -58,7 +58,7 @@
   flex-direction: column;
 
   @include breakpoint(mobile) {
-    padding: $space-60 20px 20px;
+    padding: $space-20 20px 20px;
   }
 }
 
@@ -129,7 +129,7 @@
       align-content: center;
 
       @include breakpoint(mobile) {
-        font-size: 28px;
+        // font-size: 28px;
         line-height: 110%;
         min-height: auto;
       }
@@ -192,16 +192,17 @@
   flex-wrap: wrap;
   height: 100%;
   gap: $space-12;
-  // width: 40vw;
   flex-direction: row;
 
   @include breakpoint(mobile) {
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: $space-8;
-    order: 4;
-    height: fit-content
+    gap: 0;
+    // order: 4;
+    height: fit-content;
+    justify-content: space-evenly;
+
   }
 
   .metric-card {
@@ -212,15 +213,16 @@
     min-height: 5rem;
     max-height: 8rem;
     max-width: 19vw;
-
+    @include stagger-fade-in();
     @include breakpoint(mobile) {
-      // flex: 1 1 calc(50% - 4px);
       width: auto;
       min-width: 0;
       min-height: 4rem;
       max-height: 5rem;
-     min-width: 30vw;
-     min-height: 7vh;
+      min-width: 33%;
+      width: fit-content;
+
+      
     }
 
     .cs-metric-content {
@@ -229,7 +231,7 @@
       min-height: auto;
       flex-direction: row;
       justify-content: space-around;
-
+      @include stagger-fade-in();
       @include breakpoint(mobile) {
         padding: 8px;
         gap: 4px;
@@ -242,7 +244,7 @@
       width: 1.8rem;
       height: 1.8rem;
       margin:0;
-
+      @include stagger-fade-in();
       @include breakpoint(mobile) {
         width: 1.5rem;
         height: 1.5rem;
@@ -262,10 +264,11 @@
       color: $blue;
       font-size: $font-l;
       width: auto;
-
+      @include stagger-fade-in();
       @include breakpoint(mobile) {
         font-size: 18px;
         text-align: center;
+        white-space: pre;
       }
     }
 
@@ -273,10 +276,11 @@
       font-size: $font-base;
       color: $color-blue-400;
       width: auto;
-
+      @include stagger-fade-in();
       @include breakpoint(mobile) {
         font-size: 12px;
         text-align: center;
+        // white-space: pre;
       }
     }
 
@@ -706,13 +710,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-
+  @include stagger-fade-in();
   @include breakpoint(mobile) {
     gap: 6px;
   }
 
   .tag-label {
-    // Hidden in the new design, kept for backward compatibility
     display: none;
   }
 
@@ -720,7 +723,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-
+  @include stagger-fade-in();
     @include breakpoint(mobile) {
       gap: 6px;
     }
@@ -731,7 +734,11 @@
        padding: 4px 12px;
        background-color: rgba(0, 102, 255, 0.1);
        color: $blue-dark;
-       border-radius: 2px;
+       border-radius: 2px
+       ;
+       @include breakpoint(mobile){
+        font-size: calc($font-xs)*0.8;
+       }
     }
   }
 
@@ -765,6 +772,11 @@
     gap: 1rem;
     justify-content: space-between;
     align-items: center;
+    overflow: clip;
+    @include breakpoint(mobile){
+      padding: $space-20 0 ;
+      margin: 0;
+    }
   }
 
   // ============================================================================
@@ -788,7 +800,8 @@
         margin: 0.5rem 0;
 
         @include breakpoint(mobile) {
-          font-size: calc($font-3xl * 0.85);
+          // font-size: calc($font-3xl * 0.85);
+          font-size: $font-xl;
           line-height: 1;
           margin: 0.25rem 0;
         }
@@ -802,8 +815,8 @@
         width: fit-content;
 
         @include breakpoint(mobile) {
-          font-size: $font-xs;
-          padding: 0.3rem 0.75rem;
+          font-size: calc($font-xs*0.8);
+          padding: 0.2rem 0.75rem;
         }
       }
 
@@ -869,14 +882,19 @@
   }
 
   // ============================================================================
-  // SLIDESHOW CONTAINER - MARQUEE CAROUSEL (Desktop) / DOT CAROUSEL (Mobile)
+  // SLIDESHOW CONTAINER - MARQUEE CAROUSEL
   // ============================================================================
 
   .slideshow-container {
     max-height: 40vh;
     height: 40vh;
     position: relative;
-    overflow: hidden; // Clip content to container bounds
+    overflow: hidden;
+    @include breakpoint(mobile){
+      height: 37dvh;
+      cursor: pointer;
+      width: 100dvw;
+    }
   }
 
   .project-image-wrapper.slideshow {
@@ -897,20 +915,8 @@
     }
 
     @include breakpoint(mobile) {
-      // Mobile: Traditional carousel behavior
-      animation: none;
-      gap: 0;
-      width: 100%;
-      scroll-snap-type: x mandatory;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-
-      // Hide scrollbar
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      &::-webkit-scrollbar {
-        display: none;
-      }
+      gap: 1rem;
+      animation-duration: 60s;
     }
 
     .project-image {
@@ -927,20 +933,7 @@
       opacity: 1 !important;
 
       @include breakpoint(mobile) {
-        // Mobile: One image at a time, full width
-        width: 100%;
-        height: auto;
-        max-height: 60vh;
-        object-fit: cover;
-        scroll-snap-align: start;
         border-radius: 4px;
-      }
-
-      // Hide duplicate images on mobile
-      &[aria-hidden="true"] {
-        @include breakpoint(mobile) {
-          display: none;
-        }
       }
     }
 
@@ -958,12 +951,16 @@
       display: flex;
       justify-content: center;
       gap: 8px;
-      padding: 16px 0;
+      // padding: 16px 0;
+      padding: 16px 8px;
+      border-radius: 1rem;
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
       z-index: 10;
+      background-color: $white-alpha;
+      
     }
   }
 
@@ -1007,6 +1004,14 @@
   .data {
     .metrics .metric-card {
       max-height: 6rem;
+      @include breakpoint(mobile){
+        max-height: 5rem;
+          .cs-metric-top{
+            display: flex;
+            flex-direction: row;
+            gap: $space-12;
+          }
+      }
     }
 
     .cs-metric-border {
@@ -1094,7 +1099,8 @@
     margin-bottom: $space-12;
 
     @include breakpoint(mobile) {
-      margin-bottom: 8px; // Tighter spacing on mobile
+      // margin-bottom: 8px; // Tighter spacing on mobile
+      display: none;
     }
   }
 
@@ -1103,8 +1109,9 @@
     margin-bottom:$space-12;
 
     @include breakpoint(mobile) {
-      margin-top: 8px; // Tighter spacing on mobile
-      margin-bottom: 4px;
+      // margin-top: 8px; // Tighter spacing on mobile
+      // margin-bottom: 4px;
+      display: none;
     }
   }
 

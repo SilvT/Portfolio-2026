@@ -40,6 +40,7 @@ Portfolio-clean/
     │       ├── scroll-hinter.js     # Scroll hint + GSAP scroll
     │       ├── lightgallery.js      # GLightbox initialization
     │       ├── accordion.js         # Expand/collapse sections
+    │       ├── carousel-dots.js     # Slideshow dot nav + marquee sync
     │       └── side-nav-bar.js      # Dynamic case study nav
     └── scss/
         ├── _main.scss           # Main import file
@@ -125,6 +126,9 @@ Initializes GLightbox for carousels, standalone images, gallery grids, and accor
 ### `accordion.js`
 Mutually exclusive accordion behavior for `.milestone` and `.cs-line-breaker.accordion` elements.
 
+### `carousel-dots.js`
+Syncs dot navigation with the marquee animation on project card slideshows. Uses `requestAnimationFrame` to track which slide is visible via the CSS transform matrix and updates the active dot. Clicking a dot pauses the marquee, jumps to that slide, and resumes after 3s.
+
 ### `side-nav-bar.js`
 Generates navigation from `data-section-title` attributes. Intersection Observer tracks scroll position with animated indicator.
 
@@ -209,6 +213,47 @@ Built with modern vanilla web technologies:
 
 
 ---
+# Slideshow Behavior (Project Cards)
+The project card slideshows use a **marquee animation** on all viewports — a continuous infinite horizontal scroll of images, with duplicated images for seamless looping.
+
+## Marquee Animation
+- CSS `@keyframes marqueeScroll` translates from `0%` to `-50%` over 30s (linear, infinite)
+- Images are duplicated in HTML (`aria-hidden="true"`) so the loop is seamless
+- `width: max-content` on `.project-image-wrapper.slideshow` keeps all images side-by-side
+- Desktop gap: `1.5rem` / Mobile gap: `1rem`
+- Animation pauses on hover (desktop)
+
+## Dot Indicators (Mobile Only)
+- `.carousel-dots` are `display: none` on desktop, `display: flex` at `max-width: 768px`
+- Positioned absolutely at bottom center with semi-transparent white background
+- Active dot: expands from 8px circle to 24px rounded rectangle in `$blue`
+- Inactive dots: 8px circles at 30% opacity blue
+- **JavaScript-driven** via `carousel-dots.js`:
+  - `requestAnimationFrame` loop reads the CSS transform matrix to determine which slide is visible
+  - Active dot updates in real-time as the marquee scrolls
+  - Clicking a dot pauses the marquee, jumps to that slide, and resumes after 3s
+---
+# Critical CSS Rule: `overflow: clip` not `hidden`
+
+**NEVER use `overflow: hidden` on `html`, `body`, or ancestors of sticky elements.**
+
+`overflow: hidden` creates a scroll container, which breaks `position: sticky` on child/sibling elements. Use `overflow: clip` instead — it clips content visually the same way but does NOT create a scroll container.
+
+This applies to:
+- `html` and `body` — use `overflow-x: clip` to prevent horizontal overflow without breaking sticky nav
+- `.contentbox` — uses `overflow: hidden` (acceptable since `.top-nav` is not a descendant)
+- `.project-content` in `.experimental-layout` — uses `overflow: clip` to contain the `width: max-content` marquee slideshow
+- `.top-nav` itself — uses `overflow-x: clip`
+
+### Horizontal Overflow Prevention
+Multiple sources of horizontal overflow were fixed on mobile:
+- `100vw` / `100dvw` units include scrollbar width — always use `100%` instead
+- `.metric-card` had duplicate `min-width: 30vw` overriding `min-width: 0` on mobile
+- `.social-link` in footer had `width: 10vw`, `flex-shrink: 0`, `white-space: nowrap` not reset on mobile
+- `html` and `body` use `overflow-x: clip` + `max-width: 100%` as safety net
+
+---
+
 # Actions
 
 At the first interaction of the day, before doing prompt, read CLAUDE-LOG file, review content and compile as much as possible, update with last 24hours key changes and decisions.
