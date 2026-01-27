@@ -1,5 +1,44 @@
 # Claude Log - Portfolio 2025
 
+## 2026-01-27
+
+### Session Summary
+Performance optimization: added native lazy loading, font preloading, and removed unused Noto Sans font across all 6 pages. Git push issue resolved (rebase over remote Vercel PR merge). Remote URL updated to new repo name.
+
+### Performance: Lazy Loading & Font Preload
+- **Native `loading="lazy"`** added to all below-fold `<img>` tags across all 6 HTML pages (~60+ images total)
+- **`loading="eager"` + `fetchpriority="high"`** added to LCP image on `index.html` (`mkm-large hero.png`)
+- Case study hero images already had `loading="eager"` — no change needed
+- Logo SVGs left without loading attribute (small, always needed)
+
+### Font Optimization
+- **Removed unused Noto Sans** (`wght@100..900`) from Google Fonts URL on all 6 pages — was imported but never referenced in SCSS
+- **Added `<link rel="preload" as="style">`** for Google Fonts stylesheet on all 6 pages — hints browser to fetch font CSS earlier
+- Fonts retained: Bricolage Grotesque (200-800), Fascinate, Anonymous Pro (400, 700)
+
+### JS Cleanup
+- **Removed `initLazyLoading()`** from `src/js/main.js` — it only added a `.loaded` CSS class via IntersectionObserver, didn't actually defer image loading. Native `loading="lazy"` replaces this behavior at the browser level.
+
+### Git / Deployment
+- Resolved non-fast-forward push via `git pull --rebase origin main` (remote had Vercel Web Analytics PR merge `acecae6`)
+- Updated remote URL from `Portfolio-clean.git` to `Portfolio-2026.git` (repo renamed on GitHub)
+
+### Files Modified
+- `index.html` — font preload, remove Noto Sans, `loading="eager"` on LCP, `loading="lazy"` on all other images
+- `marketing-management.html` — font preload, remove Noto Sans, `loading="lazy"` on 22 images
+- `energy-tracker.html` — font preload, remove Noto Sans, `loading="lazy"` on 9 images
+- `design-system.html` — font preload, remove Noto Sans, `loading="lazy"` on 19 images
+- `design-system-wip.html` — font preload, remove Noto Sans (only 2 images: logo + hero)
+- `token-launch.html` — font preload, remove Noto Sans (only 2 images: logo + hero)
+- `src/js/main.js` — Removed `initLazyLoading()` function and its call from `initVisualEffects()`
+
+### Known Remaining Performance Issues
+- **Large unoptimized images** — `mkm-large hero.png` (3.4MB), `card-hover-2.gif` (4.8MB) still load at full size. Converting to WebP and replacing GIF with MP4 would yield the biggest improvement.
+- **GLightbox CSS** (3MB) loaded on landing page even though lightbox is only used on case studies
+- **Duplicate marquee images** — still loaded twice for seamless loop animation
+
+---
+
 ## 2026-01-26
 
 ### Session Summary

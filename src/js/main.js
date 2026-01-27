@@ -21,7 +21,6 @@ injectSpeedInsights();
 export function initVisualEffects() {
   initFlipBoardAnimation();
   initScrollHint();
-  initLazyLoading();
 }
 /**
  * Initialize portfolio on DOM ready
@@ -40,36 +39,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   initCarouselDots();
 });
 
-
-/**
- * Initialize lazy loading for images
- */
-function initLazyLoading() {
-  const observerOptions = {
-    root: null,
-    rootMargin: '50px',
-    threshold: 0.01,
-  };
-
-  const imageObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-
-        // Add loaded class for any additional styling
-        img.classList.add('loaded');
-
-        // Stop observing this image
-        imageObserver.unobserve(img);
-      }
-    });
-  }, observerOptions);
-
-  // Observe all project images
-  document.querySelectorAll('.project-image').forEach((img) => {
-    imageObserver.observe(img);
-  });
-}
 
 
 // Initialize icon-animation
