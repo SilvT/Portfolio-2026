@@ -202,12 +202,14 @@
 }
 
 .milestone-block {
-  h4 {
+  // Semantic replacement for h4 - maintains same visual styling
+  .milestone-block-heading {
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-bottom: 0.5rem;
     color: $blue-dark;
+    font-weight: 400; // Bold handled by inner <strong>
   }
 
   ul {
