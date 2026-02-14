@@ -114,19 +114,14 @@ function showScrollHinter() {
     return;
   }
 
-  // Show hinter ONLY when About section is visible in viewport
+  // Hide hinter when leaving About section (entry animation handles showing it)
   const checkVisibility = () => {
     const rect = aboutSection.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Only show when about section is in view (top is near or above viewport top, bottom is below viewport top)
-    // This means: show when about section is the current snapped section
     const isAboutSectionVisible = rect.top <= 100 && rect.bottom >= windowHeight * 0.5;
 
-    if (isAboutSectionVisible) {
-      scrollHinter.style.opacity = '1';
-      scrollHinter.style.visibility = 'visible';
-    } else {
+    if (!isAboutSectionVisible) {
       scrollHinter.style.opacity = '0';
       scrollHinter.style.visibility = 'hidden';
     }

@@ -1,5 +1,56 @@
 # Claude Log - Portfolio 2025
 
+## 2026-02-14
+
+### Session Summary
+New `new-about` branch: redesigned About section with entry animations, and added staggered entry animations to all project cards. Removed CSS `stagger-fade-in` mixins from project cards in favour of GSAP ScrollTrigger-driven animations with re-entry support. Marquee slideshow speed reduced.
+
+### About Section Entry Animation (`about-entry-animation.js`)
+- **New module** created across prior sessions on this branch
+- GSAP timeline with ScrollTrigger, staggering: SVG circles → name parts → job title → bio → scroll hinter
+- Individual circle stagger (0.2s apart), grid elements 0.25s apart, scroll hinter with doubled delay
+- Replays on `onEnter` and `onEnterBack` via paused timeline + `resetToHidden()` + `tl.restart()`
+- Scroll hinter conflict resolved: `scroll-hinter.js` `showScrollHinter()` now only hides (not shows) the element — entry animation controls visibility
+- `visibility: hidden/visible` added alongside `opacity` to prevent inline style conflicts
+
+### Project Card Entry Animation (`project-card-entry-animation.js`)
+- **New module** — staggered entry for all 4 `.section-project` cards
+- Animation order per card:
+  1. `.project-title` → `.type-label` + `.project-meta`
+  2. `.project-description` → `.project-details` + `.meta-group`
+  3. `.metric-card` (staggered one by one, 0.2s apart)
+  4. `.slideshow-container` + `.data-tags` (gentle fade, 1.2s duration, `power1.inOut`)
+- **Scroll direction speed**: normal `timeScale(1)` on scroll down, faster `timeScale(2.5)` on scroll back up
+- Respects `prefers-reduced-motion`
+
+### CSS `stagger-fade-in` Mixin Removal (Project Cards)
+- Removed `@include stagger-fade-in()` from: `.text-content`, `.metric-card`, `.cs-metric-content`, `.cs-metric-icon-wrapper`, `.cs-metric-value`, `.cs-metric-label`, `.tags`, `.tag-list`
+- Removed `@include stagger-fade-in-reduced-motion` from reduced-motion block
+- These CSS animations used `animation: fadeInUp forwards` which overrode GSAP's inline `opacity: 0` — GSAP now has full control
+- CSS animations were also not functioning correctly on their own (user confirmed)
+
+### Marquee Speed Reduction
+- Desktop: 30s → 45s
+- Mobile: 60s → 80s
+
+### Key Decisions
+- GSAP ScrollTrigger preferred over CSS animations for entry effects — enables re-entry replay, scroll-direction-aware speed, and programmatic control
+- CSS `stagger-fade-in` mixin kept in `_animations.scss` (still used by About section SCSS) but removed from project cards
+- `timeScale()` approach for scroll direction speed — same timeline, no duplicate code
+
+### Files Modified
+- `src/js/modules/about-entry-animation.js` — New module (created in prior sessions on this branch)
+- `src/js/modules/project-card-entry-animation.js` — New module
+- `src/js/main.js` — Imports + calls for both entry animation modules
+- `src/js/modules/scroll-hinter.js` — `showScrollHinter()` changed to hide-only logic
+- `src/scss/landing-page/project-cards.scss` — Removed `stagger-fade-in` includes, marquee speed reduced
+
+### Files Created
+- `src/js/modules/project-card-entry-animation.js`
+- `src/js/modules/about-entry-animation.js` (prior sessions)
+
+---
+
 ## 2026-01-27
 
 ### Session Summary

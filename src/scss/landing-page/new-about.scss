@@ -3,6 +3,23 @@
 @use '../typography' as *;
 @use '_animations' as *;
 
+
+
+/* Prepare elements for animation */
+.ellipse-decor circle,
+.name-wrapper,
+.flip-board-container,
+.bio {
+  will-change: transform, opacity;
+}
+
+/* Force GPU acceleration */
+.ellipse-decor circle {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+
 .about-sect {
   width: 100%;
   max-width: 100%;
@@ -49,9 +66,6 @@ svg{
     transform: translateY(-100%);
     }
 
-
-
-
   }
   circle:nth-child(1) {
   animation: drift1 40s ease-in-out infinite alternate;
@@ -60,14 +74,25 @@ svg{
 circle:nth-child(2) {
   animation: drift2 30s ease-in-out infinite alternate;
 }
+circle:nth-child(3) {
+  animation: drift3 30s ease-in-out infinite alternate;
+}
 @keyframes drift1 {
   0% { transform: translateY(0px); }
   100% { transform: translateY(-20%) translateX(10%); }
 }
 
 @keyframes drift2 {
-  0% { transform: translateX(0px); }
-  100% { transform: translateX(80%) translateX(-10%); }
+  0% { transform: translateX(0px);    fill: $blue;
+ }
+  100% { transform: translateX(20%) translateY(-5%);    fill: $blue-light;
+ }
+}
+@keyframes drift3 {
+  0% { transform: translateX(0px);    fill: $color-blue-200;
+ }
+  100% { transform: translateY(10%) translateX(-15%);    fill: $blue;
+ }
 }
 
 }
@@ -131,3 +156,5 @@ max-width: 40vw;
         }
     } 
 }
+
+
