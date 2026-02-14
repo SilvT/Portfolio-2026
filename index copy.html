@@ -65,18 +65,18 @@
       </nav>
       <!-- About Landing Section -->
       <section id="about-about" class="section-about" data-section="about" aria-labelledby="portfolio-heading" aria-label="About section">
-
-            <div class="ellipse-decor" aria-hidden="true">
-            <svg viewBox="0 0 1600 1200" xmlns="http://www.w3.org/2000/svg">
-
-               <circle cx="1200" cy="200" r="600" fill="white" fill-opacity="0.12"/>
-               <circle cx="900" cy="400" r="500" fill="white" fill-opacity="0.08"/>
-               <circle cx="1400" cy="800" r="700" fill="white" fill-opacity="0.1"/>
-
-            </svg>
-            </div>
-
-      <div class="contentbox">
+               <div class="ellipse-decor visible" aria-hidden="true">
+         <svg class="ellipse-decor__svg" width="1280" height="832" viewBox="0 0 1280 832" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g>
+               <circle class="large bottom" cx="610.5" cy="1292.5" r="718"></circle>
+               <circle class="small bottom corner" cx="0" cy="840" r="195"></circle>
+               <circle class="small bottom" cx="230" cy="720.5" r="111.5"></circle>
+               <circle class="small right" cx="1064" cy="612" r="111.5"></circle>
+            </g>
+         </svg>
+      </div>
+         <div class="contentbox">
+            <!-- About Section -->
             <article class="about-sect">
                <div class="info-grid">
                   <div class="name-wrapper grid-item one">
@@ -88,18 +88,47 @@
                      <div class="flip-board-container">PRODUCT<br>DESIGNER</div>
                   </div>
                   <div class="bio grid-item three" role="contentinfo" aria-label="Professional biography">
-                     <p class="bold">
-                        I build scalable products and the design systems that power them.</p>
-                     <p class="content">
-                        Product Designer × Design Systems Specialist <br>
+                     <p>
+                        I build scalable products and the design systems that power them.<br>
+                        Product Designer × Design Systems Specialist
                         Building scalable products from 0→1.        
                   </div>
+                  <!-- <div class="stack grid-item four">
+                     <h3 class="info-title">Tech Stack</h3>
+                     <div class="stack-list">
+                        <span><b>Design &amp; Systems </b></span>
+                        <span>&gt; Figma</span>
+                        <span>|</span>
+                        <span>Token Studio</span>
+                        <span>|</span>
+                        <span>Github Actions</span>
+                        <span>|</span> 
+                        <span>&gt; Photoshop</span>
+                        <span>|</span>
+                        <span>Illustrator</span>
+                        <span>|</span>
+                        <span>Confluence</span>
+                        <span>|</span>
+                        <span><b>Development</b></span>
+                        <span>&gt; HTML5</span>
+                        <span>|</span>
+                        <span>CSS3</span>
+                        <span>|</span>
+                        <span>Sass</span>
+                        <span>|</span>
+                        <span>JavaScript</span>
+                        <span>|</span>
+                        <span>Git</span>
+                        <span>|</span>
+                        <span>Claude Code</span>
+                        <span>|</span>
+                     </div>
+                  </div> -->
                </div>
             </article>
          </div>
       </section>
-
-
+      <!-- Projects Container -->
       <div id="projects-container">
 
          
@@ -308,8 +337,113 @@
          </section>
 
 
+         <section id="triage-feature" class="section-project project-neutral experimental-layout" data-section="project" data-project-id="3">
+            <div class="contentbox">
+               <!-- Project Screen -->
+               <div class="project-screen">
+                  <button class="project-nav top project-nav-button" data-project-id="2">
+                     <h3 class="nav-title">↑ Previous</h3>
+                     <p class="nav-subtitle">Design System</p>
+                  </button>
+                  <div class="project-content">
+                     <!-- Content -->
+                     <div class="text-content">
+                        <div class="title-group">
+                           <div class="type-label">Product</div>
+                           <h1 class="project-title">Social Media Triage</h1>
+                           <p class="project-meta">Senapt LTD ∙ 2024 - 2025</p>
+                        </div>
+                        <div class="long-content">
+                           <h2 class="project-description">Identified customer support bottleneck through validation, proposed automated workflow</h2>
+                           <p class="project-details">
+                              During user research, discovered social media managers spending 30% of their time manually routing Facebook messages to support. Proposed automated ID detection and CRM validation pipeline. Feature shipped in MVP, eliminating manual handoff for 100+ support cases and clients located.
+                           </p>
+                           <!-- <div class="meta-group">
+                              <a href="/design-system-wip.html" class="cta-button">
+                              → Read Case Study - UnLIKELY
+                              </a>
+                           </div> -->
+                        </div>
+                     </div>
 
-         <section id="energy-tracker" class="section-project project-green experimental-layout" data-section="project" data-project-id="3">
+                     <div class="data-metrics">
+                        <div class="metrics green">
+                           <div class="metric-card">
+                              <div class="cs-metric-content">
+                                 <div class="cs-metric-top">
+                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-clock"></i></span></div>
+                                    <div class="cs-metric-value">Discovery</div>
+                                 </div>
+                                 <div class="cs-metric-label">during User Validation</div>
+                              </div>
+                              <div class="cs-metric-border" aria-hidden="true"></div>
+
+                           </div>
+                           <div class="metric-card">
+                              <div class="cs-metric-content">
+                                 <div class="cs-metric-top">
+                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-frame-select"></i></span></div>
+                                    <div class="cs-metric-value">30%</div>
+                                 </div>
+                                 <div class="cs-metric-label">time saved for CM</div>
+                              </div>
+                              <div class="cs-metric-border" aria-hidden="true"></div>
+
+                           </div>
+                           <div class="metric-card">
+                              <div class="cs-metric-content">
+                                 <div class="cs-metric-top">
+                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-multiple-pages-empty"></i></span></div>
+                                    <div class="cs-metric-value">100+</div>
+                                 </div>
+                                 <div class="cs-metric-label">cases automated</div>
+                              </div>
+                              <div class="cs-metric-border" aria-hidden="true"></div>
+
+                           </div>
+                        </div>
+
+                     </div>
+
+
+                     <!-- Images carousel -->
+                     <div class="slideshow-container">
+                        <div class="project-image-wrapper slideshow">
+                           <img src="/mkm/UI-Interactions-convo.png" alt="Design System from Scratch preview 1" class="project-image project-image-default loaded" loading="lazy" data-slide="0">
+                           <img src="/mkm/CRM-idea--2.png" alt="Design System from Scratch preview 2" class="project-image project-image-default loaded" loading="lazy" data-slide="1">
+                           <img src="/mkm/CRM-UI-2.png" alt="Design System from Scratch preview 3" class="project-image project-image-default loaded" loading="lazy" data-slide="2">
+                           <img src="/mkm/CRM-UI.png" alt="Design System from Scratch preview 1" class="project-image project-image-default loaded" loading="lazy" aria-hidden="true">
+                           <img src="/mkm/UI-interactions-inbox.png" alt="Design System from Scratch preview 2" class="project-image project-image-default loaded" loading="lazy" aria-hidden="true">
+                           <img src="/mkm/UI-Interactions-convo.png" alt="Design System from Scratch preview 3" class="project-image project-image-default loaded" loading="lazy" aria-hidden="true">
+                        </div>
+                        <!-- Dots navigation (mobile only) -->
+                        <div class="carousel-dots">
+                           <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button><button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button><button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button>
+                        </div>
+                     </div>
+                     <!-- Tags and metrics -->
+                     <div class="data-tags">
+                        <div class="tags">
+                           <span class="tag-label">Tags</span>
+                           <div class="tag-list">
+                              <span>Product Design</span>
+                              <span>User Research</span>
+                              <span>B2B SaaS</span>
+                              <span>Workflow Automation</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <button class="project-nav bottom project-nav-button" data-project-id="4">
+                     <h3 class="nav-title">↓ Next</h3>
+                     <p class="nav-subtitle">Energy Switching Tracker</p>
+                  </button>
+               </div>
+            </div>
+         </section>
+
+
+         <section id="energy-tracker" class="section-project project-green experimental-layout" data-section="project" data-project-id="4">
             <div class="contentbox">
                <!-- Project Screen -->
                <div class="project-screen">
@@ -411,7 +545,7 @@
                         </div>
                      </div>
                   </div>
-                  <button class="project-nav bottom project-nav-button" data-project-id="4">
+                  <button class="project-nav bottom project-nav-button" data-project-id="5">
                      <h3 class="nav-title">↓ Next</h3>
                      <p class="nav-subtitle">Lead Capturing</p>
                   </button>
@@ -420,7 +554,109 @@
          </section>
 
 
-         <section id="figma-plugin" class="section-project project-neutral experimental-layout" data-section="project" data-project-id="4">
+<!-- 
+         <section id="lead-capture" class="section-project project-blue experimental-layout" data-section="project" data-project-id="5">
+            <div class="contentbox">
+               <div class="project-screen">
+                  <button class="project-nav top project-nav-button" data-project-id="4">
+                     <h3 class="nav-title">↑ Previous</h3>
+                     <p class="nav-subtitle">Energy Switching Microsite</p>
+                  </button>
+                  <div class="project-content">
+
+                     <div class="text-content">
+                        <div class="title-group">
+                           <div class="type-label">Product</div>
+                           <h1 class="project-title">Lead Capturing</h1>
+                           <p class="project-meta">Senapt Limited (Tomato Energy) ∙ 2024</p>
+                        </div>
+                        <div class="long-content">
+                           <h2 class="project-description">Mobile-first lead capture with seamless CRM integration</h2>
+                           <p class="project-details">
+                                 Designed web app for field contractors to capture leads on-site with direct CRM backend sync. Shipped to production, iterated through 2 rounds of user testing with 50+ contractors.
+                              </p>
+                           <div class="meta-group">
+                              <a href="/energy-tracker.html" class="cta-button">
+                              → Read Case Study
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+                        <div class="data-metrics">
+                        <div class="metrics neutral">
+                           <div class="metric-card">
+                              <div class="cs-metric-content">
+                                 <div class="cs-metric-top">
+                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-eye"></i></span></div>
+                                    <div class="cs-metric-value">50+</div>
+                                 </div>
+                                 <div class="cs-metric-label">External users</div>
+                              </div>
+                              <div class="cs-metric-border" aria-hidden="true"></div>
+
+                           </div>
+                           <div class="metric-card">
+                              <div class="cs-metric-content">
+                                 <div class="cs-metric-top">
+                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-eye"></i></span></div>
+                                    <div class="cs-metric-value">2 rounds</div>
+                                 </div>
+                                 <div class="cs-metric-label">User testing and Validation</div>
+                              </div>
+                              <div class="cs-metric-border" aria-hidden="true"></div>
+
+                           </div>
+                           <div class="metric-card">
+                              <div class="cs-metric-content">
+                                 <div class="cs-metric-top">
+                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-eye"></i></span></div>
+                                    <div class="cs-metric-value">Seamless</div>
+                                 </div>
+                                 <div class="cs-metric-label">CRM integration</div>
+                              </div>
+                              <div class="cs-metric-border" aria-hidden="true"></div>
+
+                           </div>
+                        </div>
+
+                     </div>
+
+                     <div class="slideshow-container">
+                        <div class="project-image-wrapper slideshow">
+                           <img src="/microsite/tomato microsite screens.png" alt="Energy Switching Tracker preview 1" class="project-image project-image-default contain" loading="lazy" data-slide="0">
+                           <video src="/microsite/loading-tomato-frame.mov" alt="Energy Switching Tracker preview 2" class="project-image project-image-default contain loaded" muted="" loop="" playsinline="" preload="metadata" data-slide="1"></video>
+                           <video src="/microsite/card-hover.mov" alt="Energy Switching Tracker preview 3" class="project-image project-image-default contain loaded" muted="" loop="" playsinline="" preload="metadata" data-slide="2"></video>
+                           <img src="/microsite/landing.png" alt="Energy Switching Tracker preview 4" class="project-image project-image-default contain loaded" loading="lazy" data-slide="3"><img src="/microsite/loading-animation.png" alt="Energy Switching Tracker preview 5" class="project-image project-image-default contain loaded" loading="lazy" data-slide="4"><img src="/microsite/mock.png" alt="Energy Switching Tracker preview 6" class="project-image project-image-default contain loaded" loading="lazy" data-slide="5">
+                         </div>
+
+                         <div class="carousel-dots">
+                           <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button><button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button><button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button><button class="carousel-dot" data-slide="3" aria-label="Go to slide 4"></button><button class="carousel-dot" data-slide="4" aria-label="Go to slide 5"></button><button class="carousel-dot" data-slide="5" aria-label="Go to slide 6"></button><button class="carousel-dot" data-slide="6" aria-label="Go to slide 7"></button><button class="carousel-dot" data-slide="7" aria-label="Go to slide 8"></button>
+                        </div>
+                     </div>
+
+                     <div class="data-tags">
+                        <div class="tags">
+                           <span class="tag-label">Tags</span>
+                           <div class="tag-list">
+                              <span>Product Design</span>
+                              <span>Mobile-first</span>
+                              <span>B2C</span>
+                              <span>User-testing</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <button class="project-nav bottom project-nav-button" data-project-id="6">
+                     <h3 class="nav-title">↓ Next</h3>
+                     <p class="nav-subtitle">Token Launch</p>
+                  </button>
+               </div>
+            </div>
+         </section> -->
+
+
+
+         <section id="figma-plugin" class="section-project project-neutral experimental-layout" data-section="project" data-project-id="6">
             <div class="contentbox">
                <!-- Project Screen -->
                <div class="project-screen">

@@ -5,8 +5,8 @@
 
 // Configuration
 const CONFIG = {
-  titles: ['Product Designer', 'Design Systems Builder', '0→1', 'Tokens Geek'],
-  flipDuration: 60, // ms per character flip 
+  titles: ['Product Designer', 'Design Systems', 'Systems Builder', 'Tokens Geek'],
+  flipDuration: 40, // ms per character flip 
   cycleCount: 4, // Number of random characters to cycle through
   staggerDelay: 30, // ms between each character starting 
   pauseDuration: 3000, // ms pause after all characters finish 
@@ -53,11 +53,15 @@ function createCharacterSpans(text) {
       elements.push(span);
     });
 
-    // Add line break after first word
-    if (wordIndex === 0) {
-      const br = document.createElement('br');
-      elements.push(br);
+    // Add space between words (but not after last)
+    if (wordIndex < words.length - 1) {
+      const space = document.createElement('span');
+      space.className = 'flip-char';
+      space.textContent = ' ';
+      space.setAttribute('aria-hidden', 'true');
+      elements.push(space); // or container.appendChild(space)
     }
+
   });
 
   return elements;
@@ -126,10 +130,17 @@ async function transitionToTitle(container, newTitle, cursorElement) {
     });
 
     // Add line break after first word
-    if (wordIndex === 0) {
-      const br = document.createElement('br');
-      container.appendChild(br);
-    }
+// Add space between words (but not after last)
+if (wordIndex < words.length - 1) {
+  const space = document.createElement('span');
+  space.className = 'flip-char';
+  space.textContent = ' ';
+  space.setAttribute('aria-hidden', 'true');
+  container.appendChild(space);
+
+  charIndex++; // important so stagger timing stays correct
+}
+
   });
 
   // Append cursor at the end
