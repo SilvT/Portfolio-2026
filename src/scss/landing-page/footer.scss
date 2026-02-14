@@ -322,11 +322,21 @@
   filter: saturate(95%) brightness(102%);
 
 
+  @include breakpoint(mobile){
+  svg{
+      width: 100%;
+      height: 100%;
+  }
+  }
 
   svg circle{
     fill:$blue;
     transform: scale(0.5) scaleX(0.5); 
     filter: blur(2px) opacity(0.5);
+      @include breakpoint(mobile){
+      transform: translateY(-100%);
+      }
+
   }
  circle:nth-child(1) {
   animation: f-drift1 40s ease-in-out infinite alternate;
