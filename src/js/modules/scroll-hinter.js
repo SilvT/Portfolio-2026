@@ -119,7 +119,7 @@ function showScrollHinter() {
     const rect = aboutSection.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    const isAboutSectionVisible = rect.top <= 100 && rect.bottom >= windowHeight * 0.5;
+    const isAboutSectionVisible = rect.top >= -100 && rect.top <= 100 && rect.bottom >= windowHeight * 0.5;
 
     if (!isAboutSectionVisible) {
       scrollHinter.style.opacity = '0';
