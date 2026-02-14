@@ -8,6 +8,8 @@ import { initNavigation } from './modules/navigation.js';
 import { initLightGallery } from './modules/lightgallery.js';
 import { initIconAnimation } from "./modules/icon-animation.js";
 import { initCarouselDots } from "./modules/carousel-dots.js";
+import { initAboutEntryAnimation } from "./modules/about-entry-animation.js";
+import { initProjectCardEntryAnimation } from "./modules/project-card-entry-animation.js";
 
 // Vercel Analytics & Speed Insights
 inject();
@@ -28,6 +30,12 @@ export function initVisualEffects() {
 document.addEventListener('DOMContentLoaded', async () => {
   // Core features first
   initNavigation();
+
+  // About section entry stagger
+  initAboutEntryAnimation();
+
+  // Project card entry stagger
+  initProjectCardEntryAnimation();
 
   // UI features
   initVisualEffects();
