@@ -1,0 +1,133 @@
+@use '../_variables' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+@use '_animations' as *;
+
+.about-sect {
+  width: 100%;
+  max-width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 0 5vw 20vh 5vw;
+
+  @include breakpoint(mobile) {
+    height: auto;
+    min-height: 100vh;
+    padding: $space-80 $space-30 $space-40;
+    // align-items: flex-start;
+    padding-bottom: 20vh;
+  }
+}
+body{
+    background: transparent !important;
+}
+.section-about{
+    background: none !important;
+    position: relative;
+   overflow: hidden;
+   background-color: $color-bg;
+
+.ellipse-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: soft-light;
+  filter: saturate(95%) brightness(102%);
+
+@include breakpoint(mobile){
+svg{
+    width: 100%;
+    height: 100%;
+}
+}
+  svg circle{
+    fill: $blue;
+    @include breakpoint(mobile){
+    transform: translateY(-100%);
+    }
+
+
+
+
+  }
+  circle:nth-child(1) {
+  animation: drift1 40s ease-in-out infinite alternate;
+}
+
+circle:nth-child(2) {
+  animation: drift2 30s ease-in-out infinite alternate;
+}
+@keyframes drift1 {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-20%) translateX(10%); }
+}
+
+@keyframes drift2 {
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(80%) translateX(-10%); }
+}
+
+}
+  .contexbox{
+  position: relative;
+  z-index: 2;
+  }
+}
+
+.info-grid{
+max-width: 40vw;
+
+@include breakpoint(mobile){
+    max-width: none;
+}
+    
+    .name  {
+        font-size: $font-title;
+        font-weight: $weight-medium;
+        letter-spacing: -0.01em;
+        
+        @include breakpoint (mobile){
+            font-size: calc($font-title*0.7);
+        }
+        .first-letter{
+            font-family: $font-fascinate;
+            color: $blue-soft;
+            // color: $cream-dark;
+            margin-right: 0.5rem;
+        }
+        
+        .rest-name{
+            font-family: $font-bricolage;
+            color: $blue;
+        }
+    }
+    .dynamic-job-title {
+        color: $blue-soft;
+        margin-bottom: 1rem;
+        letter-spacing: 0.5rem;
+    }
+    .bio{
+
+        .bold{
+            font-size: $font-2xl;
+            line-height: 1.2;
+            letter-spacing: -0.01rem;
+            margin-bottom: 0.5rem;
+            color: $blue-dark;
+            @include breakpoint (mobile){
+                font-size: calc(($font-2xl*0.7));
+                font-weight: $weight-medium;
+            }
+        }
+        .content{
+            font-size: calc($font-base*1.2);
+            color: $color-neutral-400;
+            @include breakpoint (mobile){
+                font-size: calc($font-base*0.8);
+            }
+        }
+    } 
+}
