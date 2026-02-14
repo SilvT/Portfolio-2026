@@ -15,6 +15,9 @@
     .project-screen {
       background-color: $blue-light;
     }
+    .tags .tag-list span{
+      background-color: $color-blue-alpha;
+    }
   }
 
   &.project-green {
@@ -26,6 +29,9 @@
 
     .project-screen {
       background-color: $green-light;
+    }
+    .tags .tag-list span{
+      background-color: $green-alpha-50;
     }
   }
 
@@ -39,11 +45,24 @@
     .project-screen {
       background-color: $color-cream;
     }
+    .tags .tag-list span{
+      background-color: $cream-mid;
+    }
+ 
   }
 
   h2{
       font-weight: $weight-regular;
 
+  }
+
+  .contentbox{
+    @include breakpoint(mobile){
+      height: 100%;
+      .project-screen{
+        height: 95vh;
+      }
+    }
   }
 }
 
@@ -91,101 +110,6 @@
   }
 }
 
-// Left Column
-.left-column {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  justify-content: space-between;
-  align-self: baseline;
-
-  @include breakpoint(desktop) {
-    .title-group .project-title {
-      font-size: 32px;
-    }
-  }
-
-  @include breakpoint(mobile) {
-    display: contents; // Remove the column wrapper on mobile
-  }
-
-  .title-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
-    @include breakpoint(mobile) {
-      gap: 12px;
-      order: 1;
-    }
-
-    .project-title {
-      font-variation-settings: 'opsz' 14, 'wdth' 100;
-      line-height: 95%;
-      color: $color-blue-darker;
-      text-transform: capitalize;
-      letter-spacing: -0.2px;
-      min-height: 4.5rem;
-      align-content: center;
-
-      @include breakpoint(mobile) {
-        // font-size: 28px;
-        line-height: 110%;
-        min-height: auto;
-      }
-    }
-
-    .project-description {
-      font-variation-settings: 'opsz' 14, 'wdth' 100;
-      color: $color-blue-dark;
-      letter-spacing: 0;
-
-      @include breakpoint(mobile) {
-        font-size: 14px;
-        line-height: 140%;
-      }
-
-      &.green {
-        color: $green;
-      }
-
-      &.neutral {
-        color: $neutral;
-      }
-    }
-  }
-
-  .meta-group {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    @include breakpoint(mobile) {
-      gap: 12px;
-      order: 5;
-    }
-
-    .project-meta {
-      font-family: $font-anonymous;
-      color: $color-blue-dark;
-      letter-spacing: -0.28px;
-
-      @include breakpoint(mobile) {
-        font-size: 13px;
-      }
-
-      &.green {
-        color: $green;
-      }
-
-      &.neutral {
-        color: $neutral;
-      }
-    }
-  }
-}
-
-
 // Metrics (inside left column) - scoped to project cards only
 .project-content .metrics {
   display: flex;
@@ -222,7 +146,7 @@
       min-width: 33%;
       width: fit-content;
 
-      
+
     }
 
     .cs-metric-content {
@@ -314,153 +238,6 @@
   }
 }
 
-// Right Column
-.right-column {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  justify-content: space-between;
-  width: 50vw;
-
-  @include breakpoint(desktop) {
-    width: 100%;
-
-    .storytelling-group {
-      max-width: 35vw;
-    }
-  }
-
-  @include breakpoint(tablet) {
-    .storytelling-group {
-      position: static;
-      max-width: 100%;
-      margin-top: 24px;
-    }
-  }
-
-  @include breakpoint(mobile) {
-    display: contents; // Remove the column wrapper on mobile
-  }
-
-  .storytelling-group {
-    position: absolute;
-    // right: 0;
-    bottom: 8vh;
-    left: 0;
-
-    display: flex;
-    flex-direction: column;
-    background-color: $color-white;
-    border-radius: 0.25rem;
-    gap: 18px;
-    z-index: 1;
-    // max-width: 45vw;
-    max-width: 50vw;
-
-    padding: $space-24;
-
-    padding-left: 3vw;
-
-    // padding-right:3vw;
-    gap:$space-24;
-    box-shadow: -4px 4px 4px $color-shadows-dark;
-
-    @include breakpoint(mobile) {
-      background-color: transparent;
-      position: static;
-      max-width: 100%;
-      padding: 0;
-      gap: 0;
-      box-shadow: 0 2px 8px rgba(32, 58, 72, 0.15);
-      order: 2;
-      margin-top: 0;
-    }
-
-    .project-details {
-      font-variation-settings: 'opsz' 14, 'wdth' 100;
-      color: $neutral;
-      letter-spacing: 1;
-      font-size: $font-base;
-      line-height: 115%;
-      // font-style: italic;
-      position: relative;
-
-      @include breakpoint(mobile) {
-        font-size: $font-xs;
-        line-height: 130%;
-        display: none;
-      }
-    }
-
-    // Typing dots indicator
-    .typing-dots {
-      display: inline-flex;
-      gap: 3px;
-      margin-left: 8px;
-      align-items: center;
-      opacity: 0;
-
-      .dot {
-        width: 3px;
-        height: 3px;
-        border-radius: 50%;
-        background-color: $blue;
-        animation: typing-dot 2.8s infinite ease-in-out;
-
-        &:nth-child(1) {
-          animation-delay: 0s;
-        }
-        &:nth-child(2) {
-          animation-delay: 0.4s;
-        }
-        &:nth-child(3) {
-          animation-delay: 0.8s;
-        }
-      }
-    }
-  }
-
-  // Typing dots animation (2x slower)
-  @keyframes typing-dot {
-    0%, 60%, 100% {
-      opacity: 0.2;
-      transform: scale(0.8);
-    }
-    30% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  // Very slow pulsing shadow
-  @keyframes pulse-shadow-slow {
-    0%, 100% {
-      box-shadow: -4px 4px 4px $color-shadows-dark;
-    }
-    50% {
-      box-shadow: -4px 4px 20px rgba(57, 128, 170, 0.3),
-                  -2px 2px 8px rgba(57, 128, 170, 0.2);
-    }
-  }
-
-  @include breakpoint(large-desktop, min) {
-    width: 65vw;
-
-    .storytelling-group {
-      bottom: 9vh;
-      max-width: 25vw;
-      padding: $space-30;
-      padding-right: 3vw;
-      gap: $space-30;
-
-      .project-details {
-        font-size: $font-s;
-        line-height: 150%;
-      }
-    }
-  }
-}
-
 .project-image-wrapper {
   width: 100%;
   height: 100%;
@@ -477,42 +254,6 @@
   @include breakpoint(mobile) {
     height: 250px;
     order: 3;
-  }
-
-  .background-gradient {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-
-    @include breakpoint(mobile) {
-      display: none;
-    }
-
-    &.blue-gradient {
-      background: radial-gradient(
-        circle at 0% 0%,
-        rgba(226, 238, 249, 1) 0%,
-        rgba(252, 253, 253, 1) 85%
-      );
-    }
-
-    &.green-gradient {
-      background: radial-gradient(
-        circle at 0% 0%,
-        $green 0%,
-        $color-green-alpha 42.5%,
-        rgba(252, 253, 253, 1) 85%
-      );
-    }
-     &.neutral-gradient {
-      background: radial-gradient(
-        circle at 0% 0%,
-        rgba(227, 221, 211, 0.4) 0%,
-        rgba(245, 243, 240, 1) 42.5%,
-        rgba(252, 253, 253, 1) 85%
-      );
-    }
   }
 
   .project-image {
@@ -556,22 +297,6 @@
     &.project-image-default {
       opacity: 1;
     }
-
-    // Hover image (hidden by default)
-    &.project-image-hover {
-      opacity: 0;
-    }
-  }
-
-  // Hover state - show hover image, hide default image
-  &:hover {
-    .project-image-default {
-      opacity: 0;
-    }
-
-    .project-image-hover {
-      opacity: 1;
-    }
   }
 
   // Ensure videos inherit image styling
@@ -579,82 +304,9 @@
     display: block;
     pointer-events: none; // Prevent video controls from interfering
   }
-
-  // Carousel-specific styles
-  &[data-carousel="true"] {
-    // Disable hover effect when carousel is active
-    &:hover {
-      .project-image-default,
-      .project-image-hover {
-        opacity: 0; // Hide static images
-      }
-    }
-
-    .project-carousel-slide {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
-
-      &.active {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
-  }
-}
-
-// Carousel navigation dots
-.project-carousel-dots {
-  display: none; // Hidden on desktop by default
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-  position: relative;
-  z-index: 3;
-
-  @include breakpoint(mobile) {
-    display: flex; // Show on mobile
-  }
-
-  .project-carousel-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: $color-blue-200;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0.5;
-
-    &:hover {
-      opacity: 0.8;
-      transform: scale(1.2);
-    }
-
-    &.active {
-      background-color: $color-blue-400;
-      opacity: 1;
-      transform: scale(1.3);
-    }
-
-    // Accessible touch target
-    @include touch-device {
-      width: 12px;
-      height: 12px;
-    }
-  }
 }
 
 // CTA Button
-// CTA buttons group container
-.cta-buttons-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
-}
-
 .cta-button {
       display: inline-flex;
       align-items: center;
@@ -674,23 +326,10 @@
       color: $blue;
       border: 2px solid $blue;
 
-        
+
       &:hover {
         background-color: $blue;
         color: $color-white;
-      }
-
-      // Secondary button variant
-      &.cta-button-secondary {
-        background-color: transparent;
-        color: $blue;
-        border: 2px solid $blue;
-
-        &:hover {
-          background-color: $blue-light;
-          color: $color-blue-400;
-          border-color: $blue-light;
-        }
       }
 
       @include breakpoint(large-desktop, min) {
@@ -821,12 +460,21 @@
       }
 
       .project-meta {
-        color: $neutral-light;
         font-family: $font-anonymous;
+        color: $color-blue-dark;
+        letter-spacing: -0.28px;
         margin-top: 0.5rem;
 
         @include breakpoint(mobile) {
-          font-size: $font-xs;
+         font-size: $font-xs;
+        }
+
+        &.green {
+         color: $green;
+        }
+
+        &.neutral {
+        color: $neutral;
         }
       }
     }
@@ -877,7 +525,7 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-      }      
+      }
     }
   }
 
@@ -960,7 +608,7 @@
       transform: translateX(-50%);
       z-index: 10;
       background-color: $white-alpha;
-      
+
     }
   }
 
@@ -998,12 +646,16 @@
   }
 
   // ============================================================================
-  // DATA SECTION (Metrics + Tags)
+  // DATA SECTIONS (Metrics + Tags)
   // ============================================================================
 
-  .data {
+  .data-metrics {
+    @include breakpoint(mobile){
+      width: 100%;
+    }
     .metrics .metric-card {
       max-height: 6rem;
+
       @include breakpoint(mobile){
         max-height: 5rem;
           .cs-metric-top{
@@ -1017,7 +669,11 @@
     .cs-metric-border {
       display: none; // Hide decorative border in experimental layout
     }
-
+  }
+.data-tags{
+  @include breakpoint(mobile){
+    display: none;
+  }
     .tags {
       align-items: flex-end;
 
@@ -1180,7 +836,6 @@
 
 
 
-
   // ============================================================================
   // ACCESSIBILITY - REDUCED MOTION
   // ============================================================================
@@ -1197,6 +852,3 @@
     @include stagger-fade-in-reduced-motion;
   }
 }
-
-
-

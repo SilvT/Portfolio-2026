@@ -44,11 +44,14 @@ $color-green-300: #C7CDA9;   // solid from alpha base
 $color-green-400: #79854F;   // main (existing)
 $color-green-500: #525D2E;   // dark (existing)
 $color-green-600: #3F471F;   // dark (existing)
+$color-green-alpha: rgba(199, 205, 169, 0.3);
+$color-green-alpha-dark: rgba(199, 205, 169, 0.5);
 
 // Shorthand-versions
 $green:$color-green-400;
 $green-light:$color-green-200;
 $green-dark:$color-green-500;
+$green-alpha-50: $color-green-alpha-dark;
 
     // To-be-deprecated - LEGACY
   $color-green-lightest: $color-green-100;
@@ -56,7 +59,6 @@ $green-dark:$color-green-500;
   $color-green-main: $color-green-400;
   $color-green-dark: $color-green-500;
   $color-green-darker: $color-green-600;
-  $color-green-alpha: rgba(199, 205, 169, 0.3);
 
 
 // ===========================
@@ -208,5 +210,106 @@ $space-120:7.5rem;
     }
 
     animation-name: #{$name};
+  }
+}
+
+// Slide from LEFT
+@mixin slide-in-left($delay: 0s, $duration: 0.7s, $distance: 30px) {
+  transform: translateX(-$distance);
+  animation: slideInLeft $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: $delay;
+
+  @if $distance != 30px {
+    $name: slideInLeft-#{$distance};
+
+    @keyframes #{$name} {
+      from { transform: translateX(-$distance); }
+      to { transform: translateX(0); }
+    }
+
+    animation-name: #{$name};
+  }
+}
+// Slide from RIGHT
+@mixin slide-in-right($delay: 0s, $duration: 0.7s, $distance: 30px) {
+  transform: translateX($distance);
+  animation: slideInRight $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: $delay;
+
+  @if $distance != 30px {
+    $name: slideInRight-#{$distance};
+
+    @keyframes #{$name} {
+      from { transform: translateX($distance); }
+      to { transform: translateX(0); }
+    }
+
+    animation-name: #{$name};
+  }
+}
+//Slide from TOP
+@mixin slide-in-top($delay: 0s, $duration: 0.7s, $distance: 30px) {
+  transform: translateY(-$distance);
+  animation: slideInTop $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: $delay;
+
+  @if $distance != 30px {
+    $name: slideInTop-#{$distance};
+
+    @keyframes #{$name} {
+      from { transform: translateY(-$distance); }
+      to { transform: translateY(0); }
+    }
+
+    animation-name: #{$name};
+  }
+}
+
+//Slide from BOTTOM
+@mixin slide-in-bottom($delay: 0s, $duration: 0.7s, $distance: 30px) {
+  transform: translateY($distance);
+  animation: slideInBottom $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: $delay;
+
+  @if $distance != 30px {
+    $name: slideInBottom-#{$distance};
+
+    @keyframes #{$name} {
+      from { transform: translateY($distance); }
+      to { transform: translateY(0); }
+    }
+
+    animation-name: #{$name};
+  }
+}
+
+//Subtle Scale In (for cards)
+@mixin scale-in($delay: 0s, $duration: 0.5s, $start-scale: 0.95) {
+  opacity: 0;
+  transform: scale($start-scale);
+
+  animation: scaleIn $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: $delay;
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale($start-scale);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+//Stagger
+@mixin stagger-children($base-delay: 0.1s) {
+  > * {
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: $i * $base-delay;
+      }
+    }
   }
 }

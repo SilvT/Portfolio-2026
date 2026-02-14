@@ -1,4 +1,6 @@
 @use '../breakpoints' as *;
+@use '../variables' as *;
+
 
 // ============================================================================
 // STAGGERED FADE-IN ANIMATION MIXIN
@@ -80,4 +82,17 @@
 // Icon-animation
 svg.icon-animation {
   overflow: visible;
+}
+
+
+// NEW INPUT
+.info-grid{
+  @include stagger-children (0.1s);
+& .stack-list{
+  > * {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out forwards;
+  }
+  @include stagger-children (0.08s);
+  }
 }

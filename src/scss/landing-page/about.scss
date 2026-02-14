@@ -16,12 +16,6 @@
   justify-content: center;
   padding: 0 5vw;
 
-  @include breakpoint(desktop) {
-    .about-content {
-      padding: 100px 40px;
-    }
-  }
-
   @include breakpoint(mobile) {
     height: auto;
     min-height: 100vh;
@@ -30,118 +24,16 @@
   }
 }
 
-// Grid Container
-.about-grid {
-  width: 100%;
-  display: grid;
-  gap: $space-30;
-  row-gap: $space-80;
-  align-items: center; // Center items vertically within their grid areas
-
-  // Default: 12 columns for larger desktops
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto auto auto; // 3 rows: main content, more-info, scroll hint
-
-  // Laptop screens: 6 columns (includes MacBook Pro 16" with Retina)
-  @include breakpoint(laptop) {
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  @include breakpoint(tablet) {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-  }
-
-  @include breakpoint(mobile) {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    row-gap: 32px;
-  }
-}
-
-// Row 1: Name + Description elements
-.about-row--main {
-  // Span all 12 columns in the first row
-  grid-column: 1 / -1;
-  grid-row: 1;
-  // height: 60vh;
-  align-items: center;
-  position: relative; // Positioning context for scroll-hinter
-
-  display: grid;
-  grid-template-columns: subgrid;
-  gap: $space-30;
-
-  @include breakpoint(laptop) {
-    grid-template-columns: subgrid;
-  }
-
-  @include breakpoint(tablet) {
-    grid-template-columns: subgrid;
-  }
-
-  @include breakpoint(mobile) {
-    grid-column: 1;
-    grid-template-columns: 1fr;
-    gap: $space-24;
-    // justify-items: center;
-    justify-items: baseline;
-  }
-}
-
-// Row 2: More Info
-.about-row--info {
-  // Span all 12 columns in the second row
-  grid-column: 1 / -1;
-  grid-row: 2;
-
-  display: grid;
-  grid-template-columns: subgrid;
-  gap: $space-30;
-
-  @include breakpoint(laptop) {
-    grid-template-columns: subgrid;
-  }
-
-  @include breakpoint(tablet) {
-    grid-template-columns: subgrid;
-  }
-
-  @include breakpoint(mobile) {
-    grid-column: 1;
-    grid-template-columns: 1fr;
-    gap: $space-24;
-    text-align: end;
-
-  }
-}
-
 // Name Wrapper - Grid positioning
 .name-wrapper {
-  // Desktop: columns 1-4
-  // grid-column: 1 / 5;
-
-  // Laptop: columns 1-2
-  // @include breakpoint(laptop) {
-  //   grid-column: 1 / 3;
-  // }
-
-  // @include breakpoint(tablet) {
-  //   grid-column: 1 / 3;
-  // }
-
-  // @include breakpoint(mobile) {
-  //   grid-column: 1;
-  // }
-    @include breakpoint(mobile) {
+  @include breakpoint(mobile) {
       margin-bottom: 0;
   }
   .name {
-    // font-size: $font-3xl;
     color: $blue-dark;
     text-transform: capitalize;
 
-    
+
     .first-letter {
       font-family: $font-fascinate;
       font-weight: $weight-regular;
@@ -151,7 +43,7 @@
         display: none;
       }
     }
-    
+
     .rest-name {
       font-weight: $weight-regular;
       font-size: $font-xl;
@@ -170,9 +62,6 @@
 
 // Dynamic Job Title - Grid positioning
 .dynamic-job-title {
-  // Desktop: columns 5-6
-  // grid-column: 5 / 7;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -181,19 +70,6 @@
   color: $blue;
   position: relative;
 
-  // Laptop: column 3
-  // @include breakpoint(laptop) {
-  //   grid-column: 3 / 4;
-  // }
-
-  // @include breakpoint(tablet) {
-  //   grid-column: 3 / 4;
-  // }
-
-  // @include breakpoint(mobile) {
-  //   grid-column: 1;
-  //   font-size: $font-base;
-  // }
   @include breakpoint(mobile) {
       font-size: $font-base;
       margin-bottom: 0;
@@ -244,20 +120,7 @@
 
 // Bio - Grid positioning
 .bio {
-  // Desktop: columns 8-10
-  // grid-column: 7 / 10;
-
-  // Laptop: columns 4-5
-  // @include breakpoint(laptop) {
-  //   grid-column: 4 / 6;
-  // }
-
-  // @include breakpoint(tablet) {
-  //   grid-column: 1 / 4;
-  // }
-
   @include breakpoint(mobile) {
-    // grid-column: 1;
     width: 100%;
     margin-top: $space-4;
   }
@@ -288,7 +151,7 @@
   @include breakpoint(mobile){
     max-width: 100dvw;
     overflow: clip;
-    
+
   }
 
   &.visible {
@@ -313,21 +176,6 @@
       opacity: 0.8; // Adjust opacity
     }
 
-  .large.right {
-    stroke-dasharray: 3000 10;
-    animation: longTrail 30s linear infinite;
-    @keyframes longTrail {
-    from {
-    stroke-dashoffset: 0;
-    stroke:$blue;
-   }
-   to {
-    stroke-dashoffset: -3010;
-    stroke:$cream;
-  }
-}
-  }
-
     .small {
       stroke-width: 0.4;
   }
@@ -351,8 +199,7 @@
 
 //Text stack and other projects - Grid positioning
 // Shared styles for info sections
-.stack,
-.other-projects {
+.stack {
   color: $blue-dark;
   line-height: 150%;
 
@@ -410,58 +257,6 @@
   }
 }
 
-.other-projects {
-  // Desktop: columns 11-12
-  grid-column: 12 / 13;
-
-  // Laptop: columns 5-6
-  @include breakpoint(laptop) {
-    grid-column: 5 / 7;
-  }
-
-  @include breakpoint(tablet) {
-    grid-column: 3 / 5;
-  }
-
-  @include breakpoint(mobile) {
-    grid-column: 1;
-  }
-}
-
-.about-cv{
-margin-top: 2rem;
-z-index: 10000;
-  & .about-button-cv{
-    background-color: $color-bg;
-    padding: $space-8;
-    border-radius: 0.5rem;
-    min-width: 10vw;
-    border: 2px solid transparent;
-    & a{
-      font-family: $font-bricolage;
-      color: $color-blue-400;
-      font-size: $font-base;
-    }
-    &:hover{
-      border-bottom: 2px solid $blue;
-      background-color: white;
-      & a{
-        color: $blue;
-        font-weight: $weight-medium;
-        text-decoration: none;
-      }
-    }
-    &:active{
-    background-color: $blue-light;
-
-  }}
-}
-
-
-
-
-
-
 
   .info-grid{
     display: grid;
@@ -487,7 +282,6 @@ z-index: 10000;
           row-gap: 20%;
           margin-top:5%;
           max-width: 100%;
-          // overflow-x: hidden;
 
 
           .one, .two{
@@ -530,3 +324,4 @@ z-index: 10000;
           }
         }
     }
+

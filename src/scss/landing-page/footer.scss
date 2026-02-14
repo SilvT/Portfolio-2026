@@ -7,7 +7,7 @@
   position: relative;
   color:$blue-dark;
 
-  
+
 
   .contact__inner {
     display: flex;
@@ -270,10 +270,6 @@
     flex-shrink: 1;
     white-space: normal;
 
-    &__icon {
-      font-size: $font-xl;
-    }
-
     &__text {
       font-size: $font-s;
     }
@@ -285,12 +281,21 @@
       display: flex;
       gap: 1rem;
       align-items: center;
-      
+
     }
   .icon-animation{
     @include breakpoint(mobile){
       width: 25dvw;
     }
-    
+
   }
 }
+
+
+.icon-animation-container{
+
+   p, h3{
+      font-size: $font-s;
+      color: $blue;
+    }
+  }

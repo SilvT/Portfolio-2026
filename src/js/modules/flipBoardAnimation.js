@@ -5,11 +5,11 @@
 
 // Configuration
 const CONFIG = {
-  titles: ['UI Designer', 'Design Systems', 'Product Thinking', 'Atomic Design', 'Variables Geek','Vibe Coder'],
-  flipDuration: 200, // ms per character flip (even slower)
-  cycleCount: 8, // Number of random characters to cycle through
-  staggerDelay: 120, // ms between each character starting (much slower stagger)
-  pauseDuration: 6000, // ms pause after all characters finish (longer pause - 6 seconds)
+  titles: ['Product Designer', 'Design Systems Builder', '0→1', 'Tokens Geek'],
+  flipDuration: 60, // ms per character flip 
+  cycleCount: 4, // Number of random characters to cycle through
+  staggerDelay: 30, // ms between each character starting 
+  pauseDuration: 3000, // ms pause after all characters finish 
 };
 
 // Character set for cycling (uppercase letters, numbers, space)
