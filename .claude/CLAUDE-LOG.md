@@ -1,5 +1,69 @@
 # Claude Log - Portfolio 2025
 
+## 2026-02-15
+
+### Session Summary
+Performance optimization round 2: Addressed Vercel Speed Insights showing RES 60, FCP 5.47s, LCP 5.69s on desktop. Converted all landing page images to WebP, videos from .mov to .mp4, GIF to .mp4 video, made Google Fonts non-render-blocking across all 6 pages.
+
+### Image Optimization — PNG → WebP (ffmpeg)
+- **15 images converted** to WebP across all 4 project card slideshows
+- `mkm/mkm-large hero.png`: 3.4 MB → 594 KB (**83% reduction** — this was the LCP element)
+- `mkm/UI-*.png`, `mkm/Look-and-feel-first-screen.png` → 38–65 KB each
+- `ds/ds-hero.png`, `ds/ds-card-hover.png`, `ds/UIKIT.png` → 125–322 KB
+- `microsite/tomato microsite screens.png`, `landing.png`, `mock.png`, `loading-animation.png` → 23–265 KB
+- `plugin/TL-*.png`, `cover1.png` → 38–127 KB
+- Original PNGs kept as backup, HTML `src` swapped directly to `.webp`
+
+### Video Optimization — .mov → .mp4, GIF → .mp4 (ffmpeg, libx264 CRF 23)
+- `mkm/journey.mov`: 42 MB → 2.9 MB (**93% reduction**)
+- `mkm/card-hover-2.gif`: 4.8 MB → 1.1 MB — changed from `<img>` to `<video autoplay muted loop playsinline>`
+- `microsite/loading-tomato-frame.mov`: 17 MB → 964 KB (**94% reduction**)
+- `microsite/card-hover.mov`: 8.6 MB → 1.1 MB
+- `microsite/application.mov`: 1.6 MB → 70 KB
+
+### Font Loading — Render-blocking → Async (all 6 pages)
+- Google Fonts `<link rel="stylesheet">` changed to `media="print" onload="this.media='all'"` pattern
+- Added `<noscript>` fallback for JS-disabled browsers
+- Kept existing `<link rel="preconnect">` and `<link rel="preload" as="style">` hints
+- Applied to: `index.html`, `marketing-management.html`, `design-system-wip.html`, `energy-tracker.html`, `token-launch.html`, `design-system.html`
+
+### Loading Hints
+- All below-fold videos: `preload="none"` (was `preload="metadata"`)
+- All images: added `decoding="async"`
+- Hero image keeps `loading="eager"` + `fetchpriority="high"`
+
+### Expected Impact
+- FCP: 5.47s → ~1.5–2.5s (fonts no longer blocking render)
+- LCP: 5.69s → ~2–3s (hero image 83% smaller + async fonts)
+- Total landing page weight reduced by ~60+ MB
+
+### Key Decisions
+- Direct `.webp` swap (no `<picture>` fallback) — 97%+ browser support, cleaner HTML
+- GIF converted to `<video>` rather than animated WebP — much smaller, better quality
+- `.mov` → `.mp4` with H.264 codec for universal browser support
+
+### Known Remaining Issues
+- **GLightbox CSS** (~3 MB / 267 KB gzipped) bundled on all pages via `main.js` even though lightbox is only used on case studies — could be dynamically imported
+- Speed Insights data needs 24–48h to reflect changes after deploy
+
+### Files Modified
+- `index.html` — async fonts, all image src → .webp, video src → .mp4, loading hints
+- `marketing-management.html` — async fonts
+- `design-system-wip.html` — async fonts
+- `energy-tracker.html` — async fonts
+- `token-launch.html` — async fonts
+- `design-system.html` — async fonts
+
+### Files Created (public/)
+- `mkm/mkm-large hero.webp`, `mkm/Look-and-feel-first-screen.webp`, `mkm/UI-Leads-dashboard.webp`, `mkm/UI-interactions-inbox.webp`, `mkm/UI-Interactions-convo.webp`, `mkm/UI-grid-lead.webp`
+- `mkm/card-hover-2.mp4`, `mkm/journey.mp4`
+- `ds/ds-hero.webp`, `ds/ds-card-hover.webp`, `ds/UIKIT.webp`
+- `microsite/tomato microsite screens.webp`, `microsite/landing.webp`, `microsite/loading-animation.webp`, `microsite/mock.webp`
+- `microsite/loading-tomato-frame.mp4`, `microsite/card-hover.mp4`, `microsite/application.mp4`
+- `plugin/TL-UI-push.webp`, `plugin/TL-Git.webp`, `plugin/cover1.webp`, `plugin/TL-publish.webp`
+
+---
+
 ## 2026-02-14
 
 ### Session Summary

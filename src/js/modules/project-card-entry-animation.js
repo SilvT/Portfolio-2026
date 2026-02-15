@@ -89,7 +89,7 @@ export function initProjectCardEntryAnimation() {
 
     // Group 3: Metric cards (one after another)
     if (metricCards.length) {
-      tl.to(metricCards, { opacity: 1, y: 0, duration: 0.5, stagger: 0.2 }, t);
+      tl.to(metricCards, { opacity: 1, y: 0, duration: 0.5, stagger: 0.2, onComplete: () => gsap.set(metricCards, { clearProps: 'transform' }) }, t);
       t += 0.2 * metricCards.length + 0.1;
     }
 
