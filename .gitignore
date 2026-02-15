@@ -24,7 +24,11 @@ dist/
 *.sln
 *.sw?
 .DS_Store
+*index copy.html
 
 # Vercel
 .vercel
 .env*.local
+
+# Unused original assets (already converted or not referenced)
+public/mkm/card-hover.gif

@@ -6,5 +6,5 @@
 @use 'landing-page/_landing-page';
 @use 'case-studies/_case-study';
 
-// Iconoir Icons (must come after @use rules)
-@import 'iconoir/css/iconoir.css';
+// Iconoir Icons — custom subset (31 icons vs 1400+)
+@import 'iconoir-custom.css';

@@ -1,6 +1,63 @@
 # Claude Log - Portfolio 2025
 
-## 2026-02-15
+## 2026-02-15 (Session 2)
+
+### Session Summary
+Performance optimization round 3: Vercel Speed Insights still showing RES 60 (desktop) / 62 (mobile), FCP 5.47s, LCP 5.69s. Root cause identified: **Iconoir CSS** (2,973 KB / 265 KB gzipped) was the single largest render-blocking resource — importing all 1,400+ icons when only 31 are used. Also dynamically imported GLightbox, added LCP preload, lazy video playback, and Google Fonts splitting.
+
+### Iconoir CSS — Full Library → Custom 31-Icon Subset
+- **Root cause of slow FCP/LCP**: `@import 'iconoir/css/iconoir.css'` in `_main.scss` imported the pre-built CSS with all 1,400+ icons as inline SVG data URIs
+- CSS has no tree-shaking — entire file included regardless of usage
+- **Created `src/scss/iconoir-custom.css`** with only the 31 icons used across all HTML files
+- **2,973 KB → 137 KB total CSS bundle (95% reduction, gzipped: 265 KB → 19 KB)**
+- **Automated script**: `npm run icons` (`scripts/build-icons.cjs`) scans all HTML files for `iconoir-*` classes and regenerates the subset from `node_modules/iconoir/css/iconoir.css`
+
+### GLightbox — Dynamic Import (Landing Page)
+- GLightbox JS (60 KB) + CSS (14 KB) was bundled into landing page via static imports in `carousel-dots.js` and `main.js`
+- Lightbox is only used on case study pages + mobile slideshow tap
+- **`carousel-dots.js`**: Removed static `import GLightbox`, now uses `await import('glightbox')` on first mobile tap
+- **`main.js`**: GLightbox init wrapped in `if (document.querySelector('.new-carousel.swiper, ...))` with dynamic `import()`
+- **`lightgallery.js`**: Removed `import 'glightbox/dist/css/glightbox.min.css'` — CSS loaded at runtime via `<link>` injection from CDN to prevent Vite extracting it into all pages
+- **`vite.config.js`**: Added `modulePreload: false` to prevent Vite injecting `<link rel="modulepreload">` for dynamic chunks
+
+### LCP Image Preload
+- Added `<link rel="preload" as="image" href="/mkm/mkm-large hero.webp" type="image/webp">` to `index.html` `<head>`
+- Starts download before CSS is parsed, improving LCP timing
+
+### Video Lazy Playback
+- Removed `autoplay` from all `<video>` tags in `index.html` (10 videos across 3 project cards)
+- `autoplay` overrides `preload="none"` — browser downloads video immediately for autoplay
+- Added IntersectionObserver in `main.js` that calls `.play()` when video enters viewport (200px margin) and `.pause()` when it leaves
+- **Saves ~4 MB of immediate video downloads on landing page load**
+
+### Google Fonts Split
+- Previously: single request for Bricolage Grotesque + Fascinate + Anonymous Pro
+- Now: Bricolage Grotesque (primary) loaded eagerly with `preload`, Fascinate + Anonymous Pro deferred
+- Faster FCP since primary font resolves sooner
+
+### Key Decisions
+- Iconoir custom subset over switching icon libraries — preserves existing HTML, no class name changes
+- `npm run icons` script for maintainability — regenerate subset after adding new icons to HTML
+- CDN for GLightbox CSS (`cdn.jsdelivr.net`) rather than bundled — Vite's CSS extraction couldn't be disabled for dynamic imports
+- IntersectionObserver for video playback rather than keeping autoplay — prevents unnecessary bandwidth usage
+
+### Files Modified
+- `index.html` — LCP preload, font split, video autoplay removed
+- `src/js/main.js` — Dynamic GLightbox import, lazy video observer, removed static lightgallery import
+- `src/js/modules/carousel-dots.js` — Dynamic GLightbox import on mobile tap
+- `src/js/modules/lightgallery.js` — Removed CSS import (loaded at runtime)
+- `src/scss/_main.scss` — `@import 'iconoir-custom.css'` replacing `@import 'iconoir/css/iconoir.css'`
+- `vite.config.js` — Added `modulePreload: false`
+- `package.json` — Added `"icons": "node scripts/build-icons.cjs"` script
+- `.gitignore` — Added `public/mkm/card-hover.gif` (unused)
+
+### Files Created
+- `src/scss/iconoir-custom.css` — Custom 31-icon Iconoir subset (47 KB)
+- `scripts/build-icons.cjs` — Automated icon subset generator
+
+---
+
+## 2026-02-15 (Session 1)
 
 ### Session Summary
 Performance optimization round 2: Addressed Vercel Speed Insights showing RES 60, FCP 5.47s, LCP 5.69s on desktop. Converted all landing page images to WebP, videos from .mov to .mp4, GIF to .mp4 video, made Google Fonts non-render-blocking across all 6 pages.

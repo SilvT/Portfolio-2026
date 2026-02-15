@@ -35,12 +35,17 @@
       <!-- Google Fonts -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap">
-      <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+      <!-- Primary font: load eagerly for FCP -->
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap">
+      <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+      <!-- Secondary fonts: defer -->
+      <link href="https://fonts.googleapis.com/css2?family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
       <noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet"></noscript>
 
       <link rel="stylesheet" href="/src/scss/_main.scss">
 
+      <!-- Preload LCP image -->
+      <link rel="preload" as="image" href="/mkm/mkm-large hero.webp" type="image/webp">
    </head>
    <body>
 
@@ -171,10 +176,10 @@
                      <!-- Images carousel -->
                      <div class="slideshow-container">
                         <div class="project-image-wrapper slideshow">
-                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default" loading="eager" fetchpriority="high" decoding="async" data-slide="0"><video src="/mkm/card-hover-2.mp4" alt="Marketing Management preview 2" class="project-image project-image-default loaded" muted autoplay loop playsinline preload="none" data-slide="1"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="2">
+                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default" loading="eager" fetchpriority="high" decoding="async" data-slide="0"><video src="/mkm/card-hover-2.mp4" alt="Marketing Management preview 2" class="project-image project-image-default loaded" muted loop playsinline preload="none" data-slide="1"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="2">
                            <video src="/mkm/journey.mp4" alt="Marketing Management preview 4" class="project-image project-image-default loaded" muted loop playsinline preload="none" data-slide="3"></video>
                            <img src="/mkm/UI-Leads-dashboard.webp" alt="Marketing Management preview 5" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="4"><img src="/mkm/UI-interactions-inbox.webp" alt="Marketing Management preview 6" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="5"><img src="/mkm/UI-Interactions-convo.webp" alt="Marketing Management preview 7" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="6"><img src="/mkm/UI-grid-lead.webp" alt="Marketing Management preview 8" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="7">
-                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><video src="/mkm/card-hover-2.mp4" alt="Marketing Management preview 2" class="project-image project-image-default loaded" muted autoplay loop playsinline preload="none" aria-hidden="true"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
+                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><video src="/mkm/card-hover-2.mp4" alt="Marketing Management preview 2" class="project-image project-image-default loaded" muted loop playsinline preload="none" aria-hidden="true"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
                            <video src="/mkm/journey.mp4" alt="Marketing Management preview 4" class="project-image project-image-default loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
                            <img src="/mkm/UI-Leads-dashboard.webp" alt="Marketing Management preview 5" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/mkm/UI-interactions-inbox.webp" alt="Marketing Management preview 6" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/mkm/UI-Interactions-convo.webp" alt="Marketing Management preview 7" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/mkm/UI-grid-lead.webp" alt="Marketing Management preview 8" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
                         </div>

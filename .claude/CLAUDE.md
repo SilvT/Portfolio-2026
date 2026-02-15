@@ -14,7 +14,7 @@ Live: https://silviatravieso.com
 | Animation | GSAP 3.14.2 |
 | Carousels | Swiper 12.0.3 |
 | Lightbox | GLightbox 3.3.1 |
-| Icons | Phosphor Icons, Iconoir |
+| Icons | Phosphor Icons, Iconoir (custom subset) |
 | Deployment | Vercel |
 
 ---
@@ -25,6 +25,8 @@ Live: https://silviatravieso.com
 Portfolio-clean/
 ├── index.html                    # Landing page
 ├── marketing-management.html     # Case study template
+├── scripts/
+│   └── build-icons.cjs          # Iconoir CSS subset generator
 ├── vite.config.js               # Build configuration
 ├── vercel.json                  # Deployment config
 ├── public/                      # Static assets (images, CV, favicons)
@@ -44,6 +46,7 @@ Portfolio-clean/
     │       └── side-nav-bar.js      # Dynamic case study nav
     └── scss/
         ├── _main.scss           # Main import file
+        ├── iconoir-custom.css   # Auto-generated icon subset (npm run icons)
         ├── _variables.scss      # Design tokens
         ├── typography.scss      # Type system
         ├── breakpoints.scss     # Responsive mixins
@@ -145,12 +148,43 @@ Generates navigation from `data-section-title` attributes. Intersection Observer
 
 ---
 
+## Iconoir Icons — Custom Subset
+
+The project uses a **custom CSS subset** of Iconoir (31 icons out of 1,400+), not the full library. This reduced CSS from 2,973 KB to 47 KB.
+
+- **Source**: `src/scss/iconoir-custom.css` (auto-generated, do not edit manually)
+- **Imported in**: `src/scss/_main.scss` via `@import 'iconoir-custom.css'`
+- **Generator**: `scripts/build-icons.cjs` — scans all HTML files for `iconoir-*` classes and extracts matching rules from `node_modules/iconoir/css/iconoir.css`
+
+### Adding/Removing Icons
+1. Add the icon class to any HTML file (e.g., `<i class="iconoir-arrow-right"></i>`)
+2. Run `npm run icons`
+3. The subset CSS is regenerated automatically
+
+**NEVER import `iconoir/css/iconoir.css` directly** — it's 2.9 MB of inline SVG data URIs for all 1,400+ icons and CSS cannot tree-shake unused rules.
+
+---
+
+## GLightbox — Dynamic Loading
+
+GLightbox JS and CSS are **dynamically imported**, not bundled into the main landing page:
+
+- **Landing page**: GLightbox is NOT loaded (no lightbox needed)
+- **Case study pages**: Loaded via dynamic `import()` in `main.js` when `.new-carousel.swiper` or similar selectors are detected
+- **Mobile slideshow tap**: `carousel-dots.js` loads GLightbox on-demand on first tap via `await import('glightbox')`
+- **CSS**: Loaded at runtime via `<link>` injection from CDN (`cdn.jsdelivr.net`), not via Vite CSS extraction (which would bundle it into all pages)
+
+**NEVER add a static `import GLightbox` or `import 'glightbox/dist/css/glightbox.min.css'` to `main.js` or any module statically imported by `main.js`** — this would add ~60 KB JS + 14 KB CSS to the landing page where it's unused.
+
+---
+
 ## Commands
 
 ```bash
 npm run dev      # Start dev server (port 3000)
 npm run build    # Build to dist/
 npm run preview  # Preview production build
+npm run icons    # Regenerate Iconoir CSS subset from HTML usage
 ```
 
 ---

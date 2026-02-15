@@ -5,8 +5,6 @@
  * On mobile, tapping the slideshow opens a GLightbox gallery.
  */
 
-import GLightbox from 'glightbox';
-
 const RESUME_DELAY = 3000; // ms before marquee resumes after dot click
 const MOBILE_BREAKPOINT = 768;
 
@@ -100,44 +98,53 @@ export function initCarouselDots() {
  * with all original slides, starting from the currently visible one.
  */
 function initSlideshowLightbox(container, slides, containerIndex) {
-  const galleryName = `slideshow-${containerIndex}`;
+  let lightbox = null;
 
   // Build GLightbox elements array from original slides
-  const elements = slides.map((slide) => {
-    const isVideo = slide.tagName === 'VIDEO';
-    if (isVideo) {
+  function getElements() {
+    return slides.map((slide) => {
+      const isVideo = slide.tagName === 'VIDEO';
+      if (isVideo) {
+        return {
+          href: slide.src,
+          type: 'video',
+          source: 'local',
+          width: 900,
+          description: slide.getAttribute('alt') || '',
+        };
+      }
       return {
         href: slide.src,
-        type: 'video',
-        source: 'local',
-        width: 900,
-        description: slide.getAttribute('alt') || '',
+        type: 'image',
+        alt: slide.alt || '',
+        description: slide.alt || '',
       };
-    }
-    return {
-      href: slide.src,
-      type: 'image',
-      alt: slide.alt || '',
-      description: slide.alt || '',
-    };
-  });
+    });
+  }
 
-  const lightbox = GLightbox({
-    elements,
-    touchNavigation: true,
-    loop: true,
-  });
-
-  // Tap handler — open lightbox on mobile, ignore dot clicks
-  container.addEventListener('click', (e) => {
+  // Tap handler — load GLightbox on demand, open on mobile
+  container.addEventListener('click', async (e) => {
     if (window.innerWidth > MOBILE_BREAKPOINT) return;
-    // Don't trigger lightbox when clicking dots
     if (e.target.closest('.carousel-dots')) return;
 
-    // Determine which slide to start from based on current active dot
+    if (!lightbox) {
+      const { default: GLightbox } = await import('glightbox');
+      // Load CSS at runtime to avoid Vite extracting it into all pages
+      if (!document.querySelector('link[href*="glightbox"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css';
+        document.head.appendChild(link);
+      }
+      lightbox = GLightbox({
+        elements: getElements(),
+        touchNavigation: true,
+        loop: true,
+      });
+    }
+
     const activeDot = container.querySelector('.carousel-dot.active');
     const startIndex = activeDot ? parseInt(activeDot.dataset.slide, 10) : 0;
-
     lightbox.openAt(startIndex);
   });
 }

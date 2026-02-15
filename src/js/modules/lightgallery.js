@@ -1,5 +1,4 @@
 import GLightbox from 'glightbox';
-import 'glightbox/dist/css/glightbox.min.css';
 
 /**
  * Initialize GLightbox on Swiper carousels, standalone images, and gallery grids

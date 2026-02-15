@@ -9,6 +9,7 @@ export default defineConfig({
   build: {
     target: 'esnext',
     outDir: 'dist',
+    modulePreload: false,
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
