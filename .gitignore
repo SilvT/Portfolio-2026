@@ -25,6 +25,8 @@ dist/
 *.sw?
 .DS_Store
 *index copy.html
+*building.about.md
+
 
 # Vercel
 .vercel
