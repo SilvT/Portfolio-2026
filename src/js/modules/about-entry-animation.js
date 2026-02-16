@@ -22,10 +22,12 @@ export function initAboutEntryAnimation() {
   const jobTitle = section.querySelector('.dynamic-job-title');
   const bioBold = section.querySelector('.bio .bold');
   const bioContent = section.querySelector('.bio .content');
+  const bioSubtitle = section.querySelector('.bio .subtitle');
+  const aboutCta = section.querySelector('.about-cta');
   const scrollHinter = document.querySelector('.scroll-hinter');
 
   // Set initial hidden state — info grid elements
-  gsap.set([firstLetter, restName, jobTitle, bioBold, bioContent].filter(Boolean), {
+  gsap.set([firstLetter, restName, jobTitle, bioBold, bioContent, bioSubtitle, aboutCta].filter(Boolean), {
     opacity: 0,
     y: 20
   });
@@ -43,7 +45,7 @@ export function initAboutEntryAnimation() {
   });
 
   // Helper: reset all elements to hidden state
-  const gridEls = [firstLetter, restName, jobTitle, bioBold, bioContent].filter(Boolean);
+  const gridEls = [firstLetter, restName, jobTitle, bioBold, bioContent, bioSubtitle, aboutCta].filter(Boolean);
   function resetToHidden() {
     gsap.set(gridEls, { opacity: 0, y: 20 });
     if (scrollHinter) gsap.set(scrollHinter, { opacity: 0, y: 20, visibility: 'hidden' });
@@ -78,7 +80,7 @@ export function initAboutEntryAnimation() {
   }
 
   // 2nd — Info grid elements stagger in order (0.25s apart)
-  const gridElements = [firstLetter, restName, jobTitle, bioBold, bioContent].filter(Boolean);
+  const gridElements = [firstLetter, restName, jobTitle, bioBold, bioContent, bioSubtitle, aboutCta].filter(Boolean);
   gridElements.forEach((el, i) => {
     tl.to(el, {
       opacity: 1,

@@ -590,17 +590,10 @@
     // Make wrapper wide enough to hold all images side by side
     width: max-content;
 
-    // Desktop: Infinite loop marquee with smooth continuous scroll
-    animation: marqueeScroll 45s linear infinite;
-
-    // Pause animation on hover
-    &:hover {
-      animation-play-state: paused;
-    }
+    // Marquee scroll driven by GSAP (see marquee-scroll.js)
 
     @include breakpoint(mobile) {
       gap: 1rem;
-      animation-duration: 80s;
     }
 
     .project-image {
@@ -613,8 +606,8 @@
       flex-shrink: 0;
       position: relative;
 
-      // Override original hover behavior - keep images visible
-      opacity: 1 !important;
+      // Base opacity — GSAP entry animation controls initial fade-in
+      // (do NOT use !important here, it blocks gsap.set opacity:0)
 
       @include breakpoint(mobile) {
         border-radius: 4px;
@@ -623,7 +616,7 @@
 
     // Override default hover behavior for slideshow
     &:hover .project-image {
-      opacity: 1 !important; // Keep all images visible on hover
+      opacity: 1; // Keep all images visible on hover (no !important — GSAP needs control during entry)
     }
   }
 
@@ -666,18 +659,6 @@
 
     &:hover {
       background-color: rgba($blue, 0.6);
-    }
-  }
-
-  // Marquee scroll animation - infinite seamless loop (desktop only)
-  // Images are duplicated, so translating to -50% puts us at the start of duplicates
-  // Animation loops back to 0% seamlessly because duplicates match originals
-  @keyframes marqueeScroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
     }
   }
 
@@ -877,10 +858,6 @@
   // ============================================================================
 
   @include reduced-motion {
-    .project-image-wrapper.slideshow {
-      animation: none !important;
-    }
-
     .carousel-dot {
       transition: none;
     }

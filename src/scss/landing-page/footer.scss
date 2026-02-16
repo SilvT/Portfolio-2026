@@ -299,9 +299,12 @@
 
 .icon-animation-container{
 
-   p, h3{
+   p{
       font-size: $font-s;
       color: $blue;
+      &.bold{
+        font-size: calc($font-s*1.2);
+      }
     }
   }
 

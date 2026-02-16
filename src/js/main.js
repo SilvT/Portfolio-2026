@@ -10,7 +10,9 @@ import { initNavigation } from './modules/navigation.js';
 import { initIconAnimation } from "./modules/icon-animation.js";
 import { initCarouselDots } from "./modules/carousel-dots.js";
 import { initAboutEntryAnimation } from "./modules/about-entry-animation.js";
+import { initAboutModal } from "./modules/about-modal.js";
 import { initProjectCardEntryAnimation } from "./modules/project-card-entry-animation.js";
+import { initAnalyticsEvents } from "./modules/analytics-events.js";
 
 // Vercel Analytics & Speed Insights
 inject();
@@ -35,6 +37,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // About section entry stagger
   initAboutEntryAnimation();
 
+  // About modal slide-in panel
+  initAboutModal();
+
   // Project card entry stagger
   initProjectCardEntryAnimation();
 
@@ -57,6 +62,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Carousel dot navigation
   initCarouselDots();
+
+  // Analytics custom events
+  initAnalyticsEvents();
 
   // Lazy-play videos when their section enters viewport
   const videos = document.querySelectorAll('video[preload="none"]');

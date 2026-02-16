@@ -1,3 +1,4 @@
+!DOCTYPE html>
 <html lang="en">
    <head>
       <meta charset="UTF-8">
@@ -57,7 +58,7 @@
       <nav class="top-nav scrolled" role="navigation" aria-label="Main navigation">
          <div class="nav-wrapper">
             <div class="navigation">
-               <a href="#about-about" class="nav-item">About</a>
+               <a href="#about" class="nav-item" data-open-about-modal>About</a>
                <a href="#marketing-management" class="nav-item">Works</a>
                <!-- <a href="#token-launch" class="nav-item">Tools</a> -->
                <a href="#contact" class="nav-item">contact</a>
@@ -94,22 +95,83 @@
                   <div class="dynamic-job-title grid-item two" role="status" aria-live="polite" aria-label="Design Systems">
                      <div class="flip-board-container">PRODUCT<br>DESIGNER</div>
                   </div>
-                  <div class="bio grid-item three" role="contentinfo" aria-label="Professional biography">
+                  <div class="bio grid-item three" aria-label="Professional biography">
                      <p class="bold">
-                        I build scalable products and the design systems that power them.</p>
+                        I build products and design systems—simultaneously. </p>
                      <p class="content">
-                        Product Designer × Design Systems Specialist <br>
-                        Building scalable products from 0→1.        
+                        Not because it's trendy, because fragmented tools and inconsistent patterns drive me mad.<br>
+                        </p>
+                     <p class="subtitle">
+                        Product Designer × Design Systems Specialist
+                     </p>
                   </div>
                </div>
             </article>
          </div>
+
+         <dialog class="about-modal" aria-label="About my journey">
+            <div class="about-modal__backdrop" data-close-about-modal></div>
+            <div class="about-modal__panel">
+               <header class="about-modal__header">
+                  <h2 class="about-modal__title">Meet Me!</h2>
+                  <button class="about-modal__close" aria-label="Close" data-close-about-modal>
+                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+               </header>
+               <div class="about-modal__content">
+                  <span>
+                     <!-- <h1>Me</h1> -->
+                     <p>
+                        <i class="iconoir-sea-and-sun"></i> Born and raised in the Canary Islands, now living between there and Barcelona. Heavily shaped by British culture and humour.<br>
+                        <i class="iconoir-leaf"></i><i class="iconoir-bread-slice"></i> I have a lot of plants in my apartment and bake way too much focaccia weekly. 
+                     </p>
+                  </span>
+                  <span>
+                     <h1> Work-me:</h1>
+                     <h2> — Foundations <i class="iconoir-cellar"></i></h2> 
+                        <p>
+                        <em>Architect → 6+ years freelancing → Product Designer</em>
+                        <br>
+                        I was trained as an architect and civil engineer before moving into digital work. That training stayed with me. I learned to think about what holds things up – to consider consequences early, and what happens when things fail.
+                        <br>
+                        That mindset never really left.
+                        </p>
+                     <h2>— Systems, always - not after <i class="iconoir-ruler-combine"></i></h2>
+                        <p>I began building design systems while building products. Not as a cleanup phase.<br>
+                        Features and infrastructure aren’t separate tracks. If a product is meant to grow, structure has to be shaped early — even in messy stages.   <br>
+                        I’m comfortable starting rough. Exploring fast. Even when things are chaotic, I can keep moving the work forward.
+                        But once direction starts to form, I tighten it. My non-negotiables:  <br>
+                        <em>∙  Naming. Patterns. Reduce friction. Scaffolding.</em><br>
+                        Let's not play Jenga and keep things stable.
+                        </p>
+                     <h2>— What I value <i class="iconoir-crown"></i></h2>
+                     <p>Freelancing gave me range and ownership. But over time, I realized I value something else more: sustained impact.
+                     That's when I landed on zero-to-one B2B SaaS work: where infrastructure and features evolve together – that’s when systems thinking actually matters.
+                        <br>
+                     Different setups, same instinct.
+                     </p>
+                     <h2>— My kind of vibe <i class="iconoir-bright-star"></i></h2>
+                     <p>
+                        CRMs, internal tools, SaaS platforms — products that are dense, operational, data heavy, sometimes painfully so.   <br>
+                        They don’t just need good screens, they’re not always glamorous.   <br>
+
+                        <em>Design systems aren’t a trend for me. They’re just how I think.</em>
+                     </span>
+                    <div class="meta-group">
+                     <a href="#contact" class="cta-button" data-close-about-modal>
+                        Reach Out !
+                     </a>
+                   </div>
+
+               </div>
+            </div>
+         </dialog>
       </section>
 
 
       <div id="projects-container">
 
-         
+
 
          <section id="marketing-management" class="section-project project-blue experimental-layout" data-section="project" data-project-id="1">
             <div class="contentbox">
@@ -176,11 +238,11 @@
                      <!-- Images carousel -->
                      <div class="slideshow-container">
                         <div class="project-image-wrapper slideshow">
-                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default" loading="eager" fetchpriority="high" decoding="async" data-slide="0"><video src="/mkm/card-hover-2.mp4" alt="Marketing Management preview 2" class="project-image project-image-default loaded" muted loop playsinline preload="none" data-slide="1"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="2">
-                           <video src="/mkm/journey.mp4" alt="Marketing Management preview 4" class="project-image project-image-default loaded" muted loop playsinline preload="none" data-slide="3"></video>
+                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default" loading="eager" fetchpriority="high" decoding="async" data-slide="0"><video src="/mkm/card-hover-2.mp4" aria-label="Marketing Management preview 2" class="project-image project-image-default loaded" muted loop playsinline preload="none" data-slide="1"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="2">
+                           <video src="/mkm/journey.mp4" aria-label="Marketing Management preview 4" class="project-image project-image-default loaded" muted loop playsinline preload="none" data-slide="3"></video>
                            <img src="/mkm/UI-Leads-dashboard.webp" alt="Marketing Management preview 5" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="4"><img src="/mkm/UI-interactions-inbox.webp" alt="Marketing Management preview 6" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="5"><img src="/mkm/UI-Interactions-convo.webp" alt="Marketing Management preview 7" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="6"><img src="/mkm/UI-grid-lead.webp" alt="Marketing Management preview 8" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="7">
-                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><video src="/mkm/card-hover-2.mp4" alt="Marketing Management preview 2" class="project-image project-image-default loaded" muted loop playsinline preload="none" aria-hidden="true"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
-                           <video src="/mkm/journey.mp4" alt="Marketing Management preview 4" class="project-image project-image-default loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
+                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><video src="/mkm/card-hover-2.mp4" class="project-image project-image-default loaded" muted loop playsinline preload="none" aria-hidden="true"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
+                           <video src="/mkm/journey.mp4" class="project-image project-image-default loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
                            <img src="/mkm/UI-Leads-dashboard.webp" alt="Marketing Management preview 5" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/mkm/UI-interactions-inbox.webp" alt="Marketing Management preview 6" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/mkm/UI-Interactions-convo.webp" alt="Marketing Management preview 7" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/mkm/UI-grid-lead.webp" alt="Marketing Management preview 8" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
                         </div>
                         <!-- Dots navigation (mobile only) -->
@@ -318,7 +380,7 @@
             <div class="contentbox">
                <!-- Project Screen -->
                <div class="project-screen">
-                  <button class="project-nav top project-nav-button" data-project-id="3">
+                  <button class="project-nav top project-nav-button" data-project-id="2">
                      <h3 class="nav-title">↑ Previous</h3>
                      <p class="nav-subtitle">Design System</p>
                   </button>
@@ -385,16 +447,16 @@
                      <div class="slideshow-container">
                         <div class="project-image-wrapper slideshow">
                            <img src="/microsite/tomato microsite screens.webp" alt="Energy Switching Tracker preview 1" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="0">
-                           <video src="/microsite/loading-tomato-frame.mp4" alt="Energy Switching Tracker preview 2" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" data-slide="1"></video>
-                           <video src="/microsite/card-hover.mp4" alt="Energy Switching Tracker preview 3" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" data-slide="2"></video>
+                           <video src="/microsite/loading-tomato-frame.mp4" aria-label="Energy Switching Tracker preview 2" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" data-slide="1"></video>
+                           <video src="/microsite/card-hover.mp4" aria-label="Energy Switching Tracker preview 3" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" data-slide="2"></video>
                            <img src="/microsite/landing.webp" alt="Energy Switching Tracker preview 4" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" data-slide="3"><img src="/microsite/loading-animation.webp" alt="Energy Switching Tracker preview 5" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" data-slide="4"><img src="/microsite/mock.webp" alt="Energy Switching Tracker preview 6" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" data-slide="5">
-                           <video src="/microsite/application.mp4" alt="Energy Switching Tracker preview 7" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" data-slide="6"></video>
+                           <video src="/microsite/application.mp4" aria-label="Energy Switching Tracker preview 7" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" data-slide="6"></video>
                            <img src="/microsite/tomato microsite screens.webp" alt="Energy Switching Tracker preview 8" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" data-slide="7">
                            <img src="/microsite/tomato microsite screens.webp" alt="Energy Switching Tracker preview 1" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" aria-hidden="true">
-                           <video src="/microsite/loading-tomato-frame.mp4" alt="Energy Switching Tracker preview 2" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
-                           <video src="/microsite/card-hover.mp4" alt="Energy Switching Tracker preview 3" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
+                           <video src="/microsite/loading-tomato-frame.mp4" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
+                           <video src="/microsite/card-hover.mp4" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
                            <img src="/microsite/landing.webp" alt="Energy Switching Tracker preview 4" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/microsite/loading-animation.webp" alt="Energy Switching Tracker preview 5" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/microsite/mock.webp" alt="Energy Switching Tracker preview 6" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" aria-hidden="true">
-                           <video src="/microsite/application.mp4" alt="Energy Switching Tracker preview 7" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
+                           <video src="/microsite/application.mp4" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
                            <img src="/microsite/tomato microsite screens.webp" alt="Energy Switching Tracker preview 8" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" aria-hidden="true">
                         </div>
                         <!-- Dots navigation (mobile only) -->
@@ -518,7 +580,7 @@
                         </div>
                      </div>
                   </div>
-                  <button class="project-nav bottom project-nav-button"></button>
+                  <div class="project-nav bottom" aria-hidden="true"></div>
                </div>
             </div>
          </section>
@@ -538,21 +600,21 @@
                   <div class="socials">
                      <!-- LinkedIn Link -->
                      <a href="https://www.linkedin.com/in/silvia-travieso-gonzalez" target="_blank" rel="noopener noreferrer" class="social-link" data-name="linkedin" data-hover-text="peak at my past">
-                        <p class="icon">ln·</p>
+                        <span class="icon">ln·</span>
                         <div class="social-link__text">
                            <p>Linkedin</p>
                         </div>
                      </a>
                      <!-- Email Link -->
                      <a href="mailto:silvia.travieso.g@gmail.com" class="social-link" data-name="email" data-hover-text="my inbox is your inbox">
-                        <p class="icon">@·</p>
+                        <span class="icon">@·</span>
                         <div class="social-link__text">
                            <p>silvia.travieso.g@gmail.com</p>
                         </div>
                      </a>
                      <!-- CV Download Button -->
                      <a id="cv-download-btn" href="/cv-silvia-travieso-2025.pdf" download class="social-link" data-name="cv" data-hover-text="read it at your own pace">
-                        <p class="icon">cv·</p>
+                        <span class="icon">cv·</span>
                         <div class="social-link__text">
                            <p>Download CV</p>
                         </div>
@@ -560,7 +622,6 @@
                      <!-- Git Link -->
                      <a href="https://github.com/SilvT/Silvia_Travieso_UI_Portfolio" class="social-link" data-name="git-repo" data-hover-text="Inspect the code for this web">
                         <span class="icon">&lt; / &gt;</span>
-                         </span>
                         <div class="social-link__text">
                            <p>Git</p>
                         </div>
@@ -580,7 +641,7 @@
                      <a href="https://github.com/SilvT/Silvia_Travieso_UI_Portfolio">
                         <span>
                            <p> Designed and Built by</p>
-                           <h3>Silvia Travieso · 2026</h3>
+                           <p class="bold">Silvia Travieso · 2026</p>
                         </span>
                      </a>
                   </div>

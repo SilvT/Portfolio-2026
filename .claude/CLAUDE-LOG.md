@@ -1,5 +1,70 @@
 # Claude Log - Portfolio 2025
 
+## 2026-02-16
+
+### Session Summary
+Multiple improvements: Vercel Analytics custom events, HTML best-practices audit fixes, project card entry animation refactor (two parallel blocks with staggered slides), **CSS marquee → GSAP marquee refactor**, about modal, and marquee fine-tuning.
+
+### Vercel Analytics Custom Events (`analytics-events.js`)
+- **New module** tracking clicks on: About nav, Contact nav, Read Case Study buttons (with project ID), footer social links
+- Uses `@vercel/analytics` `track()` function (already installed)
+
+### HTML Best Practices Fixes (`index.html`)
+- `<video>` elements: replaced invalid `alt` with `aria-label` (visible) or removed (aria-hidden duplicates)
+- Removed `role="contentinfo"` from bio div (reserved for `<footer>`)
+- Changed `<p class="icon">` to `<span class="icon">` in footer social links
+- Fixed energy-tracker prev button `data-project-id` (3 → 2)
+- Changed last project empty `<button>` to `<div aria-hidden="true">`
+
+### Project Card Entry Animation Refactor
+- Split into **two parallel blocks**: Block 1 (text: title → description → metrics) and Block 2 (slideshow + tags, starts at t=0)
+- Block 2 staggers first 3 slide images individually, then pops in remaining + duplicates
+- Marquee starts paused, plays 3s after entry animation completes
+- Resets to slide 1 on scroll-down re-entry
+
+### CSS Marquee → GSAP Marquee Refactor
+- **Problem**: CSS `@keyframes marqueeScroll` had no clean API for pause/resume/restart. Hacking `animation = 'none'` + reflow + re-apply + `animationPlayState` was fragile and the loop/delay wasn't working correctly.
+- **Solution**: New `marquee-scroll.js` module with GSAP tween (`x: -oneSetWidth`, `repeat: -1`, `ease: 'none'`)
+- **Architecture**: Shared `Map<HTMLElement, Tween>` registry. Both `project-card-entry-animation.js` and `carousel-dots.js` import from it.
+- `createMarqueeTween()` / `getMarqueeTween()` API replaces all CSS animation manipulation
+- Desktop hover pause via `mouseenter`/`mouseleave` events (replaces CSS `&:hover { animation-play-state: paused }`)
+- `carousel-dots.js` now reads `tween.progress()` instead of parsing CSS transform matrix via `DOMMatrixReadOnly`
+- Dot click: `tween.pause()` → `tween.progress(index/count)` → resumes after 3s (replaces `animation-delay` offset hack)
+- Reduced motion: `createMarqueeTween()` returns `null`, consumers handle gracefully
+
+### Marquee Fine-Tuning (Session 2)
+- **CSS `!important` fix**: Removed `opacity: 1 !important` from `.project-image` in slideshow — was overriding GSAP's `gsap.set(opacity: 0)`, making Block 2 entry animation invisible
+- **Seamless loop fix**: Added `ensureFillWidth()` to `marquee-scroll.js` — dynamically clones original images until strip width >= oneSetWidth + viewportWidth, fixing empty space at loop seam for all slideshow lengths
+- **Pixel-based offset**: Changed from `xPercent: -50` to `x: -oneSetWidth` (measured pixel width of one original set) — precise loop point regardless of image sizes
+- **Consistent scroll speed**: `PX_PER_SEC = 90` constant — duration = oneSetWidth / speed, so all slideshows scroll at the same visual rate
+- **Re-entry reset**: `resetToHidden()` uses live DOM query for aria-hidden dupes (catches dynamically cloned elements). `createMarqueeTween()` called before `dupeSlides` query so clones are included in the cached NodeList for timeline animation.
+- **Marquee resume delay**: Reduced from 3s → 600ms after entry animation completes
+
+### About Modal
+- New `about-modal.js` module — slide-in `<dialog>` panel triggered from about section
+- Styled in `new-about.scss`
+
+### Key Decisions
+- GSAP tween over CSS `@keyframes` for marquee — enables `.pause()`, `.play()`, `.progress()`, `.restart()` without hacks
+- Shared module with Map registry over event bus or global state — minimal coupling, both consumers import directly
+- Dynamic cloning via `ensureFillWidth()` over fixed HTML duplicates — adapts to any slideshow length/viewport size
+- Never use GSAP function-based targets `() => querySelectorAll()` as `.to()` first arg — they silently do nothing; use cached NodeLists instead
+
+### Files Created
+- `src/js/modules/marquee-scroll.js` — GSAP tween factory + registry
+- `src/js/modules/analytics-events.js` — Vercel Analytics custom events
+- `src/js/modules/about-modal.js` — About modal slide-in panel
+
+### Files Modified
+- `src/js/modules/project-card-entry-animation.js` — Two parallel blocks, GSAP marquee integration (replaced CSS animation hacks)
+- `src/js/modules/carousel-dots.js` — GSAP tween `.progress()` API (replaced CSS matrix parsing + animation-delay hack)
+- `src/scss/landing-page/project-cards.scss` — Removed `@keyframes marqueeScroll`, `animation:`, hover pause, reduced-motion animation rule
+- `src/js/main.js` — Added imports for analytics-events, about-modal
+- `index.html` — HTML semantic fixes (video alt, contentinfo role, icon elements, nav buttons)
+- `.claude/CLAUDE.md` — Added marquee-scroll.js docs, updated slideshow behavior section
+
+---
+
 ## 2026-02-15 (Session 2)
 
 ### Session Summary

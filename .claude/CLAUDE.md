@@ -129,8 +129,11 @@ Initializes GLightbox for carousels, standalone images, gallery grids, and accor
 ### `accordion.js`
 Mutually exclusive accordion behavior for `.milestone` and `.cs-line-breaker.accordion` elements.
 
+### `marquee-scroll.js`
+GSAP-driven infinite marquee for project card slideshows. Exports `createMarqueeTween(slideshow, opts)` and `getMarqueeTween(slideshow)` via a shared `Map` registry. Handles hover-pause on desktop and respects `prefers-reduced-motion`. Duration: 45s desktop / 80s mobile.
+
 ### `carousel-dots.js`
-Syncs dot navigation with the marquee animation on project card slideshows. Uses `requestAnimationFrame` to track which slide is visible via the CSS transform matrix and updates the active dot. Clicking a dot pauses the marquee, jumps to that slide, and resumes after 3s.
+Syncs dot navigation with the GSAP marquee tween on project card slideshows. Uses `requestAnimationFrame` to read `tween.progress()` and updates the active dot. Clicking a dot pauses the marquee via `tween.pause()`, jumps via `tween.progress()`, and resumes after 3s.
 
 ### `side-nav-bar.js`
 Generates navigation from `data-section-title` attributes. Intersection Observer tracks scroll position with animated indicator.
@@ -248,14 +251,19 @@ Built with modern vanilla web technologies:
 
 ---
 # Slideshow Behavior (Project Cards)
-The project card slideshows use a **marquee animation** on all viewports — a continuous infinite horizontal scroll of images, with duplicated images for seamless looping.
+The project card slideshows use a **GSAP-driven marquee** on all viewports — a continuous infinite horizontal scroll of images, with duplicated images for seamless looping.
 
-## Marquee Animation
-- CSS `@keyframes marqueeScroll` translates from `0%` to `-50%` over 30s (linear, infinite)
+## Marquee Animation (GSAP)
+- **Module**: `src/js/modules/marquee-scroll.js` — shared registry (`Map<HTMLElement, Tween>`)
+- `gsap.to(slideshow, { xPercent: -50, ease: 'none', repeat: -1 })` replaces CSS `@keyframes`
 - Images are duplicated in HTML (`aria-hidden="true"`) so the loop is seamless
 - `width: max-content` on `.project-image-wrapper.slideshow` keeps all images side-by-side
 - Desktop gap: `1.5rem` / Mobile gap: `1rem`
-- Animation pauses on hover (desktop)
+- Duration: 45s desktop / 80s mobile
+- Hover pauses tween on desktop (`mouseenter`/`mouseleave`)
+- Respects `prefers-reduced-motion` (returns `null`, no tween created)
+- **Entry animation integration**: `project-card-entry-animation.js` creates the tween paused, plays it 3s after entry animation completes
+- **NEVER use CSS `@keyframes` or `animation:` for the marquee** — all control is via GSAP `.pause()`, `.play()`, `.progress()`, `.restart()`
 
 ## Dot Indicators (Mobile Only)
 - `.carousel-dots` are `display: none` on desktop, `display: flex` at `max-width: 768px`
@@ -263,9 +271,9 @@ The project card slideshows use a **marquee animation** on all viewports — a c
 - Active dot: expands from 8px circle to 24px rounded rectangle in `$blue`
 - Inactive dots: 8px circles at 30% opacity blue
 - **JavaScript-driven** via `carousel-dots.js`:
-  - `requestAnimationFrame` loop reads the CSS transform matrix to determine which slide is visible
+  - `requestAnimationFrame` loop reads `tween.progress()` to determine which slide is visible
   - Active dot updates in real-time as the marquee scrolls
-  - Clicking a dot pauses the marquee, jumps to that slide, and resumes after 3s
+  - Clicking a dot: `tween.pause()` → `tween.progress(index/count)` → resumes after 3s
 ---
 # Critical CSS Rule: `overflow: clip` not `hidden`
 

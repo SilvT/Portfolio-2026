@@ -1,9 +1,11 @@
 /**
- * Carousel Dots - Syncs dot navigation with marquee animation
+ * Carousel Dots - Syncs dot navigation with GSAP marquee tween
  * Dots update to reflect which slide is currently visible.
  * Clicking a dot pauses the marquee and scrolls to that slide.
  * On mobile, tapping the slideshow opens a GLightbox gallery.
  */
+
+import { getMarqueeTween } from './marquee-scroll.js';
 
 const RESUME_DELAY = 3000; // ms before marquee resumes after dot click
 const MOBILE_BREAKPOINT = 768;
@@ -34,21 +36,15 @@ export function initCarouselDots() {
       });
     }
 
-    // Track which slide is visible based on marquee transform
+    // Track which slide is visible based on GSAP tween progress
     function updateActiveDot() {
-      const computed = getComputedStyle(slideshow);
-      const matrix = new DOMMatrixReadOnly(computed.transform);
-      const translateX = Math.abs(matrix.m41);
-
-      // Total width of the original slides (half the full strip)
-      const totalWidth = slideshow.scrollWidth / 2;
-      // Wrap translateX into the original half
-      const wrapped = translateX % totalWidth;
-      // Determine which slide is at the left edge
-      const slideWidth = totalWidth / slideCount;
-      const index = Math.round(wrapped / slideWidth) % slideCount;
-
-      setActiveDot(index);
+      const tween = getMarqueeTween(slideshow);
+      if (tween) {
+        // progress goes 0→1 for one full -50% cycle
+        const progress = tween.progress();
+        const index = Math.floor(progress * slideCount) % slideCount;
+        setActiveDot(index);
+      }
       requestAnimationFrame(updateActiveDot);
     }
 
@@ -60,30 +56,18 @@ export function initCarouselDots() {
         const targetIndex = parseInt(dot.dataset.slide, 10);
         if (isNaN(targetIndex) || targetIndex >= slideCount) return;
 
-        // Pause the animation
-        slideshow.style.animationPlayState = 'paused';
+        const tween = getMarqueeTween(slideshow);
+        if (!tween) return;
 
-        // Calculate position to show the target slide
-        const totalWidth = slideshow.scrollWidth / 2;
-        const slideWidth = totalWidth / slideCount;
-        const targetX = slideWidth * targetIndex;
-
-        // Jump to that position
-        slideshow.style.animation = 'none';
-        slideshow.offsetHeight; // force reflow
-        slideshow.style.transform = `translateX(-${targetX}px)`;
-
+        // Pause and jump to target slide position
+        tween.pause();
+        tween.progress(targetIndex / slideCount);
         setActiveDot(targetIndex);
 
         // Resume marquee after delay
         clearTimeout(resumeTimer);
         resumeTimer = setTimeout(() => {
-          // Calculate the equivalent progress percentage for the animation
-          const progress = targetX / totalWidth;
-          slideshow.style.transform = '';
-          slideshow.style.animation = '';
-          slideshow.style.animationDelay = `-${progress * 30}s`;
-          slideshow.style.animationPlayState = '';
+          tween.play();
         }, RESUME_DELAY);
       });
     });
