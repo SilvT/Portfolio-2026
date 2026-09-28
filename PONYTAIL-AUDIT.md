@@ -1,141 +1,225 @@
 # Ponytail Audit Report
 
 **Date:** September 28, 2026  
-**Scope:** Whole-repo audit for over-engineering, unused code, and simplification opportunities  
-**Assessment:** Well-modularized, mostly clean — but 3 major dead-file deletions and 2 unused dependencies identified
+**Scope:** Comprehensive whole-repo audit for over-engineering, dead code, and unused assets  
+**Status:** Complete — Ready for cleanup
 
 ---
 
-## Findings (Ranked by Biggest Cut First)
+## Findings (Ranked by Impact)
 
-### 🗑️ delete: old-blocks.scss (2,675 lines)
-**What:** Dead legacy component styles never imported  
-**Why:** Superseded by active `blocks.scss`  
-**Where:** `src/scss/case-studies/old-blocks.scss`  
-**Action:** Delete file  
+### 🗑️ CRITICAL: Unused Video Files (.mov format) — 56 MB
 
-### 🗑️ delete: about.scss (325 lines)
-**What:** Commented-out import, replaced by `new-about.scss`  
-**Why:** Dual maintenance of same styles in two files  
-**Where:** `src/scss/landing-page/about.scss` — import at top is `// @use 'about'` (commented) while `@use 'new-about'` is active  
-**Action:** Delete file, verify imports point to `new-about.scss`  
+**delete:** 7 `.mov` video files in `public/microsite/`, all replaced by `.mp4` versions:
+- `initiated.mov` (2.9 MB) → use `initiated.mp4`
+- `loading-tomato-frame.mov` (17 MB) → use `loading-tomato-frame.mp4`
+- `payment error.mov` (2.2 MB) → use `payment error.mp4`
+- `tomato-ready.mov` (4.0 MB) → use `tomato-ready.mp4`
+- `trad meter and end.mov` (5.9 MB) → use `trad meter and end.mp4`
+- `application.mov` (1.6 MB) → use `application.mp4`
+- `errores.mov` (7.0 MB) — not referenced in HTML
+- `switching-smart.mov` (13 MB) — not referenced in HTML
 
-### 🗑️ delete: index copy.html (58,703 bytes)
-**What:** Duplicate template file with zero references  
-**Why:** Unlinked static archive  
-**Where:** `index copy.html` (root)  
-**Action:** Delete file  
-
-### ⚙️ yagni: @phosphor-icons/web dependency (v2.1.2)
-**What:** Unused package — zero Phosphor icon classes found in codebase  
-**Why:** Iconoir is the active icon library (103+ uses); Phosphor is dead weight  
-**Where:** `package.json` dependencies  
-**Action:** Remove `@phosphor-icons/web` from `package.json`, run `npm install`  
-**Savings:** ~50 KB bundle  
-
-### 📚 stdlib: Scroll listener debounce pattern
-**What:** Debounce logic duplicated across 3 modules  
-**Why:** `navigation.js`, `scroll-hinter.js` (lines 96, 131) all re-implement debounce  
-**Where:** `src/js/modules/`  
-**Action:** Extract to `src/js/utils/debounce.js`, import in all three  
-**Savings:** ~15 lines of boilerplate  
-
-### ⚙️ yagni: GSAP ScrollTrigger registered 4 times
-**What:** `.registerPlugin(ScrollTrigger)` called in multiple modules  
-**Why:** Only needs to run once globally  
-**Where:** 
-- `src/js/modules/about-entry-animation.js`
-- `src/js/modules/project-card-entry-animation.js`
-- `src/js/modules/scroll-hinter.js`
-- `src/js/modules/icon-animation.js`  
-
-**Action:** Register once in `src/js/main.js` before importing other modules  
-**Savings:** 3 redundant calls  
-
-### ⚙️ yagni: Swiper dependency (v12.0.3)
-**What:** Loaded but never instantiated  
-**Why:** No `.swiper` classes or Swiper JS calls detected in active HTML/JS  
-**Where:** `package.json` dependencies  
-**Action:** Remove from `package.json`, run `npm install`  
-**Savings:** ~60 KB bundle  
-
-### 🗑️ delete: design-system-wip.html (15,859 bytes)
-**What:** In-progress WIP case study  
-**Why:** Linked in CTAs but marked incomplete  
-**Where:** `design-system-wip.html` (root)  
-**Action:** Decide: ship or archive. If archive, move to `/public/archive/` and unlink from CTAs  
-
-### 📏 shrink: Dual DOMContentLoaded listeners
-**What:** Two separate `DOMContentLoaded` events in `main.js`  
-**Why:** Line 33 initializes main flow, line 88 initializes icon-animation separately  
-**Where:** `src/js/main.js`  
-**Action:** Merge both into single listener  
-**Savings:** 3 lines  
-
-### 📏 shrink: Legacy color/font/spacing aliases
-**What:** `_variables.scss` maintains dual names (old + new) for ~25 lines  
-**Why:** 4 "to-be-deprecated LEGACY" comments still aliased alongside new names  
-**Where:** `src/scss/_variables.scss` (lines 27-34, 56-62, 93-98, 117-120)  
-**Action:** Once migration is complete, delete the old aliases  
-**Savings:** ~25 lines  
-
-### 🏗️ native: Custom scroll hint functions (low priority)
-**What:** Three scroll hint functions (`showScrollHint`, `showScrollHinter`, `checkVisibility`)  
-**Why:** Could unify into single `IntersectionObserver`-based pattern  
-**Where:** `src/js/modules/scroll-hinter.js`  
-**Action:** Refactor (optional — low priority, currently working)  
-**Savings:** 200+ lines possible  
-
-### 🗑️ delete: _animations.scss placeholder (2,166 bytes)
-**What:** File contains only `@keyframes` that are duplicated in `_variables.scss`  
-**Why:** Imported but redundant  
-**Where:** `src/scss/landing-page/_animations.scss`  
-**Action:** Move all `@keyframes` to `_variables.scss`, delete file, update imports  
-**Savings:** ~2 KB  
-
-### ⚙️ yagni: Dev-only ngrok whitelist in vite.config.js
-**What:** `allowedHosts` whitelist for local ngrok tunneling  
-**Why:** Dev-only config in prod build file  
-**Where:** `vite.config.js` (line 26)  
-**Action:** Move to `.env.local`, exclude from production build  
-**Savings:** 1 line  
+**Path:** `public/microsite/*.mov`  
+**Action:** Delete all 7 `.mov` files, verify `.mp4` versions are referenced in HTML  
+**Savings:** 56 MB
 
 ---
 
-## Summary
+### 🗑️ CRITICAL: Unused Images in public/ds/ — 2.5 MB
 
-| Metric | Value |
-|--------|-------|
-| **Total lines to delete** | ~3,133 lines |
-| **Unused dependencies** | 2 (`@phosphor-icons/web`, `swiper`) |
-| **Bundle savings** | ~110 KB |
-| **Dead files** | 3 (`old-blocks.scss`, `about.scss`, `index copy.html`, `design-system-wip.html`) |
-| **Consolidation opportunities** | 3 (debounce, ScrollTrigger, DOMContentLoaded) |
+**delete:** 13 unused design system images never referenced in HTML:
+- `css-export.png`
+- `early-designs.png`
+- `early-tokens.png`
+- `initial-phase-*.png` (3 files)
+- `learnings-*.png` (3 files)
+- `mistakes-*.png` (3 files)
+- `wrong-core.png`
+
+**Path:** `public/ds/`  
+**Action:** Delete all 13 image files  
+**Note:** CLAUDE-LOG confirms these were "being cleaned up" but never removed  
+**Savings:** 2.5 MB
+
+---
+
+### 🗑️ CRITICAL: Unused Images in public/microsite/ — 5.5 MB
+
+**delete:** 21 unused microsite images never referenced in HTML:
+- `first draft by stakeholders.png`
+- `first playground ui iterations.png`
+- `hero.png`
+- `mock-*.png` (5 files)
+- `playground-*.png` (4 files)
+- `stepper-*.png` (2 files)
+- `tomato - brand reference.png`
+- `ux-customer journey.png`
+- `ux-translate-1.png`
+- `ui designs.png`
+- `micro animations.png`
+
+**Path:** `public/microsite/`  
+**Action:** Delete all 21 image files  
+**Savings:** 5.5 MB
+
+---
+
+### 🗑️ HIGH: Unused GIF Files — 9.6 MB
+
+**delete:** Two GIF files replaced by `.mp4` versions:
+- `public/mkm/card-hover.gif` (4.8 MB) → use `card-hover.mp4`
+- `public/mkm/card-hover-2.gif` (4.8 MB) → use `card-hover-2.mp4`
+
+**Path:** `public/mkm/`  
+**Action:** Delete both `.gif` files, update `.gitignore`  
+**Savings:** 9.6 MB
+
+---
+
+### 📦 HIGH: Unused Dependencies
+
+**delete:** `@phosphor-icons/web` (v2.1.2)
+- **What:** Never imported or referenced in codebase
+- **Why:** Iconoir is the active icon library
+- **Path:** `package.json:13`
+- **Action:** Remove from dependencies, run `npm install`
+
+**delete:** `swiper` (v12.0.3)
+- **What:** Never imported as ES module, only Swiper CSS loaded from CDN
+- **Why:** Inline scripts in case study pages fetch Swiper directly from CDN
+- **Path:** `package.json:19`
+- **Action:** Remove from dependencies, run `npm install` (or keep if inline scripts need it)
+
+**Savings:** ~110 KB bundle
+
+---
+
+### 🗑️ HIGH: Dead CSS File — 2,675 lines
+
+**delete:** `src/scss/case-studies/old-blocks.scss`
+- **What:** Marked as deprecated in comments, never imported by `_case-study.scss`
+- **Why:** Superseded by active `blocks.scss`
+- **Content:** Only commented-out legacy CSS + one active rule for `.project-page-body`
+- **Path:** `src/scss/case-studies/old-blocks.scss`
+- **Action:** Extract `.project-page-body` rule (lines 1–21) to `_case-study.scss`, delete file
+- **Savings:** 2,675 lines
+
+---
+
+### 📏 MEDIUM: Legacy CSS Variables — 70 lines
+
+**stdlib:** `src/scss/_variables.scss` contains duplicate legacy color aliases
+
+**What:** Lines 27–98 define old color variable names alongside new 100–700 scale:
+- `$color-blue-light` → `$color-blue-100`
+- `$color-blue-soft` → `$color-blue-200`
+- `$color-blue-dark` → `$color-blue-400`
+- `$color-blue-darker` → `$color-blue-500`
+- Similar for green and neutral scales
+
+**Why:** Marked with "To-be-deprecated — LEGACY" comments, full migration to modern scale not yet complete
+
+**Path:** `src/scss/_variables.scss:27-98`  
+**Action:** Migrate all references to modern 100–700 scale, delete old aliases  
+**Savings:** ~70 lines
+
+---
+
+### ⚙️ LOW: Orphaned .gitignore Rules
+
+**yagni:** `.gitignore` contains entries for non-existent files:
+- `*index copy.html` (line 27) — file doesn't exist
+- `*building.about.md` (line 28) — file doesn't exist
+- `public/mkm/card-hover.gif` (line 36) — file exists but unreferenced (to be deleted)
+
+**Path:** `.gitignore:27–28, 36`  
+**Action:** Remove rules for non-existent files, update after deleting dead assets  
+**Savings:** 3 lines
+
+---
+
+### ✓ VERIFIED: vite.config.js Configuration
+
+**status:** Configuration is correct.
+
+`modulePreload: false` (line 12) is intentional — it prevents GLightbox CSS from being bundled on the landing page since it's dynamically imported with runtime CSS injection via CDN. Comment is present and rationale is sound.
+
+---
+
+## Impact Summary
+
+| Category | Count | Size | Priority |
+|----------|-------|------|----------|
+| **Video files (.mov)** | 7 files | 56 MB | 🔴 CRITICAL |
+| **Unused images (ds/)** | 13 files | 2.5 MB | 🔴 CRITICAL |
+| **Unused images (microsite/)** | 21 files | 5.5 MB | 🔴 CRITICAL |
+| **Unused GIF files** | 2 files | 9.6 MB | 🔴 CRITICAL |
+| **Unused dependencies** | 2 deps | ~110 KB | 🟡 HIGH |
+| **Dead CSS file** | 1 file | 2,675 lines | 🟡 HIGH |
+| **Legacy CSS variables** | ~70 lines | — | 🟢 MEDIUM |
+| **Orphaned .gitignore rules** | 3 rules | — | 🟢 LOW |
+
+---
+
+## Total Impact
+
+```
+net: -2,675 lines CSS, -2 dependencies, -73.8 MB assets, -110 KB bundle
+```
+
+### Breakdown
+- **Asset cleanup:** 73.8 MB (videos, images, GIFs)
+- **Code cleanup:** 2,675 lines (old-blocks.scss)
+- **Dependency cleanup:** 2 deps, ~110 KB bundle
+- **CSS refinement:** 70 lines (legacy aliases)
+
+---
+
+## Action Checklist
+
+### 🔴 CRITICAL (Do First — 73.8 MB savings)
+- [ ] Delete all 7 `.mov` files from `public/microsite/`
+- [ ] Delete all 13 unused images from `public/ds/`
+- [ ] Delete all 21 unused images from `public/microsite/`
+- [ ] Delete 2 `.gif` files from `public/mkm/`
+- [ ] Verify corresponding `.mp4` versions are referenced in HTML
+- [ ] Update `.gitignore` to remove obsolete rules
+
+### 🟡 HIGH (Next Priority — 2,677 lines + bundle)
+- [ ] Remove `@phosphor-icons/web` from `package.json`
+- [ ] Remove `swiper` from `package.json` (or verify it's needed for inline scripts)
+- [ ] Run `npm install` after dependency removal
+- [ ] Extract `.project-page-body` rule from `old-blocks.scss` to `_case-study.scss`
+- [ ] Delete `src/scss/case-studies/old-blocks.scss`
+
+### 🟢 MEDIUM (Next Sprint)
+- [ ] Migrate all legacy color variable references in SCSS files to modern 100–700 scale
+- [ ] Delete legacy color aliases from `src/scss/_variables.scss`
+- [ ] Clean up `.gitignore` entries after asset deletions
+
+---
 
 ## Recommendation
 
-**High Priority (ship immediately):**
-1. Delete `index copy.html` and `old-blocks.scss`
-2. Remove `@phosphor-icons/web` and `swiper` from `package.json`
-3. Merge dual DOMContentLoaded listeners
+**Ship the CRITICAL cleanup immediately.** Removing 73.8 MB of unused media files is a quick, high-impact win with zero risk. The asset overhead is the biggest opportunity.
 
-**Medium Priority (next sprint):**
-4. Delete dead `about.scss`, consolidate to `new-about.scss`
-5. Extract debounce utility, consolidate scroll listeners
-6. Register GSAP ScrollTrigger once globally
+**For HIGH priority:** The unused dependencies and dead CSS are small but should be cleaned in the same pass as assets.
 
-**Low Priority (tech debt):**
-7. Decide on `design-system-wip.html` (ship or archive)
-8. Clean up legacy variable aliases after migration
-9. Consolidate scroll hint functions into IntersectionObserver pattern
+**For MEDIUM priority:** CSS variable migration can be deferred to a future refactor pass.
 
 ---
 
-## Assessment
+## Ponytail Summary
 
-**Lean already.** The codebase is well-modularized and minimal overall. No over-engineering at the architectural level. The wins are:
-- Removing 3 dead files (quick wins)
-- Eliminating 2 unused dependencies (bundle reduction)
-- Small consolidations (debounce, GSAP registration, DOMContentLoaded)
+**Codebase assessment:** Good architecture, minimal CSS, well-modularized JavaScript. Main issues are asset bloat from earlier iterations (design exploration artifacts) and two unused dependencies. After cleanup, this will be lean.
 
-This is clean, vanilla JS — keep it.
+**Biggest wins:**
+1. Remove `.mov` video files (56 MB)
+2. Delete unused images (8 MB)
+3. Remove unused dependencies (~110 KB bundle)
+4. Clean up dead CSS file (2,675 lines)
+
+---
+
+*Generated by Ponytail audit on 2026-09-28*
