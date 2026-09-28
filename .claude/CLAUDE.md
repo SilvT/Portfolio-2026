@@ -23,7 +23,7 @@ Live: https://silviatravieso.com
 - **Avoid overengineering.** Pick the simplest solution that works. No extra abstractions, options or files unless the task needs them.
 - **Make no assumptions.** Check the code, the changelog or ask Silvia instead of guessing.
 - **Bash commands are pre-approved** in Claude Code for this project (`.claude/settings.json` allows `Bash`).
-- **Keep a changelog** in `.claude/CHANGELOG.md` (gitignored, local only). Create it if it doesn't exist. After every completed task, add a dated entry covering:
+- **Keep a changelog** in `.claude/CHANGELOG.md` (committed to the repo). It started from zero on 2026-09-28 and replaces the old `CLAUDE-LOG.md`, which is no longer updated. Create it if it doesn't exist. After every completed task, add a dated entry covering:
   - structural decisions
   - bugs encountered (symptom, cause, fix)
   - architectural and design choices and preferences
@@ -329,10 +329,4 @@ Multiple sources of horizontal overflow were fixed on mobile:
 - `.metric-card` had duplicate `min-width: 30vw` overriding `min-width: 0` on mobile
 - `.social-link` in footer had `width: 10vw`, `flex-shrink: 0`, `white-space: nowrap` not reset on mobile
 - `html` and `body` use `overflow-x: clip` + `max-width: 100%` as safety net
-
----
-
-# Actions
-
-At the first interaction of the day, before doing prompt, read CLAUDE-LOG file, review content and compile as much as possible, update with last 24hours key changes and decisions.
 
