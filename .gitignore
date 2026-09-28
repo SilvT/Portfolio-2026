@@ -34,3 +34,6 @@ dist/
 
 # Unused original assets (already converted or not referenced)
 public/mkm/card-hover.gif
+
+# Claude changelog (local only)
+.claude/CHANGELOG.md

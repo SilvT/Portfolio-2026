@@ -18,6 +18,20 @@ Live: https://silviatravieso.com
 
 ---
 
+## Working Rules
+
+- **Avoid overengineering.** Pick the simplest solution that works. No extra abstractions, options or files unless the task needs them.
+- **Make no assumptions.** Check the code, the changelog or ask Silvia instead of guessing.
+- **Bash commands are pre-approved** in Claude Code for this project (`.claude/settings.json` allows `Bash`).
+- **Keep a changelog** in `.claude/CHANGELOG.md` (gitignored, local only). Create it if it doesn't exist. After every completed task, add a dated entry covering:
+  - structural decisions
+  - bugs encountered (symptom, cause, fix)
+  - architectural and design choices and preferences
+  - any other major change worth tracking
+- **When debugging, first do a quick sweep of `.claude/CHANGELOG.md`** to check whether the issue has been seen before.
+
+---
+
 ## Writing & Text Content: Professional Voice
 
 **Whenever Silvia asks for a rewrite, copy edit, or new text content** (page copy, case study text, bios, taglines, meta descriptions, alt text, etc.), **always read and follow `professional-voice-baseline.md` first.**
