@@ -21,6 +21,10 @@ Live: https://silviatravieso.com
 ## Working Rules
 
 - **Avoid overengineering.** Pick the simplest solution that works. No extra abstractions, options or files unless the task needs them.
+- **Use the ponytail skills for all code work** (`ponytail`, `ponytail-review`, `ponytail-audit`, `ponytail-debt`, etc., from the `ponytail@ponytail` plugin). The only exceptions:
+  - minimal cleanup (small tidy-ups, typo fixes, removing dead lines)
+  - creating content: writing, images, design and other creative work (writing still follows the Professional Voice rule below)
+  - If the ponytail skills are not available in the session, say so instead of silently skipping them.
 - **Make no assumptions.** Check the code, the changelog or ask Silvia instead of guessing.
 - **Bash commands are pre-approved** in Claude Code for this project (`.claude/settings.json` allows `Bash`).
 - **Keep a changelog** in `.claude/CHANGELOG.md` (committed to the repo). It started from zero on 2026-09-28 and replaces the old `CLAUDE-LOG.md`, which is no longer updated. Create it if it doesn't exist. After every completed task, add a dated entry covering:

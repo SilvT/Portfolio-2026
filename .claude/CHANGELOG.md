@@ -18,3 +18,4 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 - Working rules added to `CLAUDE.md`: avoid overengineering, no assumptions, keep this changelog, check it first when debugging.
 - `.claude/settings.json` pre-approves all Bash commands for this project.
 - This changelog is committed (not gitignored) so every session can read it.
+- Ponytail plugin (`DietrichGebert/ponytail`) reviewed: its hooks don't use the network or run other programs. Silvia installs it locally with `/plugin`. `CLAUDE.md` now requires the ponytail skills for all code work, except minimal cleanup and content creation (writing, images, design).
