@@ -14,7 +14,7 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ### Workflow decisions
 - Local working folder is `Portfolio-clean` (Silvia's computer); GitHub repo is `SilvT/Portfolio-2026`; `main` deploys to Vercel.
-- All text content must follow `professional-voice-baseline.md` (file not yet in the repo).
+- All text content must follow `.claude/skills/professional-voice-baseline.md` (pushed by Silvia the same day).
 - Working rules added to `CLAUDE.md`: avoid overengineering, no assumptions, keep this changelog, check it first when debugging.
 - `.claude/settings.json` pre-approves all Bash commands for this project.
 - This changelog is committed (not gitignored) so every session can read it.
