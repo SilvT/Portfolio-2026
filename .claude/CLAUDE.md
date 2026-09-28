@@ -18,6 +18,15 @@ Live: https://silviatravieso.com
 
 ---
 
+## Writing & Text Content: Professional Voice
+
+**Whenever Silvia asks for a rewrite, copy edit, or new text content** (page copy, case study text, bios, taglines, meta descriptions, alt text, etc.), **always read and follow `professional-voice-baseline.md` first.**
+
+- If the file is not available in the current session, say so and ask Silvia for it before writing. Do not silently fall back to a generic voice.
+- Always use British English spelling and never use em dashes.
+
+---
+
 ## Tech Stack
 
 | Category | Technology |
