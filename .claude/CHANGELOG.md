@@ -18,4 +18,6 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 - Working rules added to `CLAUDE.md`: avoid overengineering, no assumptions, keep this changelog, check it first when debugging.
 - `.claude/settings.json` pre-approves all Bash commands for this project.
 - This changelog is committed (not gitignored) so every session can read it.
+- Design System Rules added to `CLAUDE.md`: `_variables.scss` is the single source of truth; no hardcoded colours, pixel values or font sizes; WCAG AA contrast; reduced motion respected and visible focus states on everything clickable.
+- Playwright MCP added in `.mcp.json` (project scope). `CLAUDE.md` now requires a browser check of every visual change at 375, 480, 768, 1024, 1200 and 1728px (plus 1px either side of touched breakpoints), with a responsiveness checklist. Reason: the site is mostly viewed on phones, and horizontal overflow has broken mobile before.
 - Ponytail plugin (`DietrichGebert/ponytail`) reviewed: its hooks don't use the network or run other programs. Silvia installs it locally with `/plugin`. `CLAUDE.md` now requires the ponytail skills for all code work, except minimal cleanup and content creation (writing, images, design).
