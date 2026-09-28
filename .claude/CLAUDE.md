@@ -1,7 +1,34 @@
-# Portfolio 2025 - Silvia Travieso
+# Portfolio 2026 - Silvia Travieso
 
-**Personal UI/UX Designer Portfolio Website**
+**Personal Product / UI / Design Systems Designer Portfolio Website**
 Live: https://silviatravieso.com
+Repo: `SilvT/Portfolio-2026`
+
+---
+
+## Project Summary
+
+A personal portfolio that showcases design work and demonstrates front-end skills. Priorities:
+
+- **Minimal footprint**: no framework, vanilla JavaScript, aggressive asset optimisation
+- **Strong visual identity**: custom typography, colour themes, GSAP motion
+- **Accessibility**: ARIA labels, `prefers-reduced-motion` support, focus management
+- **Smooth experience**: CSS scroll snap, GSAP animations, lightbox galleries
+
+Two page types: the **landing page** (about, project cards, contact) and **case studies** (carousels, accordions, side nav, galleries).
+
+---
+
+## Related Docs
+
+| File | Purpose |
+|------|---------|
+| `.claude/CLAUDE-LOG.md` | Dated session log: changes, decisions, files touched |
+| `.claude/to-do-list.md` | Open tasks |
+| `.claude/Documentation.md` | Reference links (GSAP docs) |
+| `src/js/CLAUDE.md` | Detailed JS module reference |
+| `src/scss/CLAUDE.md` | Detailed SCSS architecture reference |
+| `building-about.md` | Notes from the about section redesign |
 
 ---
 
@@ -11,81 +38,125 @@ Live: https://silviatravieso.com
 |----------|------------|
 | Build Tool | Vite 7.3.1 |
 | Styling | SASS/SCSS 1.69.0 |
-| Animation | GSAP 3.14.2 |
-| Carousels | Swiper 12.0.3 |
-| Lightbox | GLightbox 3.3.1 |
+| Animation | GSAP 3.14.2 (ScrollTrigger, ScrollToPlugin, MotionPathPlugin) |
+| Carousels | Swiper 12.0.3 (case studies only) |
+| Lightbox | GLightbox 3.3.1 (dynamically loaded) |
 | Icons | Phosphor Icons, Iconoir (custom subset) |
+| Analytics | `@vercel/analytics` 1.6.1, `@vercel/speed-insights` 1.3.1 |
 | Deployment | Vercel |
+
+---
+
+## Pages
+
+All six pages are listed as Rollup inputs in `vite.config.js`. **A new page must be added there or it will not be built.**
+
+| File | Type | `data-theme` | Loads `main.js` |
+|------|------|--------------|-----------------|
+| `index.html` | Landing page | n/a | Yes |
+| `marketing-management.html` | Case study | `blue` | Yes |
+| `design-system.html` | Case study (full) | `green` | No |
+| `design-system-wip.html` | Case study (live version) | `green` | No |
+| `energy-tracker.html` | Case study | `neutral` | No |
+| `token-launch.html` | Case study | `blue` | No |
+
+- Internal links to the design system case study point to **`design-system-wip.html`**, not `design-system.html`.
+- `index copy.html` is a local scratch file, git-ignored and not built.
+
+### Landing Page (`index.html`)
+- About section: animated flip-board job titles, SVG circle decoration, staggered GSAP entry
+- About modal: slide-in `<dialog>` panel (opens on `#about`)
+- Four project cards, each with a GSAP marquee slideshow, metric cards and a "Read Case Study" CTA
+- Contact / footer with animated icon and social links
+- CSS scroll snap navigation
+
+### Case Studies
+- Hero with project overview, breadcrumbs
+- Content blocks (1-col, 2-col, galleries)
+- Swiper carousels and stacked metric swipers
+- Accordion sections, dynamic side nav from `data-section-title`
+- Theme set via `data-theme` on `<body>` and the `.case-study-page` wrapper
+- Each page has its **own inline `<script type="module">`** that imports Vercel analytics, `accordion.js`, `lightgallery.js`, `side-nav-bar.js` and Swiper directly. Swiper CSS comes from the jsDelivr CDN.
 
 ---
 
 ## Project Structure
 
 ```
-Portfolio-clean/
+Portfolio-2026/
 ├── index.html                    # Landing page
-├── marketing-management.html     # Case study template
+├── marketing-management.html     # Case studies (see Pages table)
+├── design-system.html
+├── design-system-wip.html
+├── energy-tracker.html
+├── token-launch.html
+├── building-about.md             # About redesign notes
 ├── scripts/
-│   └── build-icons.cjs          # Iconoir CSS subset generator
-├── vite.config.js               # Build configuration
-├── vercel.json                  # Deployment config
-├── public/                      # Static assets (images, CV, favicons)
-│   ├── ds/                      # Design Systems images
-│   ├── plugin/                  # Plugin project images
-│   └── mkm/                     # Marketing Management images
+│   └── build-icons.cjs           # Iconoir CSS subset generator
+├── vite.config.js                # Build config (page inputs, modulePreload: false)
+├── vercel.json                   # Deployment config
+├── public/                       # Static assets
+│   ├── ds/                       # Design System images
+│   ├── plugin/                   # Token Launch plugin images
+│   ├── mkm/                      # Marketing Management images and videos
+│   ├── microsite/                # Energy tracker microsite images and videos
+│   ├── logo-filled.svg, logo-outlined.svg, favicon.png
+│   ├── *.pdf                     # CVs
+│   └── robots.txt, sitemap.xml
 └── src/
     ├── js/
-    │   ├── main.js              # Entry point
+    │   ├── CLAUDE.md             # JS module reference
+    │   ├── main.js               # Entry point (landing + marketing-management)
     │   └── modules/
-    │       ├── navigation.js        # Nav active state tracking
-    │       ├── flipBoardAnimation.js # Animated job titles
-    │       ├── scroll-hinter.js     # Scroll hint + GSAP scroll
-    │       ├── lightgallery.js      # GLightbox initialization
-    │       ├── accordion.js         # Expand/collapse sections
-    │       ├── carousel-dots.js     # Slideshow dot nav + marquee sync
-    │       └── side-nav-bar.js      # Dynamic case study nav
+    │       ├── navigation.js                  # Nav active state tracking
+    │       ├── flipBoardAnimation.js          # Animated job titles
+    │       ├── scroll-hinter.js               # Scroll hint + GSAP scroll
+    │       ├── about-entry-animation.js       # About section GSAP entry stagger
+    │       ├── about-modal.js                 # About <dialog> slide-in panel
+    │       ├── project-card-entry-animation.js # Project card GSAP entry stagger
+    │       ├── marquee-scroll.js              # GSAP marquee tween factory + registry
+    │       ├── carousel-dots.js               # Mobile dot nav + tap-to-lightbox
+    │       ├── icon-animation.js              # Footer SVG dot orbit/bounce
+    │       ├── analytics-events.js            # Vercel custom events
+    │       ├── lightgallery.js                # GLightbox initialisation
+    │       ├── accordion.js                   # Expand/collapse sections
+    │       └── side-nav-bar.js                # Dynamic case study nav
     └── scss/
-        ├── _main.scss           # Main import file
-        ├── iconoir-custom.css   # Auto-generated icon subset (npm run icons)
-        ├── _variables.scss      # Design tokens
-        ├── typography.scss      # Type system
-        ├── breakpoints.scss     # Responsive mixins
-        ├── landing-page/        # Homepage styles
+        ├── CLAUDE.md             # SCSS architecture reference
+        ├── _main.scss            # Root import file
+        ├── _variables.scss       # Design tokens
+        ├── typography.scss       # Type system
+        ├── breakpoints.scss      # Responsive mixins
+        ├── accesibility.scss     # Accessibility utilities
+        ├── iconoir-custom.css    # Auto-generated icon subset (npm run icons)
+        ├── landing-page/
+        │   ├── _landing-page.scss  # Entry, base reset, sections
+        │   ├── _animations.scss    # Keyframes + stagger-fade-in mixin
         │   ├── about.scss
+        │   ├── new-about.scss      # Redesigned about + about modal
         │   ├── nav-bar.scss
         │   ├── project-cards.scss
+        │   ├── scroll-hinter.scss
         │   └── footer.scss
-        └── case-studies/        # Case study styles
-            ├── blocks.scss
+        └── case-studies/
+            ├── _case-study.scss    # Entry, layout, themes
             ├── hero.scss
+            ├── blocks.scss
             ├── carousel.scss
-            └── accordion.scss
+            ├── accordion.scss
+            ├── side-nav-bar.scss
+            ├── breadcrumbs.scss
+            ├── lightbox.scss
+            ├── line-breaker.scss
+            ├── switch.scss
+            └── old-blocks.scss     # Legacy, being cleaned up
 ```
-
----
-
-## Pages
-
-### Landing Page (`index.html`)
-- Hero with animated flip-board job titles
-- About section with scroll hint
-- Project cards showcase
-- Contact section
-- CSS scroll snap navigation
-
-### Case Study (`marketing-management.html`)
-- Hero section with project overview
-- Content blocks (1-col, 2-col, galleries)
-- Swiper carousels for project images
-- Accordion sections for detailed content
-- Side navigation tracking scroll position
-- Theme support via `data-theme` attribute
 
 ---
 
 ## Design System
 
-### Colors
+### Colours
 - **Blues:** Light (#edf1f3) → Dark (#203a48)
 - **Greens:** Light (#E8EBE0) → Dark (#525D2E)
 - **Cream:** Background scale (#FAF9F7 → #B8B0A4)
@@ -112,80 +183,119 @@ Portfolio-clean/
 
 ---
 
-## JavaScript Modules
+## JavaScript
 
-### `navigation.js`
-Tracks viewport position and updates active nav state with `aria-current="page"`.
+### `main.js` start-up order
+Runs on `index.html` and `marketing-management.html`.
 
-### `flipBoardAnimation.js`
-Character-by-character flip animation cycling through job titles. Respects `prefers-reduced-motion`.
+1. Vercel `inject()` + `injectSpeedInsights()` (module level)
+2. On `DOMContentLoaded`: `initNavigation()` → `initAboutEntryAnimation()` → `initAboutModal()` → `initProjectCardEntryAnimation()` → `initVisualEffects()` (flip-board + scroll hint)
+3. GLightbox: dynamic `import('./modules/lightgallery.js')` only if `.new-carousel.swiper, .cs-column-image, .cs-gallery-grid` exists, with CSS injected from CDN
+4. `initCarouselDots()` → `initAnalyticsEvents()`
+5. Lazy video playback: `IntersectionObserver` (200px margin) plays/pauses every `video[preload="none"]`
+6. Separate `DOMContentLoaded` listener: `initIconAnimation()`
 
-### `scroll-hinter.js`
-GSAP-powered smooth scroll to first project section. Manages scroll hint visibility.
+### Modules
 
-### `lightgallery.js`
-Initializes GLightbox for carousels, standalone images, gallery grids, and accordion images.
+| Module | What it does |
+|--------|--------------|
+| `navigation.js` | Tracks viewport position, sets `.active` + `aria-current="page"` on nav items |
+| `flipBoardAnimation.js` | Split-flap animation cycling through job titles. Respects reduced motion |
+| `scroll-hinter.js` | GSAP ScrollTo smooth scroll to first project. Only **hides** the hinter; the about entry animation controls showing it |
+| `about-entry-animation.js` | ScrollTrigger timeline: SVG circles → name → job title → bio → CTA → scroll hinter. Replays on `onEnter` / `onEnterBack` |
+| `about-modal.js` | `<dialog>` panel opened by any `[data-open-about-modal]`. Animates via `.is-open` class, intercepts Escape to animate out, syncs `#about` hash |
+| `project-card-entry-animation.js` | Per-card ScrollTrigger timeline in two parallel blocks (text; slideshow + tags). Creates the marquee paused, plays it 600ms after entry completes. `timeScale(2.5)` on scroll-back |
+| `marquee-scroll.js` | GSAP marquee factory. Exports `createMarqueeTween(slideshow, opts)` and `getMarqueeTween(slideshow)` via a shared `Map` registry |
+| `carousel-dots.js` | Mobile dot nav synced to `tween.progress()`; tap on slideshow loads GLightbox on demand |
+| `icon-animation.js` | Footer SVG `#dot` orbits and bounces using MotionPathPlugin. Respects reduced motion |
+| `analytics-events.js` | Vercel `track()` events: `nav_click` (about, contact), `read_case_study` (project id), `footer_click` (social link) |
+| `lightgallery.js` | GLightbox for Swiper carousels, standalone images, gallery grids and accordion images |
+| `accordion.js` | Mutually exclusive accordions for `.milestone` and `.cs-line-breaker.accordion` |
+| `side-nav-bar.js` | Builds side nav from `data-section-title`; `IntersectionObserver` drives the active indicator |
 
-### `accordion.js`
-Mutually exclusive accordion behavior for `.milestone` and `.cs-line-breaker.accordion` elements.
-
-### `marquee-scroll.js`
-GSAP-driven infinite marquee for project card slideshows. Exports `createMarqueeTween(slideshow, opts)` and `getMarqueeTween(slideshow)` via a shared `Map` registry. Handles hover-pause on desktop and respects `prefers-reduced-motion`. Duration: 45s desktop / 80s mobile.
-
-### `carousel-dots.js`
-Syncs dot navigation with the GSAP marquee tween on project card slideshows. Uses `requestAnimationFrame` to read `tween.progress()` and updates the active dot. Clicking a dot pauses the marquee via `tween.pause()`, jumps via `tween.progress()`, and resumes after 3s.
-
-### `side-nav-bar.js`
-Generates navigation from `data-section-title` attributes. Intersection Observer tracks scroll position with animated indicator.
-
----
-
-## Key Features
-
-- **No Framework** - Vanilla JS for minimal footprint
-- **CSS Scroll Snap** - Native smooth section navigation
-- **Modular Architecture** - Separate JS/SCSS modules
-- **Accessibility** - ARIA labels, reduced motion support, focus management
-- **Responsive** - Mobile-first with desktop enhancements
-- **Theme Support** - Blue, green, neutral themes for case studies
-
----
-
-## Iconoir Icons — Custom Subset
-
-The project uses a **custom CSS subset** of Iconoir (31 icons out of 1,400+), not the full library. This reduced CSS from 2,973 KB to 47 KB.
-
-- **Source**: `src/scss/iconoir-custom.css` (auto-generated, do not edit manually)
-- **Imported in**: `src/scss/_main.scss` via `@import 'iconoir-custom.css'`
-- **Generator**: `scripts/build-icons.cjs` — scans all HTML files for `iconoir-*` classes and extracts matching rules from `node_modules/iconoir/css/iconoir.css`
-
-### Adding/Removing Icons
-1. Add the icon class to any HTML file (e.g., `<i class="iconoir-arrow-right"></i>`)
-2. Run `npm run icons`
-3. The subset CSS is regenerated automatically
-
-**NEVER import `iconoir/css/iconoir.css` directly** — it's 2.9 MB of inline SVG data URIs for all 1,400+ icons and CSS cannot tree-shake unused rules.
+### GSAP rules
+- Prefer GSAP (with ScrollTrigger) over CSS `@keyframes` for anything that needs pause, replay or scroll control.
+- Never use `!important` on properties GSAP animates (e.g. `opacity`); it silently overrides `gsap.set()`.
+- Never pass a function (`() => querySelectorAll(...)`) as the target of `.to()`; it does nothing. Use a cached NodeList, queried **after** any DOM cloning.
+- Every animation module returns early on `prefers-reduced-motion: reduce`.
 
 ---
 
-## GLightbox — Dynamic Loading
+## Slideshow Behaviour (Project Cards)
 
-GLightbox JS and CSS are **dynamically imported**, not bundled into the main landing page:
+The project card slideshows use a **GSAP-driven marquee** on all viewports: a continuous horizontal scroll with duplicated images for a seamless loop.
 
-- **Landing page**: GLightbox is NOT loaded (no lightbox needed)
-- **Case study pages**: Loaded via dynamic `import()` in `main.js` when `.new-carousel.swiper` or similar selectors are detected
-- **Mobile slideshow tap**: `carousel-dots.js` loads GLightbox on-demand on first tap via `await import('glightbox')`
-- **CSS**: Loaded at runtime via `<link>` injection from CDN (`cdn.jsdelivr.net`), not via Vite CSS extraction (which would bundle it into all pages)
+### Marquee (`marquee-scroll.js`)
+- `ensureFillWidth()` measures one original set and **clones originals at runtime** (as `aria-hidden="true"`) until the strip is at least one set + viewport wide
+- Tween: `gsap.to(slideshow, { x: -oneSetWidth, ease: 'none', repeat: -1 })`
+- Constant speed: `duration = oneSetWidth / PX_PER_SEC` with `PX_PER_SEC = 90`
+- Fallback only if width cannot be measured: `xPercent: -50`, 45s desktop / 80s mobile
+- Hover pauses the tween on desktop (`mouseenter` / `mouseleave`)
+- `prefers-reduced-motion` → returns `null`, no tween; consumers must handle `null`
+- `width: max-content` on `.project-image-wrapper.slideshow`; gap `1.5rem` desktop / `1rem` mobile
+- **NEVER use CSS `@keyframes` or `animation:` for the marquee**; control is via `.pause()`, `.play()`, `.progress()`, `.restart()`
 
-**NEVER add a static `import GLightbox` or `import 'glightbox/dist/css/glightbox.min.css'` to `main.js` or any module statically imported by `main.js`** — this would add ~60 KB JS + 14 KB CSS to the landing page where it's unused.
+### Dot Indicators (Mobile Only)
+- `.carousel-dots` are `display: none` on desktop, `display: flex` at `max-width: 768px`
+- Active dot: 8px circle → 24px rounded rectangle in `$blue`; inactive dots at 30% opacity
+- `requestAnimationFrame` loop reads `tween.progress()` to set the active dot
+- Dot click: `tween.pause()` → `tween.progress(index / count)` → resumes after 3s
+- Tapping the slideshow on mobile opens a GLightbox gallery at the current slide
+
+---
+
+## Performance Rules
+
+These came out of the Speed Insights work in January and February 2026 (see the log). Keep to them when adding content.
+
+- **Images:** WebP only. Hero / LCP image keeps `loading="eager"` + `fetchpriority="high"` and a `<link rel="preload">` in `<head>`. Everything else `loading="lazy"` + `decoding="async"`.
+- **Video:** MP4 (H.264). No `.mov`, no GIFs (convert to `<video muted loop playsinline>`). Below the fold use `preload="none"` and **no `autoplay`**; `main.js` plays them on scroll.
+- **Fonts:** Google Fonts load without blocking render (`media="print" onload="this.media='all'"` + `<noscript>` fallback). Bricolage Grotesque is preloaded; Fascinate and Anonymous Pro are deferred.
+- **Bundles:** `modulePreload: false` in `vite.config.js`. Heavy libraries used only on some pages are dynamically imported.
+- **Analytics:** Vercel Analytics + Speed Insights run on all six pages.
+
+### Iconoir Icons: Custom Subset
+The project uses a **custom CSS subset** of Iconoir (a few dozen icons out of 1,400+), not the full library. The full CSS is about 2.9 MB.
+
+- **Source:** `src/scss/iconoir-custom.css` (auto-generated, do not edit by hand)
+- **Imported in:** `src/scss/_main.scss` via `@import 'iconoir-custom.css'`
+- **Generator:** `scripts/build-icons.cjs` scans all HTML files for `iconoir-*` classes and extracts matching rules from `node_modules/iconoir/css/iconoir.css`
+- **To add or remove icons:** change the class in HTML, then run `npm run icons`
+
+**NEVER import `iconoir/css/iconoir.css` directly**; CSS cannot tree-shake unused rules.
+
+### GLightbox: Dynamic Loading
+- **Landing page:** not loaded on page load
+- **`marketing-management.html` via `main.js`:** dynamic `import()` when a carousel, column image or gallery grid is present
+- **Other case studies:** imported by their own inline module script
+- **Mobile slideshow tap:** `carousel-dots.js` loads it on first tap with `await import('glightbox')`
+- **CSS:** injected at runtime as a `<link>` from `cdn.jsdelivr.net`, never through Vite CSS extraction
+
+**NEVER add a static `import GLightbox` or `import 'glightbox/dist/css/glightbox.min.css'` to `main.js` or any module statically imported by `main.js`**. It would add about 60 KB JS + 14 KB CSS to the landing page.
+
+---
+
+## Critical CSS Rule: `overflow: clip`, not `hidden`
+
+**NEVER use `overflow: hidden` on `html`, `body`, or ancestors of sticky elements.** `overflow: hidden` creates a scroll container, which breaks `position: sticky`. `overflow: clip` clips the same way without creating one.
+
+Current usage:
+- `html`, `body`: `overflow-x: clip` + `max-width: 100%`
+- `.top-nav`: `overflow-x: clip`
+- `.project-content` in `.experimental-layout`: `overflow: clip` (contains the `max-content` marquee)
+- `.contentbox`: `overflow: hidden` is allowed here because `.top-nav` is not a descendant
+
+### Horizontal overflow prevention
+- Never use `100vw` / `100dvw` for widths (they include the scrollbar); use `100%`
+- On mobile, reset fixed widths, `flex-shrink: 0` and `white-space: nowrap` that can push content wider than the screen (past offenders: `.metric-card` `min-width: 30vw`, footer `.social-link` `width: 10vw`)
 
 ---
 
 ## Commands
 
 ```bash
-npm run dev      # Start dev server (port 3000)
-npm run build    # Build to dist/
+npm run dev      # Dev server on port 3000 (ngrok hosts allowed)
+npm run build    # Build all six pages to dist/
 npm run preview  # Preview production build
 npm run icons    # Regenerate Iconoir CSS subset from HTML usage
 ```
@@ -194,109 +304,33 @@ npm run icons    # Regenerate Iconoir CSS subset from HTML usage
 
 ## Deployment
 
-Automatic deployment to Vercel on git push. Configuration in `vercel.json`:
+Automatic deployment to Vercel on push to `main`. `vercel.json`:
 - Build: `npm run build`
 - Output: `dist/`
+- Framework: Vite, catch-all rewrite for clean paths
 
 ---
 
-## File Flow
+## User Flow
 
 ```
 User lands on index.html
     ↓
-Flip-board animation plays
+About entry animation + flip-board titles
     ↓
-Scroll through sections (CSS snap)
+Scroll through project cards (CSS snap, GSAP entry, marquee)
     ↓
-Click project card
+Click "Read Case Study"
     ↓
-Navigate to case study (marketing-management.html)
-    ↓
-Explore via carousels, accordions, side nav
+Case study page (carousels, accordions, side nav)
     ↓
 Open images in GLightbox gallery
 ```
----
-# Project Summary
-What it is: A personal portfolio website for Silvia Travieso, a UI/UX Designer.
-
-Live site: https://silviatravieso.com
-
-## Goal
-To showcase design work through an elegant, performant portfolio that demonstrates both design and front-end development skills. The site prioritizes:
-
-- Minimal footprint - No framework, vanilla JavaScript
-- Strong visual identity - Custom typography, color themes, and animations
-- Accessibility - ARIA labels, reduced motion support, focus management
-- Smooth user experience - CSS scroll snap, GSAP animations, lightbox galleries
-Structure
-
-The site has two main page types:
-
-- Landing page (index.html) - Hero-about section, project CARDS showcase, and contact info
-
-- Case studies (e.g., marketing-management.html) - Detailed project pages with carousels, accordions, side navigation, and image galleries
-
-## Tech Approach
-Built with modern vanilla web technologies:
-
-- Vite for fast builds
-- SASS/SCSS for organized styling
-- GSAP for animations
-- Swiper for carousels
--  GLightbox for image galleries
-- Deployed automatically to Vercel on git push.
-
-
----
-# Slideshow Behavior (Project Cards)
-The project card slideshows use a **GSAP-driven marquee** on all viewports — a continuous infinite horizontal scroll of images, with duplicated images for seamless looping.
-
-## Marquee Animation (GSAP)
-- **Module**: `src/js/modules/marquee-scroll.js` — shared registry (`Map<HTMLElement, Tween>`)
-- `gsap.to(slideshow, { xPercent: -50, ease: 'none', repeat: -1 })` replaces CSS `@keyframes`
-- Images are duplicated in HTML (`aria-hidden="true"`) so the loop is seamless
-- `width: max-content` on `.project-image-wrapper.slideshow` keeps all images side-by-side
-- Desktop gap: `1.5rem` / Mobile gap: `1rem`
-- Duration: 45s desktop / 80s mobile
-- Hover pauses tween on desktop (`mouseenter`/`mouseleave`)
-- Respects `prefers-reduced-motion` (returns `null`, no tween created)
-- **Entry animation integration**: `project-card-entry-animation.js` creates the tween paused, plays it 3s after entry animation completes
-- **NEVER use CSS `@keyframes` or `animation:` for the marquee** — all control is via GSAP `.pause()`, `.play()`, `.progress()`, `.restart()`
-
-## Dot Indicators (Mobile Only)
-- `.carousel-dots` are `display: none` on desktop, `display: flex` at `max-width: 768px`
-- Positioned absolutely at bottom center with semi-transparent white background
-- Active dot: expands from 8px circle to 24px rounded rectangle in `$blue`
-- Inactive dots: 8px circles at 30% opacity blue
-- **JavaScript-driven** via `carousel-dots.js`:
-  - `requestAnimationFrame` loop reads `tween.progress()` to determine which slide is visible
-  - Active dot updates in real-time as the marquee scrolls
-  - Clicking a dot: `tween.pause()` → `tween.progress(index/count)` → resumes after 3s
----
-# Critical CSS Rule: `overflow: clip` not `hidden`
-
-**NEVER use `overflow: hidden` on `html`, `body`, or ancestors of sticky elements.**
-
-`overflow: hidden` creates a scroll container, which breaks `position: sticky` on child/sibling elements. Use `overflow: clip` instead — it clips content visually the same way but does NOT create a scroll container.
-
-This applies to:
-- `html` and `body` — use `overflow-x: clip` to prevent horizontal overflow without breaking sticky nav
-- `.contentbox` — uses `overflow: hidden` (acceptable since `.top-nav` is not a descendant)
-- `.project-content` in `.experimental-layout` — uses `overflow: clip` to contain the `width: max-content` marquee slideshow
-- `.top-nav` itself — uses `overflow-x: clip`
-
-### Horizontal Overflow Prevention
-Multiple sources of horizontal overflow were fixed on mobile:
-- `100vw` / `100dvw` units include scrollbar width — always use `100%` instead
-- `.metric-card` had duplicate `min-width: 30vw` overriding `min-width: 0` on mobile
-- `.social-link` in footer had `width: 10vw`, `flex-shrink: 0`, `white-space: nowrap` not reset on mobile
-- `html` and `body` use `overflow-x: clip` + `max-width: 100%` as safety net
 
 ---
 
 # Actions
 
-At the first interaction of the day, before doing prompt, read CLAUDE-LOG file, review content and compile as much as possible, update with last 24hours key changes and decisions.
+At the first interaction of the day, before doing the prompt, read `.claude/CLAUDE-LOG.md`, review its content and update it with the key changes and decisions from the last 24 hours.
 
+When a change alters anything documented here (pages, modules, rules), update this file in the same commit.

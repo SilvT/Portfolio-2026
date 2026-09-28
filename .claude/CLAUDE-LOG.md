@@ -1,5 +1,35 @@
 # Claude Log - Portfolio 2025
 
+## 2026-09-28
+
+### Session Summary
+Documentation refresh. No code changes since 2026-02-16, so the log had nothing new from the last 24 hours. `.claude/CLAUDE.md`, `src/js/CLAUDE.md` and `README.md` were brought in line with the current codebase.
+
+### `.claude/CLAUDE.md`
+- Renamed to Portfolio 2026; project tree updated (all 6 pages, all 13 JS modules, full SCSS and `public/` folders)
+- New **Pages** table: theme per page, which pages load `main.js`, reminder that new pages must be added to `vite.config.js`, links go to `design-system-wip.html`
+- New **`main.js` start-up order** and a module table covering the 6 modules that were missing (entry animations, about modal, marquee, icon animation, analytics events)
+- **Marquee facts corrected**: pixel offset `x: -oneSetWidth` at `PX_PER_SEC = 90`, runtime cloning via `ensureFillWidth()`, 600ms resume after entry. The 45s/80s and `xPercent: -50` values are fallbacks only
+- New **GSAP rules** and **Performance Rules** sections (WebP/MP4, lazy media, async fonts, `modulePreload: false`) taken from the February log entries
+- Iconoir subset: removed the stale "31 icons / 47 KB" figures (now 37 icons, about 57 KB)
+- GLightbox section now covers how each page type loads it
+- Merged duplicate summary sections, no em dashes, British spelling
+- Added an Actions rule: update CLAUDE.md in the same commit as any change it documents
+
+### `src/js/CLAUDE.md`
+- Removed `initLazyLoading()` (deleted in January) and the static GLightbox CSS import
+- Added the current start-up flow, lazy video playback, and sections for the 7 undocumented modules
+- Rewrote "Page-Specific Loading" to reflect the inline module scripts in each case study
+
+### `README.md`
+- Swiper is no longer credited with the marquees (GSAP does them)
+- Folder structure replaced with the real one; build and icons commands added; website link fixed
+
+### Found During the Audit (not fixed)
+- `marketing-management.html` loads Vercel `inject()` in its inline script **and** via `main.js`, so analytics may be initialised twice on that page
+
+---
+
 ## 2026-02-16
 
 ### Session Summary

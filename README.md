@@ -26,22 +26,31 @@ This portfolio collects examples of my work as  **Senior Product Designer / Desi
 * **Vite** – build tool
 * **HTML / SCSS / JavaScript**
 * **SCSS architecture** with tokens, mixins, and utilities
-* **GSAP** (ScrollTrigger) for motion
-* **Swiper** For Carousels and marquees
-* **Vercel** for deployment
+* **GSAP** (ScrollTrigger, MotionPath) for motion and the project card marquees
+* **Swiper** for case study carousels
+* **GLightbox** for image galleries (loaded on demand)
+* **Vercel** for deployment, Web Analytics and Speed Insights
 
 ---
 
 ## 📁 Project Structure (simplified)
 
 ```
-├── public/
+├── public/                   # Images, videos, CVs, robots.txt, sitemap.xml
+├── scripts/
+│   └── build-icons.cjs       # Iconoir icon subset generator
 ├── src/
-│   ├── styles/        # SCSS (tokens, mixins, components)
-│   ├── scripts/       # JS & interactions
-│   └── pages/         # Page-level content
-├── index.html
-├── case-study.html
+│   ├── js/
+│   │   ├── main.js           # Entry point
+│   │   └── modules/          # One file per interaction or animation
+│   └── scss/
+│       ├── landing-page/     # Landing page styles
+│       └── case-studies/     # Case study styles
+├── index.html                # Landing page
+├── marketing-management.html # Case studies
+├── design-system-wip.html
+├── energy-tracker.html
+├── token-launch.html
 ├── package.json
 └── vite.config.js
 ```
@@ -52,7 +61,9 @@ This portfolio collects examples of my work as  **Senior Product Designer / Desi
 
 ```bash
 npm install
-npm run dev
+npm run dev      # Dev server on port 3000
+npm run build    # Production build to dist/
+npm run icons    # Regenerate the Iconoir icon subset after adding icons
 ```
 
 Deployment via Vercel.
@@ -65,6 +76,6 @@ Deployment via Vercel.
 If you have questions or want to discuss the work, feel free to reach out.
 
 silvia.travieso.g@gmail.com  
-[www.silviatravieso.com](www.silviatravieso.com)   
+[www.silviatravieso.com](https://silviatravieso.com)   
 [Linkedin](http://www.linkedin.com/in/silvia-travieso-gonzalez)
 
