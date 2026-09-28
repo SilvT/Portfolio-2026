@@ -5,6 +5,19 @@ Live: https://silviatravieso.com
 
 ---
 
+## Repository & Local Folder
+
+| | |
+|---|---|
+| GitHub repo | `SilvT/Portfolio-2026` |
+| Local folder (Silvia's computer) | `Portfolio-clean` (the local working copy of this repo) |
+| Production branch | `main` (Vercel project `portfolio-clean` deploys on push) |
+
+- Cloud sessions work in their own clone and sync via GitHub. After pushing, remind Silvia to run `git pull origin main` in `Portfolio-clean`.
+- Before starting work in a cloud session, fetch the latest `main` in case changes were pushed from `Portfolio-clean`.
+
+---
+
 ## Tech Stack
 
 | Category | Technology |
