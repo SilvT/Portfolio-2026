@@ -36,9 +36,56 @@ Live: https://silviatravieso.com
 
 ---
 
+## Design System Rules
+
+1. **`src/scss/_variables.scss` is the single source of truth** for colours, typography, spacing and other design tokens. If this file and `_variables.scss` disagree, `_variables.scss` wins.
+2. **Never hardcode colours, pixel values or font sizes.** Always use the variables in `_variables.scss`. If a needed value doesn't exist, ask Silvia before adding a new token.
+3. **All text must pass WCAG AA contrast** (4.5:1 for body text, 3:1 for large text of 24px, or 18.66px bold, and above).
+4. **Every animation must respect `prefers-reduced-motion`**, and **every clickable element needs a visible focus state.**
+
+---
+
+## Visual Verification & Responsiveness (Playwright)
+
+**No visual change is done until it has been checked in a real browser at every width below.** Responsiveness is a core quality bar for this portfolio: most visitors (recruiters, hiring managers) open it on a phone first.
+
+**Tooling:** the Playwright MCP server is configured in `.mcp.json` (project scope). In cloud sessions without the MCP, use the pre-installed Playwright/Chromium directly. Run `npm run dev` (port 3000) and check `http://localhost:3000`.
+
+**When it applies:** any change to HTML, SCSS or JS that affects layout, spacing, typography, images, animation or interaction. Skip it for text-only copy edits and non-visual changes.
+
+### Widths to check (matching `breakpoints.scss`)
+| Width | Represents |
+|------:|------------|
+| 375px | Small phone (primary mobile target) |
+| 480px | `small-mobile` breakpoint |
+| 768px | `mobile` breakpoint (carousel dots appear at 768px and below) |
+| 1024px | `tablet` breakpoint |
+| 1200px | `desktop` breakpoint |
+| 1728px | `laptop` breakpoint |
+
+Also check 1px either side of any breakpoint the change touches (e.g. 767px and 769px), where most responsive bugs hide.
+
+### Checklist at every width
+1. **No horizontal scroll:** `document.documentElement.scrollWidth <= document.documentElement.clientWidth`. This has broken on mobile before (see "Horizontal Overflow Prevention" below).
+2. **No overlapping or clipped elements:** text, images, cards, nav and footer circles.
+3. **Readable text:** nothing smaller than the XS size (14px), sensible line lengths, no words breaking out of containers.
+4. **Tap targets at least 44×44px** on phone widths.
+5. **Sticky nav still sticks** after scrolling.
+6. **Images and videos keep their proportions** and load.
+7. **Interactive parts work:** nav links, about modal, accordions, Swiper carousels, marquee dots (mobile only), GLightbox on case study pages.
+8. **Design System Rules hold:** contrast passes and focus states are visible (tab through the page).
+
+### Animations
+GSAP entry animations hide content for the first second or so. Either wait until they finish before taking a screenshot, or load the page with reduced motion emulated (`prefers-reduced-motion: reduce`). Check both: the animated version once finished, and the reduced-motion version.
+
+### Reporting
+Take a screenshot at each width and say which widths were checked and what was fixed. If something couldn't be verified, say so rather than reporting it as done.
+
+---
+
 ## Writing & Text Content: Professional Voice
 
-**Whenever Silvia asks for a rewrite, copy edit, or new text content** (page copy, case study text, bios, taglines, meta descriptions, alt text, etc.), **always read and follow `professional-voice-baseline.md` first.**
+**Whenever Silvia asks for a rewrite, copy edit, or new text content** (page copy, case study text, bios, taglines, meta descriptions, alt text, etc.), **always read and follow `.claude/skills/professional-voice-baseline.md` first.**
 
 - If the file is not available in the current session, say so and ask Silvia for it before writing. Do not silently fall back to a generic voice.
 - Always use British English spelling and never use em dashes.
