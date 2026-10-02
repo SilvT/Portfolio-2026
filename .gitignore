@@ -25,13 +25,70 @@ dist/
 *.sw?
 .DS_Store
 *index copy.html
-*building.about.md
 
 
 # Vercel
 .vercel
 .env*.local
 
-# Unused original assets (already converted or not referenced)
+# Unused/dead assets (kept on disk, not tracked - see .claude/CHANGELOG.md)
+public/Silvia Travieso - Design Systems - UI - CV.pdf
+
+public/ds/UIKIT.png
+public/ds/css-export.png
+public/ds/early-designs.png
+public/ds/early-tokens.png
+public/ds/initial-phase-1.png
+public/ds/initial-phase-2.png
+public/ds/initial-phase-3.png
+public/ds/learnings-1.png
+public/ds/learnings-2.png
+public/ds/learnings-3.png
+public/ds/mistakes-1.png
+public/ds/mistakes-2.png
+public/ds/mistakes-3.png
+public/ds/wrong-core.png
+
+public/plugin/TL-Git.png
+public/plugin/TL-UI-push.png
+public/plugin/TL-publish.png
+public/plugin/cover1.png
+
+public/mkm/UI-Interactions-convo.png
+public/mkm/UI-grid-lead.png
+public/mkm/UI-interactions-inbox.png
 public/mkm/card-hover.gif
+public/mkm/card-hover-2.gif
+
+public/microsite/backendflow.png
+public/microsite/first draft by stakeholders.png
+public/microsite/first playground ui iterations.png
+public/microsite/hero.png
+public/microsite/micro animations.png
+public/microsite/mock-1.png
+public/microsite/mock-2.png
+public/microsite/mock-3.png
+public/microsite/mock-4.png
+public/microsite/mock-5.png
+public/microsite/mock-7.png
+public/microsite/mock.png
+public/microsite/playground-1.png
+public/microsite/playground-2.png
+public/microsite/playground-3.png
+public/microsite/playground-5.png
+public/microsite/stepper-smart-meter.png
+public/microsite/stepper-trad-meter.png
+public/microsite/tomato - brand reference.png
+public/microsite/ui designs.png
+public/microsite/ux-customer journey.png
+public/microsite/ux-translate-0.png
+public/microsite/ux-translate-1.png
+public/microsite/ux-translate-2.png
+public/microsite/landing.png
+public/microsite/loading-animation.png
+public/microsite/initiated.mov
+public/microsite/tomato-ready.mov
+
+# Ponytail audit reports (local scratch, not project docs)
+PONYTAIL-AUDIT*.md
 

@@ -28,8 +28,7 @@ src/scss/
     ├── breadcrumbs.scss
     ├── lightbox.scss
     ├── line-breaker.scss
-    ├── switch.scss
-    └── old-blocks.scss     # Legacy (being cleaned up)
+    └── switch.scss
 ```
 
 ---
@@ -101,11 +100,6 @@ Theme overrides are defined in `_case-study.scss`.
 | `$font-{size}` | Font size variables |
 
 ---
-
-## Legacy Code
-
-`old-blocks.scss` contains deprecated styles being phased out. Avoid adding new styles here.
-
 
 ---
 
