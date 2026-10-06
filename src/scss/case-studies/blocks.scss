@@ -23,6 +23,15 @@ body.project-page-body {
   &[data-theme="neutral"] {
     background-color: $cream;
   }
+  &[data-theme="mauve"] {
+    background-color: $mauve-light;
+  }
+  &[data-theme="brick"] {
+    background-color: $brick-light;
+  }
+  &[data-theme="bronze"] {
+    background-color: $bronze-light;
+  }
   &.js-loaded {
     width: 100% !important;
     overflow-x: hidden;
@@ -105,7 +114,7 @@ body.project-page-body {
 .cs-image-caption {
   font-family: $font-anonymous;
   font-size: $font-xs;
-  color: $color-neutral-light;
+  color: $neutral-soft;
   line-height: 121%;
   margin-top: $space-4;
   text-align: left;
@@ -254,7 +263,7 @@ body.project-page-body {
       font-size: $font-base;
       font-weight: $weight-light;
       line-height: 130%;
-      color: $color-neutral-light;
+      color: $neutral-soft;
       margin-bottom: $space-4;
     }
 
@@ -286,7 +295,7 @@ body.project-page-body {
 
       &.min {
         background-color: $color-cream;
-        color: $color-neutral;
+        color: $neutral;
         margin: 0;
         border-radius: 0.5rem;
         padding: $space-12 $space-16;
@@ -320,7 +329,7 @@ body.project-page-body {
         font-size: $font-base;
         font-weight: $weight-light;
         line-height: 130%;
-        color: $color-neutral-light;
+        color: $neutral-soft;
 
         &:before {
           content: '·';
@@ -888,7 +897,7 @@ body.project-page-body {
   }
 
   .cs-before-col .cs-before-after-label {
-    color: $color-neutral;
+    color: $neutral;
   }
 
   .cs-after-col .cs-before-after-label {
@@ -999,7 +1008,7 @@ body.project-page-body {
   .cs-key-insight-text {
     font-size: $font-xl;
     font-variation-settings: 'opsz' 14, 'wdth' 100;
-    color: $color-neutral;
+    color: $neutral;
     line-height: 1.4;
     margin-bottom: $space-24;
     font-weight: $weight-medium;
@@ -1008,7 +1017,7 @@ body.project-page-body {
   .cs-key-insight-result {
     font-size: $font-base;
     font-variation-settings: 'opsz' 14, 'wdth' 100;
-    color: $color-neutral-light;
+    color: $neutral-soft;
     line-height: 1.6;
     margin: 0;
 

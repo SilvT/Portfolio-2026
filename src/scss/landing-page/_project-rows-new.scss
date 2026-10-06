@@ -1,0 +1,343 @@
+@use 'sass:color';
+@use '../_variables' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+
+// Project cards layout toggle — .section-project marquee cards (default/"current")
+// vs. an experimental layout that reuses the same first 3 project sections as
+// normal stacked blocks, followed by a tools grid. Toggled via
+// body[data-card-layout="experimental"], see card-layout-toggle.js
+
+.segmented-control.card-layout-switch {
+  display: flex;
+  position: fixed;
+  // Below the sticky .top-nav (z-index: 1000) so it isn't covered by it
+  top: calc($space-80 + $space-20);
+  right: $space-20;
+  z-index: 100;
+  background-color: $white-alpha;
+  padding: $space-4;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px $color-shadows;
+  gap: $space-4;
+
+  @include breakpoint(mobile) {
+    top: calc($space-80 + $space-12);
+    right: $space-12;
+    padding: $space-4;
+  }
+}
+
+.segmented-option {
+  font-family: $font-anonymous;
+  font-size: $font-xs;
+  font-weight: $weight-medium;
+  color: $neutral;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $space-8 $space-16;
+  border-radius: 999px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+
+  @include breakpoint(mobile) {
+    padding: $space-8 $space-12;
+    font-size: calc($font-xs * 0.9);
+  }
+
+  &:hover {
+    color: $blue;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $blue;
+    outline-offset: 2px;
+  }
+
+  &.is-active {
+    background-color: $blue;
+    color: $color-white;
+  }
+}
+
+body:not([data-card-layout="experimental"]) #works-experimental {
+  display: none;
+}
+
+// Experimental reuses #projects-container's first 3 sections (Marketing
+// Management, Design System, Energy Tracker) as normal stacked blocks instead
+// of full-viewport snapped ones — Token Launch stays Current-only, since it
+// now has its own card in the tools grid below.
+body[data-card-layout="experimental"] {
+  #token-launch {
+    display: none;
+  }
+
+  html:has(&) {
+    scroll-snap-type: none;
+  }
+
+  .section-about {
+    scroll-snap-align: none;
+  }
+
+  #projects-container .section-project {
+    height: auto;
+    min-height: auto;
+    scroll-snap-align: none;
+
+    .contentbox {
+      height: auto;
+    }
+
+    .project-screen {
+      padding-top: $space-40;
+    }
+
+    // Previous/Next breadcrumbs only make sense for snap-scrolling between
+    // sections (Current layout) — redundant once stacked as normal blocks
+    .project-nav {
+      display: none;
+    }
+  }
+}
+
+// height (not min-height) + flex column pins the grid to fill exactly what's
+// left after the header, so the 2 grid rows fit in one viewport height
+// instead of being sized by aspect-ratio (width-driven, taller than the
+// screen on wide/short viewports)
+#works-experimental {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: $blue-light;
+  padding: $space-80 $space-40;
+}
+
+// Section header: "S.02 / OUR TOOLS" tag pair + headline
+.services-header {
+  flex: none;
+  max-width: 760px;
+  margin-bottom: $space-60;
+}
+
+.services-tag-group {
+  display: flex;
+  align-items: center;
+  gap: $space-8;
+  margin-bottom: $space-24;
+}
+
+// Same bordered/solid pill pair used by .cta-button (outline) and .type-label
+// (solid fill) elsewhere on the page
+.services-tag {
+  font-family: $font-anonymous;
+  font-size: $font-xs;
+  font-weight: $weight-semibold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: $space-8 $space-16;
+  border-radius: $space-8;
+
+  &--outline {
+    background-color: transparent;
+    border: 2px solid $blue;
+    color: $blue;
+  }
+
+  &--solid {
+    background-color: $blue-dark;
+    color: $color-white;
+  }
+}
+
+.services-headline {
+  font-size: $font-2xl;
+  font-weight: $weight-bold;
+  color: $color-neutral-600;
+  line-height: 1.3;
+}
+
+// 3x2 grid, equal columns. Fills whatever vertical room is left in
+// #works-experimental after the header (flex: 1 1 auto, not aspect-ratio —
+// see that rule's comment for why), so it always fits in one viewport height
+.services-grid {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: $space-8;
+}
+
+// Same language as .metric-card: soft tint background at rest, hard-edged
+// offset shadow + lift on hover (3px 3px 0 $accent), rather than a flat
+// colour flood — consistent with the metrics on the current/new layouts
+.service-card {
+  position: relative;
+  background-color: $color-neutral-100;
+  border-radius: $space-8;
+  padding: $space-24;
+  overflow: hidden;
+  cursor: default;
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:focus-visible {
+    outline: 2px solid $color-neutral-600;
+    outline-offset: -2px;
+  }
+
+  // --card-accent-hover is a darkened variant used only for the hover fill,
+  // so white text passes 4.5:1 (WCAG AA) — $blue and $green are too light at
+  // full strength (white text measures 4.34:1 / 3.98:1); darkening by 5-10%
+  // for the fill alone gets both to ~4.7:1 while keeping --card-accent (used
+  // for the box-shadow and other non-text contexts) at its original value.
+  &--blue {
+    --card-accent: #{$blue};
+    --card-accent-hover: #{color.adjust($blue, $lightness: -5%)};
+  }
+  &--green {
+    --card-accent: #{$green};
+    --card-accent-hover: #{color.adjust($green, $lightness: -10%)};
+  }
+  &--neutral {
+    --card-accent: #{$color-neutral-600};
+    --card-accent-hover: #{$color-neutral-600};
+  }
+  &--blue-dark {
+    --card-accent: #{$color-blue-400};
+    --card-accent-hover: #{$color-blue-400};
+  }
+  &--mauve {
+    --card-accent: #{$mauve};
+    --card-accent-hover: #{color.adjust($mauve, $lightness: -5%)};
+  }
+  &--brick {
+    --card-accent: #{$brick};
+    --card-accent-hover: #{color.adjust($brick, $lightness: -5%)};
+  }
+  &--bronze {
+    --card-accent: #{$bronze};
+    --card-accent-hover: #{color.adjust($bronze, $lightness: -5%)};
+  }
+
+  &:not(.service-card--preview):hover,
+  &:not(.service-card--preview):focus-visible {
+    background-color: var(--card-accent-hover);
+    color:white;
+    transform: translate(-1px, -3px);
+    box-shadow: 3px 3px 0 var(--card-accent);
+
+    .service-card-icon-wrapper {
+      background-color: var(--card-accent);
+    }
+
+    .service-card-icon {
+      color: $color-white;
+    }
+
+    .service-card-title {
+      color: $color-white;
+    }
+
+    .service-card-description {
+      max-height: 100px;
+      opacity: 1;
+      margin-top: $space-8;
+      color: $color-white;
+    }
+  }
+}
+
+.service-card-icon-wrapper {
+  position: absolute;
+  top: $space-24;
+  left: $space-24;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background-color: $color-neutral-200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s ease;
+}
+
+.service-card-icon {
+  font-size: $font-l;
+  color: $color-neutral-600;
+  transition: color 0.25s ease;
+}
+
+// Title + description are one bottom-anchored stack (not two independently
+// positioned elements) so the description always lands inside the card's own
+// bounds instead of being pushed past its bottom edge by the title's position.
+.service-card-text {
+  position: absolute;
+  bottom: $space-24;
+  left: $space-24;
+  right: $space-24;
+}
+
+.service-card-title {
+  font-size: $font-l;
+  font-weight: $weight-bold;
+  color: $color-neutral-600;
+  transition: color 0.25s ease;
+}
+
+.service-card-description {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  font-size: $font-s;
+  font-weight: $weight-regular;
+  color: $color-neutral-500;
+  line-height: 1.4;
+  transition: opacity 0.25s ease, max-height 0.25s ease, margin-top 0.25s ease;
+}
+
+// Always-on preview card — no title/description of its own. Shows whichever
+// of the other 4 cards is hovered/focused (service-cards-preview.js toggles
+// .is-active on the matching data-preview-row image), crossfading between
+// them. Spans the 2 grid cells left over after the 4 content cards.
+.service-card--preview {
+  grid-column: span 2;
+  padding: 0;
+  cursor: default;
+
+  &:hover {
+    background-color: $color-white;
+  }
+}
+
+.service-card-preview-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  &.is-active {
+    opacity: 1;
+  }
+}
+
+.service-card--preview .service-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 60%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card,
+  .service-card-icon,
+  .service-card-title,
+  .service-card-description,
+  .service-card-preview-img {
+    transition: none;
+  }
+}
+

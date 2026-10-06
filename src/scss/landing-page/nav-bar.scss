@@ -75,7 +75,6 @@
     display: flex;
     gap: 12px;
     align-items: flex-end;
-    width: 550px;
     max-width: 100%;
     box-sizing: border-box;
   }
@@ -107,6 +106,13 @@
         opacity: 0.7;
         transition: opacity 0.3s ease;
       }
+    }
+  }
+
+  &.scrolled .nav-item {
+    &.active,
+    &:not(.active) {
+      font-size: calc($font-3xl * 0.7);
     }
   }
 
@@ -182,6 +188,13 @@
       }
     }
 
+    &.scrolled .nav-item {
+      &.active,
+      &:not(.active) {
+        font-size: calc($font-xl * 0.7);
+      }
+    }
+
     .logo img {
       width: 50px;
     }
@@ -212,6 +225,13 @@
 
       &:not(.active) {
         font-size: $font-l;
+      }
+    }
+
+    &.scrolled .nav-item {
+      &.active,
+      &:not(.active) {
+        font-size: calc($font-l * 0.7);
       }
     }
 

@@ -26,11 +26,9 @@
 
     // To-be-deprecated - LEGACY
     $color-blue-light: $blue-light;
-    $color-blue-soft: $color-blue-200; //to be eliminated
     $color-blue-main: $blue;
     $color-blue-dark: $color-blue-400;
     $color-blue-darker: $blue-dark;
-    $color-blue-darkest: $color-blue-500; //to be eliminated**
 
 // ===========================
 // GREEN
@@ -53,13 +51,59 @@ $green:$color-green-400;
 $green-dark:$color-green-500;
 $green-alpha-50: $color-green-alpha-dark;
 
-    // To-be-deprecated - LEGACY
-  $color-green-lightest: $color-green-100;
-  $color-green-light: $color-green-200;
-  $color-green-main: $color-green-400;
-  $color-green-dark: $color-green-500;
-  $color-green-darker: $color-green-600;
+// ===========================
+// MAUVE
+// ===========================
 
+$color-mauve-100: #F1ECEF;
+$color-mauve-200: #C9ADB9;
+$color-mauve-300: #AA8696;   // interpolated, decorative/large-text only (3.20:1 on white)
+$color-mauve-400: #8A6072;   // passes AA body text (4.99:1 on white)
+$color-mauve-500: #4A2C3A;
+$color-mauve-600: #35202A;   // extra-dark reserve, 15.09:1 on white
+
+// Shorthand-versions
+$mauve-light:$color-mauve-100;
+$mauve-soft:$color-mauve-200;
+$mauve:$color-mauve-400;
+$mauve-dark:$color-mauve-500;
+$color-mauve-alpha: rgba(170, 134, 150, 0.3);
+
+// ===========================
+// BRICK
+// ===========================
+
+$color-brick-100: #F6EEEB;
+$color-brick-200: #D7B9B1;
+$color-brick-300: #C0948C;   // interpolated, decorative/large-text only (2.67:1 on white)
+$color-brick-400: #A86F68;   // large-text only, fails AA body text (4.09:1 on white)
+$color-brick-500: #5F3534;   // use for body text (10.27:1 on white)
+$color-brick-600: #442625;   // extra-dark reserve, 13.55:1 on white
+
+// Shorthand-versions
+$brick-light:$color-brick-100;
+$brick-soft:$color-brick-200;
+$brick:$color-brick-400;
+$brick-dark:$color-brick-500;
+$color-brick-alpha: rgba(192, 148, 140, 0.3);
+
+// ===========================
+// BRONZE
+// ===========================
+
+$color-bronze-100: #F4EEE7;
+$color-bronze-200: #D5B999;
+$color-bronze-300: #BC9473;  // interpolated, decorative/large-text only (2.76:1 on white)
+$color-bronze-400: #A46F4D;  // large-text only, fails AA body text (4.23:1 on white)
+$color-bronze-500: #5C3929;  // use for body text (10.13:1 on white)
+$color-bronze-600: #42291E;  // extra-dark reserve, 13.40:1 on white
+
+// Shorthand-versions
+$bronze-light:$color-bronze-100;
+$bronze-soft:$color-bronze-200;
+$bronze:$color-bronze-400;
+$bronze-dark:$color-bronze-500;
+$color-bronze-alpha: rgba(188, 148, 115, 0.3);
 
 // ===========================
 // RED
@@ -86,16 +130,10 @@ $color-neutral-700: #2A2723;
 
 // Shorthand-versions
 $neutral-light:$color-neutral-300;
+$neutral-soft:$color-neutral-400;
 $neutral:$color-neutral-500;
 $neutral-dark:$color-neutral-600;
 $neutral-darker:$color-neutral-700;
-
-    // To-be-deprecated - LEGACY
-    $color-neutral-lighter:$color-neutral-300;
-    $color-neutral-light: $color-neutral-400;
-    $color-neutral: $color-neutral-500;
-    $color-neutral-dark:$color-neutral-600;
-
 
 // ===========================
 // CREAM AND WHITES

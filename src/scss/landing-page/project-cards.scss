@@ -81,7 +81,88 @@
     .tags .tag-list span{
       background-color: $cream-mid;
     }
- 
+
+  }
+
+  &.project-mauve {
+    background-color: $mauve-light;
+
+    .contentbox {
+      background-color: $mauve-light;
+      .metric-card{
+        background-color: rgba($mauve, 0.07);
+        .cs-metric-value{
+          color: $mauve-dark;
+        }
+        .cs-metric-icon i{
+          color: $mauve;
+        }
+        &:hover {
+          box-shadow: 3px 3px 0 $mauve;
+        }
+      }
+    }
+
+    .project-screen {
+      background-color: $mauve-light;
+    }
+    .tags .tag-list span{
+      background-color: $color-mauve-alpha;
+    }
+  }
+
+  &.project-brick {
+    background-color: $brick-light;
+
+    .contentbox {
+      background-color: $brick-light;
+      .metric-card{
+        background-color: rgba($brick-dark, 0.07);
+        .cs-metric-value{
+          color: $brick-dark;
+        }
+        .cs-metric-icon i{
+          color: $brick-dark;
+        }
+        &:hover {
+          box-shadow: 3px 3px 0 $brick-dark;
+        }
+      }
+    }
+
+    .project-screen {
+      background-color: $brick-light;
+    }
+    .tags .tag-list span{
+      background-color: $color-brick-alpha;
+    }
+  }
+
+  &.project-bronze {
+    background-color: $bronze-light;
+
+    .contentbox {
+      background-color: $bronze-light;
+      .metric-card{
+        background-color: rgba($bronze-dark, 0.07);
+        .cs-metric-value{
+          color: $bronze-dark;
+        }
+        .cs-metric-icon i{
+          color: $bronze-dark;
+        }
+        &:hover {
+          box-shadow: 3px 3px 0 $bronze-dark;
+        }
+      }
+    }
+
+    .project-screen {
+      background-color: $bronze-light;
+    }
+    .tags .tag-list span{
+      background-color: $color-bronze-alpha;
+    }
   }
 
   h2{
@@ -429,6 +510,21 @@
     background-color: $color-cream-alpha;
     color: $blue-dark;
   }
+
+  &.mauve .tag-list span {
+    background-color: $color-mauve-alpha;
+    color: $mauve-dark;
+  }
+
+  &.brick .tag-list span {
+    background-color: $color-brick-alpha;
+    color: $brick-dark;
+  }
+
+  &.bronze .tag-list span {
+    background-color: $color-bronze-alpha;
+    color: $bronze-dark;
+  }
 }
 
 // ============================================================================
@@ -511,6 +607,18 @@
 
         &.neutral {
         color: $neutral;
+        }
+
+        &.mauve {
+         color: $mauve-dark;
+        }
+
+        &.brick {
+         color: $brick-dark;
+        }
+
+        &.bronze {
+         color: $bronze-dark;
         }
       }
     }

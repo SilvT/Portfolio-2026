@@ -55,7 +55,7 @@
          <a href="#marketing-management" class="scroll-text">SCROLL</a>
          <span class="scroll-line"></span>
       </div> -->
-      <nav class="top-nav scrolled" role="navigation" aria-label="Main navigation">
+      <nav class="top-nav" role="navigation" aria-label="Main navigation">
          <div class="nav-wrapper">
             <div class="navigation">
                <a href="#about" class="nav-item" data-open-about-modal>About</a>
@@ -81,7 +81,7 @@
             </svg>
             </div>
       <div class="scroll-hinter">
-         <a href="#marketing-management" class="scroll-text">SCROLL</a>
+         <a href="#marketing-management" class="scroll-text">SCROLL<br>FOR WORK</a>
          <span class="scroll-line"></span>
       </div>
       <div class="contentbox">
@@ -97,9 +97,10 @@
                   </div>
                   <div class="bio grid-item three" aria-label="Professional biography">
                      <p class="bold">
-                        I build products and design systems—simultaneously. </p>
+                        I build products and I design systems. </p>
                      <p class="content">
-                        Not because it's trendy, because fragmented tools and inconsistent patterns drive me mad.<br>
+                        <!-- and when I can't find tools to help, I build them too. -->
+                        and If I can't find the right tool for the job, I'll build that too.
                         </p>
                      <p class="subtitle">
                         Product Designer × Design Systems Specialist
@@ -168,6 +169,12 @@
          </dialog>
       </section>
 
+
+      <!-- Dev-only 3-way toggle between the marquee cards, the editorial rows layout, and the experimental layout (TBD) -->
+      <div class="segmented-control card-layout-switch" role="radiogroup" aria-label="Project cards layout">
+         <button type="button" class="segmented-option is-active" data-layout="current" role="radio" aria-checked="true">Current</button>
+         <button type="button" class="segmented-option" data-layout="experimental" role="radio" aria-checked="false">Experimental</button>
+      </div>
 
       <div id="projects-container">
 
@@ -586,6 +593,68 @@
          </section>
       </div>
 
+      <!-- Experimental project cards layout: first 3 projects reuse the original marquee cards in #projects-container
+           (restyled to normal stacked flow below, see _project-rows-new.scss), followed by a 3x2 tools grid with
+           hover-reveal cards + one always-on preview card. Toggled via body[data-card-layout="experimental"]. Desktop-only for now. -->
+      <div id="works-experimental">
+         <div class="services-header">
+            <div class="services-tag-group">
+               <!-- <span class="services-tag services-tag--outline">S.02</span> -->
+               <span class="services-tag services-tag--outline">TOOLS</span>
+               <!-- <span class="services-tag services-tag--solid">OUR TOOLS</span> -->
+            </div>
+            <h2 class="services-headline">
+               Small tools built to solve specific design-system friction — Figma plugins and lightweight integrations, built solo.
+            </h2>
+         </div>
+
+         <div class="services-grid">
+
+            <div class="service-card service-card--green" tabindex="0" data-service-row="1">
+               <div class="service-card-icon-wrapper"><i class="iconoir-clock service-card-icon"></i></div>
+               <div class="service-card-text">
+                  <h3 class="service-card-title">Library Changelog</h3>
+                  <p class="service-card-description">A Figma plugin for tracking library edits and freezes, with changelog compilation and snapshot diff comparison.</p>
+               </div>
+            </div>
+
+            <div class="service-card service-card--mauve" tabindex="0" data-service-row="2">
+               <div class="service-card-icon-wrapper"><i class="iconoir-git-branch service-card-icon"></i></div>
+               <div class="service-card-text">
+                  <h3 class="service-card-title">Token Launch</h3>
+                  <p class="service-card-description">Identified a critical gap in design token workflows across 3 product teams and built a lightweight Figma Variables → GitHub sync.</p>
+               </div>
+            </div>
+
+            <div class="service-card service-card--brick" tabindex="0" data-service-row="3">
+               <div class="service-card-icon-wrapper"><i class="iconoir-frame-select service-card-icon"></i></div>
+               <div class="service-card-text">
+                  <h3 class="service-card-title">The Figma Finder</h3>
+                  <p class="service-card-description">Find any variable, style or effect instantly, with batch search, partial matches, and CSV/JSON export.</p>
+               </div>
+            </div>
+
+            <!-- Placeholder tool — swap for a real project once built -->
+            <div class="service-card service-card--blue" tabindex="0" data-service-row="4">
+               <div class="service-card-icon-wrapper"><i class="iconoir-flash service-card-icon"></i></div>
+               <div class="service-card-text">
+                  <h3 class="service-card-title">Placeholder Tool</h3>
+                  <p class="service-card-description">Reserved slot for the next small tool — fill in once it exists.</p>
+               </div>
+            </div>
+
+            <!-- Preview card: shows the hovered/active tool's image, crossfading between them. Spans the 2 remaining grid cells. No title/description of its own. -->
+            <div class="service-card service-card--preview">
+               <img src="/plugin/cover1.webp" alt="" class="service-card-preview-img is-active" data-preview-row="2" loading="lazy" decoding="async">
+               <img src="/tools/Changelog.png" alt="" class="service-card-preview-img" data-preview-row="1" loading="lazy" decoding="async">
+               <img src="/tools/figma-finder-cover.png" alt="" class="service-card-preview-img" data-preview-row="3" loading="lazy" decoding="async">
+               <img src="/tools/figma-finder2.png" alt="" class="service-card-preview-img" data-preview-row="4" loading="lazy" decoding="async">
+               <div class="service-card-overlay"></div>
+            </div>
+
+         </div>
+      </div>
+
       <footer>
          <section class="section-contact" data-name="contact" data-section="contact" id="contact">
             <div class="ellipse-decor ellipse-decor--flipped" aria-hidden="true">
@@ -620,7 +689,7 @@
                         </div>
                      </a>
                      <!-- Git Link -->
-                     <a href="https://github.com/SilvT/Silvia_Travieso_UI_Portfolio" class="social-link" data-name="git-repo" data-hover-text="Inspect the code for this web">
+                     <a href="https://github.com/SilvT/Portfolio-2026" class="social-link" data-name="git-repo" data-hover-text="Inspect the code for this web">
                         <span class="icon">&lt; / &gt;</span>
                         <div class="social-link__text">
                            <p>Git</p>
@@ -638,7 +707,7 @@
                         <path id="bouncePathTwo" d="m14.9502,163L.4502,133" fill="none" opacity="0" stroke="#3980aa"/>
                         <circle id="dot" cx="14.5234" cy="163.3155" r="10.8155" fill="#3980aa" stroke-width="0"/>
                         </svg>
-                     <a href="https://github.com/SilvT/Silvia_Travieso_UI_Portfolio">
+                     <a href="https://github.com/SilvT/Portfolio-2026">
                         <span>
                            <p> Designed and Built by</p>
                            <p class="bold">Silvia Travieso · 2026</p>

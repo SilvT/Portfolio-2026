@@ -8,6 +8,7 @@
  */
 export function initNavigation() {
   const navItems = document.querySelectorAll('.nav-item');
+  const topNav = document.querySelector('.top-nav');
 
   if (navItems.length === 0) {
     return;
@@ -71,11 +72,22 @@ export function initNavigation() {
     }
   }
 
+  /**
+   * Toggle shrunk nav state once the page has scrolled past the top
+   */
+  function checkScrolled() {
+    if (!topNav) return;
+    topNav.classList.toggle('scrolled', window.scrollY > 0);
+  }
+
   // Listen to scroll events
   let scrollTimeout;
   window.addEventListener('scroll', () => {
     clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(checkActiveSection, 10);
+    scrollTimeout = setTimeout(() => {
+      checkActiveSection();
+      checkScrolled();
+    }, 10);
   }, { passive: true });
 
   // Initial check

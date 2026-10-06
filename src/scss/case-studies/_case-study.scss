@@ -13,6 +13,7 @@
 @use 'line-breaker' as *;
 @use 'carousel' as *;
 @use 'accordion' as *;
+@use 'specimen' as *;
 
 // Only definition of blocks and columns and grids
 
@@ -258,6 +259,87 @@ section.cs-section{
   .cs-tag {
     background-color: $color-cream-alpha;
     color: $blue-dark;
+  }
+
+  .cs-metric-card {
+    background-color: $color-bg;
+  }
+}
+
+.case-study-page[data-theme="mauve"] .cs-header {
+  background-color: $mauve-light;
+
+  .cs-breadcrumbs {
+    .cs-breadcrumb-nav {
+      color: $mauve-dark;
+
+      .cs-nav-title {
+        color: rgba($mauve, 0.6);
+      }
+
+      &:hover .cs-nav-title {
+        color: $mauve;
+      }
+    }
+  }
+
+  .cs-tag {
+    background-color: $color-mauve-alpha;
+    color: $mauve-dark;
+  }
+
+  .cs-metric-card {
+    background-color: $color-bg;
+  }
+}
+
+.case-study-page[data-theme="brick"] .cs-header {
+  background-color: $brick-light;
+
+  .cs-breadcrumbs {
+    .cs-breadcrumb-nav {
+      color: $brick-dark;
+
+      .cs-nav-title {
+        color: rgba($brick-dark, 0.6);
+      }
+
+      &:hover .cs-nav-title {
+        color: $brick-dark;
+      }
+    }
+  }
+
+  .cs-tag {
+    background-color: $color-brick-alpha;
+    color: $brick-dark;
+  }
+
+  .cs-metric-card {
+    background-color: $color-bg;
+  }
+}
+
+.case-study-page[data-theme="bronze"] .cs-header {
+  background-color: $bronze-light;
+
+  .cs-breadcrumbs {
+    .cs-breadcrumb-nav {
+      color: $bronze-dark;
+
+      .cs-nav-title {
+        color: rgba($bronze-dark, 0.6);
+      }
+
+      &:hover .cs-nav-title {
+        color: $bronze-dark;
+      }
+    }
+  }
+
+  .cs-tag {
+    background-color: $color-bronze-alpha;
+    color: $bronze-dark;
   }
 
   .cs-metric-card {

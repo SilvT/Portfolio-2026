@@ -92,3 +92,6 @@ public/microsite/tomato-ready.mov
 # Ponytail audit reports (local scratch, not project docs)
 PONYTAIL-AUDIT*.md
 
+# Playwright MCP scratch output (logs/screenshots from verification runs)
+.playwright-mcp/
+

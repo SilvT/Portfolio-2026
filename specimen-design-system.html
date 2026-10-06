@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" data-project-id="2">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Design System from Scratch | Silvia Travieso - Product Designer</title>
+      <meta name="description" content="A production-ready design system built from zero in an engineer-first startup, with no precedent, a manual token-to-code pipeline, and governance that scaled across seven product lines.">
+      <meta name="robots" content="noindex">
+      <!-- Favicon -->
+      <link rel="icon" type="image/png" href="/favicon.png">
+      <!-- Google Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap">
+      <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+      <noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet"></noscript>
+      <!-- Load source files for dev mode -->
+      <link rel="stylesheet" href="/src/scss/_main.scss">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+      <script type="module">
+        import { initLightGallery } from '/src/js/modules/lightgallery.js';
+        import Swiper from 'swiper';
+        import { Pagination, Navigation } from 'swiper/modules';
+
+        function initialize() {
+          document.querySelectorAll('.new-carousel.swiper').forEach((swiperEl) => {
+            new Swiper(swiperEl, {
+              modules: [Pagination, Navigation],
+              grabCursor: true,
+              speed: 400,
+              slidesPerView: 1,
+              spaceBetween: 0,
+              pagination: {
+                el: swiperEl.querySelector('.swiper-pagination'),
+                clickable: true
+              },
+              navigation: {
+                nextEl: swiperEl.querySelector('.swiper-button-next'),
+                prevEl: swiperEl.querySelector('.swiper-button-prev')
+              }
+            });
+          });
+
+          initLightGallery();
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+          initialize();
+        }
+      </script>
+   </head>
+   <body class="project-page-body js-loaded specimen-page" data-theme="green">
+
+      <!-- Masthead: low visual weight, just an anchor -->
+      <nav class="specimen-masthead" aria-label="Case study navigation">
+         <a href="/" aria-label="Back to home">
+            <img class="specimen-logo" src="/logo-filled.svg" alt="Silvia Travieso Logo">
+         </a>
+      </nav>
+
+      <main id="project-content" data-project-id="2">
+         <article class="specimen-article">
+
+            <!-- 1. Title block + Component 1: metadata block -->
+            <header class="specimen-title-block">
+               <div class="specimen-title-main">
+                  <img class="specimen-title-image" src="/ds/ds-hero.png" alt="Design system styleguide overview, colour tokens and component navigation" loading="eager">
+                  <h1>Design System from Scratch</h1>
+                  <p class="specimen-subtitle">Design infrastructure built solo in an engineer-first startup, by Silvia Travieso</p>
+               </div>
+
+               <div class="specimen-title-side">
+
+                  <aside class="specimen-info">
+                     <p class="specimen-issue-number">03</p>
+
+                     <p class="specimen-info-label">Information</p>
+                     <dl>
+                        <dt>Name</dt>
+                        <dd>Design System from Scratch</dd>
+                        <dt>Role</dt>
+                        <dd>Mid UI Designer → Design Systems Lead</dd>
+                     </dl>
+                     <dl>
+                        <dt>Company</dt>
+                        <dd>Senapt LTD (Startup)</dd>
+                        <dt>Team</dt>
+                        <dd>Solo → scaled with 8 designers</dd>
+                     </dl>
+                     <dl>
+                        <dt>Stack</dt>
+                        <dd>Figma Variables, JavaFX, GitHub Actions</dd>
+                        <dt>Timeline</dt>
+                        <dd>~1 year 3 months to MVP</dd>
+                     </dl>
+                  </aside>
+               </div>
+            </header>
+
+            <!-- 2. Lead evidence: shown before any commentary -->
+            <section class="specimen-split-panel">
+               <div class="specimen-split-panel__half">
+                  <img src="/ds/ds-hero.png" alt="Published styleguide site showing the neutral and primary colour ramps" loading="eager">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№01</span> — The published styleguide: tokens, documented and browsable.</p>
+               </div>
+               <div class="specimen-split-panel__half">
+                  <img src="/ds/UIKIT.png" alt="Button component documentation showing every size, hierarchy and interactive state" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№02</span> — One component, every state: size, hierarchy, hover, focus, pressed, disabled.</p>
+               </div>
+            </section>
+
+            <!-- 3. Thesis statement: appears exactly once -->
+            <p class="specimen-display-statement">
+               This system was built with no formal approval, no precedent, and no one at the company who yet believed design systems counted as infrastructure — so it was built anyway, as a proof of concept smuggled inside a live CRM dashboard project, on the principle that it's easier to ask forgiveness than permission. A three-level token architecture (primitive → semantic → component) and a custom Figma-to-GitHub pipeline turned a slow, manual, error-prone hand-off into a shipped, versioned artefact an engineer-first CEO could actually see the value of. He did: within six months this became a promotion to Design Systems Lead, and the system scaled from one product to an audit of all seven.
+            </p>
+
+            <!-- 4. Component-level close read: full-bleed stage, paged detail carousel -->
+            <h2 class="specimen-section-heading">Zooming In: Tokens to Shippable Code</h2>
+            <div class="specimen-pairing-row specimen-pairing-row--text-only specimen-prose">
+               <div class="specimen-pairing-row__right">
+                  <p>Tokens lived in Figma; the developer in Japan needed them as consumable JSON. A custom Git Action paired with a Figma plugin closed that gap — exporting primitive, semantic and component tokens straight from Figma into the codebase, with every export timestamped and change-counted automatically.</p>
+               </div>
+            </div>
+
+            <div class="specimen-stage">
+               <div class="new-carousel swiper">
+                  <div class="new-container swiper-wrapper">
+                     <div class="new-slide swiper-slide">
+                        <img src="/ds/css-export.png" data-src="/ds/css-export.png" alt="CSS Variables Generator plugin output, root-level custom properties grouped by core and semantic collections" class="cs-carousel-img" loading="lazy">
+                     </div>
+                     <div class="new-slide swiper-slide">
+                        <img src="/ds/early-tokens.png" data-src="/ds/early-tokens.png" alt="Alpha-value token ramp generated for neutral and primary colours at multiple opacities" class="cs-carousel-img" loading="lazy">
+                     </div>
+                     <div class="new-slide swiper-slide">
+                        <img src="/ds/initial-phase-1.png" data-src="/ds/initial-phase-1.png" alt="Phase 1 scaffolding plan: core tokens, typography styles, and first components" class="cs-carousel-img" loading="lazy">
+                     </div>
+                     <div class="new-slide swiper-slide">
+                        <img src="/ds/initial-phase-2.png" data-src="/ds/initial-phase-2.png" alt="Phase 2 scaffolding plan: semantic tokens, gradients and elevations, expanded component set" class="cs-carousel-img" loading="lazy">
+                     </div>
+                  </div>
+                  <button type="button" class="swiper-button-prev" aria-label="Previous image"></button>
+                  <button type="button" class="swiper-button-next" aria-label="Next image"></button>
+                  <div class="swiper-pagination"></div>
+               </div>
+               <p class="specimen-stage-caption">№03 — Full pipeline: plugin export → alpha ramps → phased rollout plan, core through component level.</p>
+            </div>
+
+            <!-- 5. Historic/contextual section: comparison imagery -->
+            <h2 class="specimen-section-heading">Context: What It Replaced</h2>
+
+            <div class="specimen-pairing-row specimen-prose">
+               <div class="specimen-pairing-row__left">
+                  <img src="/ds/prev-state.png" alt="Diagram of the previous manual hand-off process, styles and components linked to code by hand across multiple disconnected files" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№04</span> — The previous process: styles and components, manually reconciled against code.</p>
+               </div>
+               <div class="specimen-pairing-row__right">
+                  <h3>No Shared Source of Truth</h3>
+                  <p>Before this, three product lines had each accumulated their own disconnected UX, playground and UI files — no naming conventions, no shared libraries, hand-off pages manually kept in sync with the code repo by whoever had time.</p>
+               </div>
+            </div>
+
+            <div class="specimen-pairing-row specimen-prose">
+               <div class="specimen-pairing-row__left">
+                  <img src="/ds/early-designs.png" alt="Early Marketing Management CRM dashboard screens, login and leads overview, built as the design system's first testbed" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№05</span> — The testbed: an early build of the Marketing Management CRM, net-new to the company.</p>
+               </div>
+               <div class="specimen-pairing-row__right">
+                  <h3>Built Inside a Live Product</h3>
+                  <p>Rather than pitch a system no one had asked for, the token architecture was proven on a real product first — a marketing CRM dashboard, designed solo opposite a backend developer and a frontend developer seven time zones away.</p>
+               </div>
+            </div>
+
+            <!-- 6. Strengths section: repeated claim+evidence, same direction -->
+            <h2 class="specimen-section-heading">Strengths</h2>
+
+            <div class="specimen-pairing-row specimen-prose">
+               <div class="specimen-pairing-row__left">
+                  <img src="/ds/UIKIT.png" alt="Button variants documented across primary, secondary, tertiary and transparent hierarchies with all interactive states" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№06</span> — States as modes, not as a multiplied component count.</p>
+               </div>
+               <div class="specimen-pairing-row__right">
+                  <h3>Variable Modes Instead of Variant Sprawl</h3>
+                  <p>Interactive states (hover, press, focus, disabled) and on/off statuses were modelled as Figma variable modes rather than duplicated as separate component variants — cutting redundant token naming and keeping components genuinely composable instead of bloated.</p>
+               </div>
+            </div>
+
+            <div class="specimen-pairing-row specimen-prose">
+               <div class="specimen-pairing-row__left">
+                  <img src="/ds/css-export.png" alt="Automated token export with timestamp and change-count header, ready to commit to the code repository" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№07</span> — One export, fully accounted for: timestamp, change count, token breakdown.</p>
+               </div>
+               <div class="specimen-pairing-row__right">
+                  <h3>A Pipeline, Not a Hand-off Ritual</h3>
+                  <p>The custom Git Action plus Figma plugin turned token hand-off from a manual, error-prone chore into a one-click export — a side effect of which was unlocking white-label capability for an unrelated earlier product, which is what first got the CEO's attention.</p>
+               </div>
+            </div>
+
+            <figure class="specimen-image-block">
+               <img src="/ds/mistakes-1.png" alt="Mature CRM dashboard built entirely from the design system's components and tokens, bento-grid layout with live data" loading="lazy">
+               <figcaption class="specimen-caption"><span class="specimen-caption-num">№08</span> — Roughly 50% faster hand-off. Component-first delivery — build the pieces, annotate every state and edge case, assemble screens second — cut hand-off time by roughly half compared to other teams at the company, by informal comparison with other designers rather than controlled measurement.</figcaption>
+            </figure>
+
+            <div class="specimen-pairing-row specimen-prose">
+               <div class="specimen-pairing-row__left">
+                  <img src="/ds/initial-phase-3.png" alt="Phase 3 scaffolding plan covering cards, sections and slots, with documentation status noted for each prior phase" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№09</span> — The scaffolding that outlived one product: a repeatable three-phase rollout.</p>
+               </div>
+               <div class="specimen-pairing-row__right">
+                  <h3>Governance That Could Scale</h3>
+                  <p>After CEO buy-in, the same phased model — tokens, styles, components, documented in that order — became the basis for auditing all seven product lines and training an expanded eight-person design team across eight or nine workshops.</p>
+               </div>
+            </div>
+
+            <!-- 7. Weaknesses/quirks section: mirrors strengths, opposite direction -->
+            <h2 class="specimen-section-heading">Quirks</h2>
+
+            <div class="specimen-pairing-row specimen-prose">
+               <div class="specimen-pairing-row__left">
+                  <img src="/ds/wrong-core.png" alt="Token export with alert and graph values placed under the Core collection despite being semantic, not primitive, values" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№10</span> — Alert tokens, filed as Core when they were really Semantic.</p>
+               </div>
+               <div class="specimen-pairing-row__right">
+                  <h3>Naming Discipline, Learned Mid-flight</h3>
+                  <p>Alert and graph values were initially filed under the Core collection despite being semantic rather than primitive — caught and annotated during a later audit pass, not before. The three-level architecture was correct; getting every token into the right level the first time wasn't automatic.</p>
+               </div>
+            </div>
+
+            <div class="specimen-pairing-row specimen-prose">
+               <div class="specimen-pairing-row__left">
+                  <img src="/ds/learnings-1.png" alt="Annotated token audit flagging alert values as semantic, not core, with a sticky note correction" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№11</span> — Gradients raised the same question twice: not core, not quite semantic either.</p>
+               </div>
+               <div class="specimen-pairing-row__right">
+                  <h3>No Dark Mode, by Trade-off</h3>
+                  <p>Using variable modes for interactive states — rather than a more generic token structure — made the system harder to extend to light/dark theming later. Not a requirement at the time, so the right call for the problem in front of it, but a cost that would resurface if theming became a requirement.</p>
+               </div>
+            </div>
+
+            <div class="specimen-pairing-row specimen-prose">
+               <div class="specimen-pairing-row__left">
+                  <img src="/ds/early-designs.png" alt="Early CRM dashboard screens, sole evidence of the product this design system was proven against" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№12</span> — One designer, one system, one product, for most of its working life.</p>
+               </div>
+               <div class="specimen-pairing-row__right">
+                  <h3>Documentation, Deferred on Purpose</h3>
+                  <p>No traditional component documentation existed for most of the build — a deliberate trade-off while the sole consumer of the system was its own author. It held up, but it also meant the system lived in one person's head for longer than was comfortable once the team started to grow.</p>
+               </div>
+            </div>
+
+            <div class="specimen-pairing-row specimen-prose">
+               <div class="specimen-pairing-row__left">
+                  <img src="/ds/initial-phase-2.png" alt="Phase 2 plan showing an expanding component surface area across checkboxes, switches, dropdowns, pagination, chips and badges" loading="lazy">
+                  <p class="specimen-caption"><span class="specimen-caption-num">№13</span> — Scaling across seven product lines, before the company could finish scaling with it.</p>
+               </div>
+               <div class="specimen-pairing-row__right">
+                  <h3>The Scaffolding Outlived the Company</h3>
+                  <p>Guidelines, a Confluence governance template, and a planned dedicated governance role were all built out — but Senapt went bankrupt before the progressive scaling model reached full execution. The structure existed; the runway to finish it didn't.</p>
+               </div>
+            </div>
+
+         </article>
+      </main>
+   </body>
+</html>

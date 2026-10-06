@@ -139,7 +139,7 @@ max-width: 40vw;
             font-size: $font-2xl;
             line-height: 1.2;
             letter-spacing: -0.01rem;
-            margin-bottom: 0.5rem;
+            // margin-bottom: 0.5rem;
             color: $blue-dark;
             @include breakpoint (mobile){
                 font-size: calc(($font-2xl*0.7));
