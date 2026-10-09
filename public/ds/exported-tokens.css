@@ -1,0 +1,846 @@
+/*
+ * Design Tokens
+ * Generated on: 2025-10-09T20:53:56.836Z
+ * Output file: Sep25-tokens.css
+ * Format: Standard Web CSS
+ * 
+ * Sections:
+ * - Core (137 tokens in 15 groups)
+ * - Semantic (126 tokens in 9 groups)
+ * - Gradients (35 tokens in 1 groups)
+ * - Post-semantic (34 tokens in 6 groups)
+ * - Components (119 tokens in 11 groups)
+ * - Status-press (48 tokens in 1 groups)
+ * - Toggle (15 tokens in 1 groups)
+ * - Status-active (26 tokens in 1 groups)
+ * - Buttons (54 tokens in 1 groups)
+ * - Alerts (4 tokens in 1 groups)
+ * - Variable-sizings (5 tokens in 1 groups)
+ * - Variable-heights (3 tokens in 1 groups)
+ * - Shades (7 tokens in 2 groups)
+ * - Rows (7 tokens in 1 groups)
+ * Total: 620 tokens
+ */
+
+:root {
+
+  /* ============================================
+   * CORE TOKENS
+   * ============================================ */
+
+  /* Brand */
+  --brand-0000: #f8fcff;
+  --brand-200: #f2f7fd;
+  --brand-300: #e2eef9;
+  --brand-400: #b8e2ff;
+  --brand-500: #7acaff;  /* main */
+  --brand-600: #2d8bda;
+  --brand-700: #1d6bc1;
+  --brand-800: #24488f;
+  --brand-900: #032568; /* changed value!!! */
+  --brand-transparent-600-a15: rgba(45,139,218,0.15); /* equivalent to 050 in solid */
+  --brand-transparent-600-a5: rgba(45,139,218,0.05);
+  --brand-transparent-600-a50: rgba(45,139,218,0.5); /* equivalent to 075 in solid */
+  --brand-transparent-600-a70: rgba(45,139,218,0.7);
+  --brand-transparent-900-a50: rgba(3,37,104,0.5);
+  --brand-transparent-900-a70: rgba(3,37,104,0.7);
+
+  /* Neutral */
+  --neutral-100: #fcfdfd;
+  --neutral-200: #f4f5f6;
+  --neutral-300: #e3e6e7;
+  --neutral-400: #cdd2d4;
+  --neutral-500: #8d9599;  /* main  */
+  --neutral-600: #6b767d;
+  --neutral-700: #474e53;
+  --neutral-800: #101213;
+  --neutral-transparent-100-a0: rgba(255,255,255,0);
+  --neutral-transparent-100-a15: rgba(255,255,255,0.15);
+  --neutral-transparent-100-a30: rgba(255,255,255,0.3);
+  --neutral-transparent-100-a5: rgba(255,255,255,0.05);
+  --neutral-transparent-100-a50: rgba(255,255,255,0.5);
+  --neutral-transparent-100-a70: rgba(255,255,255,0.7);
+  --neutral-transparent-800-a0: rgba(30,32,36,0);
+  --neutral-transparent-800-a15: rgba(30,32,36,0.15);
+  --neutral-transparent-800-a30: rgba(16,18,19,0.3);
+  --neutral-transparent-800-a5: rgba(30,32,36,0.05);
+  --neutral-transparent-800-a50: rgba(16,18,19,0.5);
+  --neutral-transparent-800-a70: rgba(16,18,19,0.7);
+
+
+
+
+  /* To-Change */
+  --to-change: #e2f13f; /* only used for general background */
+
+
+  /* Green */
+  --green-100: #e7f5ee;
+  --green-200: #daf2e8;
+  --green-300-light: rgba(93,187,142,0.15);
+  --green-400: #5dbb8e;
+  --green-600: #34836a;
+  --green-800: #1a4e42;
+
+
+  /* Red */
+  --red-100: #fde3e1;
+  --red-200: #fab9b6;
+  --red-400: #f7654c;
+  --red-400-light: rgba(247,101,76,0.15);
+  --red-500: #c72c2a;
+  --red-800: #7d1c1b;
+
+
+  /* Yellow */
+  --yellow-100: #fef0d1;
+  --yellow-200: #fde0a3;
+  --yellow-400: #fcc133;
+  --yellow-400-light: rgba(252,193,51,0.15);
+  --yellow-500: #fa9a3e;
+  --yellow-800: #884619;
+
+
+  /* TDEP */
+  --tdep-green-300: #7fccb0;
+  --tdep-green-600: #2d6f5b;
+
+
+  /* Opacity */
+  --opacity-15: 0.15;
+  --opacity-30: 0.3;
+  --opacity-5: 0.05;
+  --opacity-50: 0.5;
+  --opacity-70: 0.7;
+  --opacity-extrasubtle: 0.0;
+
+
+  /* Typography */
+  --typography-font-family: Plus Jakarta Sans;
+  --typography-font-size-00: 8px;
+  --typography-font-size-1: 10px;
+  --typography-font-size-10: 45px;
+  --typography-font-size-2: 12px;
+  --typography-font-size-3: 14px;
+  --typography-font-size-4: 16px;
+  --typography-font-size-5: 18px;
+  --typography-font-size-6: 20px;
+  --typography-font-size-7: 22px;
+  --typography-font-size-8: 30px;
+  --typography-font-size-9: 40px;
+  --typography-font-weight-bold: Bold;
+  --typography-font-weight-medium: Medium;
+  --typography-font-weight-regular: Regular;
+  --typography-font-weight-semibold: SemiBold;
+  --typography-letter-separation-loose: 0.4px;
+  --typography-letter-separation-normal: 0px;
+  --typography-letter-separation-tight: -0.25px;
+  --typography-linespacing-0: 12px;
+  --typography-linespacing-1: 14px;
+  --typography-linespacing-10: 51px;
+  --typography-linespacing-2: 16px;
+  --typography-linespacing-3: 18px;
+  --typography-linespacing-4: 20px;
+  --typography-linespacing-5: 22px;
+  --typography-linespacing-6: 26px;
+  --typography-linespacing-7: 28px;
+  --typography-linespacing-8: 36px;
+  --typography-linespacing-9: 46px;
+
+
+  /* Spacing */
+  --spacing-0: 0px;
+  --spacing-10: 10px;
+  --spacing-12: 12px;
+  --spacing-14: 14px;
+  --spacing-16: 16px;
+  --spacing-18: 18px;
+  --spacing-2: 2px;
+  --spacing-20: 20px;
+  --spacing-22: 22px;
+  --spacing-24: 24px;
+  --spacing-26: 26px;
+  --spacing-28: 28px;
+  --spacing-30: 30px;
+  --spacing-36: 36px;
+  --spacing-4: 4px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-6: 6px;
+  --spacing-8: 8px;
+  --spacing-80: 80px;
+
+
+  /* Radius */
+  --radius-extralarge: 10px; /* Only for radio elements */
+  --radius-large: 8px;
+  --radius-medium: 4px;
+  --radius-none: 0px;
+  --radius-small: 2px;
+
+
+  /* Width */
+  --width-bold: 3px;
+  --width-contrast: 2px;
+  --width-extrabold: 4px;
+  --width-extrasubtle: 0.4px;
+  --width-light: 1.2px;
+  --width-main: 1.6px;
+  --width-null: 0px;
+  --width-subtle: 0.8px;
+
+
+  /* Sizing-content */
+  --sizing-content-extralarge: 48px; /* Only for decorations and section titles //PREV 46px */
+  --sizing-content-large: 32px; /* previously 36px */
+  --sizing-content-medium: 20px;
+  --sizing-content-small: 12px;
+
+
+  /* Position */
+  --position-05: 0.5px;
+  --position-1: 1px;
+  --position-neg05: -0.5px;
+  --position-null: 0px;
+
+
+  /* Blur */
+  --blur-05: 0.5px;
+  --blur-1: 1px;
+  --blur-10: 10px;
+
+
+  /* ============================================
+   * SEMANTIC TOKENS
+   * ============================================ */
+
+  /* Surface */
+  --surface-brand-alternate: var(--brand-600); /* **ONLY** for ALT background when --main has already been used */
+  --surface-brand-bold: var(--brand-900);
+  --surface-brand-contrast: var(--brand-800);
+  --surface-brand-extrasubtle: var(--brand-200); /* /*Alternative for Z-index:0* / */
+  --surface-brand-light: var(--brand-400);
+  --surface-brand-main: var(--brand-700); /* /*go-to surface colour when colour wants to be introduced* / */
+  --surface-brand-subtle: var(--brand-300);
+  --surface-brand-transparent-bold: var(--brand-transparent-900-a70); /* 70% alpha value of ExtraBold */
+  --surface-brand-transparent-contrast: var(--brand-transparent-600-a50); /* 50% alpha value of Contrast */
+  --surface-brand-transparent-light: var(--brand-transparent-600-a15); /* 15% alpha value of Contrast */
+  --surface-brand-ultrasubtle: var(--brand-0000); /* 5% alpha value of Extrasubtle */
+  --surface-hidden: var(--neutral-transparent-100-a0);
+  --surface-neutral-contrast: var(--neutral-500);
+  --surface-neutral-extrasubtle: var(--neutral-100); /* z-index: 0 */
+  --surface-neutral-light: var(--neutral-300); /* z-index: +2 */
+  --surface-neutral-main: var(--neutral-400);
+  --surface-neutral-subtle: var(--neutral-200); /* z-index: 1 */
+  --surface-neutral-transparent-bold-30-light: var(--to-change); /* z-index: +2 */
+  --surface-neutral-transparent-light-20: var(--neutral-transparent-100-a30); /* z-index: 0 */
+  --surface-neutral-transparent-light-50: var(--neutral-transparent-100-a50); /* z-index: 1 */
+  --surface-neutral-transparent-light-70: var(--neutral-transparent-100-a70); /* z-index: +2 */
+
+
+  /* Content */
+  --content-brand-bold: var(--brand-900);
+  --content-brand-contrast: var(--brand-800);
+  --content-brand-extrabold-70: var(--brand-transparent-900-a70);
+  --content-brand-extrasubtle: var(--brand-300);
+  --content-brand-inverted: var(--brand-200);
+  --content-brand-light: var(--brand-600);
+  --content-brand-main: var(--brand-700);
+  --content-brand-main-50: var(--brand-transparent-600-a70);
+  --content-brand-test-subtle: var(--brand-500); /* To be determined if Value is 100 or 200 */
+  --content-hidden: var(--neutral-transparent-100-a0);
+  --content-neutral-bold: var(--neutral-800);
+  --content-neutral-contrast: var(--neutral-700);
+  --content-neutral-extrabold-70: var(--neutral-transparent-800-a70);
+  --content-neutral-extrasubtle-50: var(--neutral-transparent-800-a5);
+  --content-neutral-inverted: var(--neutral-100);
+  --content-neutral-inverted70: var(--neutral-transparent-100-a70);
+  --content-neutral-light: var(--neutral-500);
+  --content-neutral-main: var(--neutral-600);
+  --content-neutral-subtle: var(--neutral-400);
+
+
+  /* Overlay */
+  --overlay-alert-error: var(--red-400-light);
+  --overlay-alert-info: var(--brand-transparent-600-a50);
+  --overlay-alert-success: var(--green-300-light);
+  --overlay-alert-warning: var(--yellow-400-light);
+  --overlay-blur: var(--blur-10);
+  --overlay-brand-contrast-15: var(--brand-transparent-600-a15);
+  --overlay-brand-contrast-5: var(--brand-transparent-600-a5);
+  --overlay-brand-contrast-50: var(--brand-transparent-600-a50);
+  --overlay-brand-contrast-70: var(--brand-transparent-600-a70);
+  --overlay-brand-extrabold-70: var(--brand-transparent-900-a70);
+  --overlay-brand-extrasubtle-5: var(--overlay-brand-contrast-5);
+  --overlay-brand-light: var(--brand-400);
+  --overlay-brand-subtle-30: var(--overlay-brand-contrast-15);
+  --overlay-hidden: var(--neutral-transparent-100-a0);
+  --overlay-neutral-bold: var(--neutral-transparent-800-a50);
+  --overlay-neutral-contrast-15: var(--neutral-transparent-800-a15);
+  --overlay-neutral-light-20: var(--neutral-transparent-100-a30); /* z-index: 0 */
+  --overlay-neutral-light-50: var(--neutral-transparent-100-a50); /* z-index: 1 */
+  --overlay-neutral-light-70: var(--neutral-transparent-100-a70); /* z-index: +2 */
+  --overlay-neutral-main: var(--neutral-transparent-800-a5);
+  --overlay-neutral-main-50: var(--neutral-transparent-800-a5); /* z-index: 0 */
+
+
+  /* Stroke */
+  --stroke-brand-bold: var(--brand-900); /* Focus states */
+  --stroke-brand-bold-70: var(--brand-transparent-900-a70);
+  --stroke-brand-contrast: var(--brand-800); /* Default */
+  --stroke-brand-light-5: var(--brand-transparent-600-a15);
+  --stroke-brand-main: var(--brand-700);
+  --stroke-brand-main-15: var(--brand-transparent-600-a15); /* Active state */
+  --stroke-brand-main-50: var(--brand-transparent-600-a50); /* Hover + Disable states */
+  --stroke-hidden: var(--neutral-transparent-100-a0);
+  --stroke-inverted: var(--neutral-100);
+  --stroke-neutral-contrast: var(--neutral-800); /* border of elements with z-index> 0 */
+  --stroke-neutral-contrast-50: var(--stroke-neutral-main); /* border of elements with z-index> 0 || To be deprecated and unified with MAIN */
+  --stroke-neutral-light: var(--neutral-400); /* border of elements with z-index> 0 */
+  --stroke-neutral-light-50: var(--stroke-neutral-light); /* || To be deprecated and unified with LIGHT */
+  --stroke-neutral-main: var(--neutral-600); /* border of elements with z-index> 0 */
+
+
+  /* Alert */
+  --alert-error-content-contrast: var(--red-800); /* /*when --main doesn't fulfil accessibility contrast checks* / */
+  --alert-error-content-light: var(--red-200);
+  --alert-error-content-main: var(--red-500); /* /*go-to error content colour* / */
+  --alert-error-surface: var(--red-400-light);
+  --alert-info-content-bold: var(--brand-800); /* /*when --main doesn't fulfil accessibility contrast checks* / */
+  --alert-info-content-light: var(--brand-transparent-600-a50);
+  --alert-info-content-main: var(--brand-700); /* /*go-to info content colour* / */
+  --alert-info-content-subtle: var(--brand-400);
+  --alert-info-surface: var(--brand-300); /* PREV - 200-A30 */
+  --alert-success-content-contrast: var(--green-800); /* /*when --main doesn't fulfil accessibility contrast checks* / */
+  --alert-success-content-light: var(--green-200);
+  --alert-success-content-main: var(--green-600); /* /*go-to success content colour* / */
+  --alert-success-surface: var(--green-300-light);
+  --alert-warning-content-bold: var(--brand-800); /* /*when --contrast doesn't fulfil accessibility contrast checks* / */
+  --alert-warning-content-contrast: var(--yellow-800); /* /*when --main doesn't fulfil accessibility contrast checks* / */
+  --alert-warning-content-light: var(--yellow-100); /* /*for dark background-inverted contrast situations* / */
+  --alert-warning-content-main: var(--yellow-400); /* /*go-to warning content colour* / */
+  --alert-warning-surface: var(--yellow-200);
+  --alert-warning-surface-subtle: var(--yellow-100); /* PREVIOUS 400-20 */
+
+
+  /* Effects */
+  --effects-shadow-main-blur: var(--blur-1);
+  --effects-shadow-main-brand: var(--brand-transparent-600-a70);
+  --effects-shadow-main-neutral: var(--neutral-transparent-800-a30);
+  --effects-shadow-position-side-x-left-subtle: var(--position-neg05);
+  --effects-shadow-position-side-x-null: var(--position-null);
+  --effects-shadow-position-side-x-right-main: var(--position-1);
+  --effects-shadow-position-side-x-right-subtle: var(--position-05);
+  --effects-shadow-position-vertical-y-down-main: var(--position-1);
+  --effects-shadow-position-vertical-y-down-subtle: var(--position-05);
+  --effects-shadow-position-vertical-y-null: var(--position-null);
+  --effects-shadow-position-vertical-y-up-subtle: var(--position-neg05);
+  --effects-shadow-subtle-blur: var(--blur-05);
+  --effects-shadow-subtle-brand: var(--brand-transparent-600-a15);
+  --effects-shadow-subtle-neutral: var(--neutral-transparent-800-a15);
+
+
+  /* TBDEP */
+  --tbdep-surface-brand-light-30-to-subtle: var(--tdep-brand-200-a30); /* 20% alpha value of Light */
+
+
+  /* Icons */
+  --icons-extralarge: var(--sizing-content-extralarge); /* Only for decorations and section titles */
+  --icons-large: var(--sizing-content-large);
+  --icons-medium: var(--sizing-content-medium);
+  --icons-small: var(--sizing-content-small);
+
+
+  /* Spacings */
+  --spacings-content-extralarge: var(--spacing-24);
+  --spacings-content-extrasmall: var(--spacing-4);
+  --spacings-content-extremelarge: var(--spacing-28);
+  --spacings-content-extremesmall: var(--spacing-2);
+  --spacings-content-large: var(--spacing-16);
+  --spacings-content-main: var(--spacing-12);
+  --spacings-content-small: var(--spacing-8);
+  --spacings-frame-extralarge: var(--spacing-56);
+  --spacings-frame-extrasmall: var(--spacing-16);
+  --spacings-frame-large: var(--spacing-48);
+  --spacings-frame-medium: var(--spacing-36);
+  --spacings-frame-small: var(--spacing-28);
+  --spacings-null: var(--spacing-0);
+
+
+  /* ============================================
+   * GRADIENTS TOKENS
+   * ============================================ */
+
+  /* Gradient */
+  --gradient-alert-error: #ec5a5a;
+  --gradient-alert-error-0: var(--red-400);
+  --gradient-alert-error-100: var(--red-500);
+  --gradient-alert-info: #ec5a5a;
+  --gradient-alert-info-0: var(--brand-800);
+  --gradient-alert-info-100: var(--brand-500);
+  --gradient-alert-info-50: var(--brand-700);
+  --gradient-alert-succcess: #ec5a5a;
+  --gradient-alert-succes-0: var(--tdep-green-300);
+  --gradient-alert-succes-100: var(--tdep-green-600);
+  --gradient-alert-warning: #ec5a5a;
+  --gradient-alert-warning-0: var(--yellow-500);
+  --gradient-alert-warning-70: var(--yellow-400);
+  --gradient-generalbackground: #e07c7c; /* -fx-background-color: radial-gradient(  center 100% 0%,   radius 150%,   rgba(41, 125, 206, 0.15) 0%, white 85%); */
+  --gradient-generalbackground-0: var(--brand-300);
+  --gradient-generalbackground-85: var(--neutral-100);
+  --gradient-graphs-graph-0: var(--green-400);
+  --gradient-graphs-graph-100: var(--brand-500);
+  --gradient-graphs-graph-50: var(--brand-700);
+  --gradient-surface-extrasubtle: #fab9b6; /* /*previously --Light * /linear-gradient(90deg, var(--Brand-50, #F2F7FD) 50%, var(--Brand-75, #E4EDFA) 100%); */
+  --gradient-surface-extrasubtle-100: var(--brand-300);
+  --gradient-surface-extrasubtle-50: var(--brand-200);
+  --gradient-surface-extreme-0: var(--neutral-100);
+  --gradient-surface-extreme-100: var(--brand-200);
+  --gradient-surface-light: #af2726;
+  --gradient-surface-light-0: var(--brand-400);
+  --gradient-surface-light-100: var(--brand-500);
+  --gradient-surface-main: #ec5a5a;
+  --gradient-surface-main-0: var(--brand-400);
+  --gradient-surface-main-100: var(--brand-700);
+  --gradient-surface-old-main-0: var(--brand-500);
+  --gradient-surface-old-main-100: var(--brand-700);
+  --gradient-surface-subtle: #f48d88;
+  --gradient-surface-subtle-0: var(--brand-200);
+  --gradient-surface-subtle-100: var(--brand-400);
+
+
+  /* ============================================
+   * POST-SEMANTIC TOKENS
+   * ============================================ */
+
+  /* TBDEP - disabled */
+  --tbdep-disabled-text-brand-primary-focus: var(--content-brand-bold);
+  --tbdep-disabled-text-brand-secondary-active: var(--content-brand-bold);
+  --tbdep-disabled-text-brand-secondary-default: var(--content-brand-contrast);
+  --tbdep-disabled-text-brand-secondary-focus: var(--content-brand-contrast);
+  --tbdep-disabled-text-neutral-primary-focus: var(--content-neutral-extrabold-70);
+  --tbdep-disabled-text-neutral-tertiary-pressed: var(--content-neutral-main);
+
+
+  /* Content */
+  --content-tbdep-disabled-brand-contrast: var(--content-brand-extrabold-70);
+  --content-tbdep-disabled-brand-light: var(--content-brand-test-subtle);
+  --content-tbdep-disabled-brand-main: var(--content-brand-main-50);
+
+
+  /* Text */
+  --text-header-brand: var(--content-brand-bold);
+  --text-header-neutral: var(--content-neutral-extrabold-70);
+  --text-header-sub-brand: var(--content-brand-extrabold-70);
+  --text-header-sub-neutral: var(--content-neutral-extrabold-70);
+  --text-placeholder-brand-contrast: var(--content-neutral-extrabold-70);
+  --text-placeholder-brand-main: var(--content-brand-main-50);
+  --text-placeholder-neutral-contrast: var(--content-neutral-light);
+  --text-placeholder-neutral-inverted: var(--content-neutral-inverted);
+  --text-placeholder-neutral-main: var(--content-neutral-subtle);
+
+
+  /* Border */
+  --border-active: var(--stroke-brand-main-15);
+  --border-default: var(--stroke-brand-contrast);
+  --border-disabled: var(--stroke-brand-main-50);
+  --border-focus: var(--stroke-brand-bold);
+  --border-hover: var(--stroke-brand-main-50);
+
+
+  /* Elevation */
+  --elevation-0: var(--surface-neutral-extrasubtle);
+  --elevation-1: var(--surface-neutral-subtle);
+  --elevation-2: var(--surface-neutral-light);
+
+
+  /* Background */
+  --background-primary-active: var(--surface-brand-subtle);
+  --background-primary-default: var(--surface-brand-ultrasubtle);
+  --background-primary-focus: var(--surface-brand-extrasubtle);
+  --background-primary-hover: var(--surface-brand-extrasubtle);
+  --background-secondary-active: var(--surface-brand-extrasubtle);
+  --background-secondary-default: var(--surface-neutral-extrasubtle);
+  --background-secondary-focus: var(--surface-brand-ultrasubtle);
+  --background-secondary-hover: var(--surface-neutral-subtle);
+
+
+  /* ============================================
+   * COMPONENTS TOKENS
+   * ============================================ */
+
+  /* Dividers */
+  --dividers-colour: var(--stroke-brand-main-15);
+  --dividers-neutral: var(--stroke-neutral-light-50);
+
+
+  /* Popup */
+  --popup-background: var(--surface-brand-ultrasubtle);
+  --popup-border-bottom: var(--stroke-brand-main-50);
+  --popup-scrim-overlay: var(--overlay-neutral-bold);
+  --popup-scrim-overlay-blur: var(--overlay-blur);
+  --popup-scrim-overlay-light: var(--overlay-neutral-main);
+
+
+  /* Icons */
+  --icons-fill-dark: var(--content-brand-contrast);
+  --icons-fill-disabled-main: var(--content-brand-extrabold-70);
+  --icons-fill-disabled-neutral: var(--content-neutral-light);
+  --icons-fill-feedback: var(--feedback-info-content-main);
+  --icons-fill-inverted: var(--content-neutral-inverted);
+  --icons-fill-main: var(--content-brand-main);
+  --icons-fill-neutral: var(--content-neutral-bold);
+
+
+  /* Menuitem */
+  --menuitem-active-default-background: var(--surface-hidden);
+  --menuitem-active-default-border: var(--stroke-hidden); /* inside 1px */
+  --menuitem-active-default-content: var(--content-brand-main);
+  --menuitem-active-focus-background: var(--surface-brand-ultrasubtle);
+  --menuitem-active-focus-border: var(--tbdep-disabled-text-brand-primary-focus); /* inside 1px */
+  --menuitem-active-focus-border-thickness: var(--width-light);
+  --menuitem-active-focus-content: var(--content-brand-bold);
+  --menuitem-active-hover-background: var(--surface-brand-subtle);
+  --menuitem-active-hover-border: var(--stroke-hidden); /* inside 1px */
+  --menuitem-active-hover-content: var(--content-brand-contrast);
+  --menuitem-border-thickness: var(--width-null);
+  --menuitem-disabled-background: var(--surface-hidden);
+  --menuitem-disabled-border: var(--stroke-hidden); /* inside 1px */
+  --menuitem-disabled-content: var(--content-neutral-light);
+  --menuitem-inactive-default-background: var(--surface-hidden);
+  --menuitem-inactive-default-border: var(--stroke-hidden); /* inside 1px */
+  --menuitem-inactive-default-content: var(--content-neutral-bold);
+  --menuitem-inactive-focus-background: var(--surface-neutral-subtle);
+  --menuitem-inactive-focus-border: var(--stroke-brand-bold); /* inside 1px */
+  --menuitem-inactive-focus-border-thickness: var(--width-light);
+  --menuitem-inactive-focus-content: var(--tbdep-disabled-text-neutral-primary-focus);
+  --menuitem-inactive-hover-background: var(--surface-neutral-subtle);
+  --menuitem-inactive-hover-border: var(--stroke-hidden); /* inside 1px */
+  --menuitem-inactive-hover-content: var(--content-neutral-extrabold-70);
+
+
+  /* Inputfield */
+  --inputfield-active-background: var(--surface-neutral-transparent-light-20);
+  --inputfield-active-border: var(--stroke-brand-bold);
+  --inputfield-active-border-bottom-thickness: var(--width-light);
+  --inputfield-active-feedback-background: var(--feedback-info-background);
+  --inputfield-active-feedback-border: var(--feedback-info-content-main);
+  --inputfield-active-feedback-content: var(--feedback-info-content-contrast);
+  --inputfield-active-feedback-fill: var(--feedback-info-content-main);
+  --inputfield-active-filled-border: var(--gradient-alert-info);
+  --inputfield-active-filled-content: var(--tbdep-disabled-text-brand-secondary-active);
+  --inputfield-active-focus-background: var(--surface-brand-extrasubtle);
+  --inputfield-active-focus-border: var(--gradient-alert-info);
+  --inputfield-active-focus-border-bottom-thickness: var(--width-contrast);
+  --inputfield-active-focus-border-thickness: var(--width-subtle); /* Only in focus state for top, right and left borders. Bottom border maintains thickness. */
+  --inputfield-active-focus-content: var(--tbdep-disabled-text-brand-secondary-focus);
+  --inputfield-active-hover-background: var(--surface-brand-extrasubtle);
+  --inputfield-active-hover-border: var(--gradient-alert-info);
+  --inputfield-active-hover-content: var(--content-brand-contrast);
+  --inputfield-active-label: var(--tbdep-disabled-text-brand-secondary-default);
+  --inputfield-active-placeholder: var(--alert-info-content-light);
+  --inputfield-active-uneditable-background: var(--surface-brand-ultrasubtle);
+  --inputfield-active-uneditable-border: var(--content-tbdep-disabled-brand-contrast);
+  --inputfield-active-uneditable-content: var(--content-tbdep-disabled-brand-contrast);
+  --inputfield-inactive-background: var(--surface-neutral-transparent-light-20);
+  --inputfield-inactive-border: var(--stroke-neutral-contrast);
+  --inputfield-inactive-border-bottom-thickness: var(--width-extrasubtle);
+  --inputfield-inactive-disabled-background: var(--surface-hidden);
+  --inputfield-inactive-disabled-border: var(--stroke-neutral-light);
+  --inputfield-inactive-disabled-content: var(--text-placeholder-neutral-main);
+  --inputfield-inactive-disabled-label: var(--to-change);
+  --inputfield-inactive-error-border: var(--gradient-alert-error);
+  --inputfield-inactive-error-placeholder: var(--alert-error-surface);
+  --inputfield-inactive-label: var(--content-neutral-bold);
+  --inputfield-inactive-placeholder: var(--text-placeholder-neutral-main);
+
+
+  /* Inlineinput */
+  --inlineinput-label: var(--tbdep-disabled-text-brand-secondary-default);
+
+
+  /* Chips */
+  --chips-default-background: var(--surface-hidden); /* inside 1px */
+  --chips-default-border: var(--stroke-hidden); /* Inside 1.5 px */
+  --chips-default-content: var(--tbdep-disabled-text-brand-secondary-default);
+  --chips-focus-background: var(--surface-brand-extrasubtle);
+  --chips-focus-border: var(--stroke-brand-bold); /* Inside 1.5 px */
+  --chips-focus-content: var(--tbdep-disabled-text-brand-primary-focus);
+  --chips-focus-hover-background: var(--gradient-surface-extrasubtle); /* inside 1px */
+  --chips-focus-hover-border: var(--stroke-brand-bold); /* Inside 1.5 px */
+  --chips-focus-hover-content: var(--tbdep-disabled-text-brand-primary-focus);
+  --chips-hover-background: var(--gradient-surface-extrasubtle); /* inside 1px */
+  --chips-hover-border: var(--stroke-hidden);
+  --chips-hover-content: var(--content-brand-contrast);
+
+
+  /* Calendar items */
+  --calendar-items-background-default: var(--surface-hidden);
+  --calendar-items-background-hover: var(--overlay-neutral-main-50);
+  --calendar-items-background-pressed: var(--surface-neutral-light);
+  --calendar-items-background-selected: var(--surface-brand-subtle);
+  --calendar-items-background-selected-ends: var(--surface-brand-alternate);
+  --calendar-items-selected-ends-text: var(--content-neutral-inverted);
+  --calendar-items-selected-text: var(--content-brand-main);
+
+
+  /* Scrollbar */
+  --scrollbar-brand-background: var(--surface-brand-transparent-light); /* inside 1px */
+  --scrollbar-brand-bar-fill-default: var(--surface-brand-transparent-contrast);
+  --scrollbar-brand-bar-fill-disabled: var(--surface-brand-transparent-light);
+  --scrollbar-brand-bar-fill-hover: var(--content-brand-contrast);
+  --scrollbar-brand-bar-fill-pressed: var(--content-brand-light);
+  --scrollbar-neutral-background: var(--surface-neutral-subtle); /* inside 1px */
+  --scrollbar-neutral-bar-fill-default: var(--surface-neutral-main);
+  --scrollbar-neutral-bar-fill-disabled: var(--surface-neutral-subtle);
+  --scrollbar-neutral-bar-fill-hover: var(--content-neutral-extrabold-70);
+  --scrollbar-neutral-bar-fill-pressed: var(--tbdep-disabled-text-neutral-tertiary-pressed);
+
+
+  /* Graphs */
+  --graphs-bg: var(--surface-neutral-light);
+  --graphs-bg-inverted: var(--surface-neutral-transparent-light-20);
+  --graphs-bg-light: var(--surface-neutral-subtle);
+  --graphs-fill-1: var(--surface-brand-main);
+  --graphs-fill-1-alternate: var(--surface-neutral-extrasubtle);
+  --graphs-fill-2: var(--surface-brand-alternate);
+  --graphs-fill-3: var(--surface-brand-light);
+  --graphs-fill-4: var(--surface-brand-bold);
+  --graphs-fill-5: var(--surface-brand-light);
+  --graphs-fill-fill-transparent: var(--tbdep-surface-brand-light-30-to-subtle);
+
+
+  /* Rows */
+  --rows-archived-default-overlay: var(--surface-hidden);
+  --rows-archived-default-stroke: var(--stroke-neutral-contrast);
+  --rows-archived-default-surface: var(--surface-neutral-subtle);
+  --rows-archived-selected-overlay: var(--overlay-brand-contrast-15);
+  --rows-archived-selected-stroke: var(--stroke-brand-contrast);
+  --rows-archived-selected-surface: var(--surface-neutral-subtle);
+  --rows-dragging-stroke: var(--stroke-brand-main);
+  --rows-dragging-surface: var(--surface-neutral-extrasubtle);
+
+
+  /* ============================================
+   * STATUS-PRESS TOKENS
+   * ============================================ */
+  --checkbox-disabled-default-background: var(--surface-neutral-extrasubtle);
+  --checkbox-disabled-default-border: var(--stroke-neutral-main);
+  --checkbox-disabled-default-border-thickness: var(--width-subtle);
+  --checkbox-disabled-default-label: var(--content-neutral-main);
+  --checkbox-disabled-default-overlay: var(--surface-hidden);
+  --checkbox-disabled-default-overlay-border: var(--surface-neutral-transparent-light-20);
+  --checkbox-disabled-default-overlay-border-thickness: var(--width-null);
+  --checkbox-disabled-default-overlay-spacing: var(--spacing-4);
+  --checkbox-error-default-background: var(--surface-neutral-extrasubtle);
+  --checkbox-error-default-border: var(--alert-error-content-main);
+  --checkbox-error-default-border-thickness: var(--width-subtle);
+  --checkbox-error-default-label: var(--alert-error-content-main);
+  --checkbox-error-default-overlay: var(--surface-hidden);
+  --checkbox-error-default-overlay-border: var(--surface-neutral-transparent-light-20);
+  --checkbox-error-default-overlay-border-thickness: var(--width-null);
+  --checkbox-error-default-overlay-spacing: var(--spacing-4);
+  --checkbox-standard-default-background: var(--surface-neutral-transparent-light-70);
+  --checkbox-standard-default-border: var(--stroke-brand-contrast);
+  --checkbox-standard-default-border-thickness: var(--width-subtle);
+  --checkbox-standard-default-label: var(--content-brand-bold);
+  --checkbox-standard-default-overlay: var(--overlay-hidden);
+  --checkbox-standard-default-overlay-border: var(--stroke-hidden);
+  --checkbox-standard-default-overlay-border-thickness: var(--width-null);
+  --checkbox-standard-default-overlay-spacing: var(--spacing-4);
+  --dropdown-item-standard-default-content: var(--content-neutral-bold);
+  --dropdown-item-standard-default-overlay: var(--overlay-hidden);
+  --dropdown-item-standard-default-overlay-border: var(--stroke-hidden);
+  --dropdown-item-standard-default-overlay-border-thickness: var(--width-null);
+  --radio-default-label: var(--content-neutral-bold);
+  --radio-default-overlay: var(--surface-hidden);
+  --radio-default-overlay-border: var(--stroke-hidden);
+  --radio-default-overlay-border-thickness: var(--width-null);
+  --switch-default-background: var(--surface-brand-subtle);
+  --switch-default-border: var(--stroke-hidden);
+  --switch-default-border-thickness: var(--width-null);
+  --switch-default-button: var(--switch-enable-off-button);
+  --switch-default-label: var(--content-brand-contrast);
+  --switch-indeterminate-default-background: var(--gradient-surface-extrasubtle);
+  --switch-indeterminate-default-border: var(--stroke-brand-main-15);
+  --switch-indeterminate-default-button: var(--content-brand-main-50);
+  --tabs-active-default-border: var(--content-brand-light);
+  --tabs-active-default-content: var(--content-brand-light);
+  --tabs-active-default-overlay: var(--overlay-hidden);
+  --tabs-active-default-overlay-border: var(--width-null);
+  --tabs-inactive-default-border: var(--content-tbdep-disabled-brand-contrast);
+  --tabs-inactive-default-content: var(--content-tbdep-disabled-brand-contrast);
+  --tabs-inactive-default-overlay: var(--overlay-hidden);
+  --tabs-inactive-default-overlay-border: var(--width-null);
+
+
+  /* ============================================
+   * TOGGLE TOKENS
+   * ============================================ */
+  --checkbox-off-checkmark: var(--content-hidden);
+  --checkbox-off-checkmark-disabled: var(--content-hidden);
+  --checkbox-off-checkmark-error: var(--content-hidden);
+  --radio-default-off-in-fill: var(--surface-hidden);
+  --radio-default-off-out-border: var(--stroke-brand-contrast);
+  --radio-disabled-off-in-fill: var(--stroke-hidden);
+  --radio-disabled-off-out-border: var(--stroke-neutral-main);
+  --radio-off-border-radius: var(--radius-extralarge);
+  --radio-off-in-border: var(--width-subtle);
+  --radio-off-out-border: var(--width-main);
+  --switch-disabled-off-background: var(--surface-neutral-subtle);
+  --switch-disabled-off-button: var(--surface-neutral-main);
+  --switch-enable-off-button: var(--surface-brand-contrast);
+  --tooltip-off-background: var(--surface-brand-bold);
+  --tooltip-off-content: var(--content-brand-inverted);
+
+
+  /* ============================================
+   * STATUS-ACTIVE TOKENS
+   * ============================================ */
+  --dropdown-default-background: var(--surface-neutral-subtle);
+  --dropdown-default-border-colour: var(--stroke-hidden);
+  --dropdown-default-content: var(--content-brand-main);
+  --dropdown-default-overlay-border: var(--width-null);
+  --inline-input-active-default-background: var(--surface-hidden);
+  --inline-input-active-default-border: var(--content-tbdep-disabled-brand-contrast);
+  --inline-input-active-default-border-bottom: var(--width-main);
+  --inline-input-active-default-border-colour: var(--width-null);
+  --inline-input-active-default-content: var(--content-tbdep-disabled-brand-contrast);
+  --inline-input-inactive-default-background: var(--surface-hidden);
+  --inline-input-inactive-default-border: var(--stroke-hidden);
+  --inline-input-inactive-default-content: var(--content-neutral-subtle);
+  --rows-brand-default-content: var(--content-neutral-contrast);
+  --rows-brand-default-stroke: var(--stroke-brand-main);
+  --rows-brand-default-surface: var(--surface-brand-ultrasubtle);
+  --rows-neutral-default-content: var(--content-neutral-contrast);
+  --rows-neutral-default-stroke: var(--stroke-neutral-main);
+  --rows-neutral-default-surface: var(--surface-neutral-extrasubtle);
+  --select-arrows-default-border-colour: var(--stroke-hidden);
+  --select-arrows-default-content: var(--content-brand-main-50);
+  --select-arrows-default-inactive-content: var(--content-hidden);
+  --select-arrows-default-overlay: var(--surface-hidden);
+  --text-action-default-background: var(--surface-hidden);
+  --text-action-default-border-colour: var(--stroke-neutral-contrast);
+  --text-action-default-content: var(--content-neutral-bold);
+  --text-action-default-overlay-border: var(--width-null);
+
+
+  /* ============================================
+   * BUTTONS TOKENS
+   * ============================================ */
+
+  /* Buttons */
+  --buttons-primary-default-background: var(--content-brand-main);
+  --buttons-primary-default-border: var(--stroke-hidden); /* Inside 1px */
+  --buttons-primary-default-content: var(--content-brand-inverted);
+  --buttons-primary-disabled-background: var(--surface-brand-extrasubtle);
+  --buttons-primary-disabled-border: var(--stroke-hidden); /* Inside 1px */
+  --buttons-primary-disabled-content: var(--content-tbdep-disabled-brand-light);
+  --buttons-primary-focus-background: var(--surface-brand-alternate);
+  --buttons-primary-focus-border: var(--border-focus); /* Inside 1px */
+  --buttons-primary-focus-content: var(--content-brand-inverted);
+  --buttons-primary-focus-hover-background: var(--gradient-surface-main);
+  --buttons-primary-focus-hover-border: var(--border-focus); /* Inside 1px */
+  --buttons-primary-focus-hover-content: var(--content-brand-bold);
+  --buttons-primary-hover-background: var(--gradient-surface-main);
+  --buttons-primary-hover-border: var(--stroke-hidden); /* Inside 1px */
+  --buttons-primary-hover-content: var(--content-brand-inverted);
+  --buttons-primary-pressed-background: var(--content-brand-bold);
+  --buttons-primary-pressed-border: var(--stroke-hidden); /* Inside 1px */
+  --buttons-primary-pressed-content: var(--content-brand-inverted);
+  --buttons-secondary-default-background: var(--surface-brand-subtle);
+  --buttons-secondary-default-border: var(--stroke-hidden); /* Inside 1px */
+  --buttons-secondary-default-content: var(--content-brand-contrast);
+  --buttons-secondary-disabled-background: var(--surface-brand-ultrasubtle);
+  --buttons-secondary-disabled-border: var(--stroke-hidden); /* Inside 1px */
+  --buttons-secondary-disabled-content: var(--content-tbdep-disabled-brand-contrast);
+  --buttons-secondary-focus-background: var(--surface-brand-ultrasubtle);
+  --buttons-secondary-focus-border: var(--border-focus); /* Inside 1px */
+  --buttons-secondary-focus-content: var(--content-brand-contrast);
+  --buttons-secondary-focus-hover-background: var(--gradient-surface-light);
+  --buttons-secondary-focus-hover-border: var(--border-focus); /* Inside 1px */
+  --buttons-secondary-focus-hover-content: var(--content-brand-bold);
+  --buttons-secondary-hover-background: var(--gradient-surface-light);
+  --buttons-secondary-hover-border: var(--stroke-hidden); /* Inside 1px */
+  --buttons-secondary-hover-content: var(--content-brand-main);
+  --buttons-secondary-pressed-background: var(--surface-brand-light);
+  --buttons-secondary-pressed-border: var(--stroke-hidden); /* Inside 1px */
+  --buttons-secondary-pressed-content: var(--content-brand-contrast);
+  --buttons-tertiary-default-background: var(--surface-hidden); /* Inside 1px */
+  --buttons-tertiary-default-border: var(--content-brand-main); /* inside 1px */
+  --buttons-tertiary-default-content: var(--content-brand-main);
+  --buttons-tertiary-disabled-background: var(--surface-neutral-subtle);
+  --buttons-tertiary-disabled-border: var(--border-disabled); /* inside 1px */
+  --buttons-tertiary-disabled-content: var(--content-tbdep-disabled-brand-main);
+  --buttons-tertiary-focus-background: var(--surface-brand-subtle);
+  --buttons-tertiary-focus-border: var(--border-focus); /* Inside 1.5 px */
+  --buttons-tertiary-focus-content: var(--content-brand-bold);
+  --buttons-tertiary-focus-hover-background: var(--gradient-surface-subtle); /* Inside 1px */
+  --buttons-tertiary-focus-hover-border: var(--content-brand-contrast); /* Inside 1.5 px */
+  --buttons-tertiary-focus-hover-content: var(--content-brand-contrast);
+  --buttons-tertiary-hover-background: var(--gradient-surface-subtle); /* Inside 1px */
+  --buttons-tertiary-hover-border: var(--stroke-hidden); /* inside 1px */
+  --buttons-tertiary-hover-content: var(--content-brand-contrast);
+  --buttons-tertiary-pressed-background: var(--surface-brand-extrasubtle); /* Inside 1px */
+  --buttons-tertiary-pressed-border: var(--content-brand-bold); /* inside 1px */
+  --buttons-tertiary-pressed-content: var(--content-brand-main);
+
+
+  /* ============================================
+   * ALERTS TOKENS
+   * ============================================ */
+  --feedback-info-background: var(--alert-info-surface);
+  --feedback-info-content-contrast: var(--alert-info-content-bold);
+  --feedback-info-content-light: var(--alert-info-content-subtle);
+  --feedback-info-content-main: var(--alert-info-content-main);
+
+
+  /* ============================================
+   * VARIABLE-SIZINGS TOKENS
+   * ============================================ */
+  --button-icon-size-s: var(--sizing-content-large);
+  --icon-size-s: var(--sizing-content-medium);
+  --icon-size-stroke-s: var(--width-main);
+  --padding-size-s: var(--spacing-8);
+  --table-row-size-s: 100px;
+
+
+  /* ============================================
+   * VARIABLE-HEIGHTS TOKENS
+   * ============================================ */
+  --button-height-m: 32px;
+  --component-height-m: 28px;
+  --padding-height-m: var(--spacing-6);
+
+
+  /* ============================================
+   * SHADES TOKENS
+   * ============================================ */
+
+  /* Card */
+  --card-content: var(--content-neutral-inverted);
+  --card-content-subtle: var(--content-neutral-inverted);
+  --card-strokes: var(--stroke-inverted);
+  --card-surface: var(--surface-brand-main);
+
+
+  /* Indicator */
+  --indicator-content: var(--content-brand-inverted);
+  --indicator-stroke: var(--stroke-brand-main);
+  --indicator-surface: var(--surface-brand-main);
+
+
+  /* ============================================
+   * ROWS TOKENS
+   * ============================================ */
+
+  /* Rows */
+  --rows-active-content: var(--content-neutral-contrast);
+  --rows-active-overlay: var(--surface-hidden);
+  --rows-active-stroke: var(--stroke-brand-main);
+  --rows-active-surface: var(--surface-brand-extrasubtle);
+  --rows-inactive-content: var(--content-neutral-contrast);
+  --rows-inactive-stroke: var(--stroke-neutral-main);
+  --rows-inactive-surface: var(--surface-neutral-extrasubtle);
+
+}

@@ -77,8 +77,9 @@ $color-brick-100: #F6EEEB;
 $color-brick-200: #D7B9B1;
 $color-brick-300: #C0948C;   // interpolated, decorative/large-text only (2.67:1 on white)
 $color-brick-400: #A86F68;   // large-text only, fails AA body text (4.09:1 on white)
-$color-brick-500: #5F3534;   // use for body text (10.27:1 on white)
-$color-brick-600: #442625;   // extra-dark reserve, 13.55:1 on white
+$color-brick-500: #925E58;   // use for body text (5.3:1 on white)
+$color-brick-600: #5F3534;   // use for body text (10.27:1 on white)
+// $color-brick-700-reserve: #442625;   // extra-dark reserve, 13.55:1 on white
 
 // Shorthand-versions
 $brick-light:$color-brick-100;
@@ -157,6 +158,25 @@ $cream-dark:$color-cream-400;
     $color-cream-alpha:rgba(227, 221, 211, 0.4);
 
 
+// ===========================
+// CASE STUDY (editorial palette)
+// ===========================
+
+$color-case-ink: #202020;
+$color-case-ink-soft: #6b6b6b;
+$color-case-bg: #ffffff;
+$color-case-accent: #fcd300;
+$color-case-stage-bg: #3a3a3a;
+$color-case-line: #dcdcdc;
+
+// Shorthand-versions
+$case-ink: $color-case-ink;
+$case-ink-soft: $color-case-ink-soft;
+$case-bg: $color-case-bg;
+$case-accent: $color-case-accent;
+$case-stage-bg: $color-case-stage-bg;
+$case-line: $color-case-line;
+
 //
 // OTHERS
 //
@@ -172,6 +192,10 @@ $color-shadows-dark:rgba(32,58,72, 0.25);
 $font-bricolage: 'Bricolage Grotesque', sans-serif;
 $font-fascinate: 'Fascinate', 'Bricolage Grotesque', sans-serif;
 $font-anonymous: 'Anonymous Pro', monospace;
+
+// Case study aliases (same families, reused as-is)
+$case-font-display: $font-bricolage;
+$case-font-mono: $font-anonymous;
 
 
 //Typography Size
@@ -209,6 +233,16 @@ $space-40:2.5rem;
 $space-60:3.75rem;
 $space-80:5rem;
 $space-120:7.5rem;
+
+// Case study layout (kept in px, separate from the $space-* rem scale —
+// deliberate, see .claude/CHANGELOG.md)
+$case-gutter: 24px;
+$case-page-margin: 40px;
+$case-page-margin-mobile: 20px;
+$case-space-section: 96px;
+$case-space-section-mobile: 56px;
+$case-max: 1500px;
+$case-image-support-width: 40%;
 
 // ===========================
 // ANIMATIONS

@@ -29,6 +29,7 @@
   align-items: flex-end;
   padding: 0 5vw 20vh 5vw;
 
+
   @include breakpoint(mobile) {
     height: auto;
     min-height: 100vh;
@@ -269,25 +270,31 @@ max-width: 40vw;
     }
   }
 
-  // Header with close button
+  // Header with close button — title + underline, matching the case-study
+  // TL;DR panel's header treatment (case-study-components.scss
+  // .case-tldr-panel__title): bold display title, full-width rule below it,
+  // instead of a borderless header with a circular hover-background button.
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: $space-24 $space-40 0;
-    // border-bottom: 1px solid $color-neutral-200;
+    padding: $space-24 $space-40 $space-16;
+    // border-bottom: 2px solid $blue-dark;
     flex-shrink: 0;
 
     @include breakpoint(mobile) {
-      padding: $space-16 $space-20 0;
+      padding: $space-16 $space-20 $space-12;
     }
   }
 
+  // Styled like .case-issue-number (case-study-components.scss) — the big
+  // number at the top of a case study's title-side sidebar — not a bold
+  // display headline.
   &__title {
     font-family: $font-bricolage;
     font-size: $font-xl;
-    font-weight: $weight-semibold;
-    color: $blue;
+    font-weight: $weight-medium;
+    color: $case-ink;
     margin: 0;
 
     @include breakpoint(mobile) {
@@ -295,72 +302,152 @@ max-width: 40vw;
     }
   }
 
+  // Plain × glyph, no circular hover background — matches
+  // .case-tldr-panel__close's minimal treatment.
   &__close {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border: none;
-    border-radius: 0.5rem;
     background: transparent;
-    color: $color-neutral-400;
+    color: $case-ink;
+    font-size: 28px;
+    line-height: 1;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
     flex-shrink: 0;
 
+    svg {
+      display: none;
+    }
+
+    &::before {
+      content: '\00d7';
+    }
+
     &:hover {
-      background-color: $color-blue-100;
-      color: $blue-dark;
+      opacity: 0.7;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $case-ink;
+      outline-offset: 2px;
     }
   }
 
-  // Scrollable content area
+  // Scrollable content area — flattened to a single ink colour throughout
+  // (no blue, no tinted greys). Typographic hierarchy now mirrors
+  // .case-info's title-side sidebar (case-study-components.scss): base
+  // font here is mono (used by h2 labels and icon markers), while actual
+  // body copy (p) switches to the display font at dd's size — see below.
   &__content {
     flex: 1;
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: $space-40;
-    font-family: $font-bricolage;
-    font-size: calc($font-base * 1.1);
+    padding-right: 4rem;
+    font-family: $font-anonymous;
+    font-size: $font-xs;
     line-height: 1.6;
-    color: $neutral;
+    color: $case-ink;
 
     @include breakpoint(mobile) {
       padding: $space-24 $space-20;
-      font-size: calc($font-base*0.9);
     }
-    h1{
-      color: $blue-dark;
-      font-size: $font-xl;
-      font-weight: $weight-regular;
-          @include breakpoint(mobile) {
-            font-size: $font-l;
-          }
-    }
+
+    // Styled like .case-info-label — the small uppercase mono eyebrow
+    // label ("INFORMATION") above a case study's metadata list — not a
+    // large display headline. Each entry's h2 is a label for what follows,
+    // same role as .case-info-label is for its dl.
     h2{
-      color: $blue-dark;
-      margin: 0.5rem 0;
+      color: $case-ink-soft;
+      margin: 0 0 10px;
       font-family: $font-anonymous;
-      font-size: $font-base;
-      font-weight: $weight-semibold;
+      font-size: 13px;
+      font-weight: $weight-bold;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
 
-        @include breakpoint(mobile) {
-            font-size: $font-l;
-          }
-
-    }
-    p {
-      margin-bottom: $space-16;
-      color: rgba($neutral, 0.8);
-      em{
-        // margin: 0.5rem;
-        padding-left: 0.5rem;
-        // background-color: $color-blue-alpha-soft;
-        line-height: 3;
-        border-left: 3px solid $blue;
+      i {
+        font-size: 16px;
       }
     }
+
+    // Styled like dd (case-study-components.scss .case-info dd) — the
+    // metadata value text ("Design Ops / Plugin", "Figma Plugin and REST
+    // API, LLM integration") — display font, not mono, at 16px.
+    p {
+      margin-bottom: 0;
+      font-family: $font-bricolage;
+      font-size: $font-s;
+      color: $case-ink;
+
+      // Standalone callout lines ("Architect → ... → Product Designer",
+      // "Naming. Patterns. Reduce friction. Scaffolding.") get a darker
+      // blue, same family as the rest of the dd-styled body — an accent
+      // weight/colour shift, not a font-family change now that body text
+      // itself is display font rather than mono.
+      strong {
+        // font-weight: $weight-bold;
+        // color: $blue-dark;
+        color:$color-blue-400;
+        font-family: $font-anonymous;
+      }
+    }
+
+    a {
+      // color: $case-ink;
+      text-decoration: underline;
+    }
+  }
+
+  // Lettered entries (component pattern shared with
+  // case-study-components.scss's .case-lettered-section/.case-tldr-panel
+  // use a bold "A."/"B." text marker; here the marker is each entry's own
+  // icon instead (Silvia's call — icons stay, but out of the body copy and
+  // used as the entry marker rather than duplicated inline).
+  &__entry {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    border-bottom: 1px solid #dcdcdc;
+    padding-bottom: 1rem;
+
+    @include breakpoint(mobile) {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    & + & {
+      margin-top: 24px;
+    }
+  }
+
+  &__marker {
+    flex: 0 0 auto;
+    display: flex;
+    // color: $case-ink;
+    color:$blue;
+    margin: 0;
+    padding-top: 0.2em; // optically aligns the icon with the first line of body text
+
+    i {
+      font-size: 20px;
+      color:$blue;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .meta-group{
+    margin-top: 3rem;
   }
 }
 

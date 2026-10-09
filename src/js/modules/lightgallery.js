@@ -1,13 +1,28 @@
 import GLightbox from 'glightbox';
 
 /**
+ * Load GLightbox's CSS at runtime (not bundled) so pages that don't need it
+ * don't ship the ~14KB. Every caller of GLightbox on this site should go
+ * through this instead of injecting the link tag itself.
+ */
+export function ensureGLightboxCSS() {
+  if (document.querySelector('link[href*="glightbox"]')) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css';
+  document.head.appendChild(link);
+}
+
+/**
  * Initialize GLightbox on Swiper carousels, standalone images, and gallery grids
  */
 export function initLightGallery() {
+  ensureGLightboxCSS();
   initCarouselGalleries();
   initStandaloneImages();
   initGalleryGrid();
   initAccordionImages();
+  initIndexGridImages();
 }
 
 /**
@@ -35,6 +50,22 @@ function initCarouselGalleries() {
       img.classList.add('glightbox');
     });
 
+    // Wrap each video in an anchor so GLightbox can open it (same gallery group)
+    const videos = carousel.querySelectorAll('.cs-carousel-video');
+    videos.forEach((video) => {
+      const altText = video.getAttribute('aria-label') || '';
+      const description = buildDescription(altText, sharedCaption);
+      const videoSrc = video.src || video.querySelector('source')?.src;
+
+      const anchor = document.createElement('a');
+      anchor.href = videoSrc;
+      anchor.className = 'glightbox';
+      anchor.setAttribute('data-gallery', galleryName);
+      anchor.setAttribute('data-glightbox', `description: ${description}`);
+      video.parentNode.insertBefore(anchor, video);
+      anchor.appendChild(video);
+    });
+
     // Initialize GLightbox for this carousel
     GLightbox({
       selector: `.new-carousel.swiper:nth-of-type(${index + 1}) .glightbox`,
@@ -58,7 +89,9 @@ function initCarouselGalleries() {
 }
 
 /**
- * Initialize GLightbox on standalone figure.cs-column-image elements
+ * Initialize GLightbox on standalone figure.cs-column-image elements, and on
+ * bare <img> + sibling .case-caption pairs inside .case-pairing-row__left
+ * (same visual pattern, different markup — case study pages use both).
  */
 function initStandaloneImages() {
   const figures = document.querySelectorAll('figure.cs-column-image');
@@ -79,6 +112,23 @@ function initStandaloneImages() {
     // Note: Don't add glightbox class to img, only to the anchor wrapper
 
     // Wrap image in anchor for GLightbox
+    const anchor = document.createElement('a');
+    anchor.href = img.src;
+    anchor.className = 'glightbox-standalone';
+    anchor.setAttribute('data-glightbox', `description: ${description}`);
+    img.parentNode.insertBefore(anchor, img);
+    anchor.appendChild(img);
+  });
+
+  const pairingImages = document.querySelectorAll('.case-pairing-row__left > img');
+
+  pairingImages.forEach((img) => {
+    const caption = img.parentNode.querySelector('.case-caption');
+    const sharedCaption = caption ? caption.textContent.trim() : '';
+
+    const altText = img.alt || '';
+    const description = buildDescription(altText, sharedCaption);
+
     const anchor = document.createElement('a');
     anchor.href = img.src;
     anchor.className = 'glightbox-standalone';
@@ -176,6 +226,41 @@ function initAccordionImages() {
   // Initialize GLightbox for accordion
   GLightbox({
     selector: '.glightbox-accordion',
+    touchNavigation: true,
+    loop: true,
+  });
+}
+
+/**
+ * Initialize GLightbox on .case-index-grid cell images as one group
+ */
+function initIndexGridImages() {
+  const grid = document.querySelector('.case-index-grid');
+  if (!grid) return;
+
+  const wrappers = grid.querySelectorAll('.case-index-grid__cell__image');
+  wrappers.forEach((wrapper) => {
+    const img = wrapper.querySelector('img');
+    if (!img) return;
+
+    // Wrapper was decorative (aria-hidden) when the image wasn't interactive;
+    // it now contains a focusable link, so the label belongs on the image.
+    wrapper.removeAttribute('aria-hidden');
+
+    const altText = img.alt || '';
+    const description = buildDescription(altText, '');
+
+    const anchor = document.createElement('a');
+    anchor.href = img.src;
+    anchor.className = 'glightbox-index-grid';
+    anchor.setAttribute('data-gallery', 'index-grid');
+    anchor.setAttribute('data-glightbox', `description: ${description}`);
+    img.parentNode.insertBefore(anchor, img);
+    anchor.appendChild(img);
+  });
+
+  GLightbox({
+    selector: '.glightbox-index-grid',
     touchNavigation: true,
     loop: true,
   });

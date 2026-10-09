@@ -56,13 +56,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Lightbox for galleries — dynamic import, only loads on case study pages
   if (document.querySelector('.new-carousel.swiper, .cs-column-image, .cs-gallery-grid')) {
-    // Load GLightbox CSS at runtime (not bundled) to avoid 3MB on pages that don't need it
-    if (!document.querySelector('link[href*="glightbox"]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css';
-      document.head.appendChild(link);
-    }
     import('./modules/lightgallery.js').then(({ initLightGallery }) => {
       initLightGallery();
     });

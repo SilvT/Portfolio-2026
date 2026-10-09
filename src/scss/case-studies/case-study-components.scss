@@ -1,0 +1,1267 @@
+@use '../breakpoints' as *;
+@use '../variables' as *;
+
+// ============================================
+// SPECIMEN PAGE — editorial claim/evidence layout
+// Adapted directly from fontreviewjournal.com/sporting-grotesque
+// (values measured from the live reference, not mapped through the
+// site's design tokens — this page intentionally stands apart from
+// the rest of the design system).
+// ============================================
+
+// $case-* tokens now live in _variables.scss (single source of truth).
+
+.case-page {
+  background-color: $case-bg;
+}
+
+.case-masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  max-width: $case-max;
+  margin: 0 auto;
+
+  @include breakpoint(mobile) {
+    padding: 16px 20px;
+  }
+
+  .case-logo {
+    height: 28px;
+    width: auto;
+  }
+
+  a {
+    font-family: $case-font-display;
+    font-size: 14px;
+    font-weight: 500;
+    color: $case-ink;
+
+    &:focus-visible {
+      outline: 2px solid $case-ink;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.case-article {
+  max-width: $case-max;
+  margin: 0 auto;
+  padding: 0 $case-page-margin 140px;
+
+  @include breakpoint(mobile) {
+    padding: 0 $case-page-margin-mobile 80px;
+  }
+
+  // Vertical rhythm between top-level sections — one token, reused by every
+  // direct child instead of each section inventing its own margin/padding.
+  > * + * {
+    margin-top: $case-space-section;
+
+    @include breakpoint(mobile) {
+      margin-top: $case-space-section-mobile;
+    }
+  }
+
+  // Title block is full-bleed and already carries its own bottom padding/border.
+  > .case-title-block + * {
+    margin-top: 0;
+  }
+}
+
+// ---- Title block ----
+.case-title-block {
+  display: grid;
+  grid-template-columns: 1fr 15vw;
+  gap: 40px;
+  margin: 0 (-$case-page-margin);
+  padding: 40px $case-page-margin 80px;
+  // border-bottom: 1px solid $case-line;
+  margin-bottom: 2rem;
+
+  @include breakpoint(mobile) {
+    margin: 0 (-$case-page-margin-mobile);
+    padding: 40px $case-page-margin-mobile 80px;
+  }
+
+  @include breakpoint(tablet) {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-family: $case-font-display;
+    font-size: 100px;
+    font-weight: 500;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    color: $case-ink;
+    margin: 0;
+
+    @include breakpoint(tablet) {
+      font-size: 72px;
+    }
+
+    @include breakpoint(mobile) {
+      font-size: 48px;
+    }
+  }
+
+  // Modifier for titles too long to fit the default 100px/72px/48px scale
+  // without wrapping into the absolutely-positioned cover image (e.g. a
+  // multi-word title that wraps to 3+ lines). Scoped to this modifier only
+  // — short titles on other pages keep the default size.
+  &--long-title h1 {
+    font-size: 64px;
+
+    @include breakpoint(tablet) {
+      font-size: 52px;
+    }
+
+    @include breakpoint(mobile) {
+      font-size: 32px;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  // On mobile the image stacks above a multi-line long title at a width
+  // that still collides with short/narrow wrapped lines — clear it fully
+  // instead of trying to out-shrink the text to dodge it.
+  &--long-title .case-title-image {
+    @include breakpoint(mobile) {
+      position: static;
+      max-height: none;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+  }
+
+  .case-subtitle {
+    font-family: $case-font-mono;
+    font-size: 20px;
+    font-weight: 400;
+    color: $case-ink-soft;
+    margin-top: 20px;
+  }
+}
+
+// Default/fallback: blue, so a page with no data-theme (or an unrecognised
+// value) still gets a themed title block instead of a transparent one.
+.case-title-block {
+  background-color: $blue-light;
+}
+
+// Shared theme → background-colour mapping, reused by every component that
+// needs to pick up the page's data-theme (title block, full-bleed image
+// block). One place to add a theme or change a value instead of repeating
+// the same 7 rules per component.
+@mixin case-theme-background($selector) {
+  .case-page[data-theme="blue"] #{$selector} {
+    background-color: $blue-light;
+  }
+
+  .case-page[data-theme="green"] #{$selector} {
+    background-color: $green-light;
+  }
+
+  .case-page[data-theme="neutral"] #{$selector} {
+    background-color: $cream;
+  }
+
+  .case-page[data-theme="brick"] #{$selector} {
+    background-color: $brick-light;
+  }
+
+  .case-page[data-theme="bronze"] #{$selector} {
+    background-color: $bronze-light;
+  }
+
+  .case-page[data-theme="mauve"] #{$selector} {
+    background-color: $mauve-light;
+  }
+
+  .case-page[data-theme="red"] #{$selector} {
+    background-color: $color-red-light;
+  }
+}
+
+@include case-theme-background('.case-title-block');
+
+// Dark variant — each family's -500/-dark step (body-text-safe dark tone,
+// not a background tone), for panels that flip to light text on a themed
+// dark background, e.g. .case-carousel-panel below. Not the same rule as
+// case-theme-background's light tints.
+@mixin case-theme-background-dark($selector) {
+  .case-page[data-theme="blue"] #{$selector} {
+    background-color: $blue;
+  }
+
+  .case-page[data-theme="green"] #{$selector} {
+    background-color: $green;
+  }
+
+  .case-page[data-theme="neutral"] #{$selector} {
+    background-color: $cream-dark;
+  }
+
+  .case-page[data-theme="brick"] #{$selector} {
+    background-color: $brick-dark;
+  }
+
+  .case-page[data-theme="bronze"] #{$selector} {
+    background-color: $bronze;
+  }
+
+  .case-page[data-theme="mauve"] #{$selector} {
+    background-color: $mauve;
+  }
+
+  .case-page[data-theme="red"] #{$selector} {
+    background-color: $color-red-main;
+  }
+}
+
+// Theme → text-colour mapping (each family's -dark step), for text that
+// should pick up the page's theme instead of a fixed colour, e.g.
+// .case-display-statement below. Same one-place-to-edit pattern as
+// case-theme-background.
+@mixin case-theme-text-dark($selector) {
+  .case-page[data-theme="blue"] #{$selector} {
+    color: $blue-dark;
+  }
+
+  .case-page[data-theme="green"] #{$selector} {
+    color: $green-dark;
+  }
+
+  .case-page[data-theme="neutral"] #{$selector} {
+    color: $cream-dark;
+  }
+
+  .case-page[data-theme="brick"] #{$selector} {
+    color: $brick-dark;
+  }
+
+  .case-page[data-theme="bronze"] #{$selector} {
+    color: $bronze-dark;
+  }
+
+  .case-page[data-theme="mauve"] #{$selector} {
+    color: $mauve-dark;
+  }
+
+  .case-page[data-theme="red"] #{$selector} {
+    color: $color-red-main;
+  }
+}
+
+.case-title-main {
+  position: relative;
+  display: flex;
+  // align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  h1 {
+    width: 70%;
+    z-index: 1;
+  }
+}
+
+.case-title-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  // z-index: -10;
+  max-height: 23vw;
+
+  &:is(img) {
+    width: auto;
+  }
+}
+
+.case-title-side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.case-info {
+  .case-issue-number {
+    font-family: $case-font-display;
+    font-size: 28px;
+    font-weight: 500;
+    color: $case-ink;
+    margin: 0 0 24px;
+  }
+
+  .case-info-label {
+    font-family: $case-font-mono;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: $case-ink;
+    margin: 0 0 14px;
+  }
+
+  dl {
+    margin: 0 0 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $case-line;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  dt {
+    font-family: $case-font-mono;
+    font-size: 13px;
+    color: $case-ink-soft;
+  }
+
+  dd {
+    font-family: $case-font-display;
+    font-size: 16px;
+    color: $case-ink;
+    margin: 0 0 10px;
+
+    em {
+      color: $case-ink-soft;
+      font-style: normal;
+    }
+  }
+}
+
+// ---- Shared caption + prose styles (reused by every component below) ----
+.case-caption {
+  font-family: $case-font-mono;
+  font-size: 13px;
+  color: $case-ink-soft;
+  margin-top: 12px;
+  line-height: 1.5;
+
+  .case-caption-num {
+    font-weight: 700;
+    color: $case-ink;
+  }
+}
+
+// Label + Content (component 1) — fixed label style, reused everywhere
+// a small/muted/uppercase caption-of-a-section is needed.
+.case-label {
+  font-family: $case-font-mono;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $case-ink-soft;
+  margin: 0 0 16px;
+}
+
+// ---- TL;DR (component 1, Label + Content — optional, under the hero) ----
+// Quiet/muted treatment: sits between the title block and the next section
+// without competing with either.
+.case-tldr {
+  max-width: 640px;
+
+  .case-label {
+    margin-bottom: 16px;
+  }
+}
+
+.case-tldr-content {
+  font-family: $case-font-display;
+  font-size: 18px;
+  line-height: 1.5;
+  color: $case-ink-soft;
+  margin: 0;
+}
+
+.case-prose {
+  h2, h3 {
+    font-family: $case-font-display;
+    font-weight: 600;
+    color: $case-ink;
+    margin: 0 0 16px;
+  }
+
+  h2 {
+    font-size: 32px;
+
+    @include breakpoint(mobile) {
+      font-size: 26px;
+    }
+  }
+
+  h3 {
+    font-size: 22px;
+  }
+
+  p,li {
+    // font-family: 'Georgia', 'Times New Roman', serif;
+      font-family: $case-font-display;
+    // font-size: 17px;
+    font-size:16px;
+    line-height: 1.65;
+    color: $case-ink;
+    margin: 0 0 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    em {
+      color: $case-ink-soft;
+    }
+  }
+
+  ul, ol {
+    margin: 0 0 16px 24px;
+    padding: 0;
+
+    li {
+      margin: 0 0 8px;
+      color: $case-ink-soft;
+      font-size:14px;
+
+      & strong{
+        // font-weight:700;
+        font-weight:$weight-medium;
+        color: $case-ink;
+      }
+    }
+  }
+
+  // Intro Text Block lede (component 9a) — bold thesis sentence, larger
+  // than body but smaller than a Display Statement (17px < lede < ~26-40px
+  // clamp). Still Georgia/serif, same family as the body copy that follows
+  // it — this is an emphasized paragraph, not a display heading.
+  p.lede {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  strong {
+    font-weight: 700;
+    color: $case-ink;
+  }
+}
+
+// ---- Image Pairing Row (component 9) ----
+// Left slot is a small proof image (~22% width) or empty; right slot is
+// always text. Top-aligned, never 50/50 — see case-study-components.md.
+.case-pairing-row {
+  display: flex;
+  gap: $case-gutter * 2;
+  align-items: flex-start;
+
+  @include breakpoint(tablet) {
+    flex-direction: column;
+    gap: $case-gutter;
+  }
+
+  // No left image, but the text still starts where paired rows' text
+  // starts — reserve the same left offset as an empty spacer instead of
+  // letting the row's text column slide to the row's left edge.
+  &--text-only {
+    &::before {
+      content: '';
+      flex: 0 0 $case-image-support-width;
+      max-width: $case-image-support-width;
+
+      @include breakpoint(tablet) {
+        display: none;
+      }
+    }
+
+    .case-pairing-row__right {
+      max-width: 820px;
+    }
+  }
+}
+
+.case-pairing-row__left {
+  flex: 0 0 $case-image-support-width;
+  max-width: $case-image-support-width;
+
+  @include breakpoint(tablet) {
+    flex-basis: auto;
+    max-width: 100%;
+  }
+
+  img, video {
+    width: 100%;
+    display: block;
+  }
+
+}
+
+// ---- Carousel panel (themed card, title + slide counter + dots) ----
+// Typography/layout reference: the Font Review Journal "Notable Glyphs"
+// carousel — solid themed panel, header row (title + "X/Y" counter + dots),
+// large centred content area, divider, caption below. Background uses each
+// theme's dark/-500 step (case-theme-background-dark), so text flips to
+// light-on-dark — the same inverted-contrast pattern as .case-stage, not
+// dark text on a light tint.
+.case-carousel-panel {
+  position: relative;
+  padding: 32px;
+  color: $case-bg;
+
+  @include breakpoint(mobile) {
+    padding: 20px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-family: $case-font-display;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__counter {
+    font-family: $case-font-mono;
+    font-size: 13px;
+  }
+
+  .new-carousel {
+    min-height: auto;
+  }
+
+  .new-slide {
+    background: transparent;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+  }
+
+  // Relocated into .case-carousel-panel__meta by JS right before Swiper
+  // initializes (see library-freeze.html's init script) so it lays out as a
+  // real flex child next to the counter, not an absolute-position hack.
+  // Overrides Swiper's own .swiper-pagination-horizontal base rule, which
+  // otherwise sets position/bottom/left/width for its default placement.
+  .swiper-pagination.swiper-pagination-horizontal {
+    position: static !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+  }
+
+  .swiper-pagination .swiper-pagination-bullet {
+    background: rgba($case-bg, 0.4);
+    opacity: 1;
+
+    &-active {
+      background: $case-bg;
+    }
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    background: none;
+    border: none;
+    padding: 0;
+    color: $case-bg;
+
+    &:focus-visible {
+      outline: 2px solid $case-bg;
+      outline-offset: 2px;
+    }
+
+    @include breakpoint(mobile) {
+      display: none;
+    }
+  }
+
+  &__divider {
+    border: none;
+    border-top: 1px solid rgba($case-bg, 0.3);
+    margin: 24px 0;
+  }
+
+  &__caption {
+    font-family: $case-font-mono;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba($case-bg, 0.85);
+    margin: 0;
+  }
+
+  // .case-study-page p sets color: $neutral (_case-study.scss), which beats
+  // the inherited $case-bg above since inheritance has no specificity —
+  // override it explicitly here.
+  p {
+    color: $case-bg;
+  }
+}
+
+@include case-theme-background-dark('.case-carousel-panel');
+
+.case-pairing-row__right {
+  flex: 1;
+  min-width: 0;
+}
+
+// ---- Prose Image (component 9a) ----
+// An image sitting inline in the text flow, between paragraphs, at the
+// same width as the surrounding text column — not floated, not full-bleed.
+.case-prose-image {
+  margin: $case-gutter 0;
+
+  img, video {
+    width: 100%;
+    display: block;
+  }
+}
+
+// ---- Two-Column Split Panel (component 3) ----
+// Two images of equal weight, genuinely being compared — the only
+// legitimate 50/50 use. Used for each page's lead-evidence pair.
+.case-split-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $case-gutter;
+
+  @include breakpoint(tablet) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.case-split-panel__half {
+  img, video {
+    width: 100%;
+    display: block;
+  }
+}
+
+// ---- Full-Bleed Image Block (component 4) ----
+// Sparingly used: the single most important visual beat on the page.
+// Genuinely full-bleed (breaks out of .case-article's max-width), with a
+// themed background behind the image — most images in this slot have a
+// transparent background themselves, so the page's data-theme colour shows
+// through around/behind the artwork instead of flashing to white.
+.case-image-block {
+  margin-inline: calc(50% - 50vw);
+  padding: $case-space-section 0;
+  background-color: $blue-light;   // fallback, matches the title block's default
+
+  @include breakpoint(mobile) {
+    padding: $case-space-section-mobile 0;
+  }
+
+  img, video {
+    display: block;
+    max-width: $case-max;
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: $case-page-margin;
+
+    @include breakpoint(mobile) {
+      padding-inline: $case-page-margin-mobile;
+    }
+  }
+}
+
+@include case-theme-background('.case-image-block');
+
+// ---- Display Statement (component 5) ----
+// Tight-leading, centred headline treatment — used for the thesis
+// paragraph and any short embedded pull-quote.
+.case-display-statement {
+  max-width: 900px;
+  margin: 0 auto;
+  // text-align: center;
+  font-family: $case-font-mono;
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: $case-ink;
+
+    font-style: italic;
+    margin-top: 2rem;
+    text-align: left;
+
+  @include breakpoint(mobile) {
+    font-size: clamp(22px, 6vw, 30px);
+  }
+}
+
+@include case-theme-text-dark('.case-display-statement');
+
+// ---- Index Grid (component 6) ----
+// Fixed-shape repeating cells (tech stack, team roles, artefact index).
+.case-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: $case-gutter * 2;
+
+  // Desktop/laptop only: column count follows the number of cells, up to
+  // 4 per row (3 cells → 3 columns, 7 cells → 4 then 3). auto-fit collapses
+  // empty tracks, and the minmax floor is set so a 5th column can never fit.
+  @include breakpoint(desktop, min) {
+    grid-template-columns: repeat(auto-fit, minmax(max(160px, (100% - #{$case-gutter * 2} * 3) / 4), 1fr));
+  }
+}
+
+.case-index-grid__cell {
+  .case-label {
+    margin-bottom: 8px;
+  }
+
+
+  
+  // Image + title + body variant — a UI crop per cell with a short
+  // explanation, not just a bare label+content pair.
+  &__image {
+    margin-bottom: 16px;
+    height: 400px;
+    margin-bottom: 16px;
+    overflow:hidden;
+     align-items: self-start;
+    align-content: center;
+    justify-items: center;
+    justify-self: center;
+
+    & img, video{
+      width: 100%;
+      display: block;
+    }
+
+    a {
+      display: block;
+    }
+  }
+
+  &__title {
+    font-family: $case-font-display;
+    font-size: 18px;
+    font-weight: 600;
+    color: $case-ink;
+    margin: 0 0 8px;
+  }
+
+  &__body {
+    // font-family: 'Georgia', 'Times New Roman', serif;
+        font-family: $case-font-display;
+    font-size: 15px;
+    line-height: 1.55;
+    color: $case-ink;
+    margin: 0;
+  }
+}
+
+// ---- Lettered section (title + underline, then A./B./C. entries) ----
+// Typography reference: the Sporting Grotesque "Musings & References"
+// section — bold display-font title with an underline rule, followed by
+// lettered entries in monospace. Used for TL;DR on library-freeze.html;
+// reusable for any section that needs this treatment (a title followed by
+// one or more short lettered notes).
+// Capped at the same max-width as a plain text block (component 9's
+// --text-only variant) so the underline reads as "part of the text column,"
+// not a full-bleed rule — this is a text block, not a page-width divider.
+.case-lettered-section {
+  max-width: 820px;
+
+  &__title {
+    font-family: $case-font-display;
+    font-size: 28px;
+    font-weight: 600;
+    color: $case-ink;
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid $case-ink;
+  }
+
+  &__entry {
+    display: flex;
+    gap: $case-gutter;
+    align-items: baseline;
+
+    @include breakpoint(mobile) {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    & + & {
+      margin-top: 24px;
+    }
+  }
+
+  &__marker {
+    flex: 0 0 auto;
+    font-family: $case-font-mono;
+    font-size: 15px;
+    font-weight: $weight-bold;
+    color: $case-ink;
+  }
+
+  &__body {
+    font-family: $case-font-mono;
+    font-size: 14px;
+    line-height: 1.6;
+    color: $case-ink;
+    margin: 0;
+
+    a {
+      color: $case-ink;
+      text-decoration: underline;
+    }
+  }
+}
+
+// ---- Phase Rail (component 7) ----
+// Timeline of expandable phases, slim collapsed rows, uniform shape.
+// Used as the narrow left slot of a .case-pairing-row (library-freeze.html)
+// so it reads as a floating left column rather than a full-width block.
+.case-phase-rail {
+  border-top: 1px solid $case-line;
+}
+
+.case-phase-row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto auto;
+  align-items: center;
+  gap: $case-gutter;
+  padding: 20px 0;
+  border-bottom: 1px solid $case-line;
+  font-family: $case-font-display;
+
+  // Inside the narrow .case-pairing-row__left slot (~40% width), the
+  // 4-column inline grid is too cramped — stack index/title above
+  // meta/outcome instead, same as an image column would stack its caption.
+  .case-pairing-row__left & {
+    grid-template-columns: 32px 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 4px;
+
+    .case-phase-row__meta,
+    .case-phase-row__outcome {
+      color:$case-ink-soft;
+      font-size:13px;
+      margin:0;
+      grid-column: 2;
+      display: block;
+    }
+    .case-phase-row__title,
+    .case-phase-row__index{
+      margin:0;
+    }
+
+    @include breakpoint(mobile) {
+      .case-phase-row__meta {
+        display: none;
+      }
+    }
+  }
+
+  @include breakpoint(mobile) {
+    grid-template-columns: 32px 1fr auto;
+
+    .case-phase-row__meta {
+      display: none;
+    }
+  }
+
+  &__index {
+    font-family: $case-font-mono;
+    font-size: 13px;
+    color: $case-ink-soft;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 500;
+    color: $case-ink-soft;
+  }
+
+  &__meta,
+  &__outcome {
+    font-family: $case-font-mono;
+    font-size: 13px;
+    color: $case-ink-soft;
+  }
+
+  &__description {
+    grid-column: 2 / -1;
+    font-family: $case-font-display;
+    font-size: 14px;
+    line-height: 1.5;
+    color: $case-ink-soft;
+    margin: 6px 0 0;
+
+    .case-pairing-row__left & {
+      grid-column: 2;
+    }
+  }
+
+  &__toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $case-ink;
+
+    &:focus-visible {
+      outline: 2px solid $case-ink;
+      outline-offset: 2px;
+    }
+  }
+
+  &__detail {
+    grid-column: 1 / -1;
+    display: none;
+    padding-top: 20px;
+
+    &.is-open {
+      display: grid;
+      gap: $case-gutter;
+      grid-template-columns: 1fr 1fr;
+
+      @include breakpoint(mobile) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
+
+// ---- Phase Rail — Accordion variant (component 7a) ----
+// Same slim collapsed row, but each row expands in place to reveal a
+// detail panel — used full-width as a section intro (case-marketing-management.html)
+// rather than the static read-only rail in the narrow pairing-row slot.
+.case-phase-rail--accordion {
+  .case-phase-row {
+    cursor: pointer;
+
+    &__toggle {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+
+      &::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 7px solid $case-ink-soft;
+
+        @media (prefers-reduced-motion: no-preference) {
+          transition: transform 0.3s ease;
+        }
+      }
+    }
+
+    &.is-open .case-phase-row__toggle::after {
+      transform: rotate(180deg);
+    }
+
+    &.is-open &__title {
+      color: $case-ink;
+    }
+  }
+
+  .case-phase-row__detail {
+    // Override the static rail's display:none — height is controlled by
+    // max-height here so collapsed content can still be measured by JS.
+    display: block;
+    overflow: hidden;
+    max-height: 0;
+    padding-top: 0;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: max-height 0.3s ease;
+    }
+
+    &.is-open {
+      max-height: var(--case-phase-row-detail-height, 1000px);
+      padding-top: 20px;
+    }
+
+    p {
+      font-family: $case-font-display;
+      font-size: 15px;
+      line-height: 1.6;
+      color: $case-ink-soft;
+      margin: 0 0 8px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    strong {
+      color: $case-ink;
+    }
+  }
+}
+
+// ---- Dense Footer/Index Grid (component 8) ----
+// Closing gallery/colophon with varying scale per item.
+// Not used by any current case page — ready for future use.
+.case-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: $case-gutter;
+  font-family: $case-font-display;
+  color: $case-ink;
+
+  .case-pairing-row__right{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+
+  h3 {
+    border-bottom: 2px solid $case-ink;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  p{
+    font-family: $case-font-mono;
+    font-size: 14px;
+    color:$case-ink-soft;
+  }
+}
+
+// ---- Section heading (Context / Strengths / Quirks) ----
+.case-section-heading {
+  font-family: $case-font-display;
+  font-size: 36px;
+  font-weight: 500;
+  color: $case-ink;
+  padding-top: 40px;
+  // border-top: 1px solid $case-line;
+
+  @include breakpoint(mobile) {
+    font-size: 28px;
+  }
+}
+
+// ---- Full-bleed dark "stage" for the one interactive module ----
+.case-stage {
+  background-color: $case-stage-bg;
+  margin-bottom: $case-space-section;
+  margin-inline: calc(50% - 50vw);
+  padding: 60px 40px;
+
+  @include breakpoint(mobile) {
+    margin-bottom: $case-space-section-mobile;
+    padding: 40px 20px;
+  }
+
+  .case-stage-caption {
+    max-width: $case-max;
+    margin: 20px auto 0;
+    padding: 0 40px;
+    font-family: $case-font-mono;
+    font-size: 13px;
+    color: #b8b8b8;
+
+    @include breakpoint(mobile) {
+      padding: 0;
+    }
+  }
+
+  .new-carousel {
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: auto;
+  }
+
+  .new-slide {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .cs-carousel-img {
+    border-radius: 2px;
+  }
+
+  .swiper-pagination .swiper-pagination-bullet {
+    background: #777;
+
+    &-active {
+      background: $case-accent;
+    }
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    background: none;
+    border: none;
+    padding: 0;
+    color: $case-bg;
+
+    &:focus-visible {
+      outline: 2px solid $case-bg;
+      outline-offset: 4px;
+    }
+
+    @include breakpoint(mobile) {
+      display: none;
+    }
+  }
+}
+
+// ---- Floating TL;DR CTA + side panel ----
+// Fixed-position button (independent of .case-masthead, which is not
+// sticky — see case-study-components.md's open questions) that opens a
+// side panel with a copy of the page's TL;DR content. Auto-closes 8s after
+// opening, resetting on mouse-hover over the panel; closes immediately on
+// mouse-leave or Escape. KNOWN ACCESSIBILITY GAP: the auto-close timer only
+// pauses on mouse hover, not on keyboard focus — a keyboard-only or screen
+// reader user tabbing into the panel does not get the same pause, which
+// does not fully satisfy WCAG 2.2.1 (Timing Adjustable). Flagged, not
+// fixed, per an explicit decision (2026-10-07) to scope this as a known gap
+// rather than solve it now.
+.case-tldr-cta {
+  position: fixed;
+  top: 24px;
+  left: 40px;
+  z-index: 40;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-family: $case-font-mono;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $case-bg;
+  background: $case-ink;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $case-ink;
+    outline-offset: 2px;
+  }
+
+  // Tap target floor is 44px even though the compact 16px top/right
+  // offset and smaller type are kept for mobile — padding grows to hit
+  // the minimum instead of shrinking with the rest of the button.
+  @include breakpoint(mobile) {
+    top: 16px;
+    left: 20px;
+    min-height: 44px;
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+}
+
+@include case-theme-background-dark('.case-tldr-cta');
+
+.case-tldr-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(400px, 100%);
+  z-index: 50;
+  background: $case-bg;
+  box-shadow: 8px 0 32px rgba(0, 0, 0, 0.15);
+  padding: 80px 32px 32px;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+
+  &.is-open {
+    transform: translateX(0);
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+
+  @include breakpoint(mobile) {
+    padding: 72px 20px 24px;
+  }
+
+  &__close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    color: $case-ink;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid $case-ink;
+      outline-offset: 2px;
+    }
+  }
+
+  &__title {
+    font-family: $case-font-display;
+    font-size: 24px;
+    font-weight: 600;
+    color: $case-ink;
+    margin: 0 0 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid $case-ink;
+  }
+
+  .case-lettered-section__entry {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+
+    & + & {
+      margin-top: 20px;
+    }
+  }
+
+  .case-lettered-section__marker {
+    flex: 0 0 auto;
+    font-family: $case-font-mono;
+    font-size: 14px;
+    font-weight: $weight-bold;
+    color: $case-ink;
+  }
+
+  .case-lettered-section__body {
+    font-family: $case-font-mono;
+    font-size: 13px;
+    line-height: 1.6;
+    color: $case-ink;
+    margin: 0;
+  }
+}

@@ -1,0 +1,97 @@
+@use '../variables' as *;
+@use '../breakpoints' as *;
+
+// ---- Masthead prev/next ----
+// Compact arrow links sitting next to the logo, for quick project-to-project
+// jumps without scrolling to the footer nav.
+.case-masthead-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+  }
+
+  @include breakpoint(mobile) {
+    gap: 16px;
+
+    a span {
+      display: none;
+    }
+  }
+}
+
+// ---- Footer project navigation ----
+// Full-width prev/next pair at the end of the article, mirroring the
+// masthead's back-to-home link in tone but sized for a deliberate exit point.
+.case-project-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $case-page-margin;
+  max-width: $case-max;
+  margin: $case-space-section auto 0;
+  padding: $case-space-section $case-page-margin 0;
+  border-top: 1px solid $case-line;
+
+  @include breakpoint(mobile) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: $case-space-section-mobile;
+    padding: $case-space-section-mobile $case-page-margin-mobile 0;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px;
+    border: 1px solid $case-line;
+    border-radius: 12px;
+    color: $case-ink;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      border-color: $case-ink;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $case-ink;
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  &__link--next {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  &__label {
+    font-family: $case-font-mono;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $case-ink-soft;
+  }
+
+  &__title {
+    font-family: $case-font-display;
+    font-size: 24px;
+    font-weight: 600;
+
+    @include breakpoint(mobile) {
+      font-size: 20px;
+    }
+  }
+}

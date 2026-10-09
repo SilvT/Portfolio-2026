@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" data-project-id="2">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Design System from Scratch | Silvia Travieso - Product Designer</title>
+      <meta name="description" content="Design infrastructure built solo, with no precedent, inside an engineer-first startup: a three-level token system proven first inside a live product at Senapt.">
+      <meta name="robots" content="noindex">
+      <!-- Favicon -->
+      <link rel="icon" type="image/png" href="/favicon.png">
+      <!-- Google Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap">
+      <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+      <noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet"></noscript>
+      <!-- Load source files for dev mode -->
+      <link rel="stylesheet" href="/src/scss/_main.scss">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+      <script type="module">
+        import { initLightGallery } from '/src/js/modules/lightgallery.js';
+        import { initPhaseRailAccordion } from '/src/js/modules/phase-rail-accordion.js';
+        import Swiper from 'swiper';
+        import { Pagination, Navigation } from 'swiper/modules';
+
+        function initialize() {
+          document.querySelectorAll('.new-carousel.swiper').forEach((swiperEl) => {
+            const panel = swiperEl.closest('.case-carousel-panel');
+            const counterEl = panel?.querySelector('[data-carousel-counter] .js-carousel-current');
+
+            const paginationEl = swiperEl.querySelector('.swiper-pagination');
+            const headerMeta = panel?.querySelector('.case-carousel-panel__meta');
+            if (paginationEl && headerMeta) {
+              headerMeta.appendChild(paginationEl);
+            }
+
+            const swiper = new Swiper(swiperEl, {
+              modules: [Pagination, Navigation],
+              grabCursor: true,
+              speed: 400,
+              slidesPerView: 1,
+              spaceBetween: 0,
+              pagination: {
+                el: paginationEl || swiperEl.querySelector('.swiper-pagination'),
+                clickable: true
+              },
+              navigation: {
+                nextEl: swiperEl.querySelector('.swiper-button-next'),
+                prevEl: swiperEl.querySelector('.swiper-button-prev')
+              },
+              on: counterEl ? {
+                slideChange: () => { counterEl.textContent = swiper.realIndex + 1; }
+              } : {}
+            });
+          });
+
+          initLightGallery();
+          initTldrPanel();
+          initPhaseRailAccordion();
+        }
+
+        // Floating TL;DR CTA — opens a side panel, auto-closes after 8s
+        // unless the pointer is hovering the panel (timer resets on
+        // mouseenter, resumes counting down on mouseleave). Also closes on
+        // Escape or clicking outside the panel/CTA.
+        function initTldrPanel() {
+          const cta = document.querySelector('.case-tldr-cta');
+          const panel = document.querySelector('.case-tldr-panel');
+          const closeBtn = panel?.querySelector('.case-tldr-panel__close');
+          if (!cta || !panel) return;
+
+          let closeTimer = null;
+          const AUTO_CLOSE_MS = 8000;
+
+          function openPanel() {
+            panel.classList.add('is-open');
+            panel.setAttribute('aria-hidden', 'false');
+            cta.setAttribute('aria-expanded', 'true');
+            scheduleClose();
+          }
+
+          function closePanel() {
+            panel.classList.remove('is-open');
+            panel.setAttribute('aria-hidden', 'true');
+            cta.setAttribute('aria-expanded', 'false');
+            clearTimeout(closeTimer);
+          }
+
+          function scheduleClose() {
+            clearTimeout(closeTimer);
+            closeTimer = setTimeout(closePanel, AUTO_CLOSE_MS);
+          }
+
+          cta.addEventListener('click', () => {
+            if (panel.classList.contains('is-open')) {
+              closePanel();
+            } else {
+              openPanel();
+            }
+          });
+
+          closeBtn?.addEventListener('click', closePanel);
+
+          panel.addEventListener('mouseenter', () => clearTimeout(closeTimer));
+          panel.addEventListener('mouseleave', () => {
+            if (panel.classList.contains('is-open')) closePanel();
+          });
+
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && panel.classList.contains('is-open')) closePanel();
+          });
+
+          document.addEventListener('click', (e) => {
+            if (!panel.classList.contains('is-open')) return;
+            if (panel.contains(e.target) || cta.contains(e.target)) return;
+            closePanel();
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+          initialize();
+        }
+      </script>
+   </head>
+   <body class="project-page-body js-loaded case-page" data-theme="green">
+
+      <!-- Masthead: low visual weight, just an anchor -->
+      <nav class="case-masthead" aria-label="Case study navigation">
+         <a href="/" aria-label="Back to home">
+            <img class="case-logo" src="/logo-filled.svg" alt="Silvia Travieso Logo">
+         </a>
+         <div class="case-masthead-nav">
+            <a href="/case-marketing-management.html" aria-label="Previous project: Marketing Management">← <span>Prev</span></a>
+            <a href="/case-energy-tracker.html" aria-label="Next project: Energy Switching Tracker"><span>Next</span> →</a>
+         </div>
+      </nav>
+
+      <!-- Floating TL;DR CTA + side panel -->
+      <button type="button" class="case-tldr-cta" aria-expanded="false" aria-controls="tldr-panel">TL;DR</button>
+      <div class="case-tldr-panel" id="tldr-panel" role="dialog" aria-label="TL;DR summary" aria-hidden="true">
+         <button type="button" class="case-tldr-panel__close" aria-label="Close">&times;</button>
+         <div class="case-tldr-panel__content">
+            <h2 class="case-tldr-panel__title">TL;DR</h2>
+            <div class="case-lettered-section__entry">
+               <p class="case-lettered-section__marker">A.</p>
+               <p class="case-lettered-section__body">No file conventions, no shared libraries, three product lines built by freelancers with no engineering mindset behind them, and I was handed a fourth, net-new, to design solo opposite a dev team seven time zones away. Designs were taking four or five review rounds after handoff, sometimes shipping to a live product without design sign-off at all.</p>
+            </div>
+            <div class="case-lettered-section__entry">
+               <p class="case-lettered-section__marker">B.</p>
+               <p class="case-lettered-section__body">I built a design system from zero, unapproved and undocumented, proving the architecture inside that one live product before anyone else agreed it was worth the time. The first formal pitch to the CEO was turned down outright: "Products are working. Nobody's complained. This isn't a priority."</p>
+            </div>
+            <div class="case-lettered-section__entry">
+               <p class="case-lettered-section__marker">C.</p>
+               <p class="case-lettered-section__body">The thing that actually got the CEO's attention wasn't the system itself: it was a token pipeline built to fix a handoff problem, which unexpectedly unlocked white-labelling for his own earlier product.</p>
+            </div>
+            <div class="case-lettered-section__entry">
+               <p class="case-lettered-section__marker">D.</p>
+               <p class="case-lettered-section__body">Promoted to Design Systems Lead, scaled to 7 product lines across 6 different dev stacks and an 8-person team, then the company went bankrupt before the scaling model finished.</p>
+            </div>
+            <div class="case-lettered-section__entry">
+               <p class="case-lettered-section__marker">E.</p>
+               <p class="case-lettered-section__body">Reception was outstanding: changed behaviour across every team member but one, followed by individual conversations and requests from designers working out how to adapt the theory to their own product's daily reality.</p>
+            </div>
+         </div>
+      </div>
+
+      <main id="project-content" data-project-id="2">
+         <article class="case-article">
+
+            <!-- Title block + metadata -->
+            <header class="case-title-block">
+               <div class="case-title-main">
+                  <img class="case-title-image" src="/ds/ds-hero.png" alt="Design system styleguide overview, colour tokens and component navigation" loading="eager">
+                  <h1>Design System from Scratch</h1>
+                  <p class="case-subtitle">Design infrastructure built solo, with no precedent, inside an engineer-first startup.</p>
+               </div>
+
+               <div class="case-title-side">
+
+                  <aside class="case-info">
+                     <p class="case-issue-number">03</p>
+
+                     <p class="case-info-label">Information</p>
+                     <dl>
+                        <dt>Project Type</dt>
+                        <dd>System</dd>
+                        <dt>Role</dt>
+                        <dd>Mid UI Designer → Design Systems Lead</dd>
+                     </dl>
+                     <dl>
+                        <dt>Company</dt>
+                        <dd>Senapt LTD (Startup)</dd>
+                        <dt>Team</dt>
+                        <dd>Solo → scaled with 8 designers</dd>
+                     </dl>
+                     <dl>
+                        <dt>Stack</dt>
+                        <dd>Figma Variables, JavaFX, GitHub Actions</dd>
+                        <dt>Timeline</dt>
+                        <dd>~1 year 3 months to MVP</dd>
+                     </dl>
+                  </aside>
+               </div>
+            </header>
+
+            <!-- Intro Text Block: lede (thesis) + body -->
+            <div class="case-pairing-row case-pairing-row--text-only case-pairing-row--intro case-prose">
+               <div class="case-pairing-row__right">
+                  <p class="lede">No file naming conventions, no shared libraries, no design structure, and no one at the company who yet believed a design system counted as infrastructure.</p>
+                  <p>I joined Senapt as its second full designer, and was handed their fourth product line: a Marketing Management Desktop App, a campaigns,leads and channels dashboard. Designed solo opposite a backend developer and a frontend developer seven time zones away in Japan, who read written English but wasn't a fluent speaker and asked to be spared video calls entirely. Handing off ambiguous screens across that gap meant every misunderstanding became a delay; across the other product lines, designs were taking four or five review rounds after handoff, and developers sometimes shipped straight to a live product without design sign-off, with corrections happening after the fact. My purpose was to build this product component-first and heavily annotated from day one, to close that gap before it opened.</p>
+                  <p>This design system was product specific, yet aimed at the whole company; proven first as a proof of concept inside that one desktop app, because asking forgiveness was faster than waiting for a permission nobody was ready to give. The first formal pitch to the CEO was turned down outright.
+                  <br> The VP of FE gave a tentative yes, though not for reasons I loved (he saw a system as a way to let FE bypass designers on some work).<br>
+                  My own response at the time: 
+                  <quote><em>"Not ideal, we don't want designers to be bypassed, but we'll take the support for now as a starting point."</em></quote></p>
+               </div>
+            </div>
+
+            <p class="case-display-statement">Products are working. Nobody's complained. This isn't a priority."<br> - CEO</p>
+
+            <!-- Full-Bleed Image Block -->
+            <figure class="case-image-block">
+               <img src="/ds/last-version-color-specs.png" alt="tbd" loading="lazy">
+            </figure>
+
+            <!-- Context: What It Replaced -->
+            <h2 class="case-section-heading">Context: The First Drafts</h2>
+
+            <div class="case-pairing-row case-prose">
+               <div class="case-pairing-row__left">
+                  <img src="/ds/base-colors.png" alt="First layer of base colors" loading="lazy">
+                  <!-- <img src="/ds/og-tokens.png" alt="Previous manual hand-off process token values" loading="lazy"> -->
+                  <!-- <img src="/ds/tokens-export.png" alt="Complete token export with header comments and modes transformation" loading="lazy"> -->
+                  <p class="case-caption"><span class="case-caption-num">№01</span> A rough first layer of values was laid out to have something to work on top of.</p>
+               </div>
+               <div class="case-pairing-row__right">
+                  <h3>No buy-in? Lead by example </h3>
+                  <p>Three already existing product lines, each built by freelancers with no engineering mindset behind them, had accumulated their own disconnected UX, playground and UI files: no naming conventions, no shared libraries, hand-off pages manually kept in sync with the code repo by whoever had time that sprint. After turning down my system-approach pitch, the token architecture was proven on a real product first, built alongside the Marketing Management Desktop App rather than keep pushing for approval without concrete evidences.</p>
+               
+                   <!-- <h3>No Formal Product Ownership</h3>
+                  <p>No formal product owner existed on this product,I functioned as de facto co-owner alongside with backend, learning an unfamiliar domain through an informal partnership with the head of marketing: observing their workflow, running informal research sessions, translating their vocabulary into product requirements as I went. It was also the first time I'd worked directly with backend and product ownership to this extend; before this, freelance work had meant working in isolation with less technical requirements and flows.</p>
+    -->
+                  <h3>Scaffolded in Phases, building on the go</h3>
+                  <p>I was juggling with product key features desicions, research, ux flows, ui and handoffs. The system was never going to land in one pass, nor be sturdy from the begining, so it didn't try to. Phase 1 proved the core: tokens, type, a first handful of components, enough to ship the dashboard's earliest screens. Phase 2 expanded it: semantic tokens, gradients and elevations, a wider component set drawn from what the product actually needed next. Phase 3 pushed into cards, sections and slots, with documentation status tracked against each prior phase rather than assumed complete.</p>
+                  <p>Delivery order was components first, screens second, every time. Changes cascaded predictably because the architecture underneath them was correct from phase one; it didn't need revisiting, only extending.</p>
+  
+
+               </div>
+            </div>
+
+           <!-- Reality Roadmap: the honest build sequence, including what went wrong first -->
+            <h2 class="case-section-heading">The Reality Roadmap</h2>
+            <div class="case-pairing-row case-prose">
+                  <div class="case-pairing-row__left">
+                  <img src="/ds/base-colors.png" alt="Previous manual hand-off process token values" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">Iteration №01</span> First layer of base colors</p>
+                  <img src="/ds/tokens-export.png" alt="Complete token export with header comments and modes transformation" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">Iteration№010</span> Complete token export with header comments and modes transformation.</p>
+               </div>
+               <div class="case-pairing-row__right">
+                  <p>The semantic layer was wrong twice, in two different ways. The first pass was thin, loosely drawn from an outside reference I no longer remember, and token creation quickly skipped past it: component tokens piled up connected straight to primitives, card by card, with no real hierarchy underneath them. There was no dedicated time to build the system properly either; shipping UI and building the token architecture were happening at once, with zero UI to start from. About five to six months in, once a full user flow existed to look at (login through to a first working set of screens), the pattern was obvious: this was going to become unmanageable. I gave my frontend developer a heads-up that a bigger structural change was coming, then deleted the original semantic layer and rebuilt it from what the screens were actually using.</p>
+                  <p>That rebuilt layer held for a while, but around month ten to twelve, a different problem showed up: patterns that repeated across many components, like text keeping the same hover, focus and disabled behaviour everywhere it appeared, or a card background behaving consistently regardless of where it was nested, which weren't semantic in the usual sense but weren't component-specific either. Forcing them into semantic made semantic unstable again, and a full rebuild didn't make sense for the time or resources available. I looked for a precedent in other design systems and found none, so I added a fourth level between semantic and component, post-semantic, to hold exactly that kind of cross-component pattern. Mode usage inside it stayed deliberately narrow: no Figma variable modes, just named values (text-hover, text-focus, text-disabled), because using modes there would have meant splitting post-semantic into several collections instead of one, working against keeping the system slim enough for one person, moving fast, to maintain alone.</p>
+                  <p>Token delivery had a false start too. My first proposal was to push tokens via Token Studio to Git as JSON; the VP of FE denied it outright: <em>"why JSON? that's not a useful file format for us"</em>, with no alternative suggested. The second proposal, direct repo access with me pushing from my own machine, was approved, though it still meant manually copying and cleaning CSS output by hand for a stretch. The eventual pipeline wasn't solo work either: I reached out to a fullstack developer elsewhere in the company, not on my project, to help scope the GitHub Action properly.</p>
+                   <figure class="case-prose-image">
+                     <img src="/ds/handoff-pieces.png" alt="TBD" loading="lazy">
+                     <figcaption class="case-caption"><span class="case-caption-num">№01</span> A rough first layer of tokens was laid out to have something to work on top of.</figcaption>
+                  </figure>
+                 
+                  <!-- <p>The CEO buy-in moment had a specific trigger. He was independently dealing with the same async, cross-language friction with my frontend developer, on an unrelated issue, at the same time I was. In a regular meeting I walked him through the handoff method: component annotations covering styling specifics, element behaviour (on hover X, on click Y), data origin or meaning, and flagged future work; hand-delivered tokens; screen recordings; screen-grabs with arrows drawn on them; and a "Ready to Dev" and "Mark as completed" status pair, set by me and by him respectively, so handoff state stayed legible across the time difference without a live call. He was impressed enough that it changed how the rest of the work was received. When he later saw the Git automation specifically, the reaction was immediate: <em>"CEO validates DESIGN SYSTEMS!!!!"</em> He asked to implement the approach across every other project.</p> -->
+               </div>
+            </div>
+
+
+            <!-- The System: Index Grid -->
+            <h2 class="case-section-heading">The System</h2>
+            <div class="case-index-grid">
+               <!-- <div class="case-index-grid__cell">
+                  <div class="case-index-grid__cell__image" aria-hidden="true">
+                     <img src="/ds/base-colors.png" alt="Early token architecture exploration" loading="lazy">
+                  </div>
+                   <p class="case-index-grid__cell__title">Token Architecture</p>
+                   <p class="case-index-grid__cell__body">1,064 variables, structured across four levels, not the traditional three: core, semantic, post-semantic and component. Mode usage stays narrow and deliberate: a small number of isolated collections, scoped to the component layer, for statuses, alert types and on/off. The four main levels themselves are all single-mode, one value per name.</p>
+               </div> -->
+               <div class="case-index-grid__cell">
+                  <div class="case-index-grid__cell__image" aria-hidden="true">
+                     <img src="/ds/og-tokens.png" alt="tbd" loading="lazy">
+                  </div>
+                  <p class="case-index-grid__cell__title">Token Architecture</p>
+                  <!-- <p class="case-index-grid__cell__title">Token Architecture: A Fourth Level</p> -->
+                  <p class="case-index-grid__cell__body">System grows up to a 3-tier structure with +300 token values.</p>
+                  <!-- <p class="case-index-grid__cell__body">Post-semantic sits between semantic and component: added roughly ten to twelve months in, for patterns that repeated across components (text states, backgrounds, elevations) without being semantic in the traditional sense. No industry reference for an in-between layer like this turned up in the research that led to it; the name is exactly what it sounds like.</p> -->
+               </div>
+               <div class="case-index-grid__cell">
+                  <div class="case-index-grid__cell__image" aria-hidden="true">
+                     <img src="/ds/architecture.png" alt="Documented brand and token reference" loading="lazy">
+                  </div>
+                  <p class="case-index-grid__cell__title">A Fourth Level</p>
+                  <p class="case-index-grid__cell__body">Post-semantic sits between semantic and component: added roughly ten to twelve months in, for patterns that repeated across components (text states, backgrounds, elevations) without being semantic in the traditional sense. No industry reference for an in-between layer like this turned up in the research that led to it; the name is exactly what it sounds like.</p>
+               </div>
+               <div class="case-index-grid__cell">
+                  <div class="case-index-grid__cell__image" aria-hidden="true">
+                     <img src="/ds/tokens-export.png" alt="CSS variables generator plugin output" loading="lazy">
+                  </div>
+                  <p class="case-index-grid__cell__title">Tokens to Code Pipeline</p>
+                  <p class="case-index-grid__cell__body">A custom Git Action paired with a Figma plugin, shipping primitive, semantic and component tokens from Figma straight into the codebase as consumable JSON.</p>
+               </div>
+            </div>
+
+            <p class="case-caption">JavaFX was incompatible with every standard design-system tool available at the time: Supernova, Storybook and Zeroheight were all ruled out, with no prior example of a JavaFX design system to work from.</p>
+
+            <!-- Reality Roadmap: the honest build sequence, including what went wrong first -->
+            <h2 class="case-section-heading">The Reality Roadmap</h2>
+            <div class="case-pairing-row case-pairing-row--text-only case-prose">
+               <div class="case-pairing-row__right">
+                  <p>The semantic layer was wrong twice, in two different ways. The first pass was thin, loosely drawn from an outside reference I no longer remember, and token creation quickly skipped past it: component tokens piled up connected straight to primitives, card by card, with no real hierarchy underneath them. There was no dedicated time to build the system properly either; shipping UI and building the token architecture were happening at once, with zero UI to start from. About five to six months in, once a full user flow existed to look at (login through to a first working set of screens), the pattern was obvious: this was going to become unmanageable. I gave my frontend developer a heads-up that a bigger structural change was coming, then deleted the original semantic layer and rebuilt it from what the screens were actually using.</p>
+                  <p>That rebuilt layer held for a while, but around month ten to twelve, a different problem showed up: patterns that repeated across many components, like text keeping the same hover, focus and disabled behaviour everywhere it appeared, or a card background behaving consistently regardless of where it was nested, which weren't semantic in the usual sense but weren't component-specific either. Forcing them into semantic made semantic unstable again, and a full rebuild didn't make sense for the time or resources available. I looked for a precedent in other design systems and found none, so I added a fourth level between semantic and component, post-semantic, to hold exactly that kind of cross-component pattern. Mode usage inside it stayed deliberately narrow: no Figma variable modes, just named values (text-hover, text-focus, text-disabled), because using modes there would have meant splitting post-semantic into several collections instead of one, working against keeping the system slim enough for one person, moving fast, to maintain alone.</p>
+                  <p>Token delivery had a false start too. My first proposal was to push tokens via Token Studio to Git as JSON; the VP of FE denied it outright: <em>"why JSON? that's not a useful file format for us"</em>, with no alternative suggested. The second proposal, direct repo access with me pushing from my own machine, was approved, though it still meant manually copying and cleaning CSS output by hand for a stretch. The eventual pipeline wasn't solo work either: I reached out to a fullstack developer elsewhere in the company, not on my project, to help scope the GitHub Action properly.</p>
+                  <p>The CEO buy-in moment had a specific trigger. He was independently dealing with the same async, cross-language friction with my frontend developer, on an unrelated issue, at the same time I was. In a regular meeting I walked him through the handoff method: component annotations covering styling specifics, element behaviour (on hover X, on click Y), data origin or meaning, and flagged future work; hand-delivered tokens; screen recordings; screen-grabs with arrows drawn on them; and a "Ready to Dev" and "Mark as completed" status pair, set by me and by him respectively, so handoff state stayed legible across the time difference without a live call. He was impressed enough that it changed how the rest of the work was received. When he later saw the Git automation specifically, the reaction was immediate: <em>"CEO validates DESIGN SYSTEMS!!!!"</em> He asked to implement the approach across every other project.</p>
+               </div>
+            </div>
+
+            <!-- Token Architecture, in Three Moves — Phase Rail accordion variant -->
+            <h2 class="case-section-heading">Token Architecture, in Three Moves</h2>
+            <div class="case-phase-rail case-phase-rail--accordion" data-section-title="Token Architecture, in Three Moves">
+               <div class="case-phase-row is-open">
+                  <p class="case-phase-row__index">01</p>
+                  <p class="case-phase-row__title">A Weak Semantic Layer</p>
+                  <p class="case-phase-row__meta">Months 1–5</p>
+                  <p class="case-phase-row__description">Thin semantic foundations, built with no dedicated time and no existing UI to learn from.</p>
+                  <button type="button" class="case-phase-row__toggle" aria-label="Toggle phase details"></button>
+                  <div class="case-phase-row__detail is-open">
+                     <p><strong>Outcome:</strong> Component tokens piled directly onto primitives, no real hierarchy underneath them.</p>
+                     <p>No dedicated time to build the system properly: shipping UI and building the token architecture were happening at once, with zero UI to start from. The first semantic layer was thin, loosely drawn from an outside reference I no longer remember, and token creation quickly skipped past it.</p>
+                  </div>
+               </div>
+               <div class="case-phase-row">
+                  <p class="case-phase-row__index">02</p>
+                  <p class="case-phase-row__title">Semantic, Rebuilt From Real Usage</p>
+                  <p class="case-phase-row__meta">Month 5–6</p>
+                  <p class="case-phase-row__description">Caught before it hardened into a habit, and rebuilt from what the screens actually needed.</p>
+                  <button type="button" class="case-phase-row__toggle" aria-label="Toggle phase details"></button>
+                  <div class="case-phase-row__detail">
+                     <p><strong>Outcome:</strong> The original semantic layer deleted and rebuilt from what the screens were actually using.</p>
+                     <p>Once a full user flow existed to look at, the pattern was obvious: this was going to become unmanageable. I gave my frontend developer a heads-up that a bigger structural change was coming, then rebuilt semantic from scratch.</p>
+                  </div>
+               </div>
+               <div class="case-phase-row">
+                  <p class="case-phase-row__index">03</p>
+                  <p class="case-phase-row__title">Post-Semantic, a Fourth Level</p>
+                  <p class="case-phase-row__meta">Month 10–12</p>
+                  <p class="case-phase-row__description">A gap with no industry precedent, solved by adding a level rather than forcing a fit.</p>
+                  <button type="button" class="case-phase-row__toggle" aria-label="Toggle phase details"></button>
+                  <div class="case-phase-row__detail">
+                     <p><strong>Outcome:</strong> A new level added between semantic and component, with no industry reference to draw on.</p>
+                     <p>Patterns kept repeating across components, like text keeping the same hover, focus and disabled behaviour everywhere it appeared, that weren't semantic in the usual sense but weren't component-specific either. Forcing them into semantic made semantic unstable again, so post-semantic was added to hold them instead: single-mode and named by hand, to keep the system slim enough for one person to maintain alone. The library was already real by this point: roughly 451 variables and 238 components in active use, growing to the eventual 1,064 variables as post-semantic and the later component work filled in.</p>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Zooming In: Tokens to Shippable Code — carousel panel -->
+            <div class="case-pairing-row case-prose">
+               <div class="case-pairing-row__left">
+                  <div class="case-carousel-panel">
+                     <div class="case-carousel-panel__header">
+                        <p class="case-carousel-panel__title">Tokens to shippable code</p>
+                        <div class="case-carousel-panel__meta">
+                           <p class="case-carousel-panel__counter" data-carousel-counter><span class="js-carousel-current">1</span>/<span class="js-carousel-total">4</span></p>
+                        </div>
+                     </div>
+                     <div class="new-carousel swiper">
+                        <div class="new-container swiper-wrapper">
+                           <div class="new-slide swiper-slide">
+                              <img src="/ds/css-export.png" alt="CSS Variables Generator plugin output" class="cs-carousel-img" loading="lazy">
+                           </div>
+                           <div class="new-slide swiper-slide">
+                              <img src="/ds/early-tokens.png" alt="Alpha-value token ramp" class="cs-carousel-img" loading="lazy">
+                           </div>
+                           <div class="new-slide swiper-slide">
+                              <img src="/ds/initial-phase-1.png" alt="Phase 1 scaffolding plan" class="cs-carousel-img" loading="lazy">
+                           </div>
+                           <div class="new-slide swiper-slide">
+                              <img src="/ds/initial-phase-2.png" alt="Phase 2 scaffolding plan" class="cs-carousel-img" loading="lazy">
+                           </div>
+                        </div>
+                        <button type="button" class="swiper-button-prev" aria-label="Previous image"></button>
+                        <button type="button" class="swiper-button-next" aria-label="Next image"></button>
+                        <div class="swiper-pagination"></div>
+                     </div>
+                     <hr class="case-carousel-panel__divider">
+                     <p class="case-carousel-panel__caption"><span class="case-caption-num">№03</span> Full pipeline: plugin export, alpha ramps, phased rollout plan, core through component level.</p>
+                  </div>
+               </div>
+               <div class="case-pairing-row__right">
+                  <h3>Zooming In: Tokens to Shippable Code</h3>
+                  <p>Tokens lived in Figma; the developer in Japan needed them as consumable JSON. Getting there took two attempts: the first proposal, pushing tokens via Token Studio to Git as JSON, was denied outright by the VP of FE, with no alternative suggested. The second, direct repo access with tokens pushed from my own machine, was approved, though it still meant manually copying and cleaning CSS output by hand for a stretch, and scoping the eventual GitHub Action properly took help from a fullstack developer elsewhere in the company. What came out the other end was a custom Git Action paired with a Figma plugin, exporting primitive, semantic and component tokens straight from Figma into the codebase, with every export timestamped and change-counted automatically.</p>
+               </div>
+            </div>
+
+            <!-- Strengths -->
+            <h2 class="case-section-heading">Strengths</h2>
+
+            <!-- Full-bleed proof image -->
+            <figure class="case-image-block">
+               <img src="/ds/mistakes-1.png" alt="Mature CRM dashboard built entirely from the system" loading="lazy">
+            </figure>
+            <p class="case-caption case-caption--centered"><span class="case-caption-num">№04</span> ~50% faster hand-off, a mature CRM dashboard built entirely from the system</p>
+
+            <div class="case-pairing-row case-prose">
+               <div class="case-pairing-row__left">
+                  <img src="/ds/css-export.png" alt="Token export pipeline output" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">№05</span> A pipeline, not a hand-off ritual</p>
+               </div>
+               <div class="case-pairing-row__right">
+                  <h3>~50% Faster Hand-off</h3>
+                  <p>Component-first delivery, build the pieces, annotate every state and edge case, assemble screens second, cut hand-off time by roughly half compared to other teams at the company, by informal comparison with other designers rather than controlled measurement. Set against the baseline it replaced: four or five review rounds per handoff, sometimes corrections happening after a product had already gone live.</p>
+                  <h3>A Pipeline, Not a Hand-off Ritual</h3>
+                  <p>The side effect mattered as much as the fix: the same pipeline that turned token hand-off into a one-click export also unlocked white-label capability for an unrelated, earlier product, which is what first got the CEO's attention, independently of the design system pitch itself. Within roughly five to six months, that became a promotion to Design Systems Lead.</p>
+               </div>
+            </div>
+
+            <div class="case-pairing-row case-prose">
+               <div class="case-pairing-row__left">
+                  <img src="/ds/learnings-2.png" alt="Annotated token categorisation decisions" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">№06</span> Governance that could scale</p>
+               </div>
+               <div class="case-pairing-row__right">
+                  <h3>Governance That Could Scale</h3>
+                  <p>Once the company committed, the real scale came into view: 7 product lines running on 6 different dev stacks (React, Flutter, Vue, Nuxt, JS, JavaFX), only one of which had any token pipeline at all. Three structural approaches were weighed by name, one design system per project, a headless design system, or a hybrid global system, with clear rules set for what could move without sign-off: core tokens frozen unless discussed directly with me, semantic tokens editable with discussion and mandatory documentation, project-specific token types allowed by request.</p>
+                  <p>The library's own analytics backed that scale up with real numbers: 238 components and 451 variables, inserted by three teams over the year. Senapt's own design team accounted for most of it, but the Tomato Design Team, building the Energy Switching Tracker on a separate product line entirely, was in there too, proof the token pipeline held up outside the product it was built for.</p>
+                  <p>The approach to scaling the team was "education, not imposition": fill the knowledge gap first, then implement and follow through on rules and guidelines. I was still doing UI/UX/product work on my own project at the same time, so a direct-control model wasn't realistic; a small team of seven made a collaborative, workshop-led model workable instead.</p>
+                  <p>That took the form of a five-part internal series, Design Bites: the 1.01 sessions, covering foundations, components and terminology, governance, design tokens, and naming systems, alongside hands-on workshops: brand and component self-audits, a shared design-principles exercise, an expert walkthrough on tokens, and first-iteration attempts at the company's own core and semantic tokens.</p>
+                  <p>Reception was outstanding: changed behaviour across every team member but one, followed by individual conversations and requests from designers wanting to work out how the theory applied to their own product's daily reality.</p>
+               </div>
+            </div>
+
+            <!-- Quirks -->
+            <h2 class="case-section-heading">Quirks</h2>
+
+            <div class="case-pairing-row case-prose">
+               <div class="case-pairing-row__left">
+                  <img src="/ds/wrong-core.png" alt="Alert and graph values misfiled under Core" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">№07</span> Naming discipline, learned mid-flight</p>
+               </div>
+               <div class="case-pairing-row__right">
+                  <h3>Naming Discipline, Learned Mid-flight</h3>
+                  <p>Alert and graph values were initially filed under the Core collection despite being semantic rather than primitive, caught and annotated during a later audit pass, not before. It wasn't an isolated slip either: the first semantic-token pass had the same root problem elsewhere, cards, titles and body text filed at the same level as backgrounds and strokes, no clear hierarchy, a novice error of jumping to component level before the semantics were properly worked out. The three-level architecture itself was correct throughout; getting every token into the right level the first time wasn't automatic.</p>
+               </div>
+            </div>
+
+            <!-- Split panel: two quirks side by side -->
+            <section class="case-split-panel">
+               <div class="case-split-panel__half">
+                  <img src="/ds/learnings-1.png" alt="Annotated token audit" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">№08</span> No dark mode, never a requirement; single-mode by design across core, semantic, post-semantic and component</p>
+               </div>
+               <div class="case-split-panel__half">
+                  <img src="/ds/early-designs.png" alt="Early designs built without formal documentation" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">№09</span> Documentation, deferred on purpose, while the system's only consumer was its own author</p>
+               </div>
+            </section>
+
+            <div class="case-pairing-row case-prose">
+               <div class="case-pairing-row__left"></div>
+               <div class="case-pairing-row__right">
+                  <h3>No Dark Mode, Never a Requirement</h3>
+                  <p>Dark mode wasn't a requirement or a concern at any point; it was kept out of MVP scope from the beginning. Figma's variable modes were used narrowly even where they were used at all: a small number of isolated collections, scoped to the component layer, for statuses, alert types and on/off. Core, semantic, post-semantic and component were all kept single-mode on purpose, to avoid multiplying collections for every interactive state. That choice kept the system contained and fast to work in alone, but it also means a theming requirement later would mean restructuring those collections rather than just adding a mode.</p>
+                  <h3>Documentation, Deferred on Purpose</h3>
+                  <p>No traditional component documentation existed for most of the build, a deliberate trade-off while the sole consumer of the system was its own author. It held up, but it also meant the system lived in one person's head for longer than was comfortable once the team started to grow, eventually scaling to 8 designers. That gap is part of what the later Design Bites series was built to close: five internal sessions and hands-on workshops, run once governance work began, rather than documentation written as the system was built. With earlier buy-in, component documentation would have started sooner, even lightweight, instead of waiting for a workshop series to catch up.</p>
+               </div>
+            </div>
+
+            <div class="case-footer-grid">
+               <div class="case-pairing-row__left">
+               </div>
+               <div class="case-pairing-row__right">
+                  <h3>Learnings</h3>
+                  <p>The architectural call to add a fourth level rather than force those patterns into semantic, or rebuild the whole system to accommodate them, was the right one for the problem it solved; it stayed the right call even in hindsight. What I'd revisit is sequencing: with earlier buy-in, component documentation would have started sooner, even lightweight, instead of living in one person's head for the length of the build.</p>
+                  <p>The governance model was still being tested when the company went bankrupt, before the scaling model reached full execution. The structure existed, and the reception from the team it was tested on was genuinely strong; the runway to prove it at full scale didn't.</p>
+                  <span> </span>
+               </div>
+            </div>
+
+         </article>
+
+         <nav class="case-project-nav" aria-label="Project navigation">
+            <a class="case-project-nav__link case-project-nav__link--prev" href="/case-marketing-management.html">
+               <span class="case-project-nav__label">← Previous project</span>
+               <span class="case-project-nav__title">Marketing Management</span>
+            </a>
+            <a class="case-project-nav__link case-project-nav__link--next" href="/case-energy-tracker.html">
+               <span class="case-project-nav__label">Next project →</span>
+               <span class="case-project-nav__title">Energy Switching Tracker</span>
+            </a>
+         </nav>
+      </main>
+   </body>
+</html>

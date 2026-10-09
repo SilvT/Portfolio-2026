@@ -6,41 +6,32 @@
 
 
 
-.lg-backdrop{
+.goverlay {
     background-color: $blue-dark !important;
 }
 
-.lg-content{
-    .lg-next, .lg-prev{
+.gnext, .gprev {
     background-color: $color-blue-alpha;
-    color: $blue-dark;
     color: $color-white-alpha;
+}
+
+.gclose {
+    color: $color-bg;
+
+    @include breakpoint(mobile){
+        color: red;
     }
 }
 
-.lg-toolbar{
-    .lg-close.lg-icon, .lg-counter{
-        color: $color-bg;
-    }
-     .lg-close.lg-icon{
-        @include breakpoint(mobile){
-            color: red;
-     }
-     }
-}
-
-
-.lg-sub-html {
-
-//  margin-bottom: 1rem;
-     @include breakpoint(mobile){
+.gslide-description {
+    @include breakpoint(mobile){
         margin-bottom: auto;
     }
-    
+
     p{
         text-align: left;
         @include breakpoint(mobile){
-        width: 100%;        
+        width: 100%;
     }
         &.alt-content{
             font-size: $font-base;

@@ -112,14 +112,11 @@ function initSlideshowLightbox(container, slides, containerIndex) {
     if (e.target.closest('.carousel-dots')) return;
 
     if (!lightbox) {
-      const { default: GLightbox } = await import('glightbox');
-      // Load CSS at runtime to avoid Vite extracting it into all pages
-      if (!document.querySelector('link[href*="glightbox"]')) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css';
-        document.head.appendChild(link);
-      }
+      const [{ default: GLightbox }, { ensureGLightboxCSS }] = await Promise.all([
+        import('glightbox'),
+        import('./lightgallery.js'),
+      ]);
+      ensureGLightboxCSS();
       lightbox = GLightbox({
         elements: getElements(),
         touchNavigation: true,
