@@ -15,6 +15,7 @@ import { initProjectCardEntryAnimation } from "./modules/project-card-entry-anim
 import { initAnalyticsEvents } from "./modules/analytics-events.js";
 import { initCardLayoutToggle } from "./modules/card-layout-toggle.js";
 import { initServiceCardsPreview } from "./modules/service-cards-preview.js";
+import { initPhaseRailAccordion } from "./modules/phase-rail-accordion.js";
 
 // Vercel Analytics & Speed Insights
 inject();

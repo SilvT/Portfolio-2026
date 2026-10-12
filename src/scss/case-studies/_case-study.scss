@@ -200,6 +200,38 @@ section.cs-section{
 
 
 // Theme variations - targeting .cs-header when theme is on parent .case-study-page
+
+//------------------BLUE THEME
+
+body[data-theme="blue"] a,
+.case-study-page[data-theme="blue"] a {
+  color: $blue-dark;
+  padding: 0 $space-4;
+  margin: 0 (-$space-4);
+  border-radius: $space-4;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $color-blue-200;
+  }
+
+  &:visited {
+    color: $color-blue-400;
+  }
+
+  &:focus {
+    border: 1px solid $blue-dark;
+  }
+
+  &[data-tooltip]::before {
+    background-color: $blue-dark;
+  }
+
+  &[data-tooltip]::after {
+    border-top-color: $blue-dark;
+  }
+}
+
 .case-study-page[data-theme="blue"] .cs-header {
   background-color: $blue-light;
 
@@ -210,6 +242,35 @@ section.cs-section{
 
   .cs-metric-card {
     background-color: $color-bg;
+  }
+}
+//------------------ GREEN THEME
+
+body[data-theme="green"] a,
+.case-study-page[data-theme="green"] a {
+  color: $color-green-600;
+  padding: 0 $space-4;
+  margin: 0 (-$space-4);
+  border-radius: $space-4;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $color-green-200;
+  }
+  &:visited {
+   color: $color-green-400;
+  }
+
+  &:focus{
+    border:1px solid $color-green-600;
+  }
+
+  &[data-tooltip]::before {
+    background-color: $green-dark;
+  }
+
+  &[data-tooltip]::after {
+    border-top-color: $green-dark;
   }
 }
 
@@ -240,6 +301,38 @@ section.cs-section{
   }
 }
 
+
+//------------------ NEUTRAL THEME
+
+body[data-theme="neutral"] a,
+.case-study-page[data-theme="neutral"] a {
+  color: $neutral-dark;
+  padding: 0 $space-4;
+  margin: 0 (-$space-4);
+  border-radius: $space-4;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $color-neutral-200;
+  }
+
+  &:visited {
+    color: $color-neutral-400;
+  }
+
+  &:focus {
+    border: 1px solid $neutral-dark;
+  }
+
+  &[data-tooltip]::before {
+    background-color: $neutral-dark;
+  }
+
+  &[data-tooltip]::after {
+    border-top-color: $neutral-dark;
+  }
+}
+
 .case-study-page[data-theme="neutral"] .cs-header {
   background-color: $cream;
 
@@ -264,6 +357,38 @@ section.cs-section{
 
   .cs-metric-card {
     background-color: $color-bg;
+  }
+}
+
+
+//------------------ MAUVE THEME
+
+body[data-theme="mauve"] a,
+.case-study-page[data-theme="mauve"] a {
+  color: $color-mauve-600;
+  padding: 0 $space-4;
+  margin: 0 (-$space-4);
+  border-radius: $space-4;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $color-mauve-200;
+  }
+
+  &:visited {
+    color: $color-mauve-400;
+  }
+
+  &:focus {
+    border: 1px solid $color-mauve-600;
+  }
+
+  &[data-tooltip]::before {
+    background-color: $mauve-dark;
+  }
+
+  &[data-tooltip]::after {
+    border-top-color: $mauve-dark;
   }
 }
 
@@ -293,6 +418,36 @@ section.cs-section{
     background-color: $color-bg;
   }
 }
+  //------------------ BRICK THEME
+
+body[data-theme="brick"] a,
+.case-study-page[data-theme="brick"] a {
+  color: $color-brick-600;
+  padding: 0 $space-4;
+  margin: 0 (-$space-4);
+  border-radius: $space-4;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $color-brick-200;
+  }
+
+  &:visited {
+    color: $color-brick-500;
+  }
+
+  &:focus {
+    border: 1px solid $color-brick-600;
+  }
+
+  &[data-tooltip]::before {
+    background-color: $color-brick-600;
+  }
+
+  &[data-tooltip]::after {
+    border-top-color: $color-brick-600;
+  }
+}
 
 .case-study-page[data-theme="brick"] .cs-header {
   background-color: $brick-light;
@@ -318,6 +473,38 @@ section.cs-section{
 
   .cs-metric-card {
     background-color: $color-bg;
+  }
+}
+
+//------------------ BRONZE THEME
+
+
+body[data-theme="bronze"] a,
+.case-study-page[data-theme="bronze"] a {
+  color: $color-bronze-600;
+  padding: 0 $space-4;
+  margin: 0 (-$space-4);
+  border-radius: $space-4;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $color-bronze-200;
+  }
+
+  &:visited {
+    color: $color-bronze-500;
+  }
+
+  &:focus {
+    border: 1px solid $color-bronze-600;
+  }
+
+  &[data-tooltip]::before {
+    background-color: $bronze-dark;
+  }
+
+  &[data-tooltip]::after {
+    border-top-color: $bronze-dark;
   }
 }
 

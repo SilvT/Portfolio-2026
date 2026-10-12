@@ -12,7 +12,7 @@
 body.project-page-body {
   background: none;
   width: 100% !important;
-  overflow-x: hidden;
+  overflow-x: clip;
 
   &[data-theme="blue"] {
     background-color: $blue-light;
@@ -34,7 +34,7 @@ body.project-page-body {
   }
   &.js-loaded {
     width: 100% !important;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   .case-study-page.active {

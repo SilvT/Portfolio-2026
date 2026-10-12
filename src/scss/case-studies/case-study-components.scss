@@ -13,6 +13,21 @@
 
 .case-page {
   background-color: $case-bg;
+
+  a{
+    font-family: $case-font-display;
+    font-size: 14px;
+    font-weight: 500;
+    // color: $case-ink;
+
+    &:focus-visible {
+      outline: 2px solid $case-ink;
+      outline-offset: 2px;
+    }
+    &:visited{
+      color:$case-ink-soft;
+    }
+  }
 }
 
 .case-masthead {
@@ -43,6 +58,7 @@
       outline-offset: 2px;
     }
   }
+
 }
 
 .case-article {
@@ -142,6 +158,7 @@
     font-weight: 400;
     color: $case-ink-soft;
     margin-top: 20px;
+    z-index: 1;
   }
 }
 
@@ -274,6 +291,10 @@
   right: 0;
   // z-index: -10;
   max-height: 23vw;
+
+  @include breakpoint(xl-desktop, min) {
+    max-height: 17vw;
+  }
 
   &:is(img) {
     width: auto;
@@ -414,6 +435,12 @@
 
     em {
       color: $case-ink-soft;
+    }
+    span.case-caption-num{
+      font-family: "Anonymous Pro", monospace;
+      font-size: 16px;
+      // font-weight: 700;
+      color: $case-ink;
     }
   }
 
@@ -703,7 +730,13 @@
 
   @include breakpoint(mobile) {
     font-size: clamp(22px, 6vw, 30px);
+    sub{
+      font-size: clamp(14px, 4vw, 20px);
+    }
   }
+
+  sub{
+  font-size: clamp(18.2px, 2vw, 28px);  }
 }
 
 @include case-theme-text-dark('.case-display-statement');
@@ -1146,7 +1179,8 @@
   min-height: 44px;
   display: inline-flex;
   align-items: center;
-  font-family: $case-font-mono;
+  // font-family: $case-font-mono;
+  font-family: $case-font-display;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -1263,5 +1297,75 @@
     line-height: 1.6;
     color: $case-ink;
     margin: 0;
+  }
+}
+
+// ============================================
+// Inline link tooltip (pure CSS, no JS)
+// Usage: <a data-tooltip="Text to show on hover">
+// Theme color overrides live in _case-study.scss
+// ============================================
+
+[data-tooltip] {
+  position: relative;
+
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-$space-8);
+    background-color: $case-ink;
+    color: $color-white;
+    padding: $space-12;
+    border-radius: 4px;
+    font-family: $font-anonymous;
+    font-size: $font-xs;
+    font-weight: $weight-bold;
+    white-space: normal;
+    min-width: 10rem;
+    line-height: 1.4;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 1000;
+
+    @include breakpoint(mobile) {
+      display: none;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    border: 8px solid transparent;
+    border-top-color: $case-ink;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 1000;
+
+    @include breakpoint(mobile) {
+      display: none;
+    }
+  }
+
+  &:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-$space-12);
+  }
+
+  &:hover::after {
+    opacity: 1;
+    visibility: visible;
+    // transform: translateX(-50%) translateY(-$space-4);
+    transform: translateX(-50%) translateY(5%);
   }
 }
