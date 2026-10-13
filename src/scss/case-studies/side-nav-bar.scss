@@ -107,3 +107,9 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
 }
+
+// Hidden for now on specific pages — initSideNavBar() keeps running (so the
+// feature is one class away from turning back on), just visually suppressed.
+.side-nav-hidden .side-nav {
+  display: none;
+}

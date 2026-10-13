@@ -156,7 +156,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 | Element | Behavior |
 |---------|----------|
-| `.scroll-hint` | Clickable, triggers GSAP scroll to `#marketing-management` |
+| `.scroll-hint` | Clickable, triggers GSAP scroll to `#library-freeze` (first project) |
 | `.scroll-hinter` | Visual indicator, opacity controlled by scroll position |
 
 ### Click Handler (scroll-hint)

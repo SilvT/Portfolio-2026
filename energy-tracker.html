@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-project-id="1">
+<html lang="en" data-project-id="4">
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,6 +69,7 @@
         import { initAccordions, initCaseStudyAccordions } from '/src/js/modules/accordion.js';
         import { initLightGallery } from '/src/js/modules/lightgallery.js';
         import { initSideNavBar } from '/src/js/modules/side-nav-bar.js';
+        import { initScrollToTop } from '/src/js/modules/scroll-to-top.js';
         import Swiper from 'swiper';
         import { Pagination } from 'swiper/modules';
 
@@ -77,6 +78,7 @@
           initAccordions();
           initCaseStudyAccordions();
           initSideNavBar();
+          initScrollToTop();
 
           // Initialize stacked metrics swiper with custom stacking behavior
           const stackedSwiper = document.querySelector('.stacked-metrics-swiper');
@@ -167,124 +169,59 @@
         }
       </script>
    </head>
-   <body class="project-page-body js-loaded" data-theme="neutral">
-      <nav class="cs-breadcrumbs cs-breadcrumbs-standalone" aria-label="Case study navigation"><a class="cs-breadcrumb-nav cs-breadcrumb-prev" href="/design-system-wip.html">
-         <span class="cs-nav-label">← Previous</span>
-         <span class="cs-nav-title">Design System from Scratch</span>
-         </a><a class="cs-breadcrumb-logo" href="/" aria-label="Back to home">
-         <img src="/logo-filled.svg" alt="Silvia Travieso Logo">
-         </a><a class="cs-breadcrumb-nav cs-breadcrumb-next" href="/token-launch.html">
-         <span class="cs-nav-label">Next →</span>
-         <span class="cs-nav-title">Token Launch</span>
+   <body class="project-page-body js-loaded case-page side-nav-hidden" data-theme="neutral">
+      <!-- Masthead: low visual weight, just an anchor -->
+      <nav class="case-masthead" aria-label="Case study navigation">
+         <a href="/" aria-label="Back to home">
+            <img class="case-logo" src="/logo-filled.svg" alt="Silvia Travieso Logo">
          </a>
+         <div class="case-masthead-nav">
+            <a href="/design-system.html" aria-label="Previous project: Design System from Scratch">← <span>Prev</span></a>
+         </div>
       </nav>
 
-    <main class="case-study-page active" id="project-content" data-theme="neutral" data-project-id="1">
+    <main class="case-study-page active" id="project-content" data-theme="neutral" data-project-id="4">
       <article class="case-study-article">
-      <header class="hero">
-         <!-- Hero Section -->
-               <div class="cs-header ">
-                  <section class="cs-hero">
-                     <div class="cs-hero-content">
-                        <div class="cs-hero-header">
-                           <div class="eyebrow">
-                              <p class="cs-type-label">B2C · Web</p>
-                              <div class="cs-hero-data">
-                                 <span>UI/UX Designer</span>
-                              </div>
-                           </div>
-                           <h1 class="cs-hero-title">Energy Switching Tracker</h1>
-                        </div>
-                     <p class="cs-hero-subtitle"> 
-                        <em> Helping customers understand their energy journey.</em></p>
-                       <p class="cs-story-hook-context"> After hunting down backend engineers to map a process no one fully understood, I built a customer-facing tracker that replaced reactive 'we'll email you' communication with proactive self-service, saving CS from a lot of anxious phone calls.
-                        </p>            
-                        </div>
-                     <div class="cs-hero-images"><img src="/microsite/tomato microsite screens.png" alt="Marketing Management preview" loading="eager"></div>
-                  </section>
-               </div>
-               <!-- At glance Section -->
-               <div class="cs-metrics">
-                  <h2 class="cs-section-title">At Glance</h2>
-                  <div class="metrics-content">
-            
-                  <div class="cs-metrics-grid new">
-                     <div class="cs-metric-card ">
-                              <div class="cs-metric-icon-wrapper">
-                              <span class="cs-metric-icon"><i class="iconoir-eye"></i></span>
-                              </div>
-                              <div class="cs-metric-value">Real Time<br>
-                              </div>
-                              <div class="cs-metric-label"> Transparent journey</div> 
-                     </div>
+      <header class="case-title-block">
+         <div class="case-title-main">
+            <img class="case-title-image" src="/microsite/tomato microsite screens.png" alt="Energy Switching Tracker platform preview" loading="eager">
+            <h1>Energy Switching Tracker</h1>
+            <p class="case-subtitle">Helping customers understand their energy journey.</p>
+         </div>
 
-                     <div class="cs-metric-card ">
-                              <div class="cs-metric-icon-wrapper">
-                              <span class="cs-metric-icon"><i class="iconoir-link"></i></span>
-                              </div>
-                              <div class="cs-metric-value">1 Magic link<br>
-                              </div>
-                              <div class="cs-metric-label"> From unreliable email system to just one click</div> 
-                     </div>
+         <div class="case-title-side">
 
-                     <div class="cs-metric-card ">
-                              <div class="cs-metric-icon-wrapper">
-                              <span class="cs-metric-icon"><i class="iconoir-combine"></i></span>
-                              </div>
-                              <div class="cs-metric-value">Consolidated <br>
-                              </div>
-                              <div class="cs-metric-label">+15 states into human language</div>
-                     </div>
-                     <div class="cs-metric-card ">
-                              <div class="cs-metric-icon-wrapper">
-                              <span class="cs-metric-icon"><i class="iconoir-hammer"></i></span>
-                              </div>
-                              <div class="cs-metric-value">Self-diagnosis tool <br>
-                              </div>
-                              <div class="cs-metric-label">give the power back to the customer</div> 
-                     </div>
-                  </div>
+            <aside class="case-info">
+               <p class="case-issue-number">04</p>
 
-                  <div class="data-container">
-                     <div class="data-item">
-                        <span class="left-data">
-                           Timeline
-                        </span>
-                        <span class="right-data">
-                           4 weeks
-                        </span>
-                     </div>
-                     <div class="data-item">
-                        <span class="left-data">
-                           Company
-                        </span>
-                        <span class="right-data">
-                           Tomato Energy
-                        </span>
-                     </div>   <div class="data-item">
-                        <span class="left-data">
-                           Team
-                        </span>
-                        <span class="right-data">
-                           Solo Designer
-                        </span>
-                     </div>
-                     <div class="data-item">
-                        <span class="left-data">
-                           Tech Stack
-                        </span>
-                        <span class="right-data">
-                           Nuxt - Mobile First
-                        </span>
-                     </div>
-                     </div>
-                  </div>
-               </div>
-         <div class="cs scroll-hinter">
-            <span class="scroll-text">READ</span>
-            <span class="scroll-line"></span>
-            </div>
+               <p class="case-info-label">Information</p>
+               <dl>
+                  <dt>Project Type</dt>
+                  <dd>B2C · Web</dd>
+                  <dt>Role</dt>
+                  <dd>UI/UX Designer</dd>
+               </dl>
+               <dl>
+                  <dt>Company</dt>
+                  <dd>Tomato Energy</dd>
+                  <dt>Team</dt>
+                  <dd>Solo Designer</dd>
+               </dl>
+               <dl>
+                  <dt>Stack</dt>
+                  <dd>Nuxt - Mobile First</dd>
+                  <dt>Timeline</dt>
+                  <dd>4 weeks</dd>
+               </dl>
+            </aside>
+         </div>
       </header>
+
+      <div class="case-pairing-row case-pairing-row--text-only case-pairing-row--intro case-prose">
+         <div class="case-pairing-row__right">
+            <p class="lede">After hunting down backend engineers to map a process no one fully understood, I built a customer-facing tracker that replaced reactive 'we'll email you' communication with proactive self-service, saving CS from a lot of anxious phone calls.</p>
+         </div>
+      </div>
 
          <!-- Content Blocks Section -->
          <div class="cs-content-container">
@@ -812,4 +749,15 @@
 </section>
          </div><!-- /.cs-content-container -->
          </article>
+
+         <button type="button" class="case-scroll-top">↑ Back to top</button>
+
+         <nav class="case-project-nav" aria-label="Project navigation">
+            <a class="case-project-nav__link case-project-nav__link--prev" href="/design-system.html">
+               <span class="case-project-nav__label">← Previous project</span>
+               <span class="case-project-nav__title">Design System from Scratch</span>
+            </a>
+         </nav>
       </main>
+   </body>
+</html>

@@ -13,7 +13,6 @@ import { initAboutEntryAnimation } from "./modules/about-entry-animation.js";
 import { initAboutModal } from "./modules/about-modal.js";
 import { initProjectCardEntryAnimation } from "./modules/project-card-entry-animation.js";
 import { initAnalyticsEvents } from "./modules/analytics-events.js";
-import { initCardLayoutToggle } from "./modules/card-layout-toggle.js";
 import { initServiceCardsPreview } from "./modules/service-cards-preview.js";
 import { initPhaseRailAccordion } from "./modules/phase-rail-accordion.js";
 
@@ -46,10 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Project card entry stagger
   initProjectCardEntryAnimation();
 
-  // Current/experimental project cards layout toggle
-  initCardLayoutToggle();
-
-  // Experimental tools grid: preview card shows whichever card is hovered/focused
+  // Tools grid: preview card shows whichever card is hovered/focused
   initServiceCardsPreview();
 
   // UI features

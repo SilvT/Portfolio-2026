@@ -52,15 +52,15 @@
 
 
       <!-- <div class="scroll-hinter">
-         <a href="#marketing-management" class="scroll-text">SCROLL</a>
+         <a href="#library-freeze" class="scroll-text">SCROLL</a>
          <span class="scroll-line"></span>
       </div> -->
       <nav class="top-nav" role="navigation" aria-label="Main navigation">
          <div class="nav-wrapper">
             <div class="navigation">
                <a href="#about" class="nav-item" data-open-about-modal>About</a>
-               <a href="#marketing-management" class="nav-item">Works</a>
-               <a href="#token-launch" class="nav-item">Tools</a>
+               <a href="#library-freeze" class="nav-item">Works</a>
+               <a href="#tools" class="nav-item">Tools</a>
                <a href="#contact" class="nav-item">Contact</a>
             </div>
             <a href="#about-about" class="logo" aria-label="Navigate to About section">
@@ -81,7 +81,7 @@
             </svg>
             </div>
       <div class="scroll-hinter">
-         <a href="#marketing-management" class="scroll-text">SCROLL<br>FOR WORK</a>
+         <a href="#library-freeze" class="scroll-text">SCROLL<br>FOR WORK</a>
          <span class="scroll-line"></span>
       </div>
       <div class="contentbox">
@@ -129,8 +129,8 @@
                      <div class="about-modal__body">
                         <h2>Foundations</h2>
                         <p>
-                           <strong>Architect → 6+ years freelancing → Product Designer</strong><br>
-                           I trained as an architect and civil engineer before moving into digital work. That training stayed with me: thinking about what holds things up, considering consequences early, and what happens when things fail. <br>That mindset never really left.
+                           <strong>Architect → Visual Designer → Product Designer → Design Technologist</strong><br>
+                           I trained as an architect and civil engineer before moving into design, Altough training stayed with me: thinking about what holds things up, considering consequences early, and what happens when things fail. <br>That mindset never really left.
                         </p>
                      </div>
                   </div>
@@ -178,20 +178,102 @@
       </section>
 
 
-      <!-- Dev-only 3-way toggle between the marquee cards, the editorial rows layout, and the experimental layout (TBD) -->
-      <div class="segmented-control card-layout-switch" role="radiogroup" aria-label="Project cards layout">
-         <button type="button" class="segmented-option is-active" data-layout="current" role="radio" aria-checked="true">Current</button>
-         <button type="button" class="segmented-option" data-layout="experimental" role="radio" aria-checked="false">Experimental</button>
-      </div>
-
       <div id="projects-container">
 
 
 
-         <section id="marketing-management" class="section-project project-blue experimental-layout" data-section="project" data-project-id="1">
+         <section id="library-freeze" class="section-project project-bronze experimental-layout" data-section="project" data-project-id="1">
+            <div class="contentbox">
+               <!-- Project Screen -->
+               <div class="project-screen">
+                  <div class="project-content">
+                     <!-- Content -->
+                     <div class="text-content">
+                        <div class="title-group">
+                           <div class="type-label">Design Ops / Plugin</div>
+                           <h1 class="project-title">Library Freeze System</h1>
+                           <p class="project-meta">International Bank, via Nateevo ∙ 2026</p>
+                        </div>
+                        <div class="long-content">
+                           <h2 class="project-description">House-cleaning an 8-designer working at the same time across a 4-library design system.</h2>
+                           <p class="project-details">
+                              Devised a freeze process to align design and development on a shared sprint clock, then built a Figma plugin to log, compile and diff changelogs across the libraries. Full adoption within two months, zero bugs across four freeze cycles, now self-published on Figma Community.
+                           </p>
+                           <div class="meta-group">
+                              <a href="/library-freeze.html" class="cta-button">
+                              → Read Case Study
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="data-metrics">
+                        <div class="metrics bronze">
+                           <div class="metric-card">
+                              <div class="cs-metric-content">
+                                 <div class="cs-metric-top">
+                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-clock"></i></span></div>
+                                    <div class="cs-metric-value">4</div>
+                                 </div>
+                                 <div class="cs-metric-label">Freeze cycles, zero bugs</div>
+                              </div>
+                              <div class="cs-metric-border" aria-hidden="true"></div>
+                           </div>
+                           <div class="metric-card">
+                              <div class="cs-metric-content">
+                                 <div class="cs-metric-top">
+                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-multiple-pages-empty"></i></span></div>
+                                    <div class="cs-metric-value">8</div>
+                                 </div>
+                                 <div class="cs-metric-label">Designers onboarded</div>
+                              </div>
+                              <div class="cs-metric-border" aria-hidden="true"></div>
+                           </div>
+                           <div class="metric-card">
+                              <div class="cs-metric-content">
+                                 <div class="cs-metric-top">
+                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-frame-select"></i></span></div>
+                                    <div class="cs-metric-value">~3K</div>
+                                 </div>
+                                 <div class="cs-metric-label">Components tracked</div>
+                              </div>
+                              <div class="cs-metric-border" aria-hidden="true"></div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Images carousel -->
+                     <div class="slideshow-container">
+                        <div class="project-image-wrapper slideshow">
+                           <img src="/library-freeze/cover.png" alt="Library Freeze System preview 1" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="0"><video src="/library-freeze/add-entry-flow.mp4" aria-label="Library Freeze System preview 2" class="project-image project-image-default contain" muted loop playsinline preload="none" data-slide="1"></video><img src="/library-freeze/Changelog-example.png" alt="Library Freeze System preview 3" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="2"><img src="/library-freeze/freeze-doc-steps-mini.png" alt="Library Freeze System preview 4" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="3"><img src="/library-freeze/snapshot.png" alt="Library Freeze System preview 5" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="4"><img src="/library-freeze/diff.png" alt="Library Freeze System preview 6" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="5">
+                           <img src="/library-freeze/cover.png" alt="Library Freeze System preview 1" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><video src="/library-freeze/add-entry-flow.mp4" class="project-image project-image-default contain" muted loop playsinline preload="none" aria-hidden="true"></video><img src="/library-freeze/Changelog-example.png" alt="Library Freeze System preview 3" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><img src="/library-freeze/freeze-doc-steps-mini.png" alt="Library Freeze System preview 4" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><img src="/library-freeze/snapshot.png" alt="Library Freeze System preview 5" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><img src="/library-freeze/diff.png" alt="Library Freeze System preview 6" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true">
+                        </div>
+                        <!-- Dots navigation (mobile only) -->
+                        <div class="carousel-dots">
+                           <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button><button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button><button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button><button class="carousel-dot" data-slide="3" aria-label="Go to slide 4"></button><button class="carousel-dot" data-slide="4" aria-label="Go to slide 5"></button><button class="carousel-dot" data-slide="5" aria-label="Go to slide 6"></button>
+                        </div>
+                     </div>
+                     <!-- Tags and metrics -->
+                     <div class="data-tags">
+                        <div class="tags">
+                           <span class="tag-label">Tags</span>
+                           <div class="tag-list">
+                              <span>Design Ops</span>
+                              <span>Figma Plugin Dev</span>
+                              <span>Generative Plugins</span>
+                              <span>Design Systems</span>
+                              <span>LLM Integration</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+
+         <section id="marketing-management" class="section-project project-blue experimental-layout" data-section="project" data-project-id="2">
             <div class="contentbox">
                <div class="project-screen">
-                  <div class="project-nav top"></div>
                   <div class="project-content">
                      <div class="text-content">
                         <div class="title-group">
@@ -205,9 +287,9 @@
                               Built from scratch to unify fragmented marketing operations across 4 departments, replacing manual Excel workflows with real-time data visibility. Grew from Mid UI Designer to co-owning product strategy
                            </p>
                            <div class="meta-group">
-                              <a href="/marketing-management.html" class="cta-button">
-                              → Read Case Study
-                              </a>
+                              <span class="cta-button cta-button--disabled" aria-disabled="true">
+                              Coming soon
+                              </span>
                            </div>
                         </div>
                      </div>
@@ -280,22 +362,14 @@
                         </div>
                      </div>
                   </div>
-                  <button class="project-nav bottom project-nav-button" data-project-id="2">
-                     <h3 class="nav-title">↓ Next</h3>
-                     <p class="nav-subtitle">Design System from Scratch</p>
-                  </button>
                </div>
             </div>
          </section>
 
-         <section id="design-system" class="section-project project-green experimental-layout" data-section="project" data-project-id="2">
+         <section id="design-system" class="section-project project-green experimental-layout" data-section="project" data-project-id="3">
             <div class="contentbox">
                <!-- Project Screen -->
                <div class="project-screen">
-                  <button class="project-nav top project-nav-button" data-project-id="1">
-                     <h3 class="nav-title">↑ Previous</h3>
-                     <p class="nav-subtitle">Marketing Management</p>
-                  </button>
                   <div class="project-content">
                      <!-- Content -->
                      <div class="text-content">
@@ -310,7 +384,7 @@
                               Built a production-ready design system from scratch as a solo mid-level designer in an engineer-first startup. Solved JavaFX (zero references), 8-hour timezone gaps, and CEO resistance. Result: 90% QA reduction, company-wide adoption, and 1,920 hours saved through systematic reuse.
                            </p>
                            <div class="meta-group">
-                              <a href="/case-design-system.html" class="cta-button">
+                              <a href="/design-system.html" class="cta-button">
                               → Read Case Study
                               </a>
                            </div>
@@ -381,24 +455,14 @@
                         </div>
                      </div>
                   </div>
-                  <button class="project-nav bottom project-nav-button" data-project-id="3">
-                     <h3 class="nav-title">↓ Next</h3>
-                     <p class="nav-subtitle">Energy Switching Tracker</p>
-                  </button>
                </div>
             </div>
          </section>
 
-
-
-         <section id="energy-tracker" class="section-project project-neutral experimental-layout" data-section="project" data-project-id="3">
+         <section id="energy-tracker" class="section-project project-neutral experimental-layout" data-section="project" data-project-id="4">
             <div class="contentbox">
                <!-- Project Screen -->
                <div class="project-screen">
-                  <button class="project-nav top project-nav-button" data-project-id="2">
-                     <h3 class="nav-title">↑ Previous</h3>
-                     <p class="nav-subtitle">Design System</p>
-                  </button>
                   <div class="project-content">
                      <!-- Content -->
                      <div class="text-content">
@@ -496,216 +560,13 @@
                         </div>
                      </div>
                   </div>
-                  <button class="project-nav bottom project-nav-button" data-project-id="4">
-                     <h3 class="nav-title">↓ Next</h3>
-                     <p class="nav-subtitle">Token Launch</p>
-                  </button>
-               </div>
-            </div>
-         </section>
-
-
-         <section id="token-launch" class="section-project project-blue experimental-layout" data-section="project" data-project-id="4">
-            <div class="contentbox">
-               <!-- Project Screen -->
-               <div class="project-screen">
-                  <button class="project-nav top project-nav-button" data-project-id="3">
-                     <h3 class="nav-title">↑ Previous</h3>
-                     <p class="nav-subtitle">Energy Switching Tracker</p>
-                  </button>
-                  <div class="project-content">
-                     <!-- Content -->
-                     <div class="text-content">
-                        <div class="title-group">
-                           <div class="type-label">Design Systems</div>
-                           <h1 class="project-title">Token Launch</h1>
-                           <p class="project-meta">Personal Project ∙ Jan 2026</p>
-                        </div>
-                        <div class="long-content">
-                           <h2 class="project-description">Solving the design systems handoff bottleneck when existing tools failed</h2>
-                           <p class="project-details">
-                              Identified critical gap in design token workflows across 3 product teams. No existing tool supported our Figma Variables → GitHub pipeline without expensive third-party dependencies.
-                              <br>Built lightweight solution enabling direct token sync, eliminating manual export/import cycles and reducing design system maintenance overhead
-                           </p>
-                           <!-- <div class="meta-group">
-                              <a href="/token-launch.html" class="cta-button">
-                              → Read Case Study
-                              </a>
-                           </div> -->
-                        </div>
-                     </div>
-
-                     <div class="data-metrics">
-                        <div class="metrics ">
-                           <div class="metric-card">
-                              <div class="cs-metric-content">
-                                 <div class="cs-metric-top">
-                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-brain"></i></span></div>
-                                    <div class="cs-metric-value">Workflows Solution</div>
-                                 </div>
-                                 <div class="cs-metric-label">For lean teams</div>
-                              </div>
-                              <div class="cs-metric-border" aria-hidden="true"></div>
-
-                           </div>
-                           <div class="metric-card">
-                              <div class="cs-metric-content">
-                                 <div class="cs-metric-top">
-                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-timer"></i></span></div>
-                                    <div class="cs-metric-value">0 </div>
-                                 </div>
-                                 <div class="cs-metric-label">Third-party dependencies</div>
-                              </div>
-                              <div class="cs-metric-border" aria-hidden="true"></div>
-
-                           </div>
-                           <div class="metric-card">
-                              <div class="cs-metric-content">
-                                 <div class="cs-metric-top">
-                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-git-branch"></i></span></div>
-                                    <div class="cs-metric-value">GitHub</div>
-                                 </div>
-                                 <div class="cs-metric-label">Integration</div>
-                              </div>
-                              <div class="cs-metric-border" aria-hidden="true"></div>
-
-                           </div>
-                        </div>
-                     </div>
-
-                     <!-- Images carousel -->
-                     <div class="slideshow-container">
-                        <div class="project-image-wrapper slideshow">
-                           <img src="/plugin/TL-UI-push.webp" alt="Token Launch preview 1" class="project-image project-image-default" loading="lazy" decoding="async" data-slide="0"><img src="/plugin/TL-Git.webp" alt="Token Launch preview 2" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="1"><img src="/plugin/cover1.webp" alt="Token Launch preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="2"><img src="/plugin/TL-publish.webp" alt="Token Launch preview 4" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="3">
-                           <img src="/plugin/TL-UI-push.webp" alt="Token Launch preview 1" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/plugin/TL-Git.webp" alt="Token Launch preview 2" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/plugin/cover1.webp" alt="Token Launch preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/plugin/TL-publish.webp" alt="Token Launch preview 4" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
-                        </div>
-                        <!-- Dots navigation (mobile only) -->
-                        <div class="carousel-dots">
-                           <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button><button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button><button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button><button class="carousel-dot" data-slide="3" aria-label="Go to slide 4"></button>
-                        </div>
-                     </div>
-                     <!-- Tags and metrics -->
-                     <div class="data-tags">
-                        <div class="tags">
-                           <span class="tag-label">Tags</span>
-                           <div class="tag-list">
-                              <span>Design Systems</span>
-                              <span>Git Automation</span>
-                              <span>APIs</span>
-                              <span>AI-Assisted Dev</span>
-                              <span>Vibe Coding</span>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <button class="project-nav bottom project-nav-button" data-project-id="5">
-                     <h3 class="nav-title">↓ Next</h3>
-                     <p class="nav-subtitle">Library Freeze System</p>
-                  </button>
-               </div>
-            </div>
-         </section>
-
-
-         <section id="library-freeze" class="section-project project-bronze experimental-layout" data-section="project" data-project-id="5">
-            <div class="contentbox">
-               <!-- Project Screen -->
-               <div class="project-screen">
-                  <button class="project-nav top project-nav-button" data-project-id="4">
-                     <h3 class="nav-title">↑ Previous</h3>
-                     <p class="nav-subtitle">Token Launch</p>
-                  </button>
-                  <div class="project-content">
-                     <!-- Content -->
-                     <div class="text-content">
-                        <div class="title-group">
-                           <div class="type-label">Design Ops / Plugin</div>
-                           <h1 class="project-title">Library Freeze System</h1>
-                           <p class="project-meta">International Bank, via Nateevo ∙ 2026</p>
-                        </div>
-                        <div class="long-content">
-                           <h2 class="project-description">House-cleaning an 8-designer working at the same time across a 4-library design system.</h2>
-                           <p class="project-details">
-                              Devised a freeze process to align design and development on a shared sprint clock, then built a Figma plugin to log, compile and diff changelogs across the libraries. Full adoption within two months, zero bugs across four freeze cycles, now self-published on Figma Community.
-                           </p>
-                           <div class="meta-group">
-                              <a href="/library-freeze.html" class="cta-button">
-                              → Read Case Study
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-
-                     <div class="data-metrics">
-                        <div class="metrics bronze">
-                           <div class="metric-card">
-                              <div class="cs-metric-content">
-                                 <div class="cs-metric-top">
-                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-clock"></i></span></div>
-                                    <div class="cs-metric-value">4</div>
-                                 </div>
-                                 <div class="cs-metric-label">Freeze cycles, zero bugs</div>
-                              </div>
-                              <div class="cs-metric-border" aria-hidden="true"></div>
-                           </div>
-                           <div class="metric-card">
-                              <div class="cs-metric-content">
-                                 <div class="cs-metric-top">
-                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-multiple-pages-empty"></i></span></div>
-                                    <div class="cs-metric-value">8</div>
-                                 </div>
-                                 <div class="cs-metric-label">Designers onboarded</div>
-                              </div>
-                              <div class="cs-metric-border" aria-hidden="true"></div>
-                           </div>
-                           <div class="metric-card">
-                              <div class="cs-metric-content">
-                                 <div class="cs-metric-top">
-                                    <div class="cs-metric-icon-wrapper"><span class="cs-metric-icon"><i class="iconoir-frame-select"></i></span></div>
-                                    <div class="cs-metric-value">~3K</div>
-                                 </div>
-                                 <div class="cs-metric-label">Components tracked</div>
-                              </div>
-                              <div class="cs-metric-border" aria-hidden="true"></div>
-                           </div>
-                        </div>
-                     </div>
-
-                     <!-- Images carousel -->
-                     <div class="slideshow-container">
-                        <div class="project-image-wrapper slideshow">
-                           <img src="/library-freeze/cover.png" alt="Library Freeze System preview 1" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="0"><video src="/library-freeze/add-entry-flow.mp4" aria-label="Library Freeze System preview 2" class="project-image project-image-default contain" muted loop playsinline preload="none" data-slide="1"></video><img src="/library-freeze/Changelog-example.png" alt="Library Freeze System preview 3" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="2"><img src="/library-freeze/freeze-doc-steps-mini.png" alt="Library Freeze System preview 4" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="3"><img src="/library-freeze/snapshot.png" alt="Library Freeze System preview 5" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="4"><img src="/library-freeze/diff.png" alt="Library Freeze System preview 6" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="5">
-                           <img src="/library-freeze/cover.png" alt="Library Freeze System preview 1" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><video src="/library-freeze/add-entry-flow.mp4" class="project-image project-image-default contain" muted loop playsinline preload="none" aria-hidden="true"></video><img src="/library-freeze/Changelog-example.png" alt="Library Freeze System preview 3" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><img src="/library-freeze/freeze-doc-steps-mini.png" alt="Library Freeze System preview 4" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><img src="/library-freeze/snapshot.png" alt="Library Freeze System preview 5" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><img src="/library-freeze/diff.png" alt="Library Freeze System preview 6" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true">
-                        </div>
-                        <!-- Dots navigation (mobile only) -->
-                        <div class="carousel-dots">
-                           <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button><button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button><button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button><button class="carousel-dot" data-slide="3" aria-label="Go to slide 4"></button><button class="carousel-dot" data-slide="4" aria-label="Go to slide 5"></button><button class="carousel-dot" data-slide="5" aria-label="Go to slide 6"></button>
-                        </div>
-                     </div>
-                     <!-- Tags and metrics -->
-                     <div class="data-tags">
-                        <div class="tags">
-                           <span class="tag-label">Tags</span>
-                           <div class="tag-list">
-                              <span>Design Ops</span>
-                              <span>Figma Plugin Dev</span>
-                              <span>Generative Plugins</span>
-                              <span>Design Systems</span>
-                              <span>LLM Integration</span>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="project-nav bottom" aria-hidden="true"></div>
                </div>
             </div>
          </section>
       </div>
 
-      <!-- Experimental project cards layout: first 3 projects reuse the original marquee cards in #projects-container
-           (restyled to normal stacked flow below, see _project-rows-new.scss), followed by a 3x2 tools grid with
-           hover-reveal cards + one always-on preview card. Toggled via body[data-card-layout="experimental"]. Desktop-only for now. -->
-      <div id="works-experimental">
+      <!-- Tools grid: 3x2 hover-reveal cards + one always-on preview card, desktop-only for now -->
+      <div id="tools">
          <div class="services-header">
             <div class="services-tag-group">
                <!-- <span class="services-tag services-tag--outline">S.02</span> -->
@@ -713,20 +574,20 @@
                <!-- <span class="services-tag services-tag--solid">OUR TOOLS</span> -->
             </div>
             <h2 class="services-headline">
-               Small tools built to solve specific design-system friction — Figma plugins and lightweight integrations, built solo.
+               Small tools built to solve specific design-system friction.
             </h2>
          </div>
 
          <div class="services-grid">
 
-            <div class="service-card service-card--mauve" tabindex="0" data-service-row="1">
-               <span class="service-card-tag"><i class="iconoir-edit-pencil"></i>Coming soon</span>
+            <a class="service-card service-card--mauve" data-service-row="1" href="https://www.figma.com/es-es/comunidad/plugin/1590435836553000116/token-launch" target="_blank" rel="noopener noreferrer">
+               <span class="service-card-tag service-card-tag--published"><i class="iconoir-check"></i>Published</span>
                <div class="service-card-icon-wrapper"><i class="iconoir-git-branch service-card-icon"></i></div>
                <div class="service-card-text">
                   <h3 class="service-card-title">Token Launch</h3>
                   <p class="service-card-description">Identified a critical gap in design token workflows across 3 product teams and built a lightweight Figma Variables → GitHub sync.</p>
                </div>
-            </div>
+            </a>
 
             <div class="service-card service-card--brick" tabindex="0" data-service-row="2">
                <span class="service-card-tag"><i class="iconoir-edit-pencil"></i>Coming soon</span>
@@ -739,7 +600,7 @@
 
             <div class="service-card service-card--green" tabindex="0" data-service-row="3">
                <span class="service-card-tag"><i class="iconoir-edit-pencil"></i>Coming soon</span>
-               <div class="service-card-icon-wrapper"><i class="iconoir-clock service-card-icon"></i></div>
+               <div class="service-card-icon-wrapper"><i class="iconoir-book-stack service-card-icon"></i></div>
                <div class="service-card-text">
                   <h3 class="service-card-title">Documentation assistant</h3>
                   <p class="service-card-description">An API and MCP integrated tool for set up and maintenance of documentation and avoid staleness.</p>
@@ -758,10 +619,10 @@
 
             <!-- Preview card: shows the hovered/active tool's image, crossfading between them. No title/description of its own. -->
             <div class="service-card service-card--preview">
-               <img src="/plugin/cover1.webp" alt="" class="service-card-preview-img is-active" data-preview-row="1" loading="lazy" decoding="async">
-               <img src="/tools/Changelog.png" alt="" class="service-card-preview-img" data-preview-row="3" loading="lazy" decoding="async">
+               <img src="/plugin/cover image.png" alt="" class="service-card-preview-img is-active" data-preview-row="1" loading="lazy" decoding="async">
+               <img src="/tools/doc-assistant.png" alt="" class="service-card-preview-img" data-preview-row="3" loading="lazy" decoding="async">
                <img src="/tools/figma-finder-cover.png" alt="" class="service-card-preview-img" data-preview-row="2" loading="lazy" decoding="async">
-               <img src="/tools/figma-finder2.png" alt="" class="service-card-preview-img" data-preview-row="4" loading="lazy" decoding="async">
+               <!-- <img src="/tools/figma-finder2.png" alt="" class="service-card-preview-img" data-preview-row="4" loading="lazy" decoding="async"> -->
                <div class="service-card-overlay"></div>
             </div>
 
@@ -802,14 +663,15 @@
                         </div>
                      </a>
                      <!-- Git Link -->
-                     <a href="https://github.com/SilvT/Portfolio-2026" class="social-link" data-name="git-repo" data-hover-text="Inspect the code for this web">
+                     <a href="https://github.com/SilvT/Portfolio-2026" target="_blank" rel="noopener noreferrer" class="social-link" data-name="git-repo" data-hover-text="Inspect the code for this web">
                         <span class="icon">&lt; / &gt;</span>
                         <div class="social-link__text">
                            <p>Git</p>
                         </div>
                      </a>
                   </div>
-                  <div class="web" data-tooltip="You can inspect the code for this website on my github repo✨">
+                  <div class="web">
+                     <span class="web-tooltip">You can inspect the code for this website on my github repo✨</span>
                      <!-- <span class="icon">&lt; / &gt;</span> -->
                         <span class="icon-animation-container">
                         <svg class="icon-animation" id="Icon-animation" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" width="173.5483" height="203.5" viewBox="0 0 173.5483 203.5">
@@ -820,7 +682,7 @@
                         <path id="bouncePathTwo" d="m14.9502,163L.4502,133" fill="none" opacity="0" stroke="#3980aa"/>
                         <circle id="dot" cx="14.5234" cy="163.3155" r="10.8155" fill="#3980aa" stroke-width="0"/>
                         </svg>
-                     <a href="https://github.com/SilvT/Portfolio-2026">
+                     <a href="https://github.com/SilvT/Portfolio-2026" target="_blank" rel="noopener noreferrer">
                         <span>
                            <p> Designed and Built by</p>
                            <p class="bold">Silvia Travieso · 2026</p>

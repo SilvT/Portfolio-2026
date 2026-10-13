@@ -14,24 +14,6 @@ body.project-page-body {
   width: 100% !important;
   overflow-x: clip;
 
-  &[data-theme="blue"] {
-    background-color: $blue-light;
-  }
-  &[data-theme="green"] {
-    background-color: $green-light;
-  }
-  &[data-theme="neutral"] {
-    background-color: $cream;
-  }
-  &[data-theme="mauve"] {
-    background-color: $mauve-light;
-  }
-  &[data-theme="brick"] {
-    background-color: $brick-light;
-  }
-  &[data-theme="bronze"] {
-    background-color: $bronze-light;
-  }
   &.js-loaded {
     width: 100% !important;
     overflow-x: clip;

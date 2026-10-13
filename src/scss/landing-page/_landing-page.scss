@@ -21,14 +21,11 @@
 }
 
 html {
-  /* Create a snapping rule on the html element */
-  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   timeline-scope: --section;
   overflow-x: clip;
 
   @include breakpoint(mobile){
-    // scroll-snap-type: none;
     timeline-scope: none;
   }
 

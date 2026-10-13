@@ -545,6 +545,20 @@
       }
     }
 
+// Disabled state: project not ready for its case study yet — same shape as
+// .cta-button, muted colour, no pointer/hover affordance.
+.cta-button--disabled {
+  color: $neutral-dark;
+  border-color: $neutral-soft;
+  cursor: default;
+  pointer-events: none;
+
+  &:hover {
+    background-color: transparent;
+    color: $neutral-dark;
+  }
+}
+
 // Tags (styled like cs-tags from case-study)
 .tags {
   display: flex;
@@ -893,150 +907,6 @@
       }
     }
   }
-
- // ============================================================================
-  // Breadcumbs Nav
-  // ============================================================================
-
-.project-nav {
-  text-align: right;
-  text-transform: capitalize;
-  line-height: 1;
-  color: $color-blue-darker;
-  position: relative;
-  min-height: $font-base * 1.2; // Reserve space for one line
-
-  @include breakpoint(mobile) {
-    min-height: auto; // Remove reserved space on mobile
-    display: none;
-  }
-
-  // Button-specific styles
-  &.project-nav-button {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 8px 0;
-    cursor: pointer;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    min-height: 36px; // Touch target
-
-    @include breakpoint(mobile) {
-      padding: 4px 0; // Tighter padding on mobile
-      min-height: 44px; // Touch target
-      min-height: auto; // Remove fixed height on mobile
-
-    }
-
-    &:hover {
-      opacity: 0.7;
-      transform: translateX(-4px);
-
-      @include breakpoint(mobile) {
-        opacity: 1; // Disable hover opacity on mobile
-        transform: none; // Disable hover transform on mobile
-      }
-    }
-
-    &:focus {
-      outline: 2px solid $color-blue-main;
-      outline-offset: 4px;
-    }
-
-    &:focus-visible {
-      outline: 2px solid $color-blue-main;
-      outline-offset: 4px;
-    }
-
-    // Better touch feedback
-    @include touch-device {
-      padding: 12px 0;
-      min-height: 48px;
-    }
-  }
-
-  &.top {
-    margin-bottom: $space-12;
-
-    @include breakpoint(mobile) {
-      // margin-bottom: 8px; // Tighter spacing on mobile
-      display: none;
-    }
-  }
-
-  &.bottom {
-    margin-top: $space-12;
-    margin-bottom:$space-12;
-
-    @include breakpoint(mobile) {
-      // margin-top: 8px; // Tighter spacing on mobile
-      // margin-bottom: 4px;
-      display: none;
-    }
-  }
-
-  .nav-title,
-  .nav-subtitle {
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-size: $font-base;
-    font-variation-settings: 'opsz' 14, 'wdth' 100;
-    letter-spacing: 0;
-    width: 100%;
-
-    @include breakpoint(mobile) {
-      font-size: 14px;
-    }
-  }
-
-  .nav-title {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-
-    @include breakpoint(mobile) {
-      position: static; // Make it flow naturally on mobile
-      transition: none; // Disable transitions on mobile
-    }
-  }
-
-  .nav-subtitle {
-    color: $color-blue-200; // Start with lighter accent color
-    opacity: 0;
-    transform: translateX(20px);
-    pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease;
-
-    @include breakpoint(mobile) {
-      display: none; // Completely hide subtitle on mobile
-    }
-  }
-
-  &:hover .nav-title {
-    opacity: 0;
-    transform: translateX(-20px);
-
-    @include breakpoint(mobile) {
-      opacity: 1; // Keep visible on mobile
-      transform: none; // No transform on mobile
-    }
-  }
-
-  &:hover .nav-subtitle {
-    color: $color-blue-500; // Transition to darker color
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-
-    @include breakpoint(mobile) {
-      display: none; // Keep hidden on mobile
-      opacity: 0;
-    }
-  }
-}
-
-
 
 
 

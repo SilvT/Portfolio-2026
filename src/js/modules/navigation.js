@@ -14,24 +14,22 @@ export function initNavigation() {
     return;
   }
 
-  // Map sections to their corresponding nav items
+  // Map sections to their corresponding nav items. About has no entry here
+  // on purpose — it shouldn't show as "active" while on the hero section.
   const sectionNavMap = [
-    {
-      selector: '.section-about',
-      navIndex: 0, // First nav-item (About)
-    },
     {
       selector: '.section-project',
       navIndex: 1, // Second nav-item (works) - matches any project section
     },
     {
       selector: '.section-contact, footer',
-      navIndex: 2, // Third nav-item (contact)
+      navIndex: 3, // Fourth nav-item (contact)
     }
   ];
 
   /**
-   * Update active nav item
+   * Update active nav item. activeIndex of null clears all (e.g. while
+   * still on the About/hero section).
    */
   function updateActiveNav(activeIndex) {
     navItems.forEach((item, index) => {
@@ -50,7 +48,15 @@ export function initNavigation() {
    */
   function checkActiveSection() {
     const windowHeight = window.innerHeight;
-    const scrollTop = window.scrollY;
+
+    // At the bottom of the page, the contact/footer section may be
+    // shorter than the viewport, so the geometry check below can fail
+    // even though contact is clearly the active section.
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    if (atBottom) {
+      updateActiveNav(3);
+      return;
+    }
 
     // Check each section to see which one is most visible
     for (let i = 0; i < sectionNavMap.length; i++) {
@@ -70,6 +76,9 @@ export function initNavigation() {
         }
       }
     }
+
+    // No section matched (still on About) — clear active state
+    updateActiveNav(null);
   }
 
   /**

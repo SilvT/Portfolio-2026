@@ -8,7 +8,14 @@
 
 // Sticky Navigation
 .top-nav {
-  position: sticky;
+  // fixed (not sticky): it's the first element on the page with nothing
+  // above it, so sticky and fixed behave identically once "stuck" — but
+  // fixed takes it out of document flow entirely, so .section-about's
+  // background/decorative circles render underneath it instead of leaving
+  // an empty gap above the section. .section-about compensates with its
+  // own padding-top (see new-about.scss) since it's the only section that
+  // used to rely on the nav's layout height to be positioned correctly.
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -16,44 +23,14 @@
   overflow-x: clip;
   box-sizing: border-box;
   z-index: 1000;
+  background-color: transparent;
 
-  // Scrolled state (added via JS)
   &.scrolled {
-    background-color: transparent;
-  }
+    background-color: rgba(250, 250, 250, 0.15);
 
-  // Blue section state
-  &.section-blue {
-    background-color:$blue-light;
-
-    &.scrolled {
-    background-color:$blue-light;
+    &:hover {
+      background-color: rgba(250, 250, 250, 0.5);
     }
-  }
-
-  // Green section state
-  &.section-green {
-    background-color:$green-light;
-
-    &.scrolled {
-      background-color: $green-light;
-    }
-  }
-
-  // Neutral section state
-  &.section-neutral {
-    background-color: $cream;
-
-    &.scrolled {
-      background-color: $cream;
-    }
-  }
-
-  // Contact/Footer section state - transparent background
-  // Higher specificity to override other section styles
-  &.section-contact,
-  &.section-contact.scrolled {
-    background-color: transparent !important;
   }
 
   .nav-wrapper {
@@ -93,13 +70,16 @@
                 font-size 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
 
+    // $font-3xl is laptop+ only (see breakpoint(laptop, min) below) — any
+    // width below that (including the 1200-1728px gap where DevTools docked
+    // on a laptop screen commonly lands) was overflowing the nav at full size
     &.active {
-      font-size: $font-3xl;
+      font-size: $font-xl;
       opacity: 1;
     }
 
     &:not(.active) {
-      font-size: $font-3xl;
+      font-size: $font-xl;
       opacity: 0.3;
 
       &:hover {
@@ -112,7 +92,7 @@
   &.scrolled .nav-item {
     &.active,
     &:not(.active) {
-      font-size: calc($font-3xl * 0.7);
+      font-size: calc($font-xl * 0.7);
     }
   }
 
@@ -178,25 +158,31 @@
       padding: 8px 40px 24px;
     }
 
+    .logo img {
+      width: 50px;
+    }
+  }
+}
+
+// Larger nav-item size only at laptop+ widths — below this (including the
+// desktop/tablet range and DevTools-docked laptop widths), $font-xl applies
+@include breakpoint(laptop, min) {
+  .top-nav {
     .nav-item {
       &.active {
-        font-size: $font-xl;
+        font-size: $font-3xl;
       }
 
       &:not(.active) {
-        font-size: $font-xl;
+        font-size: $font-3xl;
       }
     }
 
     &.scrolled .nav-item {
       &.active,
       &:not(.active) {
-        font-size: calc($font-xl * 0.7);
+        font-size: calc($font-3xl * 0.7);
       }
-    }
-
-    .logo img {
-      width: 50px;
     }
   }
 }

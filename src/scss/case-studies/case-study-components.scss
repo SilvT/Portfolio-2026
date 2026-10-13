@@ -47,6 +47,11 @@
     width: auto;
   }
 
+  // Logo hover stays blue200 regardless of case study theme.
+  a:has(> .case-logo):hover {
+    background-color: $color-blue-200 !important;
+  }
+
   a {
     font-family: $case-font-display;
     font-size: 14px;
@@ -1418,5 +1423,45 @@
     visibility: visible;
     // transform: translateX(-50%) translateY(-$space-4);
     transform: translateX(-50%) translateY(5%);
+  }
+}
+
+// Placeholder for a case study page whose body content isn't written yet
+// (title block stays live, body is swapped for this note).
+.case-coming-soon {
+  padding: $case-space-section 0;
+  text-align: center;
+
+  @include breakpoint(mobile) {
+    padding: $case-space-section-mobile 0;
+  }
+
+  &__label {
+    font-family: $case-font-mono;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: $case-ink;
+    margin: 0 0 $space-12;
+  }
+
+  &__text {
+    font-size: $font-xl;
+    color: $case-ink-soft;
+    margin: 0;
+  }
+}
+
+// energy-tracker.html is a hybrid: new .case-title-block header, old
+// .case-study-article/.cs-* body. .case-pairing-row normally gets its side
+// gutter from .case-article's own padding; the old wrapper has none, so the
+// intro lede block right after the header needs its own gutter here or it
+// runs edge-to-edge on mobile.
+.case-study-article > .case-pairing-row--intro {
+  padding: 0 $case-page-margin;
+
+  @include breakpoint(mobile) {
+    padding: 0 $case-page-margin-mobile;
   }
 }

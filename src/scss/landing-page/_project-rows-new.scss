@@ -3,102 +3,19 @@
 @use '../breakpoints' as *;
 @use '../typography' as *;
 
-// Project cards layout toggle — .section-project marquee cards (default/"current")
-// vs. an experimental layout that reuses the same first 3 project sections as
-// normal stacked blocks, followed by a tools grid. Toggled via
-// body[data-card-layout="experimental"], see card-layout-toggle.js
+// #projects-container's sections render as normal stacked blocks (not
+// full-viewport snapped) followed by a tools grid.
 
-.segmented-control.card-layout-switch {
-  display: flex;
-  position: fixed;
-  // Below the sticky .top-nav (z-index: 1000) so it isn't covered by it
-  top: calc($space-80 + $space-20);
-  right: $space-20;
-  z-index: 100;
-  background-color: $white-alpha;
-  padding: $space-4;
-  border-radius: 999px;
-  box-shadow: 0 2px 8px $color-shadows;
-  gap: $space-4;
+#projects-container .section-project {
+  height: auto;
+  min-height: auto;
 
-  @include breakpoint(mobile) {
-    top: calc($space-80 + $space-12);
-    right: $space-12;
-    padding: $space-4;
-  }
-}
-
-.segmented-option {
-  font-family: $font-anonymous;
-  font-size: $font-xs;
-  font-weight: $weight-medium;
-  color: $neutral;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: $space-8 $space-16;
-  border-radius: 999px;
-  transition: color 0.2s ease, background-color 0.2s ease;
-
-  @include breakpoint(mobile) {
-    padding: $space-8 $space-12;
-    font-size: calc($font-xs * 0.9);
-  }
-
-  &:hover {
-    color: $blue;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $blue;
-    outline-offset: 2px;
-  }
-
-  &.is-active {
-    background-color: $blue;
-    color: $color-white;
-  }
-}
-
-body:not([data-card-layout="experimental"]) #works-experimental {
-  display: none;
-}
-
-// Experimental reuses #projects-container's first 3 sections (Marketing
-// Management, Design System, Energy Tracker) as normal stacked blocks instead
-// of full-viewport snapped ones — Token Launch stays Current-only, since it
-// now has its own card in the tools grid below.
-body[data-card-layout="experimental"] {
-  #token-launch {
-    display: none;
-  }
-
-  html:has(&) {
-    scroll-snap-type: none;
-  }
-
-  .section-about {
-    scroll-snap-align: none;
-  }
-
-  #projects-container .section-project {
+  .contentbox {
     height: auto;
-    min-height: auto;
-    scroll-snap-align: none;
+  }
 
-    .contentbox {
-      height: auto;
-    }
-
-    .project-screen {
-      padding-top: $space-40;
-    }
-
-    // Previous/Next breadcrumbs only make sense for snap-scrolling between
-    // sections (Current layout) — redundant once stacked as normal blocks
-    .project-nav {
-      display: none;
-    }
+  .project-screen {
+    padding-top: $space-40;
   }
 }
 
@@ -107,7 +24,7 @@ body[data-card-layout="experimental"] {
 // instead of being sized by aspect-ratio (width-driven, taller than the
 // screen on wide/short viewports). Below mobile, the headline alone can
 // exceed 100vh, so the section grows naturally and cards stack instead.
-#works-experimental {
+#tools {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -162,7 +79,7 @@ body[data-card-layout="experimental"] {
 }
 
 .services-headline {
-  font-size: $font-2xl;
+  font-size: $font-xl;
   font-weight: $weight-bold;
   color: $color-neutral-600;
   line-height: 1.3;
@@ -173,7 +90,7 @@ body[data-card-layout="experimental"] {
 }
 
 // 2x2 grid, equal columns. Fills whatever vertical room is left in
-// #works-experimental after the header (flex: 1 1 auto, not aspect-ratio —
+// #tools after the header (flex: 1 1 auto, not aspect-ratio —
 // see that rule's comment for why), so it always fits in one viewport height.
 // Below mobile the section no longer holds to 100vh, so cards stack in a
 // single column at their natural (card-content-driven) height instead.
@@ -222,18 +139,25 @@ body[data-card-layout="experimental"] {
 // colour flood — consistent with the metrics on the current/new layouts
 .service-card {
   position: relative;
+  display: block; // reset for cards published as <a> instead of <div>
   background-color: $color-neutral-100;
   border-radius: $space-8;
   padding: $space-24;
   overflow: hidden;
   cursor: default;
+  text-decoration: none;
   transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+
+  // Published tools are real links — the rest stay inert placeholder cards
+  &[href] {
+    cursor: pointer;
+  }
 
   // Grid rows give these a natural height on desktop; stacked on mobile they'd
   // otherwise collapse to fit only their absolutely-positioned children,
   // crowding the icon/tag against the title
   @include breakpoint(mobile) {
-    min-height: 7.5rem;
+    min-height: 12rem;
   }
 
   &:focus-visible {
@@ -305,13 +229,20 @@ body[data-card-layout="experimental"] {
   font-size: $font-xs;
   font-weight: $weight-semibold;
   letter-spacing: 0.04em;
-  color: $color-white;
-  background-color: $neutral;
+  color: $color-case-ink;
+  background-color: $color-case-line;
   padding: $space-4 $space-12;
   border-radius: 999px;
 
   i {
     font-size: 0.9em;
+  }
+
+  // Live/shipped tool — green instead of neutral grey, same pill shape.
+  // $green-dark on $green-light measures ~5.9:1, passes WCAG AA.
+  &--published {
+    color: $green-dark;
+    background-color: $green-light;
   }
 }
 

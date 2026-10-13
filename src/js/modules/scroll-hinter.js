@@ -31,7 +31,7 @@ export function initScrollHint() {
         e.preventDefault();
         e.stopPropagation();
 
-        const firstProject = document.querySelector('#marketing-management');
+        const firstProject = document.querySelector('#library-freeze');
 
         if (firstProject) {
           // Calculate the target scroll position (center in viewport)
