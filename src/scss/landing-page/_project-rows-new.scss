@@ -105,13 +105,19 @@ body[data-card-layout="experimental"] {
 // height (not min-height) + flex column pins the grid to fill exactly what's
 // left after the header, so the 2 grid rows fit in one viewport height
 // instead of being sized by aspect-ratio (width-driven, taller than the
-// screen on wide/short viewports)
+// screen on wide/short viewports). Below mobile, the headline alone can
+// exceed 100vh, so the section grows naturally and cards stack instead.
 #works-experimental {
   height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: $blue-light;
   padding: $space-80 $space-40;
+
+  @include breakpoint(mobile) {
+    height: auto;
+    padding: $space-60 $space-20;
+  }
 }
 
 // Section header: "S.02 / OUR TOOLS" tag pair + headline
@@ -119,6 +125,10 @@ body[data-card-layout="experimental"] {
   flex: none;
   max-width: 760px;
   margin-bottom: $space-60;
+
+  @include breakpoint(mobile) {
+    margin-bottom: $space-32;
+  }
 }
 
 .services-tag-group {
@@ -156,18 +166,55 @@ body[data-card-layout="experimental"] {
   font-weight: $weight-bold;
   color: $color-neutral-600;
   line-height: 1.3;
+
+  @include breakpoint(mobile) {
+    font-size: $font-l;
+  }
 }
 
-// 3x2 grid, equal columns. Fills whatever vertical room is left in
+// 2x2 grid, equal columns. Fills whatever vertical room is left in
 // #works-experimental after the header (flex: 1 1 auto, not aspect-ratio —
-// see that rule's comment for why), so it always fits in one viewport height
+// see that rule's comment for why), so it always fits in one viewport height.
+// Below mobile the section no longer holds to 100vh, so cards stack in a
+// single column at their natural (card-content-driven) height instead.
 .services-grid {
   flex: 1 1 auto;
   min-height: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: $space-8;
+
+  @include breakpoint(mobile) {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+}
+
+@mixin service-card-active-state {
+  background-color: var(--card-accent-hover);
+  color: white;
+  transform: translate(-1px, -3px);
+  box-shadow: 3px 3px 0 var(--card-accent);
+
+  .service-card-icon-wrapper {
+    background-color: var(--card-accent);
+  }
+
+  .service-card-icon {
+    color: $color-white;
+  }
+
+  .service-card-title {
+    color: $color-white;
+  }
+
+  .service-card-description {
+    max-height: 100px;
+    opacity: 1;
+    margin-top: $space-8;
+    color: $color-white;
+  }
 }
 
 // Same language as .metric-card: soft tint background at rest, hard-edged
@@ -181,6 +228,13 @@ body[data-card-layout="experimental"] {
   overflow: hidden;
   cursor: default;
   transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+
+  // Grid rows give these a natural height on desktop; stacked on mobile they'd
+  // otherwise collapse to fit only their absolutely-positioned children,
+  // crowding the icon/tag against the title
+  @include breakpoint(mobile) {
+    min-height: 7.5rem;
+  }
 
   &:focus-visible {
     outline: 2px solid $color-neutral-600;
@@ -221,31 +275,43 @@ body[data-card-layout="experimental"] {
     --card-accent-hover: #{color.adjust($bronze, $lightness: -5%)};
   }
 
-  &:not(.service-card--preview):hover,
+  // Scoped to (hover: hover) so touch taps can't leave the card stuck in its
+  // hover-revealed state — on touch devices :hover persists after tap until
+  // the user taps elsewhere, which read as a broken/overlapping layout.
+  // :focus-visible (keyboard) still applies everywhere, since it clears on
+  // its own as focus moves.
   &:not(.service-card--preview):focus-visible {
-    background-color: var(--card-accent-hover);
-    color:white;
-    transform: translate(-1px, -3px);
-    box-shadow: 3px 3px 0 var(--card-accent);
+    @include service-card-active-state;
+  }
 
-    .service-card-icon-wrapper {
-      background-color: var(--card-accent);
+  @media (hover: hover) {
+    &:not(.service-card--preview):hover {
+      @include service-card-active-state;
     }
+  }
+}
 
-    .service-card-icon {
-      color: $color-white;
-    }
+// "Coming soon" tag — top right, neutral/grey, same pill language as
+// .services-tag. Sits above the hover fill so it stays legible on hover.
+.service-card-tag {
+  position: absolute;
+  top: $space-24;
+  right: $space-24;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  font-family: $font-anonymous;
+  font-size: $font-xs;
+  font-weight: $weight-semibold;
+  letter-spacing: 0.04em;
+  color: $color-white;
+  background-color: $neutral;
+  padding: $space-4 $space-12;
+  border-radius: 999px;
 
-    .service-card-title {
-      color: $color-white;
-    }
-
-    .service-card-description {
-      max-height: 100px;
-      opacity: 1;
-      margin-top: $space-8;
-      color: $color-white;
-    }
+  i {
+    font-size: 0.9em;
   }
 }
 
@@ -298,11 +364,10 @@ body[data-card-layout="experimental"] {
 }
 
 // Always-on preview card — no title/description of its own. Shows whichever
-// of the other 4 cards is hovered/focused (service-cards-preview.js toggles
+// of the other cards is hovered/focused (service-cards-preview.js toggles
 // .is-active on the matching data-preview-row image), crossfading between
-// them. Spans the 2 grid cells left over after the 4 content cards.
+// them. One grid cell, same size as a content card.
 .service-card--preview {
-  grid-column: span 2;
   padding: 0;
   cursor: default;
 

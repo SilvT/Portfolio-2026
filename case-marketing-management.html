@@ -20,6 +20,7 @@
       <script type="module">
         import { initLightGallery } from '/src/js/modules/lightgallery.js';
         import { initPhaseRailAccordion } from '/src/js/modules/phase-rail-accordion.js';
+        import { initScrollToTop } from '/src/js/modules/scroll-to-top.js';
         import Swiper from 'swiper';
         import { Pagination, Navigation } from 'swiper/modules';
 
@@ -44,6 +45,7 @@
 
           initLightGallery();
           initPhaseRailAccordion();
+          initScrollToTop();
         }
 
         if (document.readyState === 'loading') {
@@ -324,6 +326,8 @@
             </div>
 
          </article>
+
+         <button type="button" class="case-scroll-top">↑ Back to top</button>
 
          <nav class="case-project-nav" aria-label="Project navigation">
             <a class="case-project-nav__link case-project-nav__link--prev" href="/library-freeze.html">

@@ -19,6 +19,7 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
       <script type="module">
         import { initLightGallery } from '/src/js/modules/lightgallery.js';
+        import { initScrollToTop } from '/src/js/modules/scroll-to-top.js';
         import Swiper from 'swiper';
         import { Pagination, Navigation } from 'swiper/modules';
 
@@ -42,6 +43,7 @@
           });
 
           initLightGallery();
+          initScrollToTop();
         }
 
         if (document.readyState === 'loading') {
@@ -276,6 +278,8 @@
             </div>
 
          </article>
+
+         <button type="button" class="case-scroll-top">↑ Back to top</button>
 
          <nav class="case-project-nav" aria-label="Project navigation">
             <a class="case-project-nav__link case-project-nav__link--prev" href="/case-design-system.html">

@@ -1,0 +1,34 @@
+@use '../variables' as *;
+@use '../breakpoints' as *;
+
+// ---- Mobile-only scroll-to-top ----
+// Sits right before the footer project nav, so mobile visitors don't have
+// to swipe back up through the whole article to jump between projects.
+.case-scroll-top {
+  display: none;
+
+  @include breakpoint(mobile) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 44px;
+    margin-top: $case-space-section-mobile;
+    padding: 12px 20px;
+    font-family: $case-font-mono;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $case-ink;
+    background: none;
+    border: 1px solid $case-line;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid $case-ink;
+      outline-offset: 2px;
+    }
+  }
+}

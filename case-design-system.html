@@ -20,6 +20,7 @@
       <script type="module">
         import { initLightGallery } from '/src/js/modules/lightgallery.js';
         import { initPhaseRailAccordion } from '/src/js/modules/phase-rail-accordion.js';
+        import { initScrollToTop } from '/src/js/modules/scroll-to-top.js';
         import Swiper from 'swiper';
         import { Pagination, Navigation } from 'swiper/modules';
 
@@ -57,6 +58,7 @@
           initLightGallery();
           initTldrPanel();
           initPhaseRailAccordion();
+          initScrollToTop();
         }
 
         // Floating TL;DR CTA — opens a side panel, auto-closes after 8s.
@@ -125,6 +127,16 @@
             if (panel.contains(e.target) || cta.contains(e.target)) return;
             closePanel();
           });
+
+          // Mobile: sit below the masthead at rest, tuck up to the corner
+          // once the page has scrolled past it.
+          let scrollTimeout;
+          window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+              cta.classList.toggle('is-scrolled', window.scrollY > 0);
+            }, 10);
+          }, { passive: true });
         }
 
         if (document.readyState === 'loading') {
@@ -441,6 +453,8 @@
             </div>
 
          </article>
+
+         <button type="button" class="case-scroll-top">↑ Back to top</button>
 
          <nav class="case-project-nav" aria-label="Project navigation">
             <a class="case-project-nav__link case-project-nav__link--prev" href="/case-marketing-management.html">

@@ -16,6 +16,7 @@
 @use 'case-study-components' as *;
 @use 'project-navigation' as *;
 @use 'tldr-mascot' as *;
+@use 'scroll-to-top' as *;
 
 // Only definition of blocks and columns and grids
 
@@ -204,8 +205,8 @@ section.cs-section{
 
 //------------------BLUE THEME
 
-body[data-theme="blue"] a,
-.case-study-page[data-theme="blue"] a {
+body[data-theme="blue"] a:not(.case-project-nav__link):not(.cta-button),
+.case-study-page[data-theme="blue"] a:not(.case-project-nav__link):not(.cta-button) {
   color: $blue-dark;
   padding: 0 $space-4;
   margin: 0 (-$space-4);
@@ -233,6 +234,17 @@ body[data-theme="blue"] a,
   }
 }
 
+body[data-theme="blue"] .cta-button,
+.case-study-page[data-theme="blue"] .cta-button {
+  color: $blue-dark;
+  border-color: $blue-dark;
+
+  &:hover {
+    background-color: $blue-dark;
+    color: $color-white;
+  }
+}
+
 .case-study-page[data-theme="blue"] .cs-header {
   background-color: $blue-light;
 
@@ -247,8 +259,8 @@ body[data-theme="blue"] a,
 }
 //------------------ GREEN THEME
 
-body[data-theme="green"] a,
-.case-study-page[data-theme="green"] a {
+body[data-theme="green"] a:not(.case-project-nav__link):not(.cta-button),
+.case-study-page[data-theme="green"] a:not(.case-project-nav__link):not(.cta-button) {
   color: $color-green-600;
   padding: 0 $space-4;
   margin: 0 (-$space-4);
@@ -272,6 +284,17 @@ body[data-theme="green"] a,
 
   &[data-tooltip]::after {
     border-top-color: $green-dark;
+  }
+}
+
+body[data-theme="green"] .cta-button,
+.case-study-page[data-theme="green"] .cta-button {
+  color: $color-green-600;
+  border-color: $color-green-600;
+
+  &:hover {
+    background-color: $color-green-600;
+    color: $color-white;
   }
 }
 
@@ -305,8 +328,8 @@ body[data-theme="green"] a,
 
 //------------------ NEUTRAL THEME
 
-body[data-theme="neutral"] a,
-.case-study-page[data-theme="neutral"] a {
+body[data-theme="neutral"] a:not(.case-project-nav__link):not(.cta-button),
+.case-study-page[data-theme="neutral"] a:not(.case-project-nav__link):not(.cta-button) {
   color: $neutral-dark;
   padding: 0 $space-4;
   margin: 0 (-$space-4);
@@ -331,6 +354,17 @@ body[data-theme="neutral"] a,
 
   &[data-tooltip]::after {
     border-top-color: $neutral-dark;
+  }
+}
+
+body[data-theme="neutral"] .cta-button,
+.case-study-page[data-theme="neutral"] .cta-button {
+  color: $neutral-dark;
+  border-color: $neutral-dark;
+
+  &:hover {
+    background-color: $neutral-dark;
+    color: $color-white;
   }
 }
 
@@ -364,8 +398,8 @@ body[data-theme="neutral"] a,
 
 //------------------ MAUVE THEME
 
-body[data-theme="mauve"] a,
-.case-study-page[data-theme="mauve"] a {
+body[data-theme="mauve"] a:not(.case-project-nav__link):not(.cta-button),
+.case-study-page[data-theme="mauve"] a:not(.case-project-nav__link):not(.cta-button) {
   color: $color-mauve-600;
   padding: 0 $space-4;
   margin: 0 (-$space-4);
@@ -390,6 +424,17 @@ body[data-theme="mauve"] a,
 
   &[data-tooltip]::after {
     border-top-color: $mauve-dark;
+  }
+}
+
+body[data-theme="mauve"] .cta-button,
+.case-study-page[data-theme="mauve"] .cta-button {
+  color: $color-mauve-600;
+  border-color: $color-mauve-600;
+
+  &:hover {
+    background-color: $color-mauve-600;
+    color: $color-white;
   }
 }
 
@@ -421,8 +466,8 @@ body[data-theme="mauve"] a,
 }
   //------------------ BRICK THEME
 
-body[data-theme="brick"] a,
-.case-study-page[data-theme="brick"] a {
+body[data-theme="brick"] a:not(.case-project-nav__link):not(.cta-button),
+.case-study-page[data-theme="brick"] a:not(.case-project-nav__link):not(.cta-button) {
   color: $color-brick-600;
   padding: 0 $space-4;
   margin: 0 (-$space-4);
@@ -447,6 +492,17 @@ body[data-theme="brick"] a,
 
   &[data-tooltip]::after {
     border-top-color: $color-brick-600;
+  }
+}
+
+body[data-theme="brick"] .cta-button,
+.case-study-page[data-theme="brick"] .cta-button {
+  color: $color-brick-600;
+  border-color: $color-brick-600;
+
+  &:hover {
+    background-color: $color-brick-600;
+    color: $color-white;
   }
 }
 
@@ -480,8 +536,8 @@ body[data-theme="brick"] a,
 //------------------ BRONZE THEME
 
 
-body[data-theme="bronze"] a,
-.case-study-page[data-theme="bronze"] a {
+body[data-theme="bronze"] a:not(.case-project-nav__link):not(.cta-button),
+.case-study-page[data-theme="bronze"] a:not(.case-project-nav__link):not(.cta-button) {
   color: $color-bronze-600;
   padding: 0 $space-4;
   margin: 0 (-$space-4);
@@ -506,6 +562,17 @@ body[data-theme="bronze"] a,
 
   &[data-tooltip]::after {
     border-top-color: $bronze-dark;
+  }
+}
+
+body[data-theme="bronze"] .cta-button,
+.case-study-page[data-theme="bronze"] .cta-button {
+  color: $bronze-dark;
+  border-color: $bronze-dark;
+
+  &:hover {
+    background-color: $bronze-dark;
+    color: $color-white;
   }
 }
 

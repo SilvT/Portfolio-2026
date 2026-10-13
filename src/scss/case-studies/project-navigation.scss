@@ -33,14 +33,14 @@
   grid-template-columns: 1fr 1fr;
   gap: $case-page-margin;
   max-width: $case-max;
-  margin: $case-space-section auto 0;
+  margin: $case-space-section auto ;
   padding: $case-space-section $case-page-margin 0;
-  border-top: 1px solid $case-line;
+  
 
   @include breakpoint(mobile) {
     grid-template-columns: 1fr;
     gap: 32px;
-    margin-top: $case-space-section-mobile;
+    margin: $case-space-section-mobile 0 calc($case-space-section-mobile *0.5);
     padding: $case-space-section-mobile $case-page-margin-mobile 0;
   }
 
@@ -49,18 +49,16 @@
     flex-direction: column;
     gap: 8px;
     padding: 24px;
-    border: 1px solid $case-line;
-    border-radius: 12px;
     color: $case-ink;
     text-decoration: none;
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      border-color: $case-ink;
+      background-color: $blue-light;
     }
 
     &:focus-visible {
-      outline: 2px solid $case-ink;
+      outline: 2px solid $blue;
       outline-offset: 2px;
     }
 
