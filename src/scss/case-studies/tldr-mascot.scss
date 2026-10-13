@@ -1,0 +1,82 @@
+@use '../variables' as *;
+@use '../breakpoints' as *;
+
+// ASCII mascot + greeting shown inside the TL;DR panel.
+// Loops a 4-frame surprised wobble continuously; hover swaps to a sparkly cheer and pauses the loop.
+.case-tldr-mascot {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-8;
+  margin: auto 0 0;
+  padding-top: $space-20;
+  font-family: $case-font-mono;
+
+  &__face {
+    flex: 0 0 auto;
+    display: inline-block;
+    font-size: $font-s;
+    line-height: 1.3;
+    color: $blue;
+    white-space: pre;
+    user-select: none;
+  }
+
+  &__face::before {
+    content: ".( °□ ° )'";
+    animation: tldr-mascot-wobble 1s steps(1) infinite;
+  }
+
+  &:hover &__face::before,
+  &:focus-within &__face::before {
+    content: '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧';
+    animation: none;
+  }
+
+  &__message {
+    display: grid;
+    font-family: $case-font-mono;
+    font-size: 13px;
+    line-height: 1.5;
+    color: $blue;
+
+    &-default,
+    &-hover {
+      grid-area: 1 / 1;
+    }
+
+    &-hover {
+      opacity: 0;
+    }
+  }
+
+  &:hover &__message-default,
+  &:focus-within &__message-default {
+    opacity: 0;
+  }
+
+  &:hover &__message-hover,
+  &:focus-within &__message-hover {
+    opacity: 1;
+  }
+
+  @include reduced-motion {
+    &__face::before {
+      animation: none;
+    }
+  }
+}
+
+@keyframes tldr-mascot-wobble {
+  0% {
+    content: ".( °□ ° )'";
+  }
+  25% {
+    content: '-( °□ ° )-';
+  }
+  50% {
+    content: "'( °□ ° ).";
+  }
+  75% {
+    content: '-( °□ ° )-';
+  }
+}

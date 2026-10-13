@@ -1241,6 +1241,12 @@
     padding: 72px 20px 24px;
   }
 
+  &__content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
   &__close {
     position: absolute;
     top: 24px;
