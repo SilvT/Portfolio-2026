@@ -34,20 +34,7 @@ dist/
 # Unused/dead assets (kept on disk, not tracked - see .claude/CHANGELOG.md)
 public/Silvia Travieso - Design Systems - UI - CV.pdf
 
-public/ds/UIKIT.png
-public/ds/css-export.png
-public/ds/early-designs.png
-public/ds/early-tokens.png
-public/ds/initial-phase-1.png
-public/ds/initial-phase-2.png
-public/ds/initial-phase-3.png
-public/ds/learnings-1.png
-public/ds/learnings-2.png
-public/ds/learnings-3.png
-public/ds/mistakes-1.png
-public/ds/mistakes-2.png
-public/ds/mistakes-3.png
-public/ds/wrong-core.png
+public/ds/archive
 
 public/plugin/TL-Git.png
 public/plugin/TL-UI-push.png
@@ -88,6 +75,12 @@ public/microsite/landing.png
 public/microsite/loading-animation.png
 public/microsite/initiated.mov
 public/microsite/tomato-ready.mov
+
+# Full pages (testing or WIP)
+design-system-wip.html
+
+
+
 
 # Ponytail audit reports (local scratch, not project docs)
 PONYTAIL-AUDIT*.md
