@@ -24,7 +24,7 @@
     $blue:$color-blue-300;
     $blue-dark:$color-blue-500;
 
-    // To-be-deprecated - LEGACY
+    // Alternate aliases (widely used across case-studies/blocks.scss, hero.scss, project-cards.scss)
     $color-blue-light: $blue-light;
     $color-blue-main: $blue;
     $color-blue-dark: $color-blue-400;
@@ -153,7 +153,7 @@ $cream:$color-cream-200;
 $cream-mid:$color-cream-300;
 $cream-dark:$color-cream-400;
 
-    // To-be-deprecated - LEGACY
+    // Alternate aliases (widely used across blocks.scss, project-cards.scss, line-breaker.scss)
     $color-cream: $color-cream-200;
     $color-cream-alpha:rgba(227, 221, 211, 0.4);
 
@@ -283,96 +283,6 @@ $case-image-support-width: 40%;
     }
 
     animation-name: #{$name};
-  }
-}
-
-// Slide from LEFT
-@mixin slide-in-left($delay: 0s, $duration: 0.7s, $distance: 30px) {
-  transform: translateX(-$distance);
-  animation: slideInLeft $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: $delay;
-
-  @if $distance != 30px {
-    $name: slideInLeft-#{$distance};
-
-    @keyframes #{$name} {
-      from { transform: translateX(-$distance); }
-      to { transform: translateX(0); }
-    }
-
-    animation-name: #{$name};
-  }
-}
-// Slide from RIGHT
-@mixin slide-in-right($delay: 0s, $duration: 0.7s, $distance: 30px) {
-  transform: translateX($distance);
-  animation: slideInRight $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: $delay;
-
-  @if $distance != 30px {
-    $name: slideInRight-#{$distance};
-
-    @keyframes #{$name} {
-      from { transform: translateX($distance); }
-      to { transform: translateX(0); }
-    }
-
-    animation-name: #{$name};
-  }
-}
-//Slide from TOP
-@mixin slide-in-top($delay: 0s, $duration: 0.7s, $distance: 30px) {
-  transform: translateY(-$distance);
-  animation: slideInTop $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: $delay;
-
-  @if $distance != 30px {
-    $name: slideInTop-#{$distance};
-
-    @keyframes #{$name} {
-      from { transform: translateY(-$distance); }
-      to { transform: translateY(0); }
-    }
-
-    animation-name: #{$name};
-  }
-}
-
-//Slide from BOTTOM
-@mixin slide-in-bottom($delay: 0s, $duration: 0.7s, $distance: 30px) {
-  transform: translateY($distance);
-  animation: slideInBottom $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: $delay;
-
-  @if $distance != 30px {
-    $name: slideInBottom-#{$distance};
-
-    @keyframes #{$name} {
-      from { transform: translateY($distance); }
-      to { transform: translateY(0); }
-    }
-
-    animation-name: #{$name};
-  }
-}
-
-//Subtle Scale In (for cards)
-@mixin scale-in($delay: 0s, $duration: 0.5s, $start-scale: 0.95) {
-  opacity: 0;
-  transform: scale($start-scale);
-
-  animation: scaleIn $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: $delay;
-
-  @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale($start-scale);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
   }
 }
 

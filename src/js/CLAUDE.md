@@ -2,51 +2,89 @@
 
 ## Overview
 
-The JS architecture follows a **modular vanilla JavaScript** approach with no framework dependencies. Each module is self-contained and exports initialization functions that are called from the main entry point.
+Modular vanilla JavaScript, no framework. Each module in `src/js/modules/`
+is self-contained and exports one or more `init*` functions. Modules reach
+the page in two different ways — know which one a module uses before adding
+a new import:
+
+1. **Landing page (`index.html`)** loads a single bundled entry point,
+   `src/js/main.js`, which statically imports and calls most modules.
+2. **Case study pages** (`design-system.html`, `energy-tracker.html`,
+   `case-energy-tracker.html`, `library-freeze.html`,
+   `marketing-management.html`) do **not** load `main.js`. Each loads only
+   the modules it needs via its own inline `<script type="module">` tag,
+   importing directly from `/src/js/modules/<name>.js`.
 
 ```
 src/js/
-├── main.js                    # Entry point - orchestrates all modules
+├── main.js                         # Entry point for index.html only
 └── modules/
-    ├── navigation.js          # Landing page nav active states
-    ├── flipBoardAnimation.js  # Hero animated job titles
-    ├── scroll-hinter.js       # Scroll hint + GSAP smooth scroll
-    ├── lightgallery.js        # GLightbox for images/galleries
-    ├── accordion.js           # Expand/collapse sections
-    └── side-nav-bar.js        # Case study dynamic side nav
+    ├── navigation.js                 # Landing page nav active states
+    ├── flipBoardAnimation.js         # Hero animated job titles
+    ├── scroll-hinter.js              # Scroll hint + GSAP smooth scroll
+    ├── icon-animation.js             # Icon entry animation
+    ├── carousel-dots.js              # Dot nav synced to marquee-scroll tween
+    ├── marquee-scroll.js             # GSAP marquee tween registry (project card slideshows)
+    ├── about-entry-animation.js      # About section entry stagger
+    ├── about-modal.js                # About modal slide-in panel
+    ├── project-card-entry-animation.js # Project card entry stagger, creates marquee tween
+    ├── analytics-events.js           # Vercel Analytics custom events
+    ├── service-cards-preview.js      # Tools grid: preview swaps with hovered/focused card
+    ├── phase-rail-accordion.js       # Expand/collapse for .case-phase-rail--accordion
+    ├── accordion.js                  # Expand/collapse for .milestone / .cs-line-breaker.accordion
+    ├── side-nav-bar.js               # Case study dynamic side nav
+    ├── scroll-to-top.js              # Case study mobile scroll-to-top button
+    └── lightgallery.js               # GLightbox for images/galleries/videos
 ```
 
 ---
 
-## Entry Point: main.js
+## Which page loads which modules
+
+| Page | Loads |
+|------|-------|
+| `index.html` | `main.js` (bundles: flipBoardAnimation, scroll-hinter, navigation, icon-animation, carousel-dots, about-entry-animation, about-modal, project-card-entry-animation, analytics-events, service-cards-preview, phase-rail-accordion; `lightgallery.js` only via dynamic `import()` if a carousel/gallery selector is present on the page) |
+| `design-system.html` | `lightgallery.js`, `phase-rail-accordion.js`, `scroll-to-top.js` |
+| `energy-tracker.html` | `accordion.js`, `lightgallery.js`, `scroll-to-top.js`, `side-nav-bar.js` |
+| `case-energy-tracker.html` | `lightgallery.js`, `scroll-to-top.js` |
+| `library-freeze.html` | `lightgallery.js`, `scroll-to-top.js` |
+| `marketing-management.html` | `accordion.js`, `lightgallery.js`, `scroll-to-top.js`, `side-nav-bar.js` |
+
+`marquee-scroll.js` has no importer of its own in any HTML page — it's a
+shared `Map<HTMLElement, Tween>` registry imported only by
+`carousel-dots.js` and `project-card-entry-animation.js` on the landing page.
+
+Before assuming a module is unused, check both `main.js`'s static imports
+**and** every HTML page's inline `<script type="module">` block — an
+`import` inside an inline script tag doesn't show up in a `grep -r "src="`
+search the way an external `<script src="...">` would.
+
+---
+
+## Entry Point: main.js (index.html only)
 
 ### Initialization Flow
 
 ```
 DOMContentLoaded
     │
-    ├── initNavigation()        # Core: nav active states
-    │
-    ├── initVisualEffects()     # Grouped visual features
+    ├── initNavigation()
+    ├── initAboutEntryAnimation()
+    ├── initAboutModal()
+    ├── initProjectCardEntryAnimation()
+    ├── initServiceCardsPreview()
+    ├── initVisualEffects()
     │   ├── initFlipBoardAnimation()
-    │   ├── initScrollHint()
-    │   └── initLazyLoading()
-    │
-    └── initLightGallery()      # Lightbox galleries
+    │   └── initScrollHint()
+    ├── (conditional) dynamic import of lightgallery.js
+    │   — only if `.new-carousel.swiper, .cs-column-image, .cs-gallery-grid` exists
+    ├── initCarouselDots()
+    ├── initAnalyticsEvents()
+    └── lazy-play IntersectionObserver for video[preload="none"]
+
+Separate DOMContentLoaded listener:
+    └── initIconAnimation()
 ```
-
-### Key Functions
-
-| Function | Purpose |
-|----------|---------|
-| `initVisualEffects()` | Groups passive visual-only effects (no navigation, no input) |
-| `initLazyLoading()` | IntersectionObserver for `.project-image` elements |
-
-### Lazy Loading
-
-- Uses `IntersectionObserver` with 50px rootMargin
-- Adds `.loaded` class when image enters viewport
-- Threshold: 0.01 (triggers early)
 
 ---
 
@@ -54,25 +92,10 @@ DOMContentLoaded
 
 **Purpose:** Track viewport position and update landing page nav active state.
 
-### How It Works
-
-1. Maps sections to nav items via `sectionNavMap`:
-   ```js
-   [
-     { selector: '.section-about', navIndex: 0 },
-     { selector: '.section-project', navIndex: 1 },
-     { selector: '.section-contact, footer', navIndex: 2 }
-   ]
-   ```
-
-2. On scroll (debounced 10ms), checks which section is in view
-3. Updates `.active` class and `aria-current="page"` attribute
-
-### Visibility Logic
-
-Section is active when:
-- `rect.top <= 100` (near top of viewport)
-- `rect.bottom >= windowHeight * 0.3` (still visible)
+Maps sections to nav items via `sectionNavMap`, checks on a 10ms-debounced
+scroll listener which section is in view (`rect.top <= 100` and
+`rect.bottom >= windowHeight * 0.3`), updates `.active` class and
+`aria-current="page"`.
 
 ---
 
@@ -80,271 +103,128 @@ Section is active when:
 
 **Purpose:** Split-flap departure board animation cycling through job titles.
 
-### Configuration
-
-```js
-CONFIG = {
-  titles: ['UI Designer', 'Design Systems', 'Product Thinking',
-           'Atomic Design', 'Variables Geek', 'Vibe Coder'],
-  flipDuration: 200,      // ms per character flip
-  cycleCount: 8,          // random chars before settling
-  staggerDelay: 120,      // ms between each char starting
-  pauseDuration: 6000     // ms pause between titles
-}
-```
-
-### Animation Flow
-
-```
-Initial title displayed
-    │
-    └── Wait pauseDuration (6s)
-            │
-            └── For each character (staggered 120ms):
-                    │
-                    ├── Cycle through 8 random characters
-                    │   └── Each cycle: add .flipping class (200ms)
-                    │
-                    └── Land on target character
-                            │
-                            └── Show cursor, wait 6s, repeat
-```
-
-### Key Functions
-
-| Function | Purpose |
-|----------|---------|
-| `cycleCharacter(el, target)` | Animate single char through random chars to target |
-| `transitionToTitle(container, title, cursor)` | Orchestrate full title transition |
-| `createCharacterSpans(text)` | Split text into `<span class="flip-char">` elements with line break after first word |
-
-### Accessibility
-
-- Checks `prefers-reduced-motion` - falls back to instant text swap
-- Uses `aria-label`, `role="status"`, `aria-live="polite"` on wrapper
-- Individual chars marked `aria-hidden="true"`
-
-### DOM Structure Created
-
-```html
-<div class="dynamic-job-title" aria-label="UI Designer" role="status" aria-live="polite">
-  <div class="flip-board-container">
-    <span class="flip-char" aria-hidden="true">U</span>
-    <span class="flip-char" aria-hidden="true">I</span>
-    <br>
-    <span class="flip-char" aria-hidden="true">D</span>
-    <!-- ... -->
-    <span class="typing-cursor" aria-hidden="true"></span>
-  </div>
-</div>
-```
+Respects `prefers-reduced-motion` (instant text swap fallback). Uses
+`aria-label`, `role="status"`, `aria-live="polite"`.
 
 ---
 
 ## Module: scroll-hinter.js
 
-**Purpose:** Show scroll hint in About section with GSAP-powered smooth scroll.
+**Purpose:** Show scroll hint in About section with GSAP-powered smooth scroll
+(`gsap` + `gsap/ScrollToPlugin`). Handles `.scroll-hint` (click → scroll) and
+`.scroll-hinter` (visual indicator, opacity toggled by scroll position, same
+10ms-debounced pattern as `navigation.js`).
 
-### Dependencies
+---
 
-```js
-import gsap from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-```
+## Module: marquee-scroll.js
 
-### Handles Two Elements
+**Purpose:** Shared GSAP marquee tween registry for project card slideshows.
+Exports `createMarqueeTween(slideshow, opts)` and `getMarqueeTween(slideshow)`
+backed by a module-level `Map`. Duration 45s desktop / 80s mobile, pauses on
+hover (desktop), respects `prefers-reduced-motion` (returns `null`, no tween
+created). Consumed by `carousel-dots.js` (reads `tween.progress()` to sync
+dots) and `project-card-entry-animation.js` (creates the tween paused, plays
+it 3s after entry animation completes).
 
-| Element | Behavior |
-|---------|----------|
-| `.scroll-hint` | Clickable, triggers GSAP scroll to `#library-freeze` (first project) |
-| `.scroll-hinter` | Visual indicator, opacity controlled by scroll position |
+---
 
-### Click Handler (scroll-hint)
+## Module: carousel-dots.js
 
-```js
-gsap.to(window, {
-  duration: 1.5,
-  scrollTo: {
-    y: targetY,           // Centered in viewport
-    autoKill: false       // Complete even if user scrolls
-  },
-  ease: 'power2.inOut'
-});
-```
-
-### Visibility Logic
-
-Both use scroll listeners (debounced 10ms) to check if About section is visible:
-- `rect.top <= 100`
-- `rect.bottom >= windowHeight * 0.5`
-
-When visible: show hint. Otherwise: hide.
+**Purpose:** Mobile dot navigation synced to the `marquee-scroll.js` tween via
+`requestAnimationFrame`. Clicking a dot pauses the tween, jumps
+`tween.progress()`, resumes after 3s. Loads GLightbox + `lightgallery.js` on
+demand (dynamic `import()`) on first tap, for the mobile slideshow-tap-to-view
+interaction.
 
 ---
 
 ## Module: accordion.js
 
-**Purpose:** Mutually exclusive accordion behavior (only one open at a time).
+**Purpose:** Mutually exclusive accordion behavior (only one open at a time)
+for case study pages — two types: `.milestone` (uses `open` attribute +
+`.is-open` class) and `.cs-line-breaker.accordion` (`.accordion-content`
+`display` toggle). Loaded directly by `energy-tracker.html` and
+`marketing-management.html`, not via `main.js`.
 
-### Two Accordion Types
+---
 
-| Type | Selector | Content Selector |
-|------|----------|------------------|
-| Milestones | `.milestone` | Uses `open` attribute + `.is-open` class |
-| Case Study | `.cs-line-breaker.accordion` | `.accordion-content` with `display` toggle |
+## Module: phase-rail-accordion.js
 
-### Behavior
-
-1. Click header/accordion
-2. Close all accordions in group
-3. If clicked one wasn't open, open it
-
-### Milestone Accordions
-
-```js
-// Click handler on .milestone-header
-milestones.forEach(item => {
-  item.classList.remove('is-open');
-  item.removeAttribute('open');
-});
-if (!isCurrentlyOpen) {
-  accordion.classList.add('is-open');
-  accordion.setAttribute('open', '');
-}
-```
-
-### Case Study Accordions
-
-```js
-// Initially hide content
-content.style.display = 'none';
-accordion.style.cursor = 'pointer';
-
-// On click: toggle display: none/block
-```
+**Purpose:** Expand/collapse for `.case-phase-rail--accordion` rows. Used on
+the landing page (via `main.js`) and loaded directly on
+`design-system.html`.
 
 ---
 
 ## Module: side-nav-bar.js
 
-**Purpose:** Generate dynamic side navigation for case studies from `data-section-title` attributes.
+**Purpose:** Generate dynamic side navigation for case studies from
+`[data-section-title]` elements. Builds nav HTML, appends to `document.body`,
+`IntersectionObserver` (`rootMargin: '-20% 0px -60% 0px'`) tracks active
+section and moves an indicator via `transform: translateY()`. Click handler
+smooth-scrolls with an 80px offset for the sticky nav and updates the URL
+hash via `history.pushState()`. Loaded directly by `energy-tracker.html` and
+`marketing-management.html`, not via `main.js`.
 
-### Initialization Flow
+---
 
-```
-Find all [data-section-title] elements
-    │
-    ├── Build navigation HTML dynamically
-    │
-    ├── Append to document.body
-    │
-    ├── Setup IntersectionObserver for scroll tracking
-    │
-    ├── Setup click handlers for smooth scroll
-    │
-    └── Add .is-visible class after 300ms
-```
+## Module: scroll-to-top.js
 
-### DOM Structure Created
-
-```html
-<nav class="side-nav" aria-label="Case study sections">
-  <ul class="side-nav__list">
-    <div class="side-nav__indicator"></div>
-    <li class="side-nav__item">
-      <a class="side-nav__link" href="#section-1" data-section-index="0">
-        <span class="side-nav__number">01</span>
-        <span class="side-nav__label">Overview</span>
-      </a>
-    </li>
-    <!-- ... more items -->
-  </ul>
-</nav>
-```
-
-### Scroll Tracking
-
-Uses `IntersectionObserver` with:
-```js
-{
-  root: null,
-  rootMargin: '-20% 0px -60% 0px',  // Upper-middle viewport
-  threshold: 0
-}
-```
-
-When section intersects, updates `.is-active` class and moves indicator via `transform: translateY()`.
-
-### Click Handler
-
-- Smooth scroll with 80px offset (for sticky nav)
-- Updates URL hash via `history.pushState()` without page jump
+**Purpose:** Mobile scroll-to-top button for case study pages. Loaded
+directly by every case study page (`design-system.html`,
+`energy-tracker.html`, `case-energy-tracker.html`, `library-freeze.html`,
+`marketing-management.html`), not via `main.js`.
 
 ---
 
 ## Module: lightgallery.js
 
-**Purpose:** Initialize GLightbox for various image/video contexts.
+**Purpose:** Initialize GLightbox for images/galleries/videos.
 
-### Dependencies
+### Dependencies (dynamic only — never statically imported)
 
 ```js
 import GLightbox from 'glightbox';
 import 'glightbox/dist/css/glightbox.min.css';
 ```
 
+See the root `CLAUDE.md` "GLightbox — Dynamic Loading" section: never add a
+static `import GLightbox` or its CSS to `main.js` or any module statically
+imported by it — this would add ~60 KB JS + 14 KB CSS to the landing page,
+where it's unused except behind the conditional dynamic import.
+
 ### Four Initialization Contexts
 
 | Function | Selector | Gallery Grouping |
-|----------|----------|------------------|
+|----------|----------|-------------------|
 | `initCarouselGalleries()` | `.new-carousel.swiper` | Each carousel is its own gallery |
 | `initStandaloneImages()` | `figure.cs-column-image` | Individual images |
 | `initGalleryGrid()` | `.cs-gallery-grid` | All items in one group |
 | `initAccordionImages()` | `.accordion .cs-three-column-grid` | Single accordion gallery |
 
-### Common Pattern
+Loaded directly by every case study page, and dynamically by `main.js` on
+the landing page only when a matching selector is present.
 
-1. Find elements
-2. Extract caption from figcaption/alt text
-3. Build description HTML
-4. Add `data-glightbox`, `data-gallery` attributes
-5. Wrap images in `<a>` anchors
-6. Initialize GLightbox with selector
+---
 
-### Description Builder
+## Other modules (landing page only, via main.js)
 
-```js
-function buildDescription(altText, captionText) {
-  // Combines alt + caption into HTML
-  // <p class="alt-content">...</p>
-  // <p class="lg-figcaption">...</p>
-}
-```
-
-### GLightbox Options
-
-```js
-GLightbox({
-  selector: '.glightbox-gallery',
-  touchNavigation: true,
-  loop: true
-});
-```
+| Module | Purpose |
+|--------|---------|
+| `icon-animation.js` | Icon entry animation, initialized in its own `DOMContentLoaded` listener |
+| `about-entry-animation.js` | About section entry stagger |
+| `about-modal.js` | About modal slide-in panel |
+| `project-card-entry-animation.js` | Project card entry stagger; also creates the paused marquee tween (see `marquee-scroll.js`) |
+| `analytics-events.js` | Vercel Analytics custom events |
+| `service-cards-preview.js` | Tools grid: preview image swaps with whichever card is hovered/focused |
 
 ---
 
 ## Patterns & Conventions
 
-### IntersectionObserver Usage
-
-Used in 3 modules for scroll-based behavior:
-- `main.js` - lazy loading images
-- `navigation.js` - active nav state (uses manual scroll listener)
-- `side-nav-bar.js` - active section tracking
-
 ### Debounced Scroll Listeners
 
-Pattern used consistently:
 ```js
 let scrollTimeout;
 window.addEventListener('scroll', () => {
@@ -352,45 +232,29 @@ window.addEventListener('scroll', () => {
   scrollTimeout = setTimeout(checkFunction, 10);
 }, { passive: true });
 ```
+Used in `navigation.js` and `scroll-hinter.js`.
+
+### IntersectionObserver Usage
+
+Used in `main.js` (lazy-playing videos), `side-nav-bar.js` (active section
+tracking), and `carousel-dots.js`/`project-card-entry-animation.js` context.
 
 ### Accessibility Patterns
 
 - `aria-current="page"` for active nav items
 - `aria-label` on navigation elements
 - `aria-hidden="true"` on decorative elements
-- `prefers-reduced-motion` checks
+- `prefers-reduced-motion` checks before any GSAP/CSS animation
 
 ### Module Export Pattern
 
-Each module exports an `init*` function:
 ```js
 export function initModuleName() {
-  // Check if required elements exist
   const element = document.querySelector('.selector');
   if (!element) return;
-
-  // Initialize functionality
+  // ...
 }
 ```
-
----
-
-## Page-Specific Loading
-
-### Landing Page (index.html)
-
-All modules from `main.js` are active:
-- Navigation tracking
-- Flip-board animation
-- Scroll hint
-- Lazy loading
-
-### Case Study Pages
-
-Additional modules loaded via separate script tags:
-- `side-nav-bar.js` - generates side navigation
-- `accordion.js` - expand/collapse sections
-- Swiper initialization (via CDN/separate file)
 
 ---
 
@@ -398,23 +262,18 @@ Additional modules loaded via separate script tags:
 
 | Library | Version | Usage |
 |---------|---------|-------|
-| GSAP | 3.14.2 | Smooth scroll animations |
-| GLightbox | 3.3.1 | Image/video lightbox galleries |
-| Swiper | 12.0.3 | Carousels (initialized separately) |
+| GSAP | 3.14.2 | Marquee, smooth scroll, entry animations |
+| GLightbox | 3.3.1 | Image/video lightbox galleries (dynamic import only) |
+| Swiper | 12.0.3 | Carousels (initialized separately, not via these modules) |
 
 ---
 
 ## Adding New Modules
 
-1. Create file in `src/js/modules/`
-2. Export `initModuleName()` function
-3. Import in `main.js`
-4. Call in appropriate lifecycle hook (DOMContentLoaded)
-5. Use early return pattern if required elements missing
-
-
----
-
-## New Components and testings
-
-For all new elements, modules and testing, create a new separate js file named after its purpouse and then import in main.js
+1. Create file in `src/js/modules/`.
+2. Export `initModuleName()`.
+3. Decide how it reaches the page: statically imported + called in
+   `main.js` (landing page only), or imported via an inline
+   `<script type="module">` in the specific case study HTML page(s) that
+   need it. Don't assume `main.js` covers case study pages — it doesn't.
+4. Use the early-return pattern if required elements are missing.
