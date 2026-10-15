@@ -16,10 +16,10 @@
     min-height: 44px;
     margin-top: $case-space-section-mobile;
     padding: 12px 20px;
-    font-family: $case-font-mono;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
+    font-weight: $weight-bold;
+    letter-spacing: $tracking-wide;
     text-transform: uppercase;
     color: $case-ink;
     background: none;

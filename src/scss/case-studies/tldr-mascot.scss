@@ -9,13 +9,13 @@
   gap: $space-8;
   margin: auto 0 0;
   padding-top: $space-20;
-  font-family: $case-font-mono;
+  font-family: $font-anonymous;
 
   &__face {
     flex: 0 0 auto;
     display: inline-block;
     font-size: $font-s;
-    line-height: 1.3;
+    line-height: $leading-snug;
     color: $blue;
     white-space: pre;
     user-select: none;
@@ -34,9 +34,9 @@
 
   &__message {
     display: grid;
-    font-family: $case-font-mono;
-    font-size: 13px;
-    line-height: 1.5;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
+    line-height: $leading-normal;
     color: $blue;
 
     &-default,

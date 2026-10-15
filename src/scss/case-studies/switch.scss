@@ -20,11 +20,11 @@
         font-family: $font-anonymous;
         font-size: $font-s;
         color: $neutral;
-        font-weight: 400;
+        font-weight: $weight-regular;
         transition: color 0.3s ease;
 
         @include breakpoint(mobile) {
-            font-size: calc($font-s * 0.85);
+            font-size: $font-xs;
         }
 
         &:first-child {

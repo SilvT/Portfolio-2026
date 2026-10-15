@@ -30,8 +30,8 @@
         color: $neutral;
 
         @include breakpoint(mobile){
-            font-size: calc($font-base*0.9);
-            line-height: 1.3;
+            font-size: $font-s;
+            line-height: $leading-snug;
         }
     }
     
@@ -39,7 +39,7 @@
         font-size: $font-base !important;
 
         @include breakpoint(mobile){
-            font-size: calc($font-base*0.9) !important;
+            font-size: $font-s !important;
         }
     }
     .cs-subtext{

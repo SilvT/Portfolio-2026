@@ -38,7 +38,7 @@
             // color: $blue;
 
             @include breakpoint(mobile){
-                font-size: calc($font-base*0.8);
+                font-size: $font-xs;
             }
         }
 
@@ -47,9 +47,9 @@
             color:$color-white-alpha;
             // color: $neutral;
             font-family: $font-anonymous;
-            line-height: 1.2;
+            line-height: $leading-tight;
             @include breakpoint(mobile){
-                font-size: calc($font-s*0.8);
+                font-size: $font-2xs;
             }
         }
     }

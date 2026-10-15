@@ -15,9 +15,9 @@
   background-color: $case-bg;
 
   a{
-    font-family: $case-font-display;
-    font-size: 14px;
-    font-weight: 500;
+    font-family: $font-bricolage;
+    font-size: $font-xs;
+    font-weight: $weight-medium;
     // color: $case-ink;
 
     &:focus-visible {
@@ -53,9 +53,9 @@
   }
 
   a {
-    font-family: $case-font-display;
-    font-size: 14px;
-    font-weight: 500;
+    font-family: $font-bricolage;
+    font-size: $font-xs;
+    font-weight: $weight-medium;
     color: $case-ink;
 
     &:focus-visible {
@@ -111,20 +111,20 @@
   }
 
   h1 {
-    font-family: $case-font-display;
-    font-size: 100px;
-    font-weight: 500;
-    line-height: 0.92;
-    letter-spacing: -0.045em;
+    font-family: $font-bricolage;
+    font-size: $font-masthead;
+    font-weight: $weight-medium;
+    line-height: $leading-masthead;
+    letter-spacing: $tracking-masthead;
     color: $case-ink;
     margin: 0;
 
     @include breakpoint(tablet) {
-      font-size: 72px;
+      font-size: $font-masthead-tablet;
     }
 
     @include breakpoint(mobile) {
-      font-size: 48px;
+      font-size: $font-masthead-mobile;
     }
   }
 
@@ -133,15 +133,15 @@
   // multi-word title that wraps to 3+ lines). Scoped to this modifier only
   // — short titles on other pages keep the default size.
   &--long-title h1 {
-    font-size: 64px;
+    font-size: $font-masthead-long;
 
     @include breakpoint(tablet) {
-      font-size: 52px;
+      font-size: $font-masthead-long-tablet;
     }
 
     @include breakpoint(mobile) {
-      font-size: 32px;
-      letter-spacing: -0.02em;
+      font-size: $font-masthead-long-mobile;
+      letter-spacing: $tracking-tight;
     }
   }
 
@@ -158,15 +158,15 @@
   }
 
   .case-subtitle {
-    font-family: $case-font-mono;
-    font-size: 20px;
-    font-weight: 400;
+    font-family: $font-anonymous;
+    font-size: $font-m;
+    font-weight: $weight-regular;
     color: $case-ink-soft;
     margin-top: 20px;
     z-index: 1;
 
     @include breakpoint(mobile) {
-      font-size: 16px;
+      font-size: $font-s;
       margin-top: 10px;
     }
   }
@@ -334,9 +334,9 @@
 
 .case-info {
   .case-issue-number {
-    font-family: $case-font-display;
-    font-size: 28px;
-    font-weight: 500;
+    font-family: $font-bricolage;
+    font-size: $font-xl;
+    font-weight: $weight-medium;
     color: $case-ink;
     margin: 0 0 24px;
 
@@ -346,11 +346,11 @@
   }
 
   .case-info-label {
-    font-family: $case-font-mono;
-    font-size: 13px;
-    font-weight: 700;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
+    font-weight: $weight-bold;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: $tracking-wide;
     color: $case-ink;
     margin: 0 0 14px;
   }
@@ -371,14 +371,14 @@
   }
 
   dt {
-    font-family: $case-font-mono;
-    font-size: 13px;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
     color: $case-ink-soft;
   }
 
   dd {
-    font-family: $case-font-display;
-    font-size: 16px;
+    font-family: $font-bricolage;
+    font-size: $font-s;
     color: $case-ink;
     margin: 0 0 10px;
 
@@ -391,14 +391,14 @@
 
 // ---- Shared caption + prose styles (reused by every component below) ----
 .case-caption {
-  font-family: $case-font-mono;
-  font-size: 13px;
+  font-family: $font-anonymous;
+  font-size: $font-2xs;
   color: $case-ink-soft;
   margin-top: 12px;
-  line-height: 1.5;
+  line-height: $leading-normal;
 
   .case-caption-num {
-    font-weight: 700;
+    font-weight: $weight-bold;
     color: $case-ink;
   }
 }
@@ -406,11 +406,11 @@
 // Label + Content (component 1) — fixed label style, reused everywhere
 // a small/muted/uppercase caption-of-a-section is needed.
 .case-label {
-  font-family: $case-font-mono;
-  font-size: 12px;
-  font-weight: 700;
+  font-family: $font-anonymous;
+  font-size: $font-2xs;
+  font-weight: $weight-bold;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: $tracking-wide;
   color: $case-ink-soft;
   margin: 0 0 16px;
 }
@@ -427,39 +427,39 @@
 }
 
 .case-tldr-content {
-  font-family: $case-font-display;
-  font-size: 18px;
-  line-height: 1.5;
+  font-family: $font-bricolage;
+  font-size: $font-base;
+  line-height: $leading-normal;
   color: $case-ink-soft;
   margin: 0;
 }
 
 .case-prose {
   h2, h3 {
-    font-family: $case-font-display;
-    font-weight: 600;
+    font-family: $font-bricolage;
+    font-weight: $weight-semibold;
     color: $case-ink;
     margin: 0 0 16px;
   }
 
   h2 {
-    font-size: 32px;
+    font-size: $font-2xl;
 
     @include breakpoint(mobile) {
-      font-size: 26px;
+      font-size: $font-xl;
     }
   }
 
   h3 {
-    font-size: 22px;
+    font-size: $font-l;
   }
 
   p,li {
     // font-family: 'Georgia', 'Times New Roman', serif;
-      font-family: $case-font-display;
+      font-family: $font-bricolage;
     // font-size: 17px;
-    font-size:16px;
-    line-height: 1.65;
+    font-size:$font-s;
+    line-height: $leading-relaxed;
     color: $case-ink;
     margin: 0 0 16px;
 
@@ -471,8 +471,8 @@
       color: $case-ink-soft;
     }
     span.case-caption-num{
-      font-family: "Anonymous Pro", monospace;
-      font-size: 16px;
+      font-family: $font-anonymous;
+      font-size: $font-s;
       // font-weight: 700;
       color: $case-ink;
     }
@@ -485,7 +485,7 @@
     li {
       margin: 0 0 8px;
       color: $case-ink-soft;
-      font-size:14px;
+      font-size:$font-xs;
 
       & strong{
         // font-weight:700;
@@ -500,13 +500,13 @@
   // clamp). Still Georgia/serif, same family as the body copy that follows
   // it — this is an emphasized paragraph, not a display heading.
   p.lede {
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.5;
+    font-size: $font-l;
+    font-weight: $weight-bold;
+    line-height: $leading-normal;
   }
 
   strong {
-    font-weight: 700;
+    font-weight: $weight-bold;
     color: $case-ink;
   }
 }
@@ -584,9 +584,9 @@
   }
 
   &__title {
-    font-family: $case-font-display;
-    font-size: 20px;
-    font-weight: 600;
+    font-family: $font-bricolage;
+    font-size: $font-m;
+    font-weight: $weight-semibold;
     margin: 0;
   }
 
@@ -597,8 +597,8 @@
   }
 
   &__counter {
-    font-family: $case-font-mono;
-    font-size: 13px;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
   }
 
   .new-carousel {
@@ -660,9 +660,9 @@
   }
 
   &__caption {
-    font-family: $case-font-mono;
-    font-size: 14px;
-    line-height: 1.6;
+    font-family: $font-anonymous;
+    font-size: $font-xs;
+    line-height: $leading-relaxed;
     color: rgba($case-bg, 0.85);
     margin: 0;
   }
@@ -751,11 +751,11 @@
   max-width: 900px;
   margin: 0 auto;
   // text-align: center;
-  font-family: $case-font-mono;
-  font-size: clamp(26px, 3vw, 40px);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  font-family: $font-anonymous;
+  font-size: clamp($font-xl, 3vw, $font-3xl);
+  font-weight: $weight-medium;
+  line-height: $leading-none;
+  letter-spacing: $tracking-tight;
   color: $case-ink;
 
     font-style: italic;
@@ -763,14 +763,14 @@
     text-align: left;
 
   @include breakpoint(mobile) {
-    font-size: clamp(22px, 6vw, 30px);
+    font-size: clamp($font-l, 6vw, $font-xl);
     sub{
-      font-size: clamp(14px, 4vw, 20px);
+      font-size: clamp($font-xs, 4vw, $font-m);
     }
   }
 
   sub{
-  font-size: clamp(18.2px, 2vw, 28px);  }
+  font-size: clamp($font-base, 2vw, $font-xl);  }
 }
 
 @include case-theme-text-dark('.case-display-statement');
@@ -820,18 +820,18 @@
   }
 
   &__title {
-    font-family: $case-font-display;
-    font-size: 18px;
-    font-weight: 600;
+    font-family: $font-bricolage;
+    font-size: $font-base;
+    font-weight: $weight-semibold;
     color: $case-ink;
     margin: 0 0 8px;
   }
 
   &__body {
     // font-family: 'Georgia', 'Times New Roman', serif;
-        font-family: $case-font-display;
-    font-size: 15px;
-    line-height: 1.55;
+        font-family: $font-bricolage;
+    font-size: $font-s;
+    line-height: $leading-normal;
     color: $case-ink;
     margin: 0;
   }
@@ -850,9 +850,9 @@
   max-width: 820px;
 
   &__title {
-    font-family: $case-font-display;
-    font-size: 28px;
-    font-weight: 600;
+    font-family: $font-bricolage;
+    font-size: $font-xl;
+    font-weight: $weight-semibold;
     color: $case-ink;
     margin: 0 0 16px;
     padding-bottom: 8px;
@@ -876,16 +876,16 @@
 
   &__marker {
     flex: 0 0 auto;
-    font-family: $case-font-mono;
-    font-size: 15px;
+    font-family: $font-anonymous;
+    font-size: $font-s;
     font-weight: $weight-bold;
     color: $case-ink;
   }
 
   &__body {
-    font-family: $case-font-mono;
-    font-size: 14px;
-    line-height: 1.6;
+    font-family: $font-anonymous;
+    font-size: $font-xs;
+    line-height: $leading-relaxed;
     color: $case-ink;
     margin: 0;
 
@@ -911,7 +911,7 @@
   gap: $case-gutter;
   padding: 20px 0;
   border-bottom: 1px solid $case-line;
-  font-family: $case-font-display;
+  font-family: $font-bricolage;
 
   // Inside the narrow .case-pairing-row__left slot (~40% width), the
   // 4-column inline grid is too cramped — stack index/title above
@@ -924,7 +924,7 @@
     .case-phase-row__meta,
     .case-phase-row__outcome {
       color:$case-ink-soft;
-      font-size:13px;
+      font-size:$font-2xs;
       margin:0;
       grid-column: 2;
       display: block;
@@ -950,29 +950,29 @@
   }
 
   &__index {
-    font-family: $case-font-mono;
-    font-size: 13px;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
     color: $case-ink-soft;
   }
 
   &__title {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: $font-base;
+    font-weight: $weight-medium;
     color: $case-ink-soft;
   }
 
   &__meta,
   &__outcome {
-    font-family: $case-font-mono;
-    font-size: 13px;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
     color: $case-ink-soft;
   }
 
   &__description {
     grid-column: 2 / -1;
-    font-family: $case-font-display;
-    font-size: 14px;
-    line-height: 1.5;
+    font-family: $font-bricolage;
+    font-size: $font-xs;
+    line-height: $leading-normal;
     color: $case-ink-soft;
     margin: 6px 0 0;
 
@@ -1067,9 +1067,9 @@
     }
 
     p {
-      font-family: $case-font-display;
-      font-size: 15px;
-      line-height: 1.6;
+      font-family: $font-bricolage;
+      font-size: $font-s;
+      line-height: $leading-relaxed;
       color: $case-ink-soft;
       margin: 0 0 8px;
 
@@ -1091,7 +1091,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: $case-gutter;
-  font-family: $case-font-display;
+  font-family: $font-bricolage;
   color: $case-ink;
 
   @include breakpoint(mobile) {
@@ -1116,23 +1116,23 @@
   }
 
   p{
-    font-family: $case-font-mono;
-    font-size: 14px;
+    font-family: $font-anonymous;
+    font-size: $font-xs;
     color:$case-ink-soft;
   }
 }
 
 // ---- Section heading (Context / Strengths / Quirks) ----
 .case-section-heading {
-  font-family: $case-font-display;
+  font-family: $font-bricolage;
   font-size: 36px;
-  font-weight: 500;
+  font-weight: $weight-medium;
   color: $case-ink;
   padding-top: 40px;
   // border-top: 1px solid $case-line;
 
   @include breakpoint(mobile) {
-    font-size: 28px;
+    font-size: $font-xl;
   }
 }
 
@@ -1152,8 +1152,8 @@
     max-width: $case-max;
     margin: 20px auto 0;
     padding: 0 40px;
-    font-family: $case-font-mono;
-    font-size: 13px;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
     color: #b8b8b8;
 
     @include breakpoint(mobile) {
@@ -1222,10 +1222,10 @@
   display: inline-flex;
   align-items: center;
   // font-family: $case-font-mono;
-  font-family: $case-font-display;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-family: $font-bricolage;
+  font-size: $font-2xs;
+  font-weight: $weight-bold;
+  letter-spacing: $tracking-wide;
   text-transform: uppercase;
   color: $case-bg;
   background: $case-ink;
@@ -1251,7 +1251,7 @@
     left: 20px;
     min-height: 44px;
     padding: 12px 16px;
-    font-size: 12px;
+    font-size: $font-2xs;
 
     @media (prefers-reduced-motion: no-preference) {
       transition: top 0.2s ease;
@@ -1308,8 +1308,8 @@
     justify-content: center;
     background: none;
     border: none;
-    font-size: 28px;
-    line-height: 1;
+    font-size: $font-xl;
+    line-height: $leading-none;
     color: $case-ink;
     cursor: pointer;
 
@@ -1320,9 +1320,9 @@
   }
 
   &__title {
-    font-family: $case-font-display;
-    font-size: 24px;
-    font-weight: 600;
+    font-family: $font-bricolage;
+    font-size: $font-l;
+    font-weight: $weight-semibold;
     color: $case-ink;
     margin: 0 0 24px;
     padding-bottom: 16px;
@@ -1341,16 +1341,16 @@
 
   .case-lettered-section__marker {
     flex: 0 0 auto;
-    font-family: $case-font-mono;
-    font-size: 14px;
+    font-family: $font-anonymous;
+    font-size: $font-xs;
     font-weight: $weight-bold;
     color: $case-ink;
   }
 
   .case-lettered-section__body {
-    font-family: $case-font-mono;
-    font-size: 13px;
-    line-height: 1.6;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
+    line-height: $leading-relaxed;
     color: $case-ink;
     margin: 0;
   }
@@ -1380,7 +1380,7 @@
     font-weight: $weight-bold;
     white-space: normal;
     min-width: 10rem;
-    line-height: 1.4;
+    line-height: $leading-normal;
     text-align: center;
     opacity: 0;
     visibility: hidden;
@@ -1437,11 +1437,11 @@
   }
 
   &__label {
-    font-family: $case-font-mono;
-    font-size: 13px;
-    font-weight: 700;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
+    font-weight: $weight-bold;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: $tracking-wide;
     color: $case-ink;
     margin: 0 0 $space-12;
   }

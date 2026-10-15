@@ -26,8 +26,8 @@
 
 .scroll-text {
   font-family: $font-anonymous;
-  font-size: font-s;
-  letter-spacing: 0.1em;
+  font-size: $font-s;
+  letter-spacing: $tracking-wider;
   color: $blue;
   text-decoration: none;
   pointer-events: auto;
@@ -40,7 +40,7 @@
   }
 
   @include breakpoint(mobile) {
-    font-size: font-xs;
+    font-size: $font-xs;
     letter-spacing: 0.25em;
   }
 }

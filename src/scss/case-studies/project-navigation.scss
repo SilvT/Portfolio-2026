@@ -75,21 +75,21 @@
   }
 
   &__label {
-    font-family: $case-font-mono;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-family: $font-anonymous;
+    font-size: $font-2xs;
+    font-weight: $weight-bold;
+    letter-spacing: $tracking-wide;
     text-transform: uppercase;
     color: $case-ink-soft;
   }
 
   &__title {
-    font-family: $case-font-display;
-    font-size: 24px;
-    font-weight: 600;
+    font-family: $font-bricolage;
+    font-size: $font-l;
+    font-weight: $weight-semibold;
 
     @include breakpoint(mobile) {
-      font-size: 20px;
+      font-size: $font-m;
     }
   }
 }

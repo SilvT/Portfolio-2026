@@ -1204,3 +1204,11 @@ img{
   height: auto;
 }
 }
+
+// Tablet padding for the legacy .cs-layout-grid (moved from typography.scss, only used by archived pages)
+@include breakpoint(tablet) {
+  .cs-layout-grid {
+    padding: 2.5rem 3rem;
+    gap: 3rem;
+  }
+}

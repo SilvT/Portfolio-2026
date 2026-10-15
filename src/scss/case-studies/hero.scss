@@ -129,15 +129,15 @@
       .cs-metric-value {
         font-size: $font-s;
         margin-bottom: 0;
-        line-height: 1;
+        line-height: $leading-none;
         width: auto; // Override full width from mixin
         text-align: left;
         transition: opacity 0.5s ease-in-out, font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .cs-metric-icon {
-        font-size: 1.25rem;
-        line-height: 1;
+        font-size: $font-m;
+        line-height: $leading-none;
         transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
@@ -197,7 +197,7 @@
     color: $color-blue-dark;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: $tracking-wider;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -207,7 +207,7 @@
     font-variation-settings: 'opsz' 14, 'wdth' 100;
     color: $blue-dark;
     margin-bottom: 0.5rem;
-    line-height: 1.2;
+    line-height: $leading-tight;
     transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         @include breakpoint(mobile){
         font-size: $font-l;
@@ -378,7 +378,7 @@
             font-size: $font-s;
 
             @include breakpoint(mobile){
-             font-size: calc($font-s*0.8);   
+             font-size: $font-2xs;   
             }
         }
         .cs-hero-data{
@@ -390,7 +390,7 @@
                 color: $neutral;
                 font-size: $font-s;
              @include breakpoint(mobile){
-             font-size: calc($font-s*0.8);   
+             font-size: $font-2xs;   
             }
             }
         }    
@@ -407,8 +407,8 @@
     }
 
     .cs-hero-subtitle{
-        font-weight: 400;
-        font-size: calc($font-base*1.2);
+        font-weight: $weight-regular;
+        font-size: $font-l;
          @include breakpoint(mobile){
             font-size: $font-base;
             margin-bottom: 0.5rem;
@@ -417,13 +417,13 @@
      .cs-story-hook-context{
         font-size: $font-base;
         color:$blue-dark;
-        font-weight: light;
-        line-height:1.6;
+        font-weight: $weight-light;
+        line-height:$leading-relaxed;
         margin:0;
 
 
       @include breakpoint(mobile){
-         font-size: calc($font-base*0.8);   
+         font-size: $font-xs;   
          margin-bottom: 1rem;
         }
      }
@@ -509,13 +509,13 @@ margin:0 $space-120 0 $space-60;
         }
       }
       .cs-metric-icon{    
-        font-size: 1.5rem;
+        font-size: $font-l;
         color: $blue-dark;
-        line-height: 1;
+        line-height: $leading-none;
 }
         .cs-metric-value{
           text-wrap: auto;          
-          font-weight: 500;
+          font-weight: $weight-medium;
           font-size: $font-base;
           color: $color-blue-400;
           text-align: center;
@@ -525,15 +525,15 @@ margin:0 $space-120 0 $space-60;
           font-variation-settings: "opsz" 14, "wdth" 100;
           
           @include breakpoint(mobile){
-            font-size: calc($font-s*0.9);
-            font-weight: 600;
+            font-size: $font-xs;
+            font-weight: $weight-semibold;
           }
         }
       .cs-metric-label{
-        font-family: Bricolage Grotesque, sans-serif;
-        font-weight: 300;
-        font-size: 14px;
-        line-height: 1.1;
+        font-family: $font-bricolage;
+        font-weight: $weight-light;
+        font-size: $font-xs;
+        line-height: $leading-tight;
         color: $neutral;
         text-align: center;
         width: 100%;
@@ -563,24 +563,24 @@ margin:0 $space-120 0 $space-60;
             color: $blue;
             font-size:$font-base;
             $font-weigth: medium;
-            line-height: 121%;
+            line-height: $leading-tight;
         @include breakpoint(mobile){
-            font-size:calc($font-base*0.7);
+            font-size:$font-2xs;
         }
         }
         .right-data{
             color: $neutral-light;
             font-size:$font-base;
             $font-weigth: 100;
-            line-height: 121%;
+            line-height: $leading-tight;
 
             .em{
                 color: $blue;
-                font-weight: 500;
+                font-weight: $weight-medium;
                 
             }
             @include breakpoint(mobile){
-            font-size:calc($font-base*0.7);
+            font-size:$font-2xs;
         }
         }
 
@@ -598,4 +598,16 @@ margin:0 $space-120 0 $space-60;
                 @include breakpoint(mobile){
                     display: none;
                 }
+}
+
+
+// Tablet padding for the legacy .cs-hero (moved from typography.scss, only used by archived pages)
+@include breakpoint(tablet) {
+  .cs-hero {
+    padding: 0 3rem 2.5rem;
+
+    .cs-hero-metrics {
+      max-width: 500px;
+    }
+  }
 }

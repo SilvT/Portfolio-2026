@@ -92,7 +92,7 @@
   &.scrolled .nav-item {
     &.active,
     &:not(.active) {
-      font-size: calc($font-xl * 0.7);
+      font-size: $font-m;
     }
   }
 
@@ -181,7 +181,7 @@
     &.scrolled .nav-item {
       &.active,
       &:not(.active) {
-        font-size: calc($font-3xl * 0.7);
+        font-size: $font-xl;
       }
     }
   }
@@ -217,7 +217,7 @@
     &.scrolled .nav-item {
       &.active,
       &:not(.active) {
-        font-size: calc($font-l * 0.7);
+        font-size: $font-s;
       }
     }
 

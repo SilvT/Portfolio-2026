@@ -63,7 +63,7 @@
     margin: -8px;
     font-family: $font-bricolage;
     font-size: $font-s;
-    line-height: 1;
+    line-height: $leading-none;
     cursor: pointer;
     position: relative;
     text-decoration: none;
@@ -182,7 +182,7 @@
 
     .project-nav-link {
       padding: 0.4rem 0.8rem;
-      font-size: 0.85rem;
+      font-size: $font-xs;
 
       &.prev-project,
       &.next-project {
@@ -317,7 +317,7 @@
     margin: -8px;
     font-family: inherit;
     font-size: inherit;
-    line-height: 1;
+    line-height: $leading-none;
     cursor: pointer;
     position: relative;
     text-transform: capitalize;

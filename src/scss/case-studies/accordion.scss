@@ -15,7 +15,7 @@
   padding: 4rem 1.5rem;
 
   &-title {
-    font-size: 2rem;
+    font-size: $font-2xl;
     margin-bottom: 3rem;
   }
   @include breakpoint(mobile){
@@ -126,7 +126,7 @@
 .milestone-index {
   // font-size: 0.875rem;
   font-size: $font-s;
-  font-weight: 600;
+  font-weight: $weight-semibold;
   color: #4a8fdc;
   flex-shrink: 0;
 }
@@ -157,10 +157,10 @@
   padding-right: 0.5rem;
 
   strong {
-    font-weight: 600;
+    font-weight: $weight-semibold;
   }
 @include breakpoint(mobile){
-    font-size: calc($font-s*0.9);
+    font-size: $font-xs;
     padding: 0.5rem 1rem;
 }
 
@@ -192,7 +192,7 @@
     a.cta-button{
     font-size: $font-s;
     opacity: 0.7;
-    line-height: 140%;
+    line-height: $leading-normal;
     text-align: left;
     }
   }
@@ -204,12 +204,12 @@
 .milestone-block {
   // Semantic replacement for h4 - maintains same visual styling
   .milestone-block-heading {
-    font-size: 0.9rem;
+    font-size: $font-xs;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: $tracking-wide;
     margin-bottom: 0.5rem;
     color: $blue-dark;
-    font-weight: 400; // Bold handled by inner <strong>
+    font-weight: $weight-regular; // Bold handled by inner <strong>
   }
 
   ul {
@@ -244,7 +244,7 @@
       &::before {
         content: "★"; // or ✓ → ▶ → ⬤
         color: $blue;
-        font-size: 0.9rem;
+        font-size: $font-xs;
       }
     }
       &.milestone--insight{
@@ -252,7 +252,7 @@
       &::before {
         content: ">"; // or ✓ → ▶ → ⬤
         color: $blue;
-        font-weight: bold;
+        font-weight: $weight-bold;
         // font-size: 1.1rem;
       }
     }
@@ -261,7 +261,7 @@
 
   p {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: $font-s;
   }
 }
 

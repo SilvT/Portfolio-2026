@@ -382,11 +382,11 @@
     }
 
     .cs-metric-icon {
-      font-size: 1.7rem;
+      font-size: $font-xl;
       // color: $blue;
 
       @include breakpoint(mobile) {
-        font-size: 1.5rem;
+        font-size: $font-l;
       }
     }
 
@@ -395,7 +395,7 @@
       font-size: $font-l;
       width: auto;
       @include breakpoint(mobile) {
-        font-size: 18px;
+        font-size: $font-base;
         text-align: center;
         white-space: pre;
       }
@@ -407,7 +407,7 @@
       width: auto;
       text-align: center;
       @include breakpoint(mobile) {
-        font-size: 12px;
+        font-size: $font-2xs;
         text-align: center;
         // white-space: pre;
       }
@@ -429,7 +429,7 @@
       }
 
       .cs-metric-icon {
-        font-size: 2rem;
+        font-size: $font-2xl;
       }
 
       .cs-metric-value {
@@ -514,7 +514,7 @@
       justify-content: center;
       padding: 6px;
       border-radius: 2px;
-      font-weight: 500;
+      font-weight: $weight-medium;
       font-size: $font-base;
       text-decoration: none;
       white-space: nowrap;
@@ -575,7 +575,7 @@
        border-radius: 2px
        ;
        @include breakpoint(mobile){
-        font-size: calc($font-xs)*0.8;
+        font-size: $font-3xs;
        }
     }
   }
@@ -647,13 +647,13 @@
 
     .title-group {
       .project-title {
-        line-height: 130%;
+        line-height: $leading-snug;
         margin: 0.5rem 0;
 
         @include breakpoint(mobile) {
           // font-size: calc($font-3xl * 0.85);
           font-size: $font-xl;
-          line-height: 1;
+          line-height: $leading-none;
           margin: 0.25rem 0;
         }
       }
@@ -666,7 +666,7 @@
         width: fit-content;
 
         @include breakpoint(mobile) {
-          font-size: calc($font-xs*0.8);
+          font-size: $font-3xs;
           padding: 0.2rem 0.75rem;
         }
       }
@@ -709,12 +709,12 @@
       gap: $space-8;
 
       .project-description {
-        line-height: 150%;
+        line-height: $leading-normal;
         font-weight: $weight-medium;
 
         @include breakpoint(mobile) {
-          font-size: calc($font-base * 0.9);
-          line-height: 130%;
+          font-size: $font-s;
+          line-height: $leading-snug;
           margin-top: 0.7rem;
         }
       }
@@ -732,14 +732,14 @@
         color:$neutral;
         letter-spacing: 1;
         font-size: $font-base;
-        line-height: 120%;
+        line-height: $leading-tight;
         // font-style: italic;
         position: relative;
         height: 100%;
 
         @include breakpoint(mobile) {
           font-size: $font-xs;
-          line-height: 130%;
+          line-height: $leading-snug;
           // display: none;
         }
       }
