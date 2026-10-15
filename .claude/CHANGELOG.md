@@ -5,6 +5,16 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ---
 
+## 2026-10-15
+
+### Bug: Vercel build failing since `e1b0d4b`
+- **Symptom:** Vercel build failed (and `npm run build` locally): `Could not resolve entry module "token-launch.html"`.
+- **Cause:** `e1b0d4b` deleted `token-launch.html` but `vite.config.js` still listed it as a Rollup entry. Every push after that failed; Vercel kept serving the last good deploy. This was the issue flagged as "not fixed" in the 2026-10-14 entry.
+- **Fix:** removed the `token-launch` entry from `vite.config.js` and its `<url>` block from `public/sitemap.xml` (it would have pointed crawlers to a 404). The Token Launch card in `index.html` links to the Figma community plugin, so no other change needed.
+- **Verified:** `npm run build` completes cleanly.
+
+---
+
 ## 2026-10-14
 
 ### Audited — src/js/ for dead files (same pass as src/scss/ and public/, but found nothing to archive)

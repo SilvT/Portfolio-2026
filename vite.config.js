@@ -16,7 +16,6 @@ export default defineConfig({
         'marketing-management': path.resolve(__dirname, 'marketing-management.html'),
         'design-system': path.resolve(__dirname, 'design-system.html'),
         'energy-tracker': path.resolve(__dirname, 'energy-tracker.html'),
-        'token-launch': path.resolve(__dirname, 'token-launch.html'),
       },
     },
   },
