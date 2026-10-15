@@ -7,6 +7,19 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ## 2026-10-15
 
+### Added — Library Changelog card in the landing page tools grid
+- **Card:** published Figma plugin, linked to its Figma Community page (`target="_blank"`, `rel="noopener noreferrer"`), `service-card--blue`, `data-service-row="2"`, "Published" tag. Rows after it renumbered (the "Coming soon" card is now row 3).
+- **Preview images:** `token-launcher.png` (row 1, default active), `Changelog.png` (row 2, re-exported), `figma-finder-cover.png` (row 3). Documentation assistant card and its preview image are commented out, not deleted. The old "Placeholder Tool" comment block was removed.
+- **Preview cell shape (measured, not changed):** `.service-card--preview` is sized by the viewport, not by an aspect ratio, and the image is `object-fit: cover`. At 1920x1080 it is 916x379 (2.4:1), 1440x900 676x289 (2.3:1), 1280x720 596x199 (3.0:1), 1024x768 468x223 (2.1:1), 768x1024 728x192 (3.8:1), 375x812 335x192 (1.7:1). A 16:9 cover is cropped top and bottom (about 25% at 1440x900, about 40% at 1280x720).
+- **Design preference:** export preview covers at 1920x800 (2.4:1) with logo, title and key UI inside the central 16:9 band (roughly the middle 60% of the height); top and bottom 20% are background only. Do not add a fixed `aspect-ratio` to the preview cell, it breaks the one-viewport-height layout of `#tools`.
+- **Not verified:** no browser check of the new card or the token changes below at the checklist widths. Build passes.
+
+### Changed — hardcoded values replaced with design tokens across SCSS
+- Commit `Replace hardcoded values with design tokens across SCSS` covers `_variables.scss`, `typography.scss` and the landing page and case study partials. Examples: `line-height: 150%` and `1.5` became `$leading-normal`, `130%` became `$leading-snug`.
+- **Bug fixed in passing:** `scroll-hinter.scss` had `font-size: font-s` and `font-xs` (missing `$`), so the size never applied. Now `$font-s` and `$font-xs`.
+- **Removed:** `$case-font-display` and `$case-font-mono` aliases from `_variables.scss`, `$base-mobile` from `typography.scss`, and the `.cs-hero` and `.cs-layout-grid` tablet overrides from `typography.scss`.
+- **Visible change to check:** mobile `p` is now `$font-xs` (was `calc($font-s*0.9)`) and mobile `li` is `$font-2xs` (was `calc($font-s*0.8)`).
+
 ### Added — skip link, theme-color and apple-touch-icon
 - **Skip link:** `<a class="skip-link">` as first child of `<body>` on index, 404 and the four case study pages. Targets `#main` (404), `#project-content` (case studies) and `#library-freeze` (index, which has no `<main>`). Style in `accesibility.scss`: off-screen until focused, `$blue-dark` on white, above the nav (z-index 2000). `!important` on colour/margin/padding is deliberate: `body[data-theme] a:not(...)` and `.case-page a:visited` outrank a single class on case study pages.
 - **theme-color:** `#F5F3F0` (cream, `$color-cream-200`) on index and 404, `#FFFFFF` (`$case-bg`) on case study pages. HTML meta can't use SCSS tokens, so these are copies of the values.
