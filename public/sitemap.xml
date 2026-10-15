@@ -16,7 +16,7 @@
 
   <!-- CV PDF - High priority for recruiters and AI scrapers -->
   <url>
-    <loc>https://www.silviatravieso.com/cv-silvia-travieso-2025.pdf</loc>
+    <loc>https://www.silviatravieso.com/Silvia-Travieso-CV-2026.pdf</loc>
     <lastmod>2026-01-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -24,29 +24,16 @@
 
   <!-- Project Pages - Core portfolio work -->
   <url>
-    <loc>https://www.silviatravieso.com/marketing-management.html</loc>
-    <lastmod>2026-01-26</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
     <loc>https://www.silviatravieso.com/design-system.html</loc>
     <lastmod>2026-01-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <url>
-    <loc>https://www.silviatravieso.com/design-system-wip.html</loc>
-    <lastmod>2026-01-26</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.9</priority>
-  </url>
 
   <url>
-    <loc>https://www.silviatravieso.com/energy-tracker.html</loc>
-    <lastmod>2026-01-26</lastmod>
+    <loc>https://www.silviatravieso.com/library-freeze.html</loc>
+    <lastmod>2026-10-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.9</priority>
   </url>

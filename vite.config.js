@@ -16,6 +16,8 @@ export default defineConfig({
         'marketing-management': path.resolve(__dirname, 'marketing-management.html'),
         'design-system': path.resolve(__dirname, 'design-system.html'),
         'energy-tracker': path.resolve(__dirname, 'energy-tracker.html'),
+        'library-freeze': path.resolve(__dirname, 'library-freeze.html'),
+        404: path.resolve(__dirname, '404.html'),
       },
     },
   },

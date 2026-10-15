@@ -65,6 +65,6 @@ Deployment via Vercel.
 If you have questions or want to discuss the work, feel free to reach out.
 
 silvia.travieso.g@gmail.com  
-[www.silviatravieso.com](www.silviatravieso.com)   
+[www.silviatravieso.com](https://www.silviatravieso.com)   
 [Linkedin](http://www.linkedin.com/in/silvia-travieso-gonzalez)
 

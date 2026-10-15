@@ -7,6 +7,79 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ## 2026-10-15
 
+### Added — skip link, theme-color and apple-touch-icon
+- **Skip link:** `<a class="skip-link">` as first child of `<body>` on index, 404 and the four case study pages. Targets `#main` (404), `#project-content` (case studies) and `#library-freeze` (index, which has no `<main>`). Style in `accesibility.scss`: off-screen until focused, `$blue-dark` on white, above the nav (z-index 2000). `!important` on colour/margin/padding is deliberate: `body[data-theme] a:not(...)` and `.case-page a:visited` outrank a single class on case study pages.
+- **theme-color:** `#F5F3F0` (cream, `$color-cream-200`) on index and 404, `#FFFFFF` (`$case-bg`) on case study pages. HTML meta can't use SCSS tokens, so these are copies of the values.
+- **apple-touch-icon:** `public/apple-touch-icon.png`, 180x180, opaque (iOS fills transparency with black), logo on cream. Rendered from `logo-filled.svg` with Playwright.
+- **Verified** at 1200px on all six pages (hidden until Tab, then visible with a focus outline, Enter moves to the target) and 375px on design-system (no overflow). Build passes.
+- **Not added:** `case-energy-tracker.html` (local working file).
+
+### Changed — `design-system.html` and `library-freeze.html` are now indexable
+- Silvia confirmed both are finished. Removed `noindex` and added Open Graph + Twitter card tags (title, description, image, `og:url` matching the canonical). Both stay in `sitemap.xml`.
+- **Images:** library-freeze uses `/library-freeze/cover.png` (1482x712). Design system uses a new `public/ds/ds-og.jpg` (1200x630 crop of `ds-hero.webp`; WebP is not reliably supported by link previews). The crop shows the Marketing UI styleguide screenshot, same as the page hero.
+- **Copy:** the OG description for library-freeze swaps the em dash in the page's meta description for a colon. The page's own meta description was fixed too (em dash replaced by a colon).
+- Still `noindex`: `marketing-management.html`, `energy-tracker.html` (work in progress), `case-energy-tracker.html` (local working file), `404.html`.
+
+### Changed — work-in-progress case studies are noindex; Marketing Management card is a normal button
+- **noindex:** `marketing-management.html` already had it; added `<meta name="robots" content="noindex">` to `energy-tracker.html`. Removed both from `public/sitemap.xml` so sitemap and robots agree. Canonical tags stay.
+- **Landing page:** the Marketing Management card showed a disabled "Coming soon" pill. Replaced with the standard `<a class="cta-button">→ Read Case Study</a>` linking to `/marketing-management.html`, so visitors can see the in-between state. Deleted the now-unused `.cta-button--disabled` rule from `project-cards.scss`. The two "Coming soon" tags on the Tools cards are unchanged.
+- **Verified** at 375/768/1200px: button 44-48px tall, no horizontal overflow, link opens the page, no console errors.
+- **Still open:** `design-system.html` and `library-freeze.html` are `noindex` but remain in the sitemap (decision pending in `tbd-tasks.md`).
+- **Correction:** `case-energy-tracker.html` is a local working file (not live, not published), not a deleted page. It stays untracked by the build and sitemap.
+
+### Removed — `case-energy-tracker.html` from tracking
+- Silvia confirmed the page is no longer part of the site. Removed it from `vite.config.js` (build input), `public/sitemap.xml` and `src/js/CLAUDE.md`, and from the `tbd-tasks.md` noindex item. This reverses the earlier entry that added it to the build and sitemap.
+- The file itself is still in the repo root (committed history only, nothing links to it). Left in place pending Silvia's call on archiving or deleting it.
+
+### Added — canonical tags on case study pages
+- Added `<link rel="canonical" href="https://www.silviatravieso.com/<page>.html">` to `design-system.html`, `marketing-management.html` and `library-freeze.html`, right after their robots meta. Skipped `case-energy-tracker.html` (intentionally unindexed) and `404.html` (`noindex`).
+- **Finding:** all four case study pages have `<meta name="robots" content="noindex">` yet are listed in `sitemap.xml`. Mixed signal; logged in `tbd-tasks.md` for a decision. Did not add `og:url` because those pages have no OG block at all.
+
+### Fixed — canonical domain and `energy-tracker.html` canonical URL
+- **Finding:** `https://silviatravieso.com` returns a 307 redirect to `https://www.silviatravieso.com`, so `www` is the real canonical domain. `index.html` canonical/OG/Twitter tags and `energy-tracker.html` used the non-www domain (sitemap and robots.txt already used `www`).
+- **Bug:** `energy-tracker.html` canonical and `og:url` pointed to `/energy-tracker`, which returns 404 on production (no `cleanUrls`; only `.html` URLs resolve). Fixed to `/energy-tracker.html`.
+- **Fix:** switched all `silviatravieso.com` URLs in `index.html` and `energy-tracker.html` to `https://www.silviatravieso.com`; fixed the README link (missing `https://`, it was a relative link).
+- **Not done (needs Silvia):** make the Vercel redirect permanent (308) in the dashboard; update the `.claude/CLAUDE.md` live URL. `.claude/worktrees/` holds a stale copy of the site with the old URLs; left untouched.
+
+### Added — draft 404 page (landing-page style)
+- **Files:** `404.html` (added to `vite.config.js` input, so Vercel serves it for unknown URLs), `src/scss/landing-page/error-page.scss` (`@use`d from `_landing-page.scss`).
+- **Design:** first version used the white case study shell and looked off-brand. Rebuilt on the landing hero: cream body, `.top-nav` logo, `.section-about` with the blue ellipse circles, `.info-grid` name styling (`.404` in Fascinate like `.S`), `.about-cta` outline buttons, plus an "Case studies you can read" link list and a slim blue-light footer. No JS, no flip-board (`flipBoardAnimation.js` hardcodes its titles). Nav shows the logo only: the landing nav links sit at 30% opacity, which fails AA.
+- **Contrast:** `$blue` and `$blue-soft` are below 4.5:1 on cream, so the small text on this page uses `$blue-dark`. The landing hero's `$blue-soft` role line has the same issue (not changed).
+- **Bugs:** (1) the case study theme rule `body[data-theme] a:not(...)` outranked single-class styles; moot after the rebuild. (2) The hero circles drift forever with no reduced-motion rule; added one for this page (`circle:nth-child(n)` to match the hero's per-circle specificity). The landing page itself still lacks it. (3) Vite dev kept serving stale SCSS after an edit; restarting the dev server fixed it.
+- **Verified** at 375/480/767/769/1024/1200/1728px: no horizontal overflow, links 44px tall, heading on one line, focus visible, circles stop under reduced motion. Not checked: Vercel serving it in production.
+
+### Fixed — `library-freeze` and `case-energy-tracker` missing from the build; sitemap and OG image refreshed
+- **Symptom:** both pages existed at the repo root but were not in `dist/`, so they would 404 on Vercel.
+- **Cause:** they were never added to `rollupOptions.input` in `vite.config.js`.
+- **Fix:** added both entries. `npm run build` now outputs all 6 HTML pages.
+- **Sitemap (`public/sitemap.xml`):** removed `design-system-wip.html` (no longer exists), CV entry now `Silvia-Travieso-CV-2026.pdf`, added the two pages above.
+- **`public/og-image.jpg`:** new file (referenced by OG/Twitter tags but never existed). 1200x630 Playwright screenshot of the hero, taken after the flip-board settled.
+- **Open items** (404 page, www vs non-www, JSON-LD, theme-color, apple-touch-icon, skip link, print CSS) are in `tbd-tasks.md`.
+
+### Added — new type tokens in `_variables.scss` (Phase 1 of making variables the typography source of truth)
+- **Why:** audit of 272 `font-size` declarations found only ~120 on tokens, ~35 as `calc($font-x * 0.8/0.9…)` and ~75 raw values. `line-height` (20+ values) and `letter-spacing` (16 values) had no tokens at all.
+- **Added (unused so far, additive, no CSS output change):** `$font-m` 20px, `$font-2xs` 13px, `$leading-none/tight/snug/normal/relaxed` (1 / 1.2 / 1.3 / 1.5 / 1.6), `$tracking-tight/wide/wider` (-0.01em / 0.04em / 0.1em). Each has a `NEW:` comment with use counts and where used, so they can be condensed later. Block is labelled "NEW TYPE TOKENS" after `$weight-bold`.
+- **Scope rule:** `case-studies/blocks.scss` (legacy `cs-*` styles, to be removed later) is NOT migrated to tokens in Phases 2 to 4, and the lint check must exclude it. Removed `$font-3xs` (11px) because all 4 uses were in `blocks.scss`. Counts in the token comments now exclude it.
+- **First migration:** the four live `line-height: 1.4` / `140%` uses now use `$leading-normal` (1.5; 1.4 is equidistant from 1.3 and 1.5, 1.5 chosen): `case-study-components.scss` (`::before` label), `_project-rows-new.scss` (`.service-card-description`), `footer.scss` (`.web-tooltip`), `accordion.scss` (`a.cta-button`, was `140%`). `blocks.scss` left as is. Visual change (about 1.6px more per line at 16px), not yet checked in a browser. Accordion applied before confirming it is live styling.
+- **Phase 2 (`typography.scss`):** line-heights now use `$leading-normal` (was `150%`/`1.5`) and `$leading-snug` (was `130%`). Removed unused `$base-mobile` and the empty "Variables" banner. Moved the tablet `.cs-hero` and `.cs-layout-grid` padding out of `typography.scss` into the end of `hero.scss` and `blocks.scss`: both classes are only used by archived HTML (legacy), so they now sit with the rest of the legacy styles that will be deleted. Compiled CSS diff: only `150%`/`130%` to `1.5`/`1.3` and the two moved blocks (they now come after the base rules, which only affects archived pages). Still raw in `typography.scss`: mobile `calc($font-s*0.9)` / `0.8` for `p` / `li` and `$font-base` for mobile h3, waiting on the mobile-scale decision.
+- **Re-added `$font-3xs` (11px)** at Silvia's request, now justified by the `calc($font-xs*0.8)` (11.2px) and `calc($font-base*0.6)` (10.8px) uses in `line-breaker.scss` and `project-cards.scss` instead of the removed `blocks.scss` ones.
+- **Phase 3a, mobile `calc()` sizes snapped to tokens:** all 35 `font-size: calc($font-x * n)` outside `blocks.scss` now use the nearest token (tie broken to the smaller token), plus `line-height: calc(1.6*0.9)` to `$leading-normal` in `line-breaker.scss`. Mapping: 10.8 and 11.2px to `$font-3xs` (Silvia specified this for `$font-base*0.6` and `$font-xs*0.8`), 12.6 and 12.8px to `$font-2xs`, 13.6 and 14.4px to `$font-xs`, 15.4 and 16.2px to `$font-s`, 19.2 and 19.6px to `$font-m`, 21.6 and 22.4px to `$font-l`, 28px to `$font-xl`, 39.2px to `$font-3xl`. Max change about 0.8px (new-about title 39.2 to 40px, nav-bar 15.4 to 16px). `blocks.scss` (14 calcs) left per the legacy rule. Compiled CSS diff matches the mapping exactly. Not yet checked in a browser: affects about, nav-bar, footer, project cards, hero, line-breaker, lightbox, accordion, switch and typography `p`/`li` on mobile.
+- **Phase 3b, remaining raw typography values migrated (214 declarations, `blocks.scss` skipped):**
+  - `font-weight` to `$weight-*` (all raw values).
+  - `line-height` to `$leading-*` (nearest; 0.92 to `$leading-masthead`).
+  - `letter-spacing` to `$tracking-*` (-0.045em to `$tracking-masthead`; -0.02em to tight; 0.05em and 0.06em to wide; 1px to wider).
+  - `font-size` px/rem to the nearest token within 2px. Silvia decided 12px to `$font-2xs` (13) and 15px to `$font-s` (16). Masthead h1 sizes (100/72/48 and 64/52/32px) to `$font-masthead*`. 24px to `$font-l`, 26px to `$font-xl`, 0.95rem to `$font-s`, 1.5rem to `$font-l`.
+  - `font-family`: `$case-font-display` / `$case-font-mono` replaced by `$font-bricolage` / `$font-anonymous` (aliases removed from `_variables.scss`), plus two hardcoded stacks.
+  - **Left raw on purpose:** `clamp()` sizes in `case-display-statement`, `font-size: 0.9em` (`_project-rows-new`), `36px` (`case-study-components:1128`, 4px from nearest token), line-height 0.8 (line-breaker x2) and 0.862 (nav-bar), letter-spacing `0.25em` (scroll-hinter), `0.5rem` and `-0.01rem` (new-about), `-0.28px` (project-cards).
+  - **Bug found, not fixed:** `project-cards.scss:747` has `letter-spacing: 1;` with no unit, which is invalid CSS and ignored by browsers.
+  - Verified: sass compiles, compiled CSS diff matches the mapping. Not yet checked in a browser.
+- **`clamp()` sizes kept, px ends tokenised** (`.case-display-statement` and its `sub`, `case-study-components.scss`): `clamp(26px,3vw,40px)` to `clamp($font-xl, 3vw, $font-3xl)`, `clamp(22px,6vw,30px)` to `clamp($font-l, 6vw, $font-xl)`, `clamp(14px,4vw,20px)` to `clamp($font-xs, 4vw, $font-m)`, `clamp(18.2px,2vw,28px)` to `clamp($font-base, 2vw, $font-xl)`. Shifts: 26 to 28, 30 to 28 (tie, smaller token), 18.2 to 18. The `vw` middle values are unchanged. Not yet checked in a browser.
+- **Masthead tokens (added after):** `$font-masthead` 100 / `-tablet` 72 / `-mobile` 48, `$font-masthead-long` 64 / `-tablet` 52 / `-mobile` 32, `$leading-masthead` 0.92, `$tracking-masthead` -0.045em, all commented as case study pages masthead sizes. The mobile ones equal `$font-4xl` and `$font-2xl` and are candidates to drop.
+- **Decisions:** keep `typography.scss` (rules) separate from `_variables.scss` (values). Not added: a serif family token (both Georgia uses are commented-out), the mobile `calc()` multipliers (0.6 to 1.2, inconsistent, need a scale decision), 12px/15px sizes (snap decision pending).
+- **Bug found and fixed:** `landing-page/scroll-hinter.scss` lines 29 and 43 had `font-size: font-s` / `font-xs` without `$`. Invalid CSS, so browsers dropped it and `.scroll-text` inherited its size. Added the `$`; it now compiles to 16px desktop / 14px at max 768px. Visual change, not yet checked in a browser.
+- **Verified:** `sass src/scss/_main.scss` compiles.
+- **Next:** Phase 2 (`typography.scss` uses tokens only, move the `.cs-hero` / `.cs-layout-grid` padding out), Phase 3 (migrate components), Phase 4 (lint check + docs).
+
 ### Bug: Vercel build failing since `e1b0d4b`
 - **Symptom:** Vercel build failed (and `npm run build` locally): `Could not resolve entry module "token-launch.html"`.
 - **Cause:** `e1b0d4b` deleted `token-launch.html` but `vite.config.js` still listed it as a Rollup entry. Every push after that failed; Vercel kept serving the last good deploy. This was the issue flagged as "not fixed" in the 2026-10-14 entry.

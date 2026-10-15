@@ -538,26 +538,12 @@
       }
 
       @include breakpoint(mobile) {
-        font-size: 14px;
+        font-size: $font-xs;
         min-height: 44px;
         padding: 8px 16px;
         width: 100%;
       }
     }
-
-// Disabled state: project not ready for its case study yet — same shape as
-// .cta-button, muted colour, no pointer/hover affordance.
-.cta-button--disabled {
-  color: $neutral-dark;
-  border-color: $neutral-soft;
-  cursor: default;
-  pointer-events: none;
-
-  &:hover {
-    background-color: transparent;
-    color: $neutral-dark;
-  }
-}
 
 // Tags (styled like cs-tags from case-study)
 .tags {

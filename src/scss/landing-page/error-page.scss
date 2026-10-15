@@ -1,0 +1,95 @@
+@use '../variables' as *;
+@use '../breakpoints' as *;
+
+// 404 page. Reuses the landing hero (.section-about, .info-grid, .about-cta)
+// so only the pieces the hero doesn't have live here.
+
+.section-about--error {
+  // the hero is a fixed 100vh; this one has more content, so let it grow
+  height: auto;
+  min-height: 100vh;
+  overflow: hidden;
+
+  .contentbox {
+    position: relative;
+    z-index: 2;
+  }
+
+  .about-sect {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  // the hero's 40vw column wraps this heading
+  .info-grid {
+    max-width: 40rem;
+  }
+
+  // the hero's role line is a div with a flip-board; here it's plain text
+  .dynamic-job-title {
+    font-family: $font-anonymous;
+    font-size: $font-s;
+    // $blue-soft and $blue are below 4.5:1 on cream; $blue-dark passes AA
+    color: $blue-dark;
+  }
+
+  .about-cta {
+    // mobile hero sets width: 100%, which would stack the buttons full width; fine
+    margin-right: $space-12;
+
+    @include breakpoint(mobile) {
+      margin-right: 0;
+    }
+  }
+
+  // the hero circles drift forever; stop them for reduced motion
+  @media (prefers-reduced-motion: reduce) {
+    // :nth-child(n) matches the specificity of the hero's per-circle animation rules
+    .ellipse-decor circle:nth-child(n) {
+      animation: none;
+    }
+  }
+}
+
+.error-links {
+  margin-top: $space-40;
+
+  h2 {
+    font-family: $font-anonymous;
+    font-size: $font-xs;
+    font-weight: $weight-regular;
+    letter-spacing: $tracking-wider;
+    text-transform: uppercase;
+    color: $color-neutral-500;
+    margin-bottom: $space-8;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: $font-s;
+    color: $blue-dark;
+
+    &:focus-visible {
+      outline: 2px solid $blue;
+      outline-offset: 4px;
+    }
+  }
+}
+
+.error-footer {
+  padding: $space-24;
+  text-align: center;
+  font-size: $font-xs;
+  color: $color-neutral-500;
+  background-color: $blue-light;
+
+  strong {
+    color: $blue-dark;
+  }
+}

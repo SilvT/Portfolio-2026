@@ -216,6 +216,42 @@ $weight-medium: 500;
 $weight-semibold: 600;
 $weight-bold: 700;
 
+// ---------------------------------------------------------------------------
+// NEW TYPE TOKENS (added 2026-10-15, to evaluate and condense later)
+// Now in use (Phase 3b migration). They cover values that were hardcoded across the
+// SCSS. Counts are from the pre-migration audit and exclude blocks.scss (legacy
+// cs-* styles, to be removed, so deliberately not migrated).
+// ---------------------------------------------------------------------------
+
+// Extra sizes, between the existing steps
+$font-m: 20px;     // NEW: 4 uses, case-study-components (sub-heads), project-navigation, new-about. Sits between $font-base (18) and $font-l (22)
+$font-2xs: 13px;   // NEW: 15 uses, mostly case-study-components (labels, captions, meta), also project-navigation, scroll-to-top, new-about
+$font-3xs: 11px;   // NEW: smallest size. Replaces calc() values resolving to 10.8 to 11.2px (5 uses: line-breaker x2, project-cards x3). 12px snaps up to $font-2xs, not here
+
+// Line-height (unitless; none existed before, 20+ different values in use)
+$leading-none: 1;       // NEW: icon/label/display text. Absorbs 1.05
+$leading-tight: 1.2;    // NEW: headings (hero, lightbox, new-about). Absorbs 1.1, 120%, 121%
+$leading-snug: 1.3;     // NEW: 7 uses as 1.3 or 130%. Absorbs 121%, 1.4 (4 uses outside blocks.scss, snap to 1.3 or 1.5 to decide)
+$leading-normal: 1.5;   // NEW: matches current h1-h4 and base text (typography.scss). Absorbs 150%, 1.4/140% (4 live uses, already migrated), 1.55
+$leading-relaxed: 1.6;  // NEW: 7 uses outside blocks.scss, body copy in case studies. Absorbs 1.65, 1.8
+
+// Letter-spacing (none existed before, 16 different values in use)
+$tracking-tight: -0.01em; // NEW: large display text (new-about, case-study-components). -0.02em and -0.045em are outliers
+$tracking-wide: 0.04em;   // NEW: 8 uses at 0.04em and 5 at 0.05em, merged. Uppercase labels and mono captions
+$tracking-wider: 0.1em;   // NEW: scroll hint. Absorbs 1px and 1.5px (px values, ~4 uses). 0.25em outlier
+
+// Case study masthead h1 (case-study-components.scss, .case-masthead h1)
+// Default title: desktop / tablet (max 1024px) / mobile (max 768px)
+$font-masthead: 100px;        // NEW: case study pages masthead title, desktop
+$font-masthead-tablet: 72px;  // NEW: case study pages masthead title, tablet
+$font-masthead-mobile: 48px;  // NEW: case study pages masthead title, mobile (equals $font-4xl, may be dropped)
+// Long-title modifier (--long-title), for titles that would wrap into the cover image
+$font-masthead-long: 64px;        // NEW: case study pages masthead long title, desktop
+$font-masthead-long-tablet: 52px; // NEW: case study pages masthead long title, tablet
+$font-masthead-long-mobile: 32px; // NEW: case study pages masthead long title, mobile (equals $font-2xl, may be dropped)
+$leading-masthead: 0.92;          // NEW: case study pages masthead title line-height (tighter than $leading-none)
+$tracking-masthead: -0.045em;     // NEW: case study pages masthead title letter-spacing (long title on mobile uses -0.02em)
+
 //Spacings
 $space-4:0.25rem;
 $space-8:0.5rem;

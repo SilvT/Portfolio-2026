@@ -24,3 +24,29 @@
     outline-offset: $offset;
   }
 }
+
+// Skip link: hidden until keyboard focus, then jumps to the main content.
+// !important on colour/margin/padding: the case study theme rule
+// `body[data-theme] a:not(...)` and `.case-page a:visited` outrank a single class.
+.skip-link {
+  position: fixed;
+  top: $space-8;
+  left: $space-8;
+  z-index: 2000;
+  transform: translateY(-200%);
+  background: $blue-dark;
+  color: $color-white !important;
+  margin: 0 !important;
+  padding: $space-12 $space-20 !important;
+  border-radius: 0.5rem;
+  font-family: $font-bricolage;
+  font-size: $font-s;
+  font-weight: $weight-medium;
+  text-decoration: none;
+
+  &:focus {
+    transform: translateY(0);
+    outline: 2px solid $color-white;
+    outline-offset: -4px;
+  }
+}

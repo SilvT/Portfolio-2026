@@ -10,7 +10,7 @@ a new import:
 1. **Landing page (`index.html`)** loads a single bundled entry point,
    `src/js/main.js`, which statically imports and calls most modules.
 2. **Case study pages** (`design-system.html`, `energy-tracker.html`,
-   `case-energy-tracker.html`, `library-freeze.html`,
+   `library-freeze.html`,
    `marketing-management.html`) do **not** load `main.js`. Each loads only
    the modules it needs via its own inline `<script type="module">` tag,
    importing directly from `/src/js/modules/<name>.js`.
@@ -46,7 +46,6 @@ src/js/
 | `index.html` | `main.js` (bundles: flipBoardAnimation, scroll-hinter, navigation, icon-animation, carousel-dots, about-entry-animation, about-modal, project-card-entry-animation, analytics-events, service-cards-preview, phase-rail-accordion; `lightgallery.js` only via dynamic `import()` if a carousel/gallery selector is present on the page) |
 | `design-system.html` | `lightgallery.js`, `phase-rail-accordion.js`, `scroll-to-top.js` |
 | `energy-tracker.html` | `accordion.js`, `lightgallery.js`, `scroll-to-top.js`, `side-nav-bar.js` |
-| `case-energy-tracker.html` | `lightgallery.js`, `scroll-to-top.js` |
 | `library-freeze.html` | `lightgallery.js`, `scroll-to-top.js` |
 | `marketing-management.html` | `accordion.js`, `lightgallery.js`, `scroll-to-top.js`, `side-nav-bar.js` |
 
@@ -173,7 +172,7 @@ hash via `history.pushState()`. Loaded directly by `energy-tracker.html` and
 
 **Purpose:** Mobile scroll-to-top button for case study pages. Loaded
 directly by every case study page (`design-system.html`,
-`energy-tracker.html`, `case-energy-tracker.html`, `library-freeze.html`,
+`energy-tracker.html`, `library-freeze.html`,
 `marketing-management.html`), not via `main.js`.
 
 ---
