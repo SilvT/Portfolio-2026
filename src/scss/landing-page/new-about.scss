@@ -243,12 +243,12 @@ max-width: 40vw;
     position: relative;
     z-index: 1;
     margin-left: auto; // push to right
-    width: 50vw;
-    max-width: 60%;
+    width: 64vw;
+    max-width: min(64%, 56rem);
     // height: 100%;
-    max-height: 87vh;
+    max-height: 94vh;
     height: auto;
-    margin-top: 7vh;
+    margin-top: 3vh;
     border-radius: 1rem 0 0 1rem;
     background-color: $color-bg;
     box-shadow: -8px 0 32px $color-shadows-dark;
@@ -260,6 +260,12 @@ max-width: 40vw;
       transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
       opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
+
+    // Narrower laptops: give the text more width so it needs less height
+    @media (max-width: 1366px) {
+      width: 80vw;
+      max-width: 80%;
+    }
 
     @include breakpoint(mobile) {
       width: 100%;
@@ -275,7 +281,7 @@ max-width: 40vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: $space-24 $space-40 $space-16;
+    padding: $space-16 $space-40 $space-8;
     // border-bottom: 2px solid $blue-dark;
     flex-shrink: 0;
 
@@ -342,8 +348,9 @@ max-width: 40vw;
     flex: 1;
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: $space-40;
-    padding-right: 4rem;
+    // padding: $space-24 $space-40;
+    padding:$space-50;
+    margin:$space-16;
     font-family: $font-anonymous;
     font-size: $font-xs;
     line-height: $leading-relaxed;
@@ -351,6 +358,7 @@ max-width: 40vw;
 
     @include breakpoint(mobile) {
       padding: $space-24 $space-20;
+      margin: 0;
     }
 
     // Styled like .case-info-label — the small uppercase mono eyebrow
@@ -396,7 +404,12 @@ max-width: 40vw;
       }
     }
 
-    a {
+    // Tag chips (same markup/styles as the project cards' .tags) under a paragraph
+    .tags {
+      margin-top: $space-12;
+    }
+
+    a:not(.cta-button) {
       // color: $case-ink;
       text-decoration: underline;
     }
@@ -412,7 +425,7 @@ max-width: 40vw;
     gap: 16px;
     align-items: flex-start;
     border-bottom: 1px solid #dcdcdc;
-    padding-bottom: 1rem;
+    padding-bottom: $space-16;
 
     @include breakpoint(mobile) {
       flex-direction: column;
@@ -420,7 +433,7 @@ max-width: 40vw;
     }
 
     & + & {
-      margin-top: 24px;
+      margin-top: $space-16;
     }
   }
 
@@ -444,7 +457,82 @@ max-width: 40vw;
   }
 
   .meta-group{
-    margin-top: 3rem;
+    margin-top: $space-24;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: $space-16;
   }
 }
 
+
+// ===========================
+// Status chip — "open to work" tag, sits beside the About modal CTA
+// ===========================
+
+.status-chip {
+  display: flex;
+  align-items: center;
+  gap: $space-12;
+  margin: 0;
+  padding: $space-8 $space-16;
+  border-radius: 999px;
+  background-color: $color-green-100;
+  color: $color-green-500;
+  // border: 1px solid $color-green-600;
+  font-family: $font-anonymous !important;
+  font-size: $font-xs !important;
+  line-height: $leading-relaxed;
+  text-align: right;
+
+  // Same hover language as the project cards' .metric-card: lift + hard offset shadow
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translate(-1px, -3px);
+    box-shadow: 3px 3px 0 $color-green-600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  position: absolute;
+  top: 2%;
+  right:10%;
+  border-radius:6px;
+
+
+  &__dot {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: $color-green-600;
+  }
+
+
+
+  em{
+    color:$green;
+    font-weight: $weight-bold;
+    font-size: $font-s;
+  }
+
+  // Below desktop the floating spot collides with the title/close button,
+  // so the chip drops back into the flow beside the CTA.
+  @include breakpoint(desktop) {
+    position: static;
+    top: auto;
+    right: auto;
+  }
+
+  @include breakpoint(mobile) {
+    border-radius: 1rem;
+  }
+}

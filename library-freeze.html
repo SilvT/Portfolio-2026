@@ -253,7 +253,7 @@
             <div class="case-pairing-row case-pairing-row--text-only case-pairing-row--intro case-prose">
                <div class="case-pairing-row__right">
                   <p class="lede">Eight designers, four library files, and no record of what changed between one sprint and the next.</p>
-                  <p>I joined this multi-brand design system about six months into the project, brought in as Senior Design System Strategist via Nateevo. The foundation was already in place (variables, a commons/brand split, half the first component batch built), yet with up to 8 designers working on the libraries at the same time there was no process for tracking ownership of changes across sprints. Developers needed to know what had shifted before pulling an update and who to ask for clarifications; designers needed to tell each other what they'd touched. In practice, that happened in Teams messages and meetings, and got lost the moment the library grew past a certain size. Inspired by the developing team's code freezes per sprint, I built the process and the tooling to fix that: a Figma freeze cycle and a generative Figma plugin that logs, compiles and summarises changes as they happen.</p>
+                  <p>I joined this multi-brand design system about six months into the project, brought in as Senior Design System Strategist via Nateevo. The foundation was already in place (variables, a commons/brand split, half the first component batch built), yet with up to 8 designers working on the libraries at the same time there was no process for tracking ownership of changes across sprints. Developers needed to know what had shifted before pulling an update and who to ask for clarifications; designers needed to tell each other what they'd touched. In practice, that happened in Teams messages and meetings, and got lost the moment the library grew past a certain size. Inspired by the development team's code freezes per sprint, I built the process and the tooling to fix that: a Figma freeze cycle and a generative Figma plugin that logs, compiles and summarises changes as they happen.</p>
                </div>
             </div>
 
@@ -271,7 +271,7 @@
                   <p class="case-caption"><span class="case-caption-num">--context-diagram-</span> the 4-library structure holding around 3K components</p>
                </div>
                <div class="case-pairing-row__right">
-                  <h3>The Starting point: 3000 components but no tracing.</h3>
+                  <h3>The starting point: 3000 components but no tracing.</h3>
                   <p> Four levels, variables shared across brands, a commons layer, an extended commons for retail brands, and (at that point) two brand-specific UI kits: Brand A, web-first, and Brand B, app-first. Together holding around 3000 components counting variants individually and 8 designers working across them daily, pulled in from several different consulting companies, most with no prior design systems experience and no clear hierarchy despite a nominal lead. Separately, the dev team pulled from these libraries on 2-week sprints that mirrored the design cycle. The problem wasn't the size of the libraries. It was that, between each sprint, there was no record of what had changed or who changed it, and the bigger the libraries grew, the worse that got.</p>
                   <span></span>
                      <p>Before building anything we needed to set a process, not just a tool: a library freeze aligned to the dev team's sprint. At the end of each sprint, design freezes the library at a known state; development pulls from that save point. It gave both teams a shared clock; everyone knew which version they were aligned to, and a changed library stopped being something developers discovered mid-sprint. The plugin came after the process, not instead of it, to make that freeze cheap to run and easy to trust, rather than another manual step someone would eventually skip.</p>
@@ -326,19 +326,72 @@
                </div>
                <div class="case-pairing-row__right">
                   <h3>Draft, Test, Validate.</h3>
-                  <p>It started as a page of rules. Freeze on day 7, starts at noon, etc etc. 
-                  Six rounds in, the process became clearer on each one landing on the current updated structure: 5 defined stages, a streamline process, clear ownerships, roles and outcomes criteria. Documentation was updated and readied for future potential onboardings on the team, separating each phase with its own checklist and support templates and prompts.</p>
-                  <p>Clear rules and red lines were set for the team: Foundations must be left untouched once a freeze starts; anything that comes up gets queued for the next sprint instead.<br> Benefit from having a larger design systems team, the role of conductor of the freeze rotates, with this sprint's conductor becoming next sprint's reviewer, so the process doesn't depend on one person remembering how it works.</p>
-                  <h3>Underneath it all: The need for a Tool.</h3>
-                   <p> With a system now in place a hidden friction point came clearer into view. We were relying on what was pending to be published on each library as the only, very unreliable source of changes across the libraries. I devised a POC changelog using a Notes component from our toolkit, to be used and left by designers next to the components touched, iterated or created, so they could all be collected by the time the freeze came around.</p>
+                  <p>It started as a page of rules. Freeze on day 7, starts at noon, etc. 
+                  Six rounds in, the process became clearer with each one, landing on the current structure: 5 defined stages, a streamlined process, clear ownership, roles and outcome criteria. Documentation was updated and made ready for future onboarding to the team, separating each phase with its own checklist, support templates and prompts.</p>
+                  <p>Clear rules and red lines were set for the team: Foundations must be left untouched once a freeze starts; anything that comes up gets queued for the next sprint instead.<br> With a larger design systems team to draw on, the role of conductor of the freeze rotates, with this sprint's conductor becoming next sprint's reviewer, so the process doesn't depend on one person remembering how it works.</p>
+                  <h3>Underneath it all: the need for a tool.</h3>
+                   <p> With a system now in place, a hidden friction point came into clearer view. We were relying on what was pending to be published on each library as the only, and very unreliable, source of changes across the libraries. I devised a POC changelog using a Notes component from our toolkit, to be used and left by designers next to the components touched, iterated or created, so they could all be collected by the time the freeze came around.</p>
                    <p>This became the foundation and defined the PRD of the Changelog Plugin.</p>
 
                </div>
             </div>
             
+            <!-- 9. Pairing Row: themed carousel panel (left) + text (right) -->
+            <div class="case-pairing-row case-prose">
+               <div class="case-pairing-row__left">
+                  <div class="case-carousel-panel">
+                     <div class="case-carousel-panel__header">
+                        <p class="case-carousel-panel__title">Plugin in use</p>
+                        <div class="case-carousel-panel__meta">
+                           <p class="case-carousel-panel__counter" data-carousel-counter><span class="js-carousel-current">1</span>/<span class="js-carousel-total">3</span></p>
+                        </div>
+                     </div>
+                     <div class="new-carousel swiper">
+                        <div class="new-container swiper-wrapper">
+                           <div class="new-slide swiper-slide">
+                              <video src="/library-freeze/add-entry-flow.mp4" aria-label="Add entry flow in the Changelog plugin" class="cs-carousel-video" muted loop autoplay playsinline></video>
+                           </div>
+                           <div class="new-slide swiper-slide">
+                              <video src="/library-freeze/Freeze-process.mp4" aria-label="Freeze process in the Changelog plugin" class="cs-carousel-video" muted loop autoplay playsinline></video>
+                           </div>
+                           <div class="new-slide swiper-slide">
+                              <video src="/library-freeze/snapshot.mp4" aria-label="Snapshot and diff view in the Changelog plugin" class="cs-carousel-video" muted loop autoplay playsinline></video>
+                           </div>
+                        </div>
+                        <button type="button" class="swiper-button-prev" aria-label="Previous image"></button>
+                        <button type="button" class="swiper-button-next" aria-label="Next image"></button>
+                        <div class="swiper-pagination"></div>
+                     </div>
+                     <hr class="case-carousel-panel__divider">
+                     <p class="case-carousel-panel__caption">Real-time usage examples and displays of the plugin and its functions.</p>
+                  </div>
+               </div>
+               <div class="case-pairing-row__right">
+                  <p>
+                  The friction was deliberately kept as low as possible. We were asking designers to keep in mind, and remember, that they had to log the changes right after they were done. <br>
+                  Key decisions to achieve this:
+                  </p>
+                  <ul>
+                     <li><strong>Figma Generative plugin instead of traditional plugin:</strong> an unexpected benefit of Figma's own generative plugins is that they are bound to the files they are run in AND they appear on the right action bar. No need to remember to launch a plugin: it's always at hand and ready to use.</li>
+                     <li><strong>Auto detect and auto fill:</strong> component's name is filled by simply selecting the component on the canvas. User name and timestamp are autogenerated, removing the ownership traceability problems.</li>
+                     <li><strong>Daily use first and upfront:</strong> the plugin opens ready to log a partial entry. No navigation inside needed. Freeze and Snapshot functions are a couple clicks away, with a double verification built in to avoid unwanted overwrites or untimely compilations.</li>
+                  </ul><br>
+                  <p>The Partial Changelog entry tab in particular needed almost no explanation; the lower the friction to log a change in the moment, the more likely anyone actually does it.
+                  </p>
+                  <br>
+                  <h3>Outcomes</h3>
+                  <p> Full adoption of the process and plugin within the first two months.<br>
+                     Freeze documentation and steps ready for onboarding. <br>
+                     Across 4 successful full freeze runs, the plugin has performed with no bugs detected and zero pushback.
+                     The plugin is now self-published on Figma Community.</p>
+
+               </div>
+            </div>
+
+
             <!-- 8. Index Grid: the three tabs -->
             <h2 class="case-section-heading">The Plugin: Functionalities</h2>
-            <div class="case-index-grid">
+            <div class="case-index-grid case-index-grid--3-col">
                <div class="case-index-grid__cell">
                   <div class="case-index-grid__cell__image" aria-hidden="true">
                       <img src="/library-freeze/entrada-tab.png" alt="tbd" loading="lazy">
@@ -376,59 +429,6 @@
                </div>
             </div>
 
-            <!-- 9. Pairing Row: themed carousel panel (left) + text (right) -->
-            <div class="case-pairing-row case-prose">
-               <div class="case-pairing-row__left">
-                  <div class="case-carousel-panel">
-                     <div class="case-carousel-panel__header">
-                        <p class="case-carousel-panel__title">Plugin in use</p>
-                        <div class="case-carousel-panel__meta">
-                           <p class="case-carousel-panel__counter" data-carousel-counter><span class="js-carousel-current">1</span>/<span class="js-carousel-total">3</span></p>
-                        </div>
-                     </div>
-                     <div class="new-carousel swiper">
-                        <div class="new-container swiper-wrapper">
-                           <div class="new-slide swiper-slide">
-                              <video src="/library-freeze/add-entry-flow.mp4" aria-label="Add entry flow in the Changelog plugin" class="cs-carousel-video" muted loop autoplay playsinline></video>
-                           </div>
-                           <div class="new-slide swiper-slide">
-                              <video src="/library-freeze/Freeze-process.mp4" aria-label="Freeze process in the Changelog plugin" class="cs-carousel-video" muted loop autoplay playsinline></video>
-                           </div>
-                           <div class="new-slide swiper-slide">
-                              <video src="/library-freeze/snapshot.mp4" aria-label="Snapshot and diff view in the Changelog plugin" class="cs-carousel-video" muted loop autoplay playsinline></video>
-                           </div>
-                        </div>
-                        <button type="button" class="swiper-button-prev" aria-label="Previous image"></button>
-                        <button type="button" class="swiper-button-next" aria-label="Next image"></button>
-                        <div class="swiper-pagination"></div>
-                     </div>
-                     <hr class="case-carousel-panel__divider">
-                     <p class="case-carousel-panel__caption">Real time usage examples and displays of plugin and its functions.</p>
-                  </div>
-               </div>
-               <div class="case-pairing-row__right">
-                  <p>
-                  The friction was deliberately kept as low as possible. We are asking for designers to keep in mind and remember they have to log the changes right after they are done. <br>
-                  Key decisions to achieve this:
-                  </p>
-                  <ul>
-                     <li><strong>Figma Generative plugin instead of traditional plugin:</strong> an unexected benefit of figma's own generative plugins is that they are bound to the files they are run in AND they appear on the right action bar. No need to remember to launch a plugin, it's always there on hand ready to use it.</li>
-                     <li><strong>Auto detect and auto fill:</strong> component's name is filled by simply selecting the component on the canvas. User name and timestamp are autogenerated - removing the ownership traceability problems.</li>
-                     <li><strong>Daily use first an upfront:</strong> plugin opens ready to log in a partial log. No navigation inside needed. Freeze and Snapshop functions are a couple clicks away, with a double verification built in to avoid unwated overwrites or untimely compilations.</li>
-                  </ul><br>
-                  <p>The Partial Changelog entry tab in particular needed almost no explanation; the lower the friction to log a change in the moment, the more likely anyone actually does it.
-                  </p>
-                  <br>
-                  <h3>Outcomes</h3>
-                  <p> Full adoption of the process and plugin within the first two months.<br>
-                     Freeze documentation and steps ready for onboarding. <br>
-                     Across 4 successful full freeze runs, plugin performs with no bugs detected, zero pushback.
-                     Plugin is now self-published on Figma Community.</p>
-
-               </div>
-            </div>
-
-
              <!-- 10. -->
 
             <div class="case-footer-grid">
@@ -438,7 +438,7 @@
                   <h3>Learnings</h3>
                   <p>Honestly, not much went wrong here, and that's worth saying plainly rather than inventing a struggle to sound reflective. The team wanted structure, the process held up sprint after sprint, the plugin didn't need a single bug fix. That's rare enough that I don't want to manufacture a lesson where there wasn't a real one.</p>
                   <p>If I'm pushing for something genuine: the system was never tested against a third brand joining the commons library, so we proved it works at the scale I actually ran it at, not necessarily beyond that. And the plugin fixes the friction of logging a change, but not the moment someone simply moves on without logging it at all; that's a timing gap, not a UX one. </p>
-                  <p>Now that it's available on Figma Community, being used outside the one environment it was built around, I'm looking forward to see whatever bugs or edge cases that may surface in various environments and scales.</p>
+                  <p>Now that it's available on Figma Community, being used outside the one environment it was built around, I'm looking forward to seeing whatever bugs or edge cases that may surface in various environments and scales.</p>
                   <span> </span>
 
                   <div class="meta-group">

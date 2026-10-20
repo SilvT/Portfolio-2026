@@ -5,6 +5,41 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ---
 
+## 2026-10-20
+
+### Changed — PDF covers: tighter title gap, case info row on Marketing Management
+- `.text-content` gap in the PDF covers went from 6rem to 3rem (all four covers).
+- `coverInfo` list in `build-pdf.mjs`: the script fetches `/<id>.html`, copies its `.case-info` aside (minus the issue number, since the PDF renumbers issues) and appends it under the long content as three columns. Reuses the site's `.case-info` styles; only the row layout is injected.
+- **Bug on the way:** the wide aside stretched `.text-content` and shifted the title left. Fix: `width: 0; min-width: 100%` so it doesn't drive the column width.
+
+### Changed — PDF tools page: new headline and detail paragraph
+- In `build-pdf.mjs` the tools page headline becomes "Custom tools, self-developed." and a detail paragraph is added under it. The paragraph copies colour, size and line height from a cover's `.project-details` (read with `getComputedStyle`, nothing hardcoded). Site copy untouched. Checked in the rebuilt PDF.
+
+### Fixed — grammar and spelling pass over everything printed in the PDF
+- Read the text of `index.html` (cover, About, covers, tools, contact), `library-freeze.html`, `design-system.html` and the three override texts in `build-pdf.mjs`. Fixed at source, so the live site gets the fixes too. Marketing Management and Energy Tracker case studies and the TL;DR panels are not in the PDF and were not reviewed.
+- Typos: Altough, Snapshop, unwated, unexected, "peak at my past" (hover text), the override typos (unsual, sytem, conected). Capitalisation: GitHub, LinkedIn, Figma, POV. Wording: a missing "team" in the Library Freeze cover heading, a dangling "Benefit from having...", "Daily use first and upfront", "Month 5–6" en dashes, "a custom fit:" and similar. Copy and voice left as written.
+- Follow-up: unified the noun to "hand-off(s)" in `design-system.html` (8 text spots; image file names like `handoff-pieces.png` untouched, the verb "handing off" unchanged).
+- Not changed, flagged to Silvia: "5 defined stages" vs four phases shown on the Library Freeze board; "they don't just need good screens; they're not always glamorous" (About); hand-off / handoff spelling varies on design-system.
+
+### Changed — PDF cover info row on all four covers, trimmed
+- `coverInfo` is now every cover. Company and Timeline are dropped from the copied `.case-info`; Project Type, Role, Team and Stack stay. Empty `dl`s are removed.
+- `projectTypes` map in `build-pdf.mjs` rewrites Project Type for the PDF only: Marketing Management "B2B · Desktop App", Design System "Library / Repo". Others keep their case study value.
+- **Bug (symptom):** on Design System the last image row touched the tag chips. **Cause:** the cover fit loop ignored the tags (absolutely positioned at the page bottom) and the info row had used up the slack. **Fix:** the loop now also requires the images to end 16px above the tags; `.project-content` got `min-height: 0`.
+
+### Added — PDF-only copy override for cover `.project-details`
+- Energy Tracker (microsite) cover: new details copy in `coverDetails`, verbatim, PDF only. Checked in the rebuilt PDF.
+- Design System cover: new description and details copy (Silvia's text, verbatim). `coverDescriptions` map added for the `.project-description` heading; `coverDetails` has the body. Checked in the rebuilt PDF: it fits.
+- Copy edit: "MVP in 9 months" became "MVP in 1 year" in the Marketing Management override.
+- `scripts/build-pdf.mjs` has a `coverDetails` map (section id → text). `addCovers` swaps the cover's `.project-details` text before the fit loop, so the images resize around the longer copy. Site HTML untouched.
+- First entry: `marketing-management` (Silvia's longer "Desktop App, built from scratch..." text, inserted verbatim). Checked on the rebuilt PDF: it fits on the cover page.
+- **Bug on the way:** `page.evaluate` takes one argument; passing `(fn, name, text)` threw "Too many arguments". Fix: pass `{ id, text }`.
+
+### Added — tools grid as the last page of the PDF
+- `scripts/build-pdf.mjs` loads `index.html`, hides everything except `#tools`, and prints one page after the case studies (now 33 pages).
+- Print-only CSS injected in the script: 3 columns, descriptions always visible (no hover on paper), the hover preview card hidden. Site CSS untouched.
+- Cover images from the hover preview card are moved into the grid as a second row, so each sits under its own card (PDF only, done in `build-pdf.mjs`).
+- Known: the Figma Finder card (a `div`, not a link) has its title about 18px lower than the other two.
+
 ## 2026-10-15
 
 ### Added — Library Changelog card in the landing page tools grid
@@ -728,3 +763,42 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 - Design System Rules added to `CLAUDE.md`: `_variables.scss` is the single source of truth; no hardcoded colours, pixel values or font sizes; WCAG AA contrast; reduced motion respected and visible focus states on everything clickable.
 - Playwright MCP added in `.mcp.json` (project scope). `CLAUDE.md` now requires a browser check of every visual change at 375, 480, 768, 1024, 1200 and 1728px (plus 1px either side of touched breakpoints), with a responsiveness checklist. Reason: the site is mostly viewed on phones, and horizontal overflow has broken mobile before.
 - Ponytail plugin (`DietrichGebert/ponytail`) reviewed: its hooks don't use the network or run other programs. Silvia installs it locally with `/plugin`. `CLAUDE.md` now requires the ponytail skills for all code work, except minimal cleanup and content creation (writing, images, design).
+
+## 2026-10-20
+
+### Portfolio PDF generator (`npm run pdf`)
+- **Decision:** PDF is built from the live case study pages with Playwright (`scripts/build-pdf.mjs`), not a separate designed document. Chosen by Silvia; a Figma version stays an option.
+- **How it works:** starts Vite on port 4173, opens design-system, energy-tracker, library-freeze and marketing-management at 1200px with reduced motion, injects print-only CSS from the script (no site SCSS touched), opens all accordions, flattens Swiper carousels into a 2-column grid, hides nav/TL;DR/side nav/scroll-to-top, prints each page as 1200x1700px pages and merges them with `pdf-lib`. Output defaults to `public/portfolio.pdf` (pass a path as the first argument to write elsewhere).
+- **New devDependencies:** `playwright`, `pdf-lib`.
+- **Image shrink (same day):** after the accordions open, every image is redrawn on a canvas at 2x its printed width. Opaque ones become JPEG (quality 0.82), transparent ones stay PNG, SVGs are skipped. 34 MB became 6.4 MB (33 pages). Videos are hidden in print (`video { display: none }`), per Silvia.
+- **Page gaps (same day):** removed `break-inside: avoid` from `.cs-block` (whole sections were jumping to the next page); kept it on figures, images, headings and `.milestone`. 33 pages became 29.
+- **Bug: blue cross on a Marketing Management image.** Symptom: blue cross across the 4-slide "Full cycle evolution" carousel. Cause (probable, fix not yet checked by eye in the final PDF): the 2x2 grid gap showed the carousel's blue background. Fix: `.swiper, .swiper-wrapper { background: none }` in the print CSS.
+- **Output:** `public/portfolio.pdf` generated (about 6 MB, 29 pages), not committed. Download link on the site not added yet (placement is Silvia's call).
+- **Page format change (same day):** pages were 1200x1700px (desktop layout, too wide to scroll comfortably). Now rendered at 720x1018px (A4 proportions, below the 768px `mobile` breakpoint), so the site's own mobile layout applies: single column, larger relative text. Silvia chose the mobile layout. Print CSS adds: `.case-title-image` made static and full width (the absolute cover image overlapped the subtitle), and `.case-carousel-panel:has(video)` hidden so video-only carousels don't print as empty coloured boxes. Result: 51 pages, about 7 MB. Copy also saved to `~/Downloads/Silvia-Travieso-Portfolio.pdf`.
+- **Not done:** download link on the site (Silvia: not for now). `public/portfolio.pdf` is uncommitted; pushing it would make it reachable at `/portfolio.pdf`.
+- **Text scale and masthead (same day):** added `html { zoom: 0.7 }` to the print CSS so all text and images are 0.7x relative to the page while the 720px viewport keeps the mobile layout (a plain smaller font size would have needed per-element overrides). Added `break-inside: avoid` on `.case-title-block` so the masthead stays on one page; verified it fits on page 1 of all four case studies. 51 pages became 39, about 8 MB. The script now logs the start page of each case study.
+- **False alarm:** hero covers looked blurry in `sips` previews; the same low-res rasteriser blurs the text, so it's a preview artefact (source images are 1482 to 7293px wide and the shrink step doesn't downscale them under zoom). View the PDF in a real viewer to judge sharpness.
+- **Print CSS fix (same day):** back-to-top buttons (`.case-scroll-top`) now hidden in the PDF; the earlier `.scroll-to-top` selector didn't match anything.
+- **Cover and image sizes (same day):** page 1 is now a static cover: the landing page's first screen printed at the same 720x1018 size (nav and skip link hidden since they are dead in a PDF). Masthead cover images (`.case-title-image`) and every other image that fills its container now print at 70% width (left-aligned; carousel slide images excluded because the 2-column grid already sizes them). 36 pages, about 7 MB.
+- **Carousel panel colour (same day):** removed the print rule that cleared `.swiper`/`.swiper-wrapper` backgrounds (those were already transparent; it only stripped the white `.stacked-metrics-swiper`). `.case-carousel-panel` (olive on Design System, brown on Library Freeze) keeps its theme colour at 50% opacity, set from the computed colour in the script. All text inside it is forced to `#202020` (the value of `$color-case-ink`) because the original white text fails contrast on the lighter tint.
+- **Page 2 (same day):** the About modal content stacked on top of the contact footer, built from `index.html` at 0.7 zoom: the dialog is moved to `body` and shown non-modally, the rest of the page is hidden, the footer's 100vh height is cleared and its socials laid out in a wrapping row. Dead elements hidden (modal close button, "Reach Out!" button, footer ellipses). Now 37 pages, case studies start on page 3.
+- **Bug: case studies in the wrong order (same day).** Symptom: PDF ran Design System, Energy Tracker, Library Freeze, Marketing Management. Cause: the page list in `scripts/build-pdf.mjs` was copied from `vite.config.js` input order, not the landing page. Fix: order is now Library Freeze (01), Marketing Management (02), Design System (03), Energy Tracker (04), matching the landing page cards and each page's issue number.
+- **Page 2 footer (same day):** the "Designed and Built by" mark (`.web`) and the CV link (`#cv-download-btn`) are hidden, so LinkedIn, email and Git sit on one line (`flex-wrap: nowrap`).
+- **Page 2 footer copy (same day):** in the PDF only (set in `scripts/build-pdf.mjs`, the live site is untouched), the LinkedIn label reads `linkedin.com/in/silvia-travieso-gonzalez/` and the Git label reads `https://github.com/SilvT`. Both still link to their original targets (the Git link still points at the Portfolio-2026 repo).
+- **Back to the desktop two-column layout (same day, Silvia's request):** media queries in print follow the page width, and the two-column text blocks and left-image pairing rows collapse at the 1024px `tablet` breakpoint, so the 720px mobile render could never show them. Pages are now 1100x1556px (A4 proportions, above 1024px) with no zoom: the desktop layout applies and the text lands at about the same size relative to the page as the old 720px + 0.7 zoom render. All pages (cover, About, case studies) share that size. Size constants `W`/`H` are at the top of the script. The `.social-link` fix on page 2 copies the site's own mobile rule (column, auto width) because the desktop `width: 10vw` made the three links overlap. Added `break-after: avoid` on h2/h3 so headings don't strand at the bottom of a page.
+- **Bug: stale dev server broke the build.** Symptom: `page.goto` timeout on a case study page. Cause: a leftover Vite server held port 4173, Vite moved to another port, but the script still hardcoded 4173. Fix: the script now reads the real URL from `server.resolvedUrls`.
+- **Known:** pages end with white space where a large image block avoids splitting (e.g. under the Library Freeze masthead text).
+- **Marketing Management milestone accordions as a flex row with wrap (same day, PDF only):** the five `details.milestone` cards sit inside one `.milestones > div.cs-block` wrapper, so that wrapper is the flex container (`display: flex; flex-direction: row; flex-wrap: wrap; gap: 1.25rem`) and each `.milestone` is `flex: 1 1 calc(50% - 1.25rem)`: two per row, the odd fifth card takes a full row. `.milestones` loses its 660px `max-width` in the print CSS. Debugging notes: the first two attempts targeted the wrong element (`.milestones` children, then `.milestones > .cs-block` as items) and had no effect; probing the DOM showed there is only one `.cs-block` child. Scoped to `marketing-management` only (Energy Tracker's milestones are untouched).
+- **Bug: blue cross in the Marketing Management 2x2 carousel grid, fixed.** Cause: each `.new-slide` has `box-shadow: 0 2px 26px $color-shadows-blue`; in the print grid the soft shadows overlapped in the gaps and drew a cross (not a container background, as first assumed). Fix: `.new-slide { box-shadow: none }` in the print CSS.
+
+## 2026-10-21 — About modal fit + status chip
+- About modal: panel widened (64vw, max 56rem; 80vw up to 1366px), top margin 7vh→3vh, max-height 94vh, tighter padding/entry gaps. Cause of desktop scroll was a 50vw-wide panel making text tall. Now no vertical scroll at 1366x768 and up, and 1024x768 to 1366 wide; short laptop heights (e.g. 1024x700, 1281x720) can still scroll slightly, by design.
+- Modal CTA ("Reach Out!") no longer underlined (`a:not(.cta-button)`).
+- New `.status-chip` in the About modal (green-100 bg, mono font, copy: "Open to Design Systems / Design Technologist roles, Barcelona-based, open to remote"). Above 1200px it floats top-right of the panel (`position: absolute; top: 5%; right: 10%`); at 1200px and below it drops into the flow beside the "Reach Out!" CTA, because the ~440px chip collided with the title and close button at 1024px and below. Moved there from the hero after review (in the hero it overlapped the scroll hint on mobile).
+- `.meta-group` is now a flex row (`justify-content: space-between`, wrap, `gap: $space-16`), so the CTA sits left and the chip right.
+- Chip hover copies the project cards' `.metric-card` hover: `translate(-1px, -3px)` + `3px 3px 0 $color-green-600` shadow, 0.25s; no transition or lift under `prefers-reduced-motion`.
+- Content area on mobile: removed the `margin: $space-16` (was squeezing text to 343px of 375px).
+- New token `$space-50` (3rem) in `_variables.scss`, used for the modal content padding.
+- Bug: Sass build failed with "Undefined variable" after `$font-mono` was used in the chip; the monospace token is `$font-anonymous`. Fixed.
+- Known: with the larger content padding, laptops still scroll slightly (about 27px at 1201x800, 33px at 1366x768, 164px at 1024x768); fits with no scroll at 1440 and above.
+- `package.json`: added `pdf` script and `pdf-lib` / `playwright` dependencies for `scripts/build-pdf.mjs` (see PDF entries above).

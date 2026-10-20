@@ -788,6 +788,22 @@
   @include breakpoint(desktop, min) {
     grid-template-columns: repeat(auto-fit, minmax(max(160px, (100% - #{$case-gutter * 2} * 3) / 4), 1fr));
   }
+
+  // Three per row from tablet up (5 cells → 3 on top, 2 centred below, all the
+  // same size). Six tracks, each cell spans two, so the last two can be offset by one.
+  &--3-col {
+    @include breakpoint(tablet, min) {
+      grid-template-columns: repeat(6, 1fr);
+
+      > * {
+        grid-column: span 2;
+      }
+
+      > :nth-child(4) {
+        grid-column: 2 / span 2;
+      }
+    }
+  }
 }
 
 .case-index-grid__cell {

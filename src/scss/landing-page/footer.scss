@@ -64,7 +64,7 @@
   flex-shrink: 0;
   width: fit-content;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-evenly; // links size to their content, so equal gaps rather than equal columns
   @include breakpoint(mobile){
     gap: 0;
   }
@@ -75,8 +75,7 @@
   @include touch-target(44px); // Accessibility: Minimum 44px touch target
   display: flex;
   align-content: center;
-  width: 10vw;
-  // min-width: 10vw;
+  width: auto;
   gap: 1rem;
   align-items: center;
   position: relative;
