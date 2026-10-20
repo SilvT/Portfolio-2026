@@ -803,3 +803,4 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 - Known: with the larger content padding, laptops still scroll slightly (about 27px at 1201x800, 33px at 1366x768, 164px at 1024x768); fits with no scroll at 1440 and above.
 - `package.json`: added `pdf` script and `pdf-lib` / `playwright` dependencies for `scripts/build-pdf.mjs` (see PDF entries above).
 - `.gitignore`: the generated `public/Silvia-Travieso_Portfolio-2026.pdf` (from `npm run pdf`) is now ignored and untracked. Known: the site's `#pdf-download-btn` links to it, so the download 404s on Vercel until the file is served some other way.
+- Stopped tracking `node_modules/` (`git rm -r --cached`, about 2,000 files). It was committed before the `.gitignore` rule existed and kept showing as modified. Local folder untouched; fresh clones need `npm install`.
