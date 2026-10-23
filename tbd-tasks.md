@@ -8,13 +8,14 @@
 - [x] `energy-tracker.html` JSON-LD `image` now uses `/microsite/tomato microsite screens.png`, the same image as og:image (the old `/energy/` folder was renamed to `/microsite/`).
 - [ ] Check the other HTML pages for the same meta tags as `index.html` (title, description, OG, canonical).
 - [ ] Add JSON-LD `Person` structured data to `index.html`.
+- [ ] Add `theme-color` meta.
+- [ ] Add a 180x180 apple-touch-icon.
 
 ## Pages
-- [ ] 404 page: draft built (`404.html`). Still to decide: flip-board headline (needs `flipBoardAnimation.js` to accept custom titles), copy review, and a `vercel.json` check that Vercel serves it (remove the no-op `rewrites` block).
+- [x] 404 page: draft built (`404.html`). Still to decide: flip-board headline (needs `flipBoardAnimation.js` to accept custom titles), copy review, and a `vercel.json` check that Vercel serves it (remove the no-op `rewrites` block).
 - [ ] When `marketing-management.html` and `energy-tracker.html` are finished: remove `noindex`, add them back to `sitemap.xml`, and add OG/Twitter tags to `marketing-management.html` (energy-tracker already has them).
 - [ ] Check link previews of `design-system.html` and `library-freeze.html` after deploy (LinkedIn Post Inspector).
 
 ## Accessibility / polish
-- [x] Skip-to-content link, `theme-color` meta and apple-touch-icon added to index, 404 and the four case study pages (not `case-energy-tracker.html`, a local working file).
-- [ ] `favicon.ico` 404s in the browser console (browsers request it by default). Optional: add a `/favicon.ico` or ignore.
-- [ ] Check a print stylesheet (hiring managers sometimes print or save as PDF).
+- [ ] Add a skip-to-content link on every page.
+- [x] Check a print stylesheet (hiring managers sometimes print or save as PDF).
