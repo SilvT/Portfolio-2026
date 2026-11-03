@@ -2,6 +2,7 @@
 // Navigation Styles - Sticky Header
 // ============================================
 
+@use 'sass:math';
 @use '../_variables' as *;
 @use '../breakpoints' as *;
 @use '../typography' as *;
@@ -127,7 +128,13 @@
       height: auto;
       width: 40px;
       display: block;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
+  }
+
+  // Logo shrinks by the same ratio as the nav links (.scrolled .nav-item)
+  &.scrolled .logo img {
+    width: 40px * math.div($font-m, $font-xl);
   }
 }
 
@@ -161,6 +168,10 @@
     .logo img {
       width: 50px;
     }
+
+    &.scrolled .logo img {
+      width: 50px * math.div($font-m, $font-xl);
+    }
   }
 }
 
@@ -183,6 +194,10 @@
       &:not(.active) {
         font-size: $font-xl;
       }
+    }
+
+    &.scrolled .logo img {
+      width: 40px * math.div($font-xl, $font-3xl);
     }
   }
 }
@@ -224,6 +239,10 @@
     .logo img {
       width: 30px;
     }
+
+    &.scrolled .logo img {
+      width: 30px * math.div($font-s, $font-l);
+    }
   }
 }
 
@@ -236,7 +255,8 @@
     transition: none;
   }
 
-  .nav-item {
+  .nav-item,
+  .top-nav .logo img {
     transition: none;
   }
 }

@@ -14,7 +14,7 @@ const MOBILE_BREAKPOINT = 768;
 const marqueeTweens = new Map();
 
 // Pixels-per-second scroll rate (consistent across all slideshows)
-const PX_PER_SEC = 90;
+const PX_PER_SEC = 50;
 
 /**
  * Ensures the slideshow strip has enough duplicated content to fill
@@ -54,6 +54,15 @@ function ensureFillWidth(slideshow) {
     }
   }
 
+  // offsetWidth rounds to whole pixels, so the sum above can be off by up to
+  // a pixel or two per set: measure the real distance to the first clone so
+  // the loop lands exactly on the seam
+  const firstClone = slideshow.querySelector('[aria-hidden="true"]');
+  if (firstClone) {
+    const exact = firstClone.getBoundingClientRect().left - originals[0].getBoundingClientRect().left;
+    if (exact > 0) return exact;
+  }
+
   return oneSetWidth;
 }
 
@@ -68,7 +77,10 @@ export function createMarqueeTween(slideshow, { paused = true } = {}) {
 
   // Kill existing tween if re-creating
   const existing = marqueeTweens.get(slideshow);
-  if (existing) existing.kill();
+  if (existing) {
+    existing.kill();
+    gsap.set(slideshow, { x: 0, xPercent: 0 });
+  }
 
   // Ensure enough cloned content to fill viewport during scroll
   const oneSetWidth = ensureFillWidth(slideshow);
@@ -92,6 +104,22 @@ export function createMarqueeTween(slideshow, { paused = true } = {}) {
   });
 
   marqueeTweens.set(slideshow, tween);
+
+  // Lazy images have no width until they load, so the loop distance measured
+  // above is too short (just the gaps) and the strip snaps back every couple
+  // of seconds. Load them now and rebuild once their real widths are known.
+  const unloaded = [...slideshow.querySelectorAll('img')].filter((img) => !img.complete);
+  if (unloaded.length) {
+    unloaded.forEach((img) => { img.loading = 'eager'; });
+    Promise.all(unloaded.map((img) => new Promise((resolve) => {
+      img.addEventListener('load', resolve, { once: true });
+      img.addEventListener('error', resolve, { once: true });
+    }))).then(() => {
+      if (marqueeTweens.get(slideshow) !== tween) return;
+      const next = createMarqueeTween(slideshow, { paused: tween.paused() });
+      if (next) next.progress(tween.progress());
+    });
+  }
 
   // Desktop: pause on hover, resume on leave
   if (!slideshow._marqueeHoverBound && window.innerWidth > MOBILE_BREAKPOINT) {

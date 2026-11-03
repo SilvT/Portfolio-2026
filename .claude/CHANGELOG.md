@@ -5,6 +5,76 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ---
 
+## 2026-10-24
+
+### Experiment: TL;DR panel opens on hover (marketing-management.html only)
+- Inline `initTldrPanel()`: on `(hover: hover)` devices, `mouseenter` on the CTA opens the panel; `mouseleave` on the CTA closes after 200ms unless the pointer reaches the panel (its `mouseenter` cancels the timer). Panel `mouseleave` already closed it. Click, Escape and touch behaviour unchanged.
+- Not yet checked in a browser. Revert by deleting the `matchMedia('(hover: hover)')` block.
+
+### Fixed: `.case-index-grid` showed an empty fifth column at 1024-1199px
+- **Symptom:** on design-system.html (4 cells) with the viewport narrowed by docked DevTools, the grid showed a blank fifth column on the right.
+- **Cause:** base rule is `repeat(auto-fill, minmax(160px, 1fr))`, which keeps empty tracks. The `auto-fit` rule capped at 4 columns only applied from `desktop` (1200px), so at ~1093px wide the container fitted 5 tracks for 4 cells.
+- **Fix:** the capped 4-column `auto-fit` rule in `case-study-components.scss` now starts at `tablet` (1024px) instead of `desktop`.
+- Not verified in a browser (Playwright was in use). Still to check: 1023/1024/1199px show 4 even columns, and 375/480/768px have no horizontal scroll.
+
+### Fixed: landing page `.cta-button` style leaking onto case study pages
+- **Symptom:** on case studies (seen on library-freeze, bronze theme) the CTA button had a solid blue fill behind themed text and border.
+- **Cause:** the base `.cta-button` in `project-cards.scss` was global (solid `$blue` fill) and the theme blocks in `_case-study.scss` only set `color` and `border-color`.
+- **Fix:** the landing rule is now `:where(body:not(.case-page)) .cta-button` (zero extra specificity, so the per-card `.meta-group .cta-button` overrides still win). Case pages get their own outline base, `.case-page .cta-button`, in `_case-study.scss`; themes still set colour and border colour.
+- Checked library-freeze at 1440 and 375, and index at 1440 and 375: no horizontal overflow, landing button unchanged (blue fill), case button transparent with themed border. Not checked: other themes, hover and focus states, 480/768/1024/1728.
+
+### Fixed: Sass warnings from `cta-pulse.scss`
+- **Symptom:** `npm run dev` / `build` printed "You probably don't mean to use the color value blue/green in interpolation" and global `nth()` deprecation warnings.
+- **Cause:** unquoted map keys `blue` and `green` are Sass colours, so `.project-#{$name}` could emit invalid CSS; `nth()` is a deprecated global function.
+- **Fix:** quoted the `"blue"` and `"green"` keys, switched to `list.nth` via `@use 'sass:list'`. Build is warning-free and all six `.project-*` pulse rules are generated.
+- **Localhost closing:** npm logs showed `exit 143` (SIGTERM) on repeated starts, so the dev server was being stopped from outside, not crashing. No config change made.
+
+### Fixed: quote bubble tail not level with the bubble outline
+- Symptom: the tail's top line sat 2px above the bubble's bottom outline, so the two lines looked misaligned.
+- Cause: `.case-quote-bubble blockquote::after` had `margin-top: -$bubble-line`. The tail is positioned at `top: 100%`, which is already the top edge of the bottom border, so the extra offset was wrong.
+- Fix: removed the negative margin (all widths, not just desktop).
+- Checked design-system.html at 375, 768, 1024, 1440: no horizontal overflow. Alignment inspected visually at 1440 only.
+
+### Changed: `.case-quote-bubble` now used on design-system.html too, quote text smaller
+- Quote font-size reduced from `clamp($font-xl, 3vw, $font-3xl)` to `clamp($font-l, 2.4vw, $font-xl)`; mobile `clamp($font-base, 5vw, $font-l)`.
+- design-system.html converted (green theme picks up green-dark). case-energy-tracker.html deliberately NOT converted: its `.case-display-statement` is a long thesis paragraph with no attribution, which does not suit a speech bubble. The old `.case-display-statement` styles stay for it.
+- Checked marketing-management and design-system at 375, 768, 1024, 1440 (reduced motion): no horizontal overflow.
+
+### Added (trial): `.case-quote-bubble`, speech-bubble alternative to the display statement
+- New partial `src/scss/case-studies/case-quote-bubble.scss`, indexed in `_case-study.scss`. Markup is `<figure><blockquote><p>` plus a `<figcaption>` for the attribution. Outline, tail and text use the page theme's `-dark` colour via `case-theme-text-dark` and `currentColor`. Inspired by a CodePen blockquote (rounded outline, curved tail, offset attribution), rebuilt with our fonts and tokens.
+- Used only on marketing-management.html; `.case-display-statement` is untouched and still used by design-system.html and case-energy-tracker.html.
+- Tail: an open quarter-circle under the bubble, with a `::before` strip in `$case-bg` hiding the outline where it joins. This assumes the page background is `$case-bg` (white).
+- Hardcoded locals in the partial: `2px` outline, `60px` tail size, `50px` tail offset (no matching tokens; ask before promoting to `_variables.scss`).
+- Checked at 375, 768, 1024, 1440 with reduced motion: no horizontal overflow, tail clear of the caption. Not checked: 480, 1200, 1728, 1px either side of breakpoints, animated version.
+
+### Fixed: marquee snapping back every couple of seconds
+- Symptom: a project card strip jumped back ~119px every ~2.4s instead of looping smoothly (measured on the Design System card, fresh load with no cache).
+- Cause: `createMarqueeTween` measures the loop distance at init, but the strip's images are `loading="lazy"` and have no width until they load, so the "one set" was only the gaps (5 x 24px). Duration = distance / 50 px/s gave a ~2.4s loop. It was latent before; the slower speed made it obvious.
+- Fix in `marquee-scroll.js`: unloaded strip images are switched to eager, and the tween is rebuilt (same progress and paused state, x reset to 0) once they have loaded. Loop distance is also now measured from the real position of the first clone instead of summing rounded `offsetWidth`s (was up to ~0.7px off at the seam).
+- Checked 375 and 1440, all four cards, 8s each: steady 50 px/s, no resets. Not checked: hover pause after a rebuild, the seam over a full loop, other widths.
+
+### Changed: project card marquee slowed from 90 to 50 px/s (via 60, 45)
+- `PX_PER_SEC` in `marquee-scroll.js` (one constant, all viewports). Loop duration is one image set's width divided by it, so loops now take 1.8x as long as at 90.
+- The 45s desktop / 80s mobile durations in the docs are only a fallback used when the strip can't be measured; the px/s rate is the real speed.
+
+## 2026-10-23
+
+### Added: `.case-image-block--pair` (two images, optional captions, full-bleed band)
+- New partial `src/scss/case-studies/case-image-block-pair.scss`, indexed in `_case-study.scss`. A modifier of `.case-image-block`: same themed full-bleed band, with an inner `.case-image-block__pair` grid (2 columns, stacks at the `tablet` breakpoint like `.case-split-panel`). Each `<figure>` takes a `.case-caption`.
+- `.case-image-block__img--muted` (greyscale, 50% opacity) for a de-emphasised "before" image. It replaces the inline style Silvia had tried; the inline `height: 100%` was dropped (no effect on an auto-height figure).
+- Used on marketing-management.html in place of the Excel vs Leads `.case-split-panel`.
+- Gotcha: base `.case-image-block img` sets `max-width`, `margin-inline` and `padding-inline` for the single-image case, so the modifier resets them.
+- Checked at 375, 480, 767, 768, 769, 1024, 1025, 1200, 1728: no horizontal overflow, images load, side by side from 1025 up, stacked at 1024 and below. Not checked: tap targets, focus states (nothing interactive in it).
+
+### Changed: marketing-management.html rebuilt from case-study-marketing-management-final.md
+- Page rebuilt on the Library Freeze / Design System components: TL;DR panel (5 entries), title block and info, lede intro, display statement, split panel (Excel vs Leads dashboard), static phase rail (5 phases) beside the text, full-bleed `.case-stage` carousel, Outcome, Learnings, project nav. Script block copied from `library-freeze.html` (carousel, TL;DR panel, scroll-to-top). The old stacked-metrics swiper script and `side-nav-hidden` body class were dropped.
+- Phase rail used in its static form (as on design-system.html), not the accordion variant, so no new JS.
+- Carousel images chosen from `/mkm/` by what they show (the md's six slides had no file names). Slide 1 is the early posts-grid wireframe, which is not the "pre-API-revision dashboard" the md describes.
+- Facebook-to-CRM "read the full case study" link left out: no page exists yet.
+- Checked at 375, 480, 768, 1024, 1200 and 1728 with reduced motion: no horizontal overflow, no broken images, no JS errors. Not checked: animated version, tap targets, focus states, 1px either side of breakpoints.
+
+---
+
 ## 2026-10-20
 
 ### Changed — PDF covers: tighter title gap, case info row on Marketing Management
@@ -807,3 +877,16 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ## 2026-10-21
 - Bug: the `#pdf-download-btn` on the live site returned 404. Cause: `public/Silvia-Travieso_Portfolio-2026.pdf` was gitignored, so Vercel never received it. Fix: removed the ignore rule and committed the PDF (about 10 MB). After running `npm run pdf`, commit the regenerated file to update the download.
+
+## 2026-10-23
+- Reconciled `archive/case-study-components.md` with the live case study pages (the `archive/` folder is gitignored, so this lives only locally). The doc still described the removed `case-*` specimen pages. Added: TL;DR panel (CTA, side panel, mascot), Lettered Section, Carousel Panel, Prose Image, Link with Tooltip, Project Nav / Scroll-to-top, Coming Soon; marked the inline `.case-tldr` as legacy; moved Index Grid, Phase Rail (static) and Footer Grid to verified; fixed `$case-max` (1500px) and `$case-image-support-width` (40%); noted tokens now live in `_variables.scss`; documented the theme mixins; rewrote the open questions.
+- Found while checking (not fixed): `marketing-management.html` has the TL;DR button but no `initTldrPanel()` script, so it does nothing; `.case-link-with-tooltip` has no CSS anywhere, so its `data-tooltip` never shows; the accordion phase rail is unused.
+- `archive/specimen-page-spec.md` kept as-is with a "historical reference" banner (it is the Font Review Journal brief, not a description of the built pages).
+- Created `marketing-management-copy.html` (gitignored duplicate) and `marketing-management-copy.md` (full text and image extract of it). Created branch `marketing-management-case-study`.
+
+### 2026-10-24 - Marketing Management: applied structure from case-study-mkm.md (line 86 onwards)
+- Added "What This Actually Does" Index Grid (Campaigns, Leads, Interactions, Analytics; text-only cells) after The Problem.
+- Added "Async by Necessity" section with its paragraph. The Input Field June 2024 / 2025 split panel is commented out with a TODO because the images are not in `public/mkm` yet.
+- Renamed "Zooming In: Designing Against Someone Else's API" to "Designing Against Someone Else's API".
+- Sections before line 86 of the md (masthead to The Problem) were left untouched, per Silvia's instruction.
+- Not verified in a browser yet.

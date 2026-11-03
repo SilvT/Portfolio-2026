@@ -782,10 +782,11 @@
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: $case-gutter * 2;
 
-  // Desktop/laptop only: column count follows the number of cells, up to
+  // Tablet up: column count follows the number of cells, up to
   // 4 per row (3 cells → 3 columns, 7 cells → 4 then 3). auto-fit collapses
   // empty tracks, and the minmax floor is set so a 5th column can never fit.
-  @include breakpoint(desktop, min) {
+  // (Was desktop-only, which let auto-fill make a 5th empty track at 1024-1199px.)
+  @include breakpoint(tablet, min) {
     grid-template-columns: repeat(auto-fit, minmax(max(160px, (100% - #{$case-gutter * 2} * 3) / 4), 1fr));
   }
 

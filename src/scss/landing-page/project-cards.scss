@@ -32,12 +32,13 @@
       color: $blue-dark;
     }
     .meta-group .cta-button {
-      color: $blue-dark;
+      background-color: $blue-dark;
+      color: $color-white;
       border-color: $blue-dark;
 
       &:hover {
-        background-color: $blue-dark;
-        color: $color-white;
+        background-color: transparent;
+        color: $blue-dark;
       }
     }
   }
@@ -72,12 +73,13 @@
       color: $green-dark;
     }
     .meta-group .cta-button {
-      color: $green-dark;
+      background-color: $green-dark;
+      color: $color-white;
       border-color: $green-dark;
 
       &:hover {
-        background-color: $green-dark;
-        color: $color-white;
+        background-color: transparent;
+        color: $green-dark;
       }
     }
   }
@@ -112,12 +114,13 @@
       color: $neutral-dark;
     }
     .meta-group .cta-button {
-      color: $neutral-dark;
+      background-color: $neutral-dark;
+      color: $color-white;
       border-color: $neutral-dark;
 
       &:hover {
-        background-color: $neutral-dark;
-        color: $color-white;
+        background-color: transparent;
+        color: $neutral-dark;
       }
     }
 
@@ -153,12 +156,13 @@
       color: $mauve-dark;
     }
     .meta-group .cta-button {
-      color: $mauve-dark;
+      background-color: $mauve-dark;
+      color: $color-white;
       border-color: $mauve-dark;
 
       &:hover {
-        background-color: $mauve-dark;
-        color: $color-white;
+        background-color: transparent;
+        color: $mauve-dark;
       }
     }
   }
@@ -193,12 +197,13 @@
       color: $brick-dark;
     }
     .meta-group .cta-button {
-      color: $brick-dark;
+      background-color: $brick-dark;
+      color: $color-white;
       border-color: $brick-dark;
 
       &:hover {
-        background-color: $brick-dark;
-        color: $color-white;
+        background-color: transparent;
+        color: $brick-dark;
       }
     }
   }
@@ -233,12 +238,13 @@
       color: $bronze-dark;
     }
     .meta-group .cta-button {
-      color: $bronze-dark;
+      background-color: $bronze-dark;
+      color: $color-white;
       border-color: $bronze-dark;
 
       &:hover {
-        background-color: $bronze-dark;
-        color: $color-white;
+        background-color: transparent;
+        color: $bronze-dark;
       }
     }
   }
@@ -507,8 +513,8 @@
   }
 }
 
-// CTA Button
-.cta-button {
+// CTA Button (landing page only: case study pages style their own in case-studies/_case-study.scss)
+:where(body:not(.case-page)) .cta-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -523,14 +529,14 @@
       border-radius: 0.5rem;
       cursor: pointer;
 
-      background-color: transparent;
-      color: $blue;
+      background-color: $blue;
+      color: $color-white;
       border: 2px solid $blue;
 
 
       &:hover {
-        background-color: $blue;
-        color: $color-white;
+        background-color: transparent;
+        color: $blue;
       }
 
       @include breakpoint(large-desktop, min) {
@@ -748,6 +754,7 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
+        margin-bottom: $space-16;
       }
     }
   }
