@@ -890,3 +890,13 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 - Renamed "Zooming In: Designing Against Someone Else's API" to "Designing Against Someone Else's API".
 - Sections before line 86 of the md (masthead to The Problem) were left untouched, per Silvia's instruction.
 - Not verified in a browser yet.
+
+## 2026-11-06 - Font change: Atkinson Hyperlegible Next + Clash Display
+- Decision: main font (`$font-bricolage`) is now Atkinson Hyperlegible Next; label font (`$font-anonymous`, was Anonymous Pro) is now Clash Display. Token names were kept on purpose so no rule had to change. Fascinate stays on Google Fonts; its fallback is now Atkinson.
+- Both fonts are self-hosted in `public/fonts/` and declared in `src/scss/fonts.scss` (Atkinson: one variable WOFF2, 200 to 800; Clash: Light 300, Medium 500, Bold 700 only).
+- Clash weights: the first attempt remapped 400 to Medium; final version declares real weights only, so 400 falls to Medium and 600/800 fall to Bold by CSS font matching. Anonymous Pro only had 400/700, so one step heavier was needed to match its look.
+- Newsreader Text and Caption kept as a backup in `src/scss/newsreader-backup.scss` (not imported) with files in `public/fonts/newsreader/`. Karla and Fraunces were tried and dropped.
+- Removed the Bricolage, Anonymous Pro, Karla and Fraunces requests from the Google Fonts links in all HTML pages (404, design-system, energy-tracker, case-energy-tracker, library-freeze, index, marketing-management). Only Fascinate is still requested. `marketing-management-copy.html` (gitignored) was left as is.
+- `.case-tldr-panel .case-lettered-section__body` now uses `$font-bricolage` (Atkinson) instead of the label font; the hardcoded `'Anonymous Pro'` on `p.alt-quote-author` was replaced with `$font-anonymous`.
+- Bug while editing: a line-number sed overwrote the wrong line in `_variables.scss` and briefly left a duplicate active font line. Fixed; lesson: match on content, not line numbers.
+- Check: Clash Display licence (FFL.txt in the font folder) not read; confirm it covers web use. Not yet checked in a browser at the required widths.

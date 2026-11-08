@@ -179,9 +179,11 @@ Portfolio-clean/
 - **Neutrals:** Light (#A8ADB8) → Dark (#2A2723)
 
 ### Typography
-- **Primary:** Bricolage Grotesque
+- **Primary:** Atkinson Hyperlegible Next (self-hosted, `public/fonts/atkinson`, token `$font-bricolage`)
 - **Display:** Fascinate
-- **Monospace:** Anonymous Pro
+- **Labels:** Clash Display (self-hosted, `public/fonts/clash`, token `$font-anonymous`; weights 300/500/700 only)
+- **Backup:** Newsreader Text / Caption (`src/scss/newsreader-backup.scss`, not imported)
+- `@font-face` rules live in `src/scss/fonts.scss`. Token names `$font-bricolage` and `$font-anonymous` are kept from the old fonts
 - **Scale:** 4XL (48px) → XS (14px)
 
 ### Spacing

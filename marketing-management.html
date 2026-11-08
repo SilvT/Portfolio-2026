@@ -14,9 +14,9 @@
       <!-- Google Fonts -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap">
-      <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-      <noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet"></noscript>
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fascinate&display=swap">
+      <link href="https://fonts.googleapis.com/css2?family=Fascinate&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+      <noscript><link href="https://fonts.googleapis.com/css2?family=Fascinate&display=swap" rel="stylesheet"></noscript>
       <!-- Load source files for dev mode -->
       <link rel="stylesheet" href="/src/scss/_main.scss">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
@@ -213,7 +213,7 @@
                <div class="case-title-main">
                   <img class="case-title-image" src="/mkm/mkm-large hero.png" alt="Marketing Management platform dashboard overview" loading="eager">
                   <h1>Marketing Management</h1>
-                  <p class="case-subtitle">A B2B SaaS dashboard, designed and co-owned from brief to MVP.</p>
+                  <p class="case-subtitle">A B2B SaaS platform for a four-way-blind marketing operation, designed and co-owned.</p>
                </div>
 
                <div class="case-title-side">
@@ -225,19 +225,19 @@
                         <dt>Project Type</dt>
                         <dd>Product</dd>
                         <dt>Role</dt>
-                        <dd>Product Designer → de facto Product Co-owner</dd>
+                        <dd>Product Designer & de-facto Co-owner</dd>
                      </dl>
                      <dl>
                         <dt>Company</dt>
-                        <dd>Senapt (B2B SaaS startup)</dd>
+                        <dd>Senapt LTD, startup</dd>
                         <dt>Team</dt>
-                        <dd>1 backend developer (lead by default), 1 frontend developer (Japan, 7hrs ahead)</dd>
+                        <dd>Backend Lead, Frontend Developer (async Japan), me</dd>
                      </dl>
                      <dl>
                         <dt>Stack</dt>
-                        <dd>JavaFX</dd>
+                        <dd>JavaFX desktop</dd>
                         <dt>Timeline</dt>
-                        <dd>15 months, brief to MVP</dd>
+                        <dd>Feb 2024 - October 2025</dd>
                      </dl>
                   </aside>
                </div>
@@ -246,15 +246,16 @@
             <!-- Intro: lede + body -->
             <div class="case-pairing-row case-pairing-row--text-only case-pairing-row--intro case-prose">
                <div class="case-pairing-row__right">
-                  <p class="lede">No product team, no UX, no feature definitions; three section names and a backend developer who also needed direction.</p>
-                  <p>I was hired with a background in UI design. One month in, I was faced with three section names, no feature definitions, and a backend developer who was as lost as me, and with a CEO too busy to answer our questions (what actually goes in "Campaigns"? How deep does each section go? What's v1, what's v2? Who decides?).</p>
-                  <p>There was no product or UX team to ask. Backend and I became co-owners of scope because nobody else was around and it needed to be done. We split along technical lines but shared every strategic call: they owned architecture, data models and APIs; I owned design, research, specs and ux. The marketing lead, brought in as the product's end user and domain expert, gave us validation and workflow knowledge; the CEO got results-based check-ins from both of us. For the first few months we also weren't allowed to talk to the marketing department directly; that restriction lifted around month 4–5.</p>
+                  <p class="lede">Hired as a UI designer. One month in, nobody had defined what “done” meant, who decided what shipped, or who owned the product. So I did.</p>
+                  <p>Four departments inside the same company, none of them able to see what the others were doing. Going in: an uncommon stack with no mature tooling, a frontend developer onboarded with a single approved screen, no PM, no UX, and a projected customer base growing from 14K to 24K to design the system around.
+                  </p>
+                  <p>The brief from the CEO was one line:</p>
                </div>
             </div>
 
             <figure class="case-quote-bubble">
-               <blockquote><p>“Campaigns, Leads, Channels. Unify the data. Make it work.”</p></blockquote>
-               <figcaption>CEO <sub>(in a 20-minute brief with two hand-drawn sketches and nothing written down)</sub></figcaption>
+               <blockquote><p>“Campaigns, Leads, Channels... maybe something else. Make it work.”</p></blockquote>
+               <figcaption>CEO</figcaption>
             </figure>
 
             <!-- The Problem -->
@@ -276,15 +277,26 @@
             
             <div class="case-pairing-row case-pairing-row--text-only case-prose">
                <div class="case-pairing-row__right">
-                  <p>The marketing team was flying blind. Campaign performance lived across several manually maintained Excel files, updated when someone had time, with roughly 14K customers on the books and growth to 24K projected over the next year. Data entry was manual across 6+ touchpoints: live events, traditional media, four-plus social platforms, review and forum sites, a custom quotation tool on the website, telesales. None of it talked to the others. Leads came in fragmented: some via telesales (tracked by a different department), some via social media (not tracked at all), some via the website's own quotation tool (not tracked either), some from door-to-door campaigns and events (also untracked). Social media comments and complaints weren't reaching Customer Care.</p>
-                  <h3>Going in:<h3>
-                  <p> <span class="case-caption-num"> ✦ </span> An engineer-first CEO, initially dismissive of design-systems thinking. </p>
-                  <p> <span class="case-caption-num"> ✦ </span>No component library or pattern precedent.</p>
-                  <p> <span class="case-caption-num"> ✦ </span>An uncommon stack (JavaFX) with no mature tooling or references.</p>
-                  <p> <span class="case-caption-num"> ✦ </span>A frontend developer onboarded with a single approved UI screen (look&feel). </p>
-                  <p> <span class="case-caption-num"> ✦ </span> Collaboration fully async across a 7-hour gap and a language barrier. </p>
-                  <p> <span class="case-caption-num"> ✦ </span>No PM, no UX, no defined MVP, no defined competitor set.</p>
-                  <p> <span class="case-caption-num"> ✦ </span>Scattered data-entry points across 4 departments(marketing, sales, customer care, social media).</p>
+                  <!-- <p>The marketing team was flying blind. Campaign performance lived across several manually maintained Excel files, updated when someone had time, with roughly 14K customers on the books and growth to 24K projected over the next year. Data entry was manual across 6+ touchpoints: live events, traditional media, four-plus social platforms, review and forum sites, a custom quotation tool on the website, telesales. None of it talked to the others. Leads came in fragmented: some via telesales (tracked by a different department), some via social media (not tracked at all), some via the website's own quotation tool (not tracked either), some from door-to-door campaigns and events (also untracked). Social media comments and complaints weren't reaching Customer Care.</p> -->
+                   <p>Marketing was flying blind: none of it talked to the others. A campaign’s performance lived in whichever spreadsheet its owner happened to keep it in, updated whenever someone had time. Four departments and four sets of unconnected tools and databases.</p>
+                  <p> <span class="case-caption-num"> ✦ </span> <strong>Digital and traditional marketing:</strong> tracked in separate spreadsheets, no shared view of either.</p>
+                   <p> <span class="case-caption-num"> ✦ </span><strong>Social Media:</strong> absorbed sales and support questions that weren’t theirs, because there was nowhere else for them to go.</p>
+                  <p> <span class="case-caption-num"> ✦ </span><strong>Sales:</strong> ran leads through a funnel tool never connected to the main CRM, so conversions never flowed back to marketing.</p>
+                  <p> <span class="case-caption-num"> ✦ </span> <strong>Business and finance:</strong> judged campaign ROI with none of the data that would have told them.</p>
+      
+                  <p>On the product side, the minimum-viable team: 3 people, a sketch of 4 buttons with names and no further details.</p>
+
+               
+                  <h3>What I Owned, and Why</h3>
+                  <p>The CEO had drawn three shapes and left a fourth blank. That was the entire product organisation on paper: no product manager assigned to this, no UX function, and a project manager who was already running fourteen other things at once. What existed instead was me and the backend lead, deciding between the two of us what the product actually was.</p>
+                  <p>That wasn’t a title anyone gave us. It’s closer to the truth to say nobody at this company had a very settled title system at all, so there was nobody positioned to hand one out. What we actually did was run something close to a 50-50 product-owner relationship: regular working sessions between just the two of us, where ideas got pressure-tested against what was feasible to build and what the business actually needed, before anything reached the CEO for a decision.</p>
+                  <p> Scope, prioritisation, competitive context, which workflows to fix first (none of it had an owner before we took it on).</p>
+                  <div class="alt-quote">
+                     <p class="alt-quote-content"> <span class="alt-quote-mark">‹‹</span>Silvia led the design work, while I was responsible for the implementation, and the handover between design and development was always smooth and well thought out. <span class="alt-quote-mark">››</span></p>
+                  <p class="alt-quote-author"> — Dirk Lemmermann<br> 
+                     <span class="alt-quote-author-title">Java and JavaFX Consultant,VP Front-end </span>
+                  </p>
+                  </div>
                </div>
 
             </div>
@@ -305,7 +317,7 @@
             </section>
 
             <!-- What This Actually Does: Index Grid -->
-            <h2 class="case-section-heading">What This Actually Does</h2>
+            <h2 class="case-section-heading">The MVP Structure</h2>
             <div class="case-index-grid">
                <div class="case-index-grid__cell">
                   <p class="case-index-grid__cell__title">Campaigns</p>
@@ -326,7 +338,7 @@
             </div>
 
             <!-- Building the Plane While Flying It -->
-            <h2 class="case-section-heading">Building the Plane While Flying It</h2>
+            <h2 class="case-section-heading">The Decisions</h2>
             <div class="case-pairing-row case-prose">
                <div class="case-pairing-row__left">
                   <div class="case-phase-rail">
@@ -363,9 +375,17 @@
                   </div>
                </div>
                <div class="case-pairing-row__right">
-                  <p>Competitor research came first, self-driven and cross-checked with the marketing lead: flows, features, look and feel, plus using an LLM to get up to speed on marketing terminology I didn't have. Look and feel had no direction from the CEO at all, so I put together broad mood-board explorations; after two or three rounds of pushback, the CEO sent over his own direct visual references, which finally gave the project a clear direction to approve against. The same meeting that approved the look and feel brought the frontend developer in and asked him to start immediately, on a library that at that point held only rough brand colours, rough text styles, a bento-box card layout and a borrowed material-symbols icon set.</p>
-                  <p>That stage was genuinely stressful, worth naming rather than smoothing over: no product, no UX, no team to lean on; co-owning the roadmap and the architecture conversation with backend despite never having done that before; building a design system foundation because nobody else would, on top of a look and feel that was itself still rough; frontend waiting on deliverables while I was still unsure of the features, the information architecture, or half the marketing concepts I was designing for.</p>
-                  <p>Two months in, the CEO asked for something unrelated: a lead-capturing tablet tool for an upcoming door-to-door campaign, needed in two weeks, built in Nuxt.js rather than JavaFX, with an explicit instruction that it carry no visual connection to this product's brand. It shipped on time, fed into the same backend being built for Marketing Management, and nobody (including the CEO) loved the UI, but it worked; it was later deprecated once the website's own quotation tool started covering that same lead-capture role.</p>
+                  <h3>The Facebook-to-CRM pipeline</h3>
+                  <p>Social media was handling customer complaints and sales enquiries through Facebook Messenger, manually, because there was nowhere else for those messages to go. I noticed this while mapping a different workflow, and the friction was obvious once I saw it: content people were doing support and sales triage on the side, unrecorded, unrouted.</p>
+                  <p>I built a proposal, validated it with the backend lead first (could this actually be built, what would it take), then with the marketing department (would this solve the right problem), before it ever reached the CEO. Once approved, it shipped: a flow that reads a Facebook conversation, detects a support or sales case, asks for a contract ID, validates it against the CRM, and opens a ticket automatically, with a confirmation sent back to the customer in the same motion. </p>
+                  <p>It also passed Facebook’s own API review to go live, an external check neither I nor the company controlled.</p>
+
+
+                  <h3>The token architecture: modes over bloat</h3>
+                  <p>Three-level token system (primitive, semantic, component), with Figma variable modes handling interactive states and variants instead of a separate component for every state. The trade-off was real: the system wasn’t built for easy dark/light-mode switching, because that wasn’t a requirement at the time. What it bought instead was a flatter, genuinely composable system, no redundant naming, no bloated component sets to maintain.</p>
+
+                  <h3>Building without the scaffolding</h3>
+                  <p>JavaFX had no Style Dictionary equivalent, no Storybook, no existing design system to start from, and I could find none built by anyone else for the stack. The frontend lead (one of the few people in the JavaFX community with any documented reference material for this) and I built a custom token transformation pipeline from scratch as a GitHub Action, against a dialect of CSS that standard tooling doesn’t recognise. If this had been a mainstream web stack, most of that tooling would have existed already. It didn’t, so it got built.</p>
                   <figure class="case-prose-image">
                      <!-- <img src="/mkm/decisions-framework.png" alt="TBD" loading="lazy"> -->
                      <img src="/mkm/collaboration-model.png" alt="TBD" loading="lazy">

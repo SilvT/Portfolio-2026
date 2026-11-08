@@ -22,6 +22,15 @@
 
 // Only definition of blocks and columns and grids
 
+// Active theme palette: var(--theme-light | --theme-color | --theme-dark | --theme-alpha)
+@each $theme, $palette in $theme-colors {
+  [data-theme="#{$theme}"] {
+    @each $key, $value in $palette {
+      --theme-#{$key}: #{$value};
+    }
+  }
+}
+
 //------------------
 // General structure
 //------------------
