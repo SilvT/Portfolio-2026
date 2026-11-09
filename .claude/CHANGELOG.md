@@ -1036,3 +1036,56 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 ## 2026-11-09 - About modal scrim restored to dark blue (index.html only)
 - `.about-modal__backdrop` is back to `rgba($blue-dark, 0.25)` (rgba(32,58,72,0.25), no backdrop blur) after the white veil (`$color-white-alpha`) was tried and rejected. Not re-checked in a browser; the value is the same one measured earlier (computed rgba(32, 58, 72, 0.25)).
 
+## 2026-11-09 - About modal scrim 2x darker (index.html only)
+- `.about-modal__backdrop` alpha 0.25 to 0.5 (`rgba($blue-dark, 0.5)`, computed rgba(32, 58, 72, 0.5)).
+- Side effect, open: the dot labels use `$blue-dark` and now sit on a mid blue-grey (about rgb(124,145,157) by eye from the screenshot), roughly 3.6:1 by estimate, under the 4.5:1 AA target for 14px text; the inactive dots (30% blue) are barely visible. Not measured with a tool. Options: a small `$color-bg` backing pill behind the dot column, or lighter label colour plus a backing.
+- Checked with Playwright at 1200x800 (screenshot reviewed). Not checked: 375.
+
+## 2026-11-09 - About modal scrim at 0.7 (index.html only)
+- `.about-modal__backdrop` alpha 0.5 to 0.7 (`rgba($blue-dark, 0.7)`, computed rgba(32, 58, 72, 0.7)); was 0.25 originally.
+- Open problem: the dot labels are `$blue-dark` and the inactive dots are 30% `$blue`, now on a scrim of the same dark blue. In the screenshot the labels are hard to read (about 1.8:1 by estimate, well under the 4.5:1 AA target) and the inactive dots are almost invisible. Not fixed yet; the fix is to switch the labels and inactive dots to a light colour (`$color-bg` / `$color-white` alpha) while the scrim stays dark.
+- Checked with Playwright at 1200x800 (screenshot reviewed). Not checked: 375. Uncommitted (the previous commit has 0.25).
+
+## 2026-11-09 - About modal scrim: 0.6 plus blur (index.html only)
+- `.about-modal__backdrop`: `rgba($blue-dark, 0.6)` and `backdrop-filter: blur($space-8)` (8px; `-webkit-` prefixed too). Was 0.7 without blur, 0.25 originally.
+- Checked with Playwright at 1200x800: computed rgba(32, 58, 72, 0.6) and blur(8px); page behind is clearly blurred. The dot labels (`$blue-dark`) are still low contrast on this scrim (open since the 0.5 change). Not checked: 375, Safari.
+
+## 2026-11-09 - About modal scrim: noise texture test (index.html only)
+- `.about-modal__backdrop::after` (in `about-stack.scss`): inline SVG data-URI (`feTurbulence` fractalNoise, baseFrequency 0.8, 2 octaves, desaturated via `feColorMatrix`) at `opacity: 0.35` with `mix-blend-mode: overlay`, `pointer-events: none`, over the tint (rgba($blue-dark, 0.6)) and the 8px blur. Tuning knobs: opacity, baseFrequency (grain size), blend mode.
+- The SVG fill values are not design tokens (a generated texture, no colours or sizes of the design system); no external file or request.
+- Checked with Playwright at 1200x800: pseudo-element covers the viewport (1200x800), blend overlay, opacity 0.35; grain is visible but fine in a zoomed screenshot. Not checked: 375, Safari, performance on low-end devices (blend modes over a blurred backdrop can be costly).
+- Still open: dot labels are low contrast on the dark scrim.
+
+## 2026-11-09 - Project sliders pause while the about modal is open (index.html)
+- `project-slider.js`: the autoplay interval skips its tick while `.about-modal` is `open` (`aboutOpen()`); it resumes by itself after the modal closes. Videos inside slides keep playing (muted loops, driven by the IntersectionObserver in `main.js`); only the slide advance is paused.
+- Checked with Playwright at 1200x800 (reduced motion off): slider at 2 / 6 before opening, still 2 / 6 after 12s with the modal open (two ticks skipped), then 3 / 6 and 4 / 6 after closing. A first run looked like autoplay was not advancing; it was test timing (first tick comes about 5s after the slider is seen plus observer delay).
+
+## 2026-11-09 - About modal scrim: hero circles instead of a flat tint (index.html)
+- The scrim is now the hero's three circles (same cx/cy/r as `.ellipse-decor` in the about section: (1200,200,r600), (900,400,r500), (1400,800,r700) in a 1600x1200 viewBox, `preserveAspectRatio="xMidYMid slice"`) drawn in `$blue-dark` via `currentColor` at fill-opacity 0.30 / 0.25 / 0.30. Overlaps accumulate, so the scrim is darker where circles overlap and clear outside them. The flat `rgba($blue-dark, 0.6)` background is commented out (`background: transparent`); the 8px blur and the noise `::after` are unchanged.
+- Markup: `<svg class="about-modal__circles">` inside `.about-modal__backdrop` (`aria-hidden`, `pointer-events: none`, so backdrop clicks still close the modal). Opacities are SVG attributes (not tokens); the colour comes from the `$blue-dark` token.
+- Checked with Playwright: 1200x800 (svg 1200x800, three circles, computed colour rgb(32,58,72)) and 375x800 screenshots reviewed; clicking the backdrop at (60,700) closes the modal. Not checked: Safari, other widths, performance with blur plus blend on the circles.
+- Still open: the dot labels (`$blue-dark`) sit on the darkest overlap and are low contrast there.
+
+## 2026-11-09 - Scrim circles test: $blue (index.html)
+- `.about-modal__circles` colour changed from `$blue-dark` to `$blue` (`color: $blue`, computed rgb(57, 128, 170)); opacities unchanged (0.30 / 0.25 / 0.30). The circles read as soft sky-blue washes instead of a dark dimming; overlaps are the deepest blue. The dot labels (`$blue-dark`, rgb(32,58,72)) are clearly more readable on this than on the dark version.
+- Checked with Playwright at 1200x800 (screenshot reviewed). Not checked: 375 after this change.
+- Seen in the same screenshot, not changed by this entry: the "Meet Me!" header was rendering as white text without its #FAFAFA pill and sat left of the cards (the modal layout differs from the last review), so `about-stack.scss` was edited outside this session; left as is.
+
+## 2026-11-09 - Scrim circles test: $blue-soft (index.html)
+- `.about-modal__circles` `color: $blue-soft` (rgb(124, 177, 202)); opacities unchanged. Lighter, airier wash than `$blue`; the dot labels stay readable on it. The white "Meet Me!" header text (the header background was made transparent outside this session) is hard to see on it.
+- Checked with Playwright at 1200x800 (screenshot reviewed). Not checked: 375.
+
+## 2026-11-09 - About modal anchored to the right edge (index.html)
+- `.about-modal[open]` in `about-stack.scss`: `justify-content: flex-end` (was `center`). The panel hugs the deck and now sits against the right edge of the viewport at every width. The panel's own `transform: translateY` slide-up is unchanged. (The `/* right: 0 */` comment seen in DevTools on `.about-deck__stage` did nothing: the stage is not positioned, the dialog's flex alignment is what places the panel.)
+- Checked with Playwright: 1200 (panel 400 to 1200, 800 wide), 1728 (928 to 1728), 375 (0 to 375, full width as before); no horizontal overflow, panel flush with the right edge (0px gap).
+- Seen, not changed: with the modal open, Chrome draws its default blue focus ring around `.about-modal__content` (it is a keyboard-focusable scroll container and receives focus when the dialog opens). It is the scroller that moves the deck, so the ring was left alone; hide it only if the keyboard-scroll focus indicator is not needed.
+- Layout in Silvia's DevTools screenshot (header and dots in `.about-deck__side` beside the deck) was edited outside this session; this change builds on it.
+
+## 2026-11-09 - About modal: close button top-right, full height, circles scrim, right-anchored (index.html)
+- **Close button**: the `<button class="about-modal__close">` moved out of the header and panel to be a direct child of the dialog (after the panel). A transformed panel (`translateY`) becomes the containing block for `position: fixed`, so a fixed button inside it would have been pinned to the panel, not the screen. It is now `position: fixed; top/right: $space-16`, 44x44, so it is no longer tied to the header text.
+- **Close button styling**: same language as `.cta-button` (project-cards.scss): `$blue` fill, white glyph, 2px `$blue` border, `$space-8` radius; hover flips to white fill with a `$blue` glyph and lifts with the hard offset shadow (`translate(-1px, -3px)` + `3px 3px 0 $blue`) like `.metric-card`; `focus-visible` ring in `$blue-dark`; transitions and the lift off under `prefers-reduced-motion`. Deviation from the CTA hover: hover fills white instead of transparent, so the glyph stays readable on the scrim circles.
+- **Full height**: panel `max-height: none` (the original `94vh` limit came from `new-about.scss`; the first attempt only commented out our own `92vh`, which left the 94vh in force, 752px of 800px) and `height: 100%`; content `flex: 1; min-height: 0` instead of the fixed `$deck-height`; stage `height: 100%`. The `$deck-height` variable and the old height rules are kept as comments. Panel is now 0 to viewport height at every width; scroll still drives the deck (cards 1, 3, 5 at 0 / 50 / 100%).
+- Scrim (same day, earlier): hero circles in `$blue-soft`; panel anchored right (`justify-content: flex-end`); noise and 8px blur kept.
+- Checked with Playwright at 1200x800, 1728x1000, 375x800: panel top 0 and height equal to the viewport, close button 44x44 at 16px from top and right, no horizontal overflow, hover state computed (white fill, `$blue` glyph, offset shadow). Not checked: Safari, keyboard focus ring visuals on the button, 480 to 1024.
+- Still open: white "Meet Me!" title is hard to see on the light scrim; Chrome's blue focus ring on the scroll container shows when the modal opens.
+

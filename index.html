@@ -111,22 +111,28 @@
          </div>
 
          <dialog class="about-modal" aria-label="About my journey">
-            <div class="about-modal__backdrop" data-close-about-modal></div>
+            <div class="about-modal__backdrop" data-close-about-modal>
+               <!-- Same three circles as the hero (.ellipse-decor); overlaps stack, so the scrim is darker where they overlap -->
+               <svg class="about-modal__circles" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="1200" cy="200" r="600" fill="currentColor" fill-opacity="0.3"/>
+                  <circle cx="900" cy="400" r="500" fill="currentColor" fill-opacity="0.25"/>
+                  <circle cx="1400" cy="800" r="700" fill="currentColor" fill-opacity="0.3"/>
+               </svg>
+            </div>
             <div class="about-modal__panel">
-               <header class="about-modal__header">
-                  <h2 class="about-modal__title">Meet Me!</h2>
-                  <button class="about-modal__close" aria-label="Close" data-close-about-modal>
-                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </button>
-               </header>
                <div class="about-modal__content">
                   <div class="about-deck__stage">
+                     <div class="about-deck__side">
+                        <header class="about-modal__header">
+                  <h2 class="about-modal__title">Meet Me!</h2>
+               </header>
                      <div class="about-deck__dots" role="group" aria-label="Choose a card">
                         <button type="button" class="about-deck__dot is-active" data-deck-dot="0" aria-label="Show card 1 of 5: Origins" aria-current="true"><span class="about-deck__label">Origins</span></button>
                         <button type="button" class="about-deck__dot" data-deck-dot="1" aria-label="Show card 2 of 5: Foundations"><span class="about-deck__label">Foundations</span></button>
                         <button type="button" class="about-deck__dot" data-deck-dot="2" aria-label="Show card 3 of 5: Systems"><span class="about-deck__label">Systems</span></button>
                         <button type="button" class="about-deck__dot" data-deck-dot="3" aria-label="Show card 4 of 5: Vibe"><span class="about-deck__label">Vibe</span></button>
                         <button type="button" class="about-deck__dot" data-deck-dot="4" aria-label="Show card 5 of 5: Reach out"><span class="about-deck__label">Reach out</span></button>
+                     </div>
                      </div>
                      <div class="about-deck">
                   <div class="about-modal__entry">
@@ -202,6 +208,10 @@
                   <div class="about-deck__track" aria-hidden="true"></div>
                </div>
             </div>
+            <!-- Close button lives outside the panel (a transformed panel would trap position: fixed), pinned to the viewport's top right -->
+            <button class="about-modal__close" aria-label="Close" data-close-about-modal>
+                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
          </dialog>
       </section>
 

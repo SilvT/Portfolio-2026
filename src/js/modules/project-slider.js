@@ -3,6 +3,9 @@
 
 const INTERVAL = 5000;
 
+// Autoplay waits while the about modal is open (the cards behind it shouldn't move)
+const aboutOpen = () => document.querySelector('.about-modal')?.open === true;
+
 export function initProjectSliders() {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -31,7 +34,7 @@ export function initProjectSliders() {
     const stop = () => clearInterval(timer);
     const start = () => {
       stop();
-      if (!paused && inView) timer = setInterval(() => show(index + 1), INTERVAL);
+      if (!paused && inView) timer = setInterval(() => { if (!aboutOpen()) show(index + 1); }, INTERVAL);
     };
 
     const setPaused = (value) => {

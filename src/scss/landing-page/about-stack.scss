@@ -34,13 +34,36 @@ html:has(.about-stack .about-modal[open]) {
     overscroll-behavior: contain;
     display: flex;
     align-items: flex-end;
-    justify-content: center;
+    justify-content: flex-end; // panel sits against the right edge (was: center)
   }
 
   .about-modal__backdrop {
-    background: rgba($blue-dark, 0.25);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    // Flat tint replaced by the hero's circles (see .about-modal__circles below)
+    // background: rgba($blue-dark, 0.6); // was 0.25
+    background: transparent;
+    backdrop-filter: blur($space-8); // was none
+    -webkit-backdrop-filter: blur($space-8);
+
+    .about-modal__circles {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      color: $blue-soft; // circles fill with currentColor (was $blue-dark, then $blue)
+    }
+
+    // Noise texture over the scrim (test): SVG fractal noise, desaturated,
+    // blended with the tint. Static, so nothing to disable for reduced motion.
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
   }
 
 
@@ -48,9 +71,12 @@ html:has(.about-stack .about-modal[open]) {
   // The dots on the left swap the top card (about-deck.js sets --d on each
   // card: 0 = on top, 1+ = underneath, negative = already sent away).
   .about-modal__content {
-    // Panel wraps the deck: fixed content height, the stage fills it.
-    flex: none;
-    height: $deck-height;
+    // The panel now fills the full height; the content takes what is left and
+    // the stage fills the content. ($deck-height was the old fixed height.)
+    // flex: none;
+    // height: $deck-height;
+    flex: 1;
+    min-height: 0;
     margin: 0;
     padding: $space-24 $space-40;
 
@@ -77,11 +103,12 @@ html:has(.about-stack .about-modal[open]) {
       align-items: stretch;
       justify-content: center;
       gap: $space-24;
-      height: calc(#{$deck-height} - #{$space-24} * 2);
+      // height: calc(#{$deck-height} - #{$space-24} * 2);
+      height: 100%;
 
       @include breakpoint(mobile) {
         gap: $space-8;
-        height: calc(#{$deck-height} - #{$space-16} * 2);
+        // height: calc(#{$deck-height} - #{$space-16} * 2);
       }
     }
 
@@ -99,6 +126,15 @@ html:has(.about-stack .about-modal[open]) {
       padding-bottom: $space-24; // room for the cards underneath
     }
 
+    // Right column: header (title + close) stacked on top of the dots
+    .about-deck__side {
+      display: flex;
+      flex-direction: column;
+      flex: none;
+      order: 1; // after the deck, so the column sits on the right
+      justify-content: center;
+    }
+
     // Vertical dot navigation, right of the cards (same language as the
     // project card carousel dots: small circle, active one elongates)
     .about-deck__dots {
@@ -106,7 +142,6 @@ html:has(.about-stack .about-modal[open]) {
       flex-direction: column;
       justify-content: center;
       flex: none;
-      order: 1; // after the deck, so the dots sit on the right
     }
 
     .about-deck__dot {
@@ -315,7 +350,9 @@ html:has(.about-stack .about-modal[open]) {
     box-shadow: none; // was: 0 -8px 32px $color-shadows-dark
     max-width: none; // was: min(64%, 56rem) (new-about.scss)
     width: auto;
-    max-height: 92vh;
+    // max-height: 92vh; // limit removed: the panel fills the full height
+    max-height: none; // was 94vh from new-about.scss (overridden here, kept for index-original)
+    height: 100%;
     padding-bottom: $space-40; // breathing room under the cards, off the screen edge
     border-radius: $space-16 $space-16 0 0;
     transform: translateY(100%);
@@ -328,14 +365,56 @@ html:has(.about-stack .about-modal[open]) {
     @include breakpoint(mobile) {
       // width: 100%;
       // max-width: 100%;
-      max-height: 94dvh;
+      // max-height: 94dvh;
+      max-height: none;
       padding-bottom: $space-24;
     }
   }
 
+  // Close button pinned to the top right of the screen (not tied to the header).
+  // It is a direct child of the dialog; the panel's transform would otherwise
+  // become the containing block for position: fixed.
+  .about-modal__close {
+    position: fixed;
+    top: $space-16;
+    right: $space-16;
+    z-index: 3;
+    // Same language as .cta-button: filled $blue, white glyph, 2px border,
+    // 0.5rem radius; hover flips to outline and lifts like the metric cards.
+    background-color: $blue;
+    color: $color-white;
+    border: 2px solid $blue;
+    border-radius: $space-8;
+    opacity: 1;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    @include focus-visible($blue-dark);
+
+    &:hover {
+      opacity: 1;
+      background-color: $color-white;
+      color: $blue;
+      transform: translate(-1px, -3px);
+      box-shadow: 3px 3px 0 $blue;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+
   .about-modal__header {
-    background-color: $color-bg; // #FAFAFA
-    border-radius: $space-16; // 1rem
+    background-color: transparent; // was $color-bg (#FAFAFA)
+    flex-direction: column; // title above the close button
+    align-items: flex-start;
+    padding: 0 0 $space-16 $space-16;
+
+    .about-modal__title {
+      color: $color-white;
+    }
   }
 
   .about-modal.is-open .about-modal__panel {
