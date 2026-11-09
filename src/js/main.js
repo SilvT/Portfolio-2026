@@ -14,6 +14,8 @@ import { initAboutModal } from "./modules/about-modal.js";
 import { initProjectCardEntryAnimation } from "./modules/project-card-entry-animation.js";
 import { initAnalyticsEvents } from "./modules/analytics-events.js";
 import { initServiceCardsPreview } from "./modules/service-cards-preview.js";
+import { initAboutDeck } from "./modules/about-deck.js";
+import { initProjectSliders } from "./modules/project-slider.js";
 import { initPhaseRailAccordion } from "./modules/phase-rail-accordion.js";
 
 // Vercel Analytics & Speed Insights
@@ -41,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // About modal slide-in panel
   initAboutModal();
+  initAboutDeck();
 
   // Project card entry stagger
   initProjectCardEntryAnimation();
@@ -60,6 +63,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Carousel dot navigation
   initCarouselDots();
+
+  // Autoplay sliders (split project cards on index.html)
+  initProjectSliders();
 
   // Analytics custom events
   initAnalyticsEvents();

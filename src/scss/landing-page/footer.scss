@@ -219,10 +219,17 @@
     padding: 80px;
   }
 
+  // Socials now sit below the credit: a wrapping row instead of a tall column
   .socials {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    flex-grow: 0;
+    flex-basis: auto;
+    gap: $space-16 $space-24;
+  }
+
+  .contact__content {
     gap: $space-40;
+    justify-content: center;
   }
 }
 
@@ -349,4 +356,24 @@
 
 
   }
+}
+// Footer content is now taller than one phone screen: let it grow instead of overflowing upwards
+@include breakpoint(mobile) {
+  .section-contact {
+    .contact__inner {
+      height: auto;
+      min-height: 100dvh;
+    }
+
+    .contact__content {
+      height: auto;
+      justify-content: flex-start;
+      gap: $space-40;
+    }
+  }
+}
+
+// .social-link sets display:flex, which would override the hidden attribute
+.social-link[hidden] {
+  display: none;
 }

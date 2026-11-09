@@ -1,0 +1,180 @@
+@use '../_variables' as *;
+@use '../breakpoints' as *;
+@use '../accesibility' as *;
+
+// Test layout for the project cards (index.html only; index-original.html
+// keeps the marquee). Left column: text, metrics, tags. Right column: slider.
+.split-layout {
+  // Each card fits within one viewport height (stacked layouts below tablet
+  // can't, so they keep their natural height)
+  @include breakpoint(tablet, min) {
+    max-height: 100vh;
+  }
+
+  // Stacked layouts grow with their content (project-cards.scss pins these to 95vh on mobile)
+  @include breakpoint(tablet) {
+    .contentbox,
+    .contentbox .project-screen {
+      height: auto;
+    }
+  }
+
+  .project-content {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+    grid-template-areas:
+      'text slider'
+      'metrics slider'
+      'tags slider';
+    grid-template-rows: auto auto 1fr;
+    align-items: start;
+    gap: $space-24 $space-40;
+
+    @include breakpoint(tablet) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'text'
+        'slider'
+        'metrics'
+        'tags';
+      grid-template-rows: none;
+      gap: $space-24;
+    }
+  }
+
+  .text-content {
+    grid-area: text;
+    flex-direction: column;
+    gap: $space-16;
+  }
+
+  .text-content .long-content {
+    max-width: none;
+  }
+
+  .data-metrics {
+    grid-area: metrics;
+    width: 100%;
+  }
+
+  .metric-card {
+    .cs-metric-icon-wrapper {
+      display: none;
+    }
+
+    .cs-metric-content {
+      flex-direction: row;
+      align-items: center;
+      gap: $space-12;
+    }
+
+    .cs-metric-value {
+      font-size: $font-2xl;
+    }
+
+    .cs-metric-label {
+      font-size: $font-xs;
+    }
+  }
+
+  .data-tags {
+    grid-area: tags;
+
+    .tags .tag-list {
+      justify-content: flex-start;
+    }
+  }
+
+  .project-slider {
+    grid-area: slider;
+    align-self: start;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-12;
+  }
+
+  .slider-track {
+    display: flex;
+    aspect-ratio: 4 / 3; // stable box: no jump while lazy images load
+    max-height: 75vh;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border-radius: $space-8;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .slider-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    height: 100%;
+    position: relative;
+    scroll-snap-align: center;
+  }
+
+  // Scales to the slide width; tall images are limited by the slide height instead
+  .slider-media {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-8;
+  }
+
+  .slider-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    font-size: $font-l;
+    color: $blue-dark;
+    background: transparent;
+    border: 1px solid $blue-dark;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    @include focus-visible($blue-dark);
+
+    &:hover {
+      background: $blue-dark;
+      color: $color-white;
+    }
+  }
+
+  // Pause icon while playing, play icon while paused
+  .slider-icon-play,
+  [data-slider-toggle][aria-pressed='true'] .slider-icon-pause {
+    display: none;
+  }
+
+  [data-slider-toggle][aria-pressed='true'] .slider-icon-play {
+    display: inline-block;
+  }
+
+  .slider-count {
+    min-width: 4ch;
+    margin-left: $space-8;
+    font-family: $font-anonymous;
+    font-size: $font-xs;
+    color: $blue-dark;
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slider-btn {
+      transition: none;
+    }
+  }
+}

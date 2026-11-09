@@ -5,6 +5,15 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ---
 
+## 2026-11-09
+
+### Added: photo on the first About card (index.html)
+- `public/about/silvia.jpg` (1051x1400, resized from the original with `sips`) sits above the icon and text in the "Origins" card.
+- `.about-modal__photo` in `about-stack.scss`: flex item with `min-height: 0` and `object-fit: contain`, so it keeps its proportions and shrinks to the height the card has left after the text, instead of overflowing (the card is `overflow: clip`).
+- Checked in Playwright (reduced motion) at 375, 768, 1024, 1200 and 1728px: no horizontal scroll, image never overflows the card. 480, 767 and 769px not checked.
+- Second photo `silvia-camera.jpg` (letterbox bars cropped out, 828x1236) sits behind the first in `.about-modal__photos`: `z-index` 1 vs 2, `margin-left: -$space-24` overlap, `scale(0.9)` centred vertically. The front photo has a soft drop shadow for depth.
+- **Bug:** with two images in the flex row the card grew to ~1900px wide. **Cause:** the grid column in `.about-deck` was `auto`, so the images' min-content pushed it out. **Fix:** `grid-template-columns: minmax(0, 1fr)` on `.about-deck`.
+
 ## 2026-10-24
 
 ### Experiment: TL;DR panel opens on hover (marketing-management.html only)
@@ -900,3 +909,130 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 - `.case-tldr-panel .case-lettered-section__body` now uses `$font-bricolage` (Atkinson) instead of the label font; the hardcoded `'Anonymous Pro'` on `p.alt-quote-author` was replaced with `$font-anonymous`.
 - Bug while editing: a line-number sed overwrote the wrong line in `_variables.scss` and briefly left a duplicate active font line. Fixed; lesson: match on content, not line numbers.
 - Check: Clash Display licence (FFL.txt in the font folder) not read; confirm it covers web use. Not yet checked in a browser at the required widths.
+
+## 2026-11-09 - Index A/B layout toggle
+- `index-backup.html`: untouched copy of index.html before the layout experiment (not in the Vite build).
+- `index-original.html`: duplicate of the previous layout, kept as the alternative. Added to `vite.config.js` inputs.
+- `index.html` is now the one to modify. Both pages have a fixed `.layout-toggle` link (`src/scss/landing-page/layout-toggle.scss`) pointing to the other. Temporary: remove once one layout wins.
+- Not visually checked in a browser yet.
+
+## 2026-11-09 - Split project cards on index.html (test layout)
+- `index.html` project sections now carry `split-layout` (alongside `experimental-layout`). `.project-content` is a 2-col grid: left = text-content, data-metrics, data-tags; right = slider. Single column at `tablet` and below (text, slider, metrics, tags).
+- Marquee markup replaced by `.project-slider` (scroll-snap track, prev / pause-play / next buttons, "n / total" counter). Autoplay every 5s, pauses on hover/focus and when off-screen; reduced motion starts paused.
+- New files: `src/scss/landing-page/project-split.scss`, `src/js/modules/project-slider.js` (init in `main.js`). Icons regenerated (`npm run icons`: added nav-arrow-left/right, pause, play).
+- `index-original.html` is untouched and keeps the GSAP marquee + dots, so the marquee modules still serve it.
+- Not yet checked in a browser at any width.
+
+## 2026-11-09 - Split cards: slider fit, metrics, vh cap, Playwright pass
+- Left column 3fr / right 7fr. Metric cards in split layout: icon wrapper hidden, `.cs-metric-content` row, value `$font-2xl`, label `$font-xs`.
+- Slider: `.slider-track` is a stable 4:3 box (max 75vh), `.slider-media` `width/height: 100%; object-fit: contain`. Earlier "natural height" approach made sliders up to 3000px tall (tall images + lazy loading).
+- Bug: 13 slide images kept the old `project-image ...` classes after the HTML rewrite (different class lists than the first ones), so they got no slider styling. Fixed by rewriting every class inside `.slider-slide` to `slider-media`.
+- Bug: `project-cards.scss` pins `.project-screen` to 95vh at mobile, clipping metrics once the card got taller. `split-layout` now sets `.contentbox` / `.project-screen` to `height: auto` at tablet and below.
+- Cards capped at `max-height: 100vh` from `tablet` up. At 1200x900 three cards' content is taller than 900px, so the bottom (metrics/tags) is clipped; at 1728x1000 it fits.
+- Checked with Playwright (reduced motion): 375, 768, 1200, 1728. No horizontal overflow. 480, 1024 and 767/769 not checked. Animated (non-reduced-motion) version and keyboard focus not checked.
+
+## 2026-11-09 - Footer CTA above the credit, socials below (index.html only)
+- `index.html` footer order is now: `.contact-cta` (heading "Got a team or a problem in mind? Let's talk.", one line of text, "Get in touch" `mailto:` button reusing `.cta-button`), then `.web` (logo + credit), then `.socials`. All social links keep their ids, attributes and data-attributes.
+- New `src/scss/landing-page/contact-cta.scss` (used in `_landing-page.scss`). Button uses `$blue-dark` on the `$blue-light` footer (the default `$blue` fill is lower contrast), with a visible `focus-visible` outline.
+- `footer.scss`: the stacked 5-link column no longer fits under the credit, so `.socials` is a wrapping row at `desktop` and below. At `mobile` the footer grows (`.contact__inner` `height: auto; min-height: 100dvh`, content `height: auto`, flex-start). Bug: with the old `height: 80%`/`flex-end` the taller content overflowed upwards and clipped the CTA.
+- CV (`#cv-download-btn`) and portfolio PDF (`#pdf-download-btn`) links temporarily hidden with the `hidden` attribute (markup kept, comment says to remove `hidden` to restore). `.social-link[hidden] { display: none }` added because `.social-link` sets `display: flex`, which overrides `hidden`. `index-original.html` untouched.
+- Checked with Playwright (reduced motion) at 375, 768, 1200: no horizontal overflow, nothing clipped, button 44px tall, focus outline visible, email hover text works. Not checked: 480, 1024, 1728, 767/769.
+- Dev tip: the browser served stale compiled CSS after SCSS edits until the URL changed (`?x=n`).
+
+## 2026-11-09 - Stacked-card about modal (index.html only)
+- `index.html`: `<body class="about-stack">` + everything except skip link and layout toggle wrapped in `.page-stack`. `index-original.html` keeps the side-panel modal.
+- `src/scss/landing-page/about-stack.scss`: while `.about-modal.is-open`, `.page-stack` scales to 0.92 and dims (`brightness(0.7)`); the panel becomes a bottom card (top corners rounded, centred, slides up). `html` gets `overflow: clip` to lock scroll (not `hidden`, per sticky rule). Reduced motion: no transitions.
+- `about-modal.js` sets `--scroll-y` on open so the page scales around the viewport centre. The wrapper only has a transform while the modal is open, so fixed/sticky elements behave normally otherwise.
+- Checked with Playwright at 1200 and 375: opens, scales, closes with Escape and restores (transform none). Not checked: 480/768/1024/1728, animated vs reduced-motion comparison, backdrop-click close, focus trap.
+
+## 2026-11-09 - About modal content as cards (index.html only)
+- In `about-stack.scss`, `.about-modal__content` is a 2-col grid (1 col at `mobile`); each `.about-modal__entry` is a white card (`$cream-mid` border, `$space-12` radius, icon above text, no divider). `.meta-group` (Reach Out button + status chip) spans both columns as a `$blue-light` card. No HTML changes; scoped via `body.about-stack`, so `index-original.html` is unchanged.
+- Checked with Playwright at 1200 and 375 (no horizontal overflow, 44px button). Not checked: 480/768/1024/1728, focus order.
+
+## 2026-11-09 - About modal: scroll-driven card deck (index.html only)
+- Replaced the 2-col card grid with a deck: 5 cards (4 entries + Reach Out as a card) share one grid cell and are layered by `z-index`, each with its own tilt and side offset (not straight). Scrolling the modal content sends the top card up and out and brings the next forward; scrolling up reverses it.
+- Markup: `.about-deck__stage` (sticky) > `.about-deck` (the cards) + count line, then `.about-deck__track` (invisible spacer that provides scroll distance). New module `src/js/modules/about-deck.js` (init in `main.js`, no-op when `.about-deck` is absent, so `index-original.html` is unaffected) sets `--d` per card from `scrollTop`. Native scroll, so touch, wheel and scrollbar work. Tabbing to a card underneath (Reach Out link) scrolls it to the top. Content resets to card 1 when the modal closes.
+- Cards are as tall as the deck (content height 66vh, stage fills it) and the panel wraps them (no empty space under the deck). Decision: "stacked" means z-index layering, not a flex column.
+- Reduced motion: transitions off, deck still works.
+- Checked with Playwright at 1200x800 and 375x800: steps 1 to 5 forward and back, no horizontal overflow, no clipped copy, CTA 52px tall. Not checked: 480/768/1024/1728, short viewports (<700px tall), touch swipe, backdrop-click close.
+
+## 2026-11-09 - About deck: dots instead of scroll (index.html only)
+- Scroll-driven switching removed (sticky stage, `.about-deck__track` spacer, count line, scroll listener). A vertical dot nav (`.about-deck__dots`, 5 buttons with `data-deck-dot`) now sits left of the cards. Clicking a dot sets that card on top; going back to an earlier dot brings its card back over the others. Active dot elongates (same language as the project carousel dots). Each dot is a 44x44 tap target.
+- `about-deck.js`: dot click, ArrowUp/ArrowDown between dots (vertical tab-list pattern), `focusin` on a card underneath brings it to the top, reset to card 1 on modal close. Dots have `aria-label` ("Show card n of 5: ...") and `aria-current`.
+- `.about-modal__content` is `overflow: visible` (no scroll); stage is a flex row (dots + deck).
+- Checked with Playwright at 1200x800 and 375x800: forward, back, arrow keys, no horizontal overflow, dots 44x44. Not checked: 480/768/1024/1728, short viewports, screen reader announcement, touch.
+
+## 2026-11-09 - About deck: dots on the right, page scroll lock (index.html only)
+- Dots moved to the right of the cards (`order: 1` on `.about-deck__dots`).
+- Bug: with the deck no longer scrolling, wheel/touch over the modal scrolled the page behind it. The earlier lock (`overflow: clip`) was on `body`, but the viewport scrolls on `html`. Fix: `html:has(.about-stack .about-modal[open]) { overflow: clip }` (clip, not hidden, per the sticky-nav rule), `overscroll-behavior: contain` on the dialog and cards, and `overflow-y: auto` on cards so long copy scrolls inside the card, never the page. Lock holds for the whole open state including the close animation.
+- Checked with Playwright at 1200x800: scrollY stayed at 900 with the modal open under wheel over cards, over the backdrop and with PageDown; after Escape the page scrolls again (900 to 1400) and the page transform is none. Dots confirmed right of the deck. Not checked: 375 and other widths after this change, touch scrolling, a card with overflowing copy.
+
+## 2026-11-09 - About deck: scroll navigates the cards (index.html only)
+- Decision: with the page locked, wheel and swipe now move the deck, one card per gesture, instead of scrolling anything. Cards have no inner scroll (`overflow: clip`, reverts the `overflow-y: auto` added in the previous entry). `.about-modal__content` has `touch-action: none`.
+- `about-deck.js`: `wheel` listener on the dialog (non-passive, `preventDefault`), 600ms cooldown plus a quiet gap (80ms) after each step so trackpad inertia can't skip cards; vertical touch swipe (>40px); dots and arrow keys unchanged. Wheel works anywhere on the modal, including the backdrop.
+- Checked with Playwright at 1200x800: 3 wheel steps forward, 1 back, 1 from the backdrop, a burst of 8 small events moved exactly one card; scrollY stayed at 900; all cards `overflow-y: clip`. Not checked: touch swipe (no touch emulation run), 375 and other widths, real trackpad inertia.
+
+## 2026-11-09 - About deck: native scroll restored (index.html only)
+- Silvia preferred the earlier scroll behaviour. Cause of the regression: when the dots were added, the native scroll mechanism was replaced (not layered), the page behind then scrolled, and a wheel/swipe interceptor was bolted on, which gave a stepped feel instead of continuous scroll. Lesson: add a new control next to the existing mechanism instead of swapping it, and keep the previous version recoverable (nothing was committed at the time).
+- Restored: `.about-modal__content` is the scroller (`overflow-y: auto`, `overscroll-behavior: contain`), `.about-deck__stage` sticky, `.about-deck__track` (160vh) spacer back in the markup, `about-deck.js` maps `scrollTop` to the top card. Wheel/touch interceptors and `touch-action: none` removed. Page stays locked by `html:has(.about-stack .about-modal[open]) { overflow: clip }`.
+- Kept from the later requests: dots on the right (now synced with scroll; clicking a dot or pressing arrow keys scrolls to that card), cards `overflow: clip` (no inner scroll). The "n / 5 · scroll" count line was not restored (the dots replace it).
+- Checked with Playwright at 1200x800: continuous scroll over the cards steps through 1 to 4 in order, scrolling up goes back, dots follow, dot 5 and dot 1 scroll to the first and last card, page scrollY stayed at 900. Wheel over the dimmed backdrop does nothing (page locked, content not under the pointer). Not checked: 375 and other widths, touch, real trackpad.
+
+## 2026-11-09 - About deck: scrollbar hidden (index.html only)
+- `.about-modal__content` has `scrollbar-width: none` + `::-webkit-scrollbar { display: none }`. Scrolling (wheel, touch, keys) is unchanged; the dots show the position.
+- Checked with Playwright at 1200x800: scrollbar width 0, wheel still steps the cards 1 to 4, page scrollY stayed at 900. Not checked: Safari/Firefox rendering, touch.
+
+## 2026-11-09 - About modal 10% taller (index.html only)
+- Deck/content height 66vh to 73vh, now one SCSS variable `$deck-height` in `about-stack.scss` (content height and stage height both use it). Panel (header + deck) went from 596px to 652px at 1200x800.
+- Checked with Playwright at 1200x800, 375x800 and 1728x1000: panel fits within the viewport, no horizontal overflow. Not checked: short viewports (under 700px tall), where 92vh max-height could start to apply.
+
+## 2026-11-09 - About modal bottom padding (index.html only)
+- `.about-modal__panel` gets `padding-bottom: $space-40` (`$space-24` at mobile) so the cards sit off the bottom edge of the screen (the panel is bottom-anchored). Panel is 40px taller as a result (652px to 692px at 1200x800).
+- Checked with Playwright at 1200x800, 375x800, 1728x1000: gap below the lowest visible card is about 45px (25px on mobile), no horizontal overflow.
+
+## 2026-11-09 - About deck: soft project hue per card (index.html only)
+- Each card gets an opaque tint via `--card-tint`, computed at compile time with `color.mix(<project colour>, $color-white, n%)` (not rgba, so the cards never become see-through over the cards underneath): card 1 `$bronze` 10%, card 2 `$blue` 10%, card 3 `$green` 10%, card 4 `$cream-dark` 30% (the neutral project; cream needs a higher share to read). Order follows the projects (Library Freeze, Marketing Management, Design System, Energy Tracker).
+- Decision: the project alpha tokens (`$color-*-alpha`) are 30% and rgba, so they were not used; mixing the base colour tokens gives the requested 5-10% look and stays opaque. Card 5 (Reach Out) keeps `$blue-light`.
+- Used `@use 'sass:color'` / `color.mix` (the global `mix()` is deprecated in this Sass version).
+- Checked with Playwright at 1200x800: computed backgrounds are solid rgb values with no alpha (rgb(246,241,237), (235,242,247), (242,243,237), (241,238,235)); screenshots of cards 2 and 3 look right. Not checked: 375, contrast measured by tool (body ink on these very light tints is far above 4.5:1; the grey h2 labels `#6b6b6b` are the closest, roughly 5:1 by estimate).
+
+## 2026-11-09 - About card 1: silvia.jpg hidden, other photo centred (index.html only)
+- `public/about/silvia.jpg` is hidden with the `hidden` attribute (plus an HTML comment on how to restore it). There is no `silvia3` file in `public/about/` (only `silvia.jpg` and `silvia-camera.jpg`), so "silvia3" was taken to mean `silvia-camera.jpg`. Confirm if another file was meant.
+- `about-stack.scss`: `.about-modal__photos:has(> [hidden])` centres the remaining photo and drops its "tucked behind" treatment (negative margin, scale 0.9, no shadow). Removing `hidden` restores the original two-photo layout with no CSS change.
+- Checked with Playwright at 1200x800 and 375x800: photo centred in the card (within 3px, the card is tilted), fits above the text, text inside the card, no horizontal overflow, hidden image `display: none`.
+
+## 2026-11-09 - About deck: card hues reassigned (index.html only)
+- Silvia: first card should be green or blue, and mauve, bronze and brick were not showing. New order (all `color.mix(<token>, $color-white, 10%)`, opaque): card 1 `$green`, card 2 `$mauve`, card 3 `$bronze`, card 4 `$brick`, card 5 (Reach Out) `$blue`. The neutral/cream tint is no longer used; Reach Out now uses the blue tint instead of the solid `$blue-light`.
+- Computed backgrounds: rgb(242,243,237), (243,239,241), (246,241,237), (246,241,240), (235,242,247); Reach Out button still rgb(57,128,170).
+- Checked with Playwright (viewport was 375x800 for the screenshots; computed values are width-independent): card 1 green with the photo, card 4 brick. Not checked: cards 2, 3 and 5 visually, 1200 width after this change, tool-measured contrast.
+
+## 2026-11-09 - About modal panel surface removed, header as a pill (index.html only)
+- `.about-modal__panel` (in `about-stack.scss`): background set to transparent (was `$color-bg` from `new-about.scss`), box-shadow none (was `0 -8px 32px $color-shadows-dark`), `max-width: none` (was `min(64%, 56rem)`), `width: auto` so it hugs the deck; the old width rules (`80vw` at 1366px and below, `100%` + `max-width: 100%` at mobile) are commented out. The originals are kept as comments next to the overrides. The values live in `new-about.scss`, which `index-original.html` still uses, so they were overridden here instead of removed there.
+- `.about-modal__header`: `background-color: $color-bg` (it is #FAFAFA) and `border-radius: $space-16` (1rem). Used the token, not the hex.
+- Checked with Playwright: 1200 (panel 724px wide, centred), 1728 (724px), 375 (full width). Computed: panel bg rgba(0,0,0,0), shadow none, header rgb(250,250,250), radius 16px, no horizontal overflow.
+- Side effect to review: the deck and its dots now sit straight on the dimmed page, so the dots (light blue, 30% opacity) have lower contrast against the page behind; at 375 the page text shows through behind the dots.
+
+## 2026-11-09 - Social links on the Reach Out card (index.html only)
+- The Reach Out card (card 5) has a list of all five footer links: LinkedIn, Email (mailto), Download CV, GitHub, Portfolio (PDF). CV and PDF are visible here even though the footer still hides them (`hidden`).
+- Markup: `ul.about-modal__links` > `a.about-modal__link`, new classes (not `.social-link`), so the footer's big link styling and its `footer_click` analytics hook (`.social-link[data-name]`) are not triggered; no duplicate ids (the footer keeps `#cv-download-btn` / `#pdf-download-btn`). Outline pills in `$blue-dark`, `min-height: 44px`, hover fill, focus ring via the `focus-visible` mixin, reduced-motion safe.
+- The footer spells the PDF label "Porfolio"; the card uses "Portfolio (PDF)". Footer typo left untouched.
+- No analytics events on the new links (not requested). To track them, extend `analytics-events.js`.
+- Checked with Playwright at 1200x800 and 375x800: all five links inside the card, heights 46 to 49px, no horizontal overflow. Not checked: that the download and mailto links actually open, keyboard focus visuals.
+
+## 2026-11-09 - Labels next to the about deck dots (index.html only)
+- Each `.about-deck__dot` now contains `<span class="about-deck__label">` (Origins, Foundations, Systems, Vibe, Reach out), to the right of the dot. Active label is bold. Labels use `$blue-dark` (rgb 32,58,72) because the dots sit on the dimmed page, not on a white surface. The buttons keep their `aria-label` ("Show card n of 5: ..."), which contains the visible text.
+- `.about-deck__dot` is now left-aligned flex (dot + label) with `min-width: 44px`, 44px high; the dot is a fixed 8px pseudo-element so the dots stay in one aligned column. Labels are `display: none` at `mobile` (768px and below) to keep the deck wide; only the dots show there.
+- The panel widened from 724px to 800px at 1200px viewport to hug the labels.
+- Checked with Playwright at 1200x800 and 375x800: all five labels visible and aligned at 1200, hidden at 375, no horizontal overflow. Not checked: 768-1024 range, contrast of the inactive dots (30% blue) against the dimmed page.
+
+## 2026-11-09 - Depth-scaling background commented out (index.html only)
+- The `&:has(.about-modal.is-open) .page-stack { transform: scale(0.92); filter: brightness(0.7) }` rule in `about-stack.scss` is commented out. The `.page-stack` wrapper, its transition/transform-origin and the `--scroll-y` line in `about-modal.js` are left in place (unused for now) so the effect can be restored by uncommenting four lines.
+- Checked with Playwright at 1200x800 with the modal open: `.page-stack` transform none, filter none; page scroll lock (`html` overflow clip) still active.
+
+## 2026-11-09 - About modal scrim: white veil (index.html only)
+- `.about-modal__backdrop` background is now `$color-white-alpha` (rgba(255,255,255,0.4)), was `rgba($blue-dark, 0.25)`. Tried `$color-blue-alpha` (rgba(0,102,255,0.1)) first; Silvia rejected it. `$white-alpha` (rgba(250,250,250,0.90)) was the other white token and was not used: at 90% it nearly hides the page.
+- Checked with Playwright at 1200x800: computed rgba(255,255,255,0.4); page content behind is visible but washed out. Side effect: the header pill (`$color-bg`, #FAFAFA) now barely stands out from the veil; the pale inactive dots and the "View original layout" button are also lower contrast on it. Not checked: 375.
+
+## 2026-11-09 - About modal scrim restored to dark blue (index.html only)
+- `.about-modal__backdrop` is back to `rgba($blue-dark, 0.25)` (rgba(32,58,72,0.25), no backdrop blur) after the white veil (`$color-white-alpha`) was tried and rejected. Not re-checked in a browser; the value is the same one measured earlier (computed rgba(32, 58, 72, 0.25)).
+

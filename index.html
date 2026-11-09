@@ -46,8 +46,9 @@
       <!-- Preload LCP image -->
       <link rel="preload" as="image" href="/mkm/mkm-large hero.webp" type="image/webp">
    </head>
-   <body>
+   <body class="about-stack">
       <a class="skip-link" href="#library-freeze">Skip to content</a>
+      <div class="page-stack">
 
 
       <!-- <div class="scroll-hinter">
@@ -119,7 +120,21 @@
                   </button>
                </header>
                <div class="about-modal__content">
+                  <div class="about-deck__stage">
+                     <div class="about-deck__dots" role="group" aria-label="Choose a card">
+                        <button type="button" class="about-deck__dot is-active" data-deck-dot="0" aria-label="Show card 1 of 5: Origins" aria-current="true"><span class="about-deck__label">Origins</span></button>
+                        <button type="button" class="about-deck__dot" data-deck-dot="1" aria-label="Show card 2 of 5: Foundations"><span class="about-deck__label">Foundations</span></button>
+                        <button type="button" class="about-deck__dot" data-deck-dot="2" aria-label="Show card 3 of 5: Systems"><span class="about-deck__label">Systems</span></button>
+                        <button type="button" class="about-deck__dot" data-deck-dot="3" aria-label="Show card 4 of 5: Vibe"><span class="about-deck__label">Vibe</span></button>
+                        <button type="button" class="about-deck__dot" data-deck-dot="4" aria-label="Show card 5 of 5: Reach out"><span class="about-deck__label">Reach out</span></button>
+                     </div>
+                     <div class="about-deck">
                   <div class="about-modal__entry">
+                     <div class="about-modal__photos">
+                        <!-- silvia.jpg temporarily hidden: remove `hidden` to restore the two-photo layout -->
+                        <img class="about-modal__photo" hidden src="/about/silvia.jpg" width="1052" height="1400" alt="Silvia taking a mirror selfie at home, surrounded by plants, in a green linen shirt and tan trousers" loading="lazy" decoding="async">
+                        <img class="about-modal__photo about-modal__photo--back" src="/about/silvia-camera.jpg" width="828" height="1236" alt="Silvia laughing under a leafy canopy, holding a camera" loading="lazy" decoding="async">
+                     </div>
                      <p class="about-modal__marker"><i class="iconoir-sea-and-sun"></i></p>
                      <p class="about-modal__body">Born and raised in the Canary Islands, now living between there and Barcelona. Heavily shaped by British culture and humour.<br>I have a lot of plants in my apartment and bake way too much focaccia weekly.</p>
                   </div>
@@ -173,7 +188,18 @@
                         <!-- <span class="status-chip__dot" aria-hidden="true"></span> -->
                         <span><em>OPEN TO</em> Design Systems | Design Technologist roles<br> Location: remote or Barcelona</span>
                      </p>
+                     <!-- Same links as the footer, CV and PDF included (hidden there for now) -->
+                     <ul class="about-modal__links" aria-label="Links">
+                        <li><a href="https://www.linkedin.com/in/silvia-travieso-gonzalez" target="_blank" rel="noopener noreferrer" class="about-modal__link">LinkedIn</a></li>
+                        <li><a href="mailto:silvia.travieso.g@gmail.com" class="about-modal__link">Email</a></li>
+                        <li><a href="/Silvia-Travieso-CV-2026.pdf" download class="about-modal__link">Download CV</a></li>
+                        <li><a href="https://github.com/SilvT/Portfolio-2026" target="_blank" rel="noopener noreferrer" class="about-modal__link">GitHub</a></li>
+                        <li><a href="/Silvia-Travieso_Portfolio-2026.pdf" download class="about-modal__link">Portfolio (PDF)</a></li>
+                     </ul>
                   </div>
+                     </div>
+                  </div>
+                  <div class="about-deck__track" aria-hidden="true"></div>
                </div>
             </div>
          </dialog>
@@ -184,7 +210,7 @@
 
 
 
-         <section id="library-freeze" class="section-project project-bronze experimental-layout" data-section="project" data-project-id="1">
+         <section id="library-freeze" class="section-project project-bronze experimental-layout split-layout" data-section="project" data-project-id="1">
             <div class="contentbox">
                <!-- Project Screen -->
                <div class="project-screen">
@@ -245,15 +271,20 @@
                         </div>
                      </div>
 
-                     <!-- Images carousel -->
-                     <div class="slideshow-container">
-                        <div class="project-image-wrapper slideshow">
-                           <img src="/library-freeze/cover.png" alt="Library Freeze System preview 1" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="0"><video src="/library-freeze/add-entry-flow.mp4" aria-label="Library Freeze System preview 2" class="project-image project-image-default contain" muted loop playsinline preload="none" data-slide="1"></video><img src="/library-freeze/Changelog-example.png" alt="Library Freeze System preview 3" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="2"><img src="/library-freeze/freeze-doc-steps-mini.png" alt="Library Freeze System preview 4" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="3"><img src="/library-freeze/snapshot.png" alt="Library Freeze System preview 5" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="4"><img src="/library-freeze/diff.png" alt="Library Freeze System preview 6" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="5">
-                           <img src="/library-freeze/cover.png" alt="Library Freeze System preview 1" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><video src="/library-freeze/add-entry-flow.mp4" class="project-image project-image-default contain" muted loop playsinline preload="none" aria-hidden="true"></video><img src="/library-freeze/Changelog-example.png" alt="Library Freeze System preview 3" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><img src="/library-freeze/freeze-doc-steps-mini.png" alt="Library Freeze System preview 4" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><img src="/library-freeze/snapshot.png" alt="Library Freeze System preview 5" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true"><img src="/library-freeze/diff.png" alt="Library Freeze System preview 6" class="project-image project-image-default contain" loading="lazy" decoding="async" aria-hidden="true">
+                     <div class="project-slider" role="region" aria-roledescription="carousel" aria-label="Project images" data-slider>
+                        <div class="slider-track">
+                           <div class="slider-slide"><img src="/library-freeze/cover.png" alt="Library Freeze System preview 1" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><video src="/library-freeze/add-entry-flow.mp4" aria-label="Library Freeze System preview 2" class="slider-media" muted loop playsinline preload="none"></video></div>
+                           <div class="slider-slide"><img src="/library-freeze/Changelog-example.png" alt="Library Freeze System preview 3" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/library-freeze/freeze-doc-steps-mini.png" alt="Library Freeze System preview 4" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/library-freeze/snapshot.png" alt="Library Freeze System preview 5" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/library-freeze/diff.png" alt="Library Freeze System preview 6" class="slider-media" loading="lazy" decoding="async"></div>
                         </div>
-                        <!-- Dots navigation (mobile only) -->
-                        <div class="carousel-dots">
-                           <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button><button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button><button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button><button class="carousel-dot" data-slide="3" aria-label="Go to slide 4"></button><button class="carousel-dot" data-slide="4" aria-label="Go to slide 5"></button><button class="carousel-dot" data-slide="5" aria-label="Go to slide 6"></button>
+                        <div class="slider-controls">
+                           <button type="button" class="slider-btn" data-slider-prev aria-label="Previous slide"><i class="iconoir-nav-arrow-left" aria-hidden="true"></i></button>
+                           <button type="button" class="slider-btn" data-slider-toggle aria-label="Pause autoplay" aria-pressed="false"><i class="iconoir-pause slider-icon-pause" aria-hidden="true"></i><i class="iconoir-play slider-icon-play" aria-hidden="true"></i></button>
+                           <button type="button" class="slider-btn" data-slider-next aria-label="Next slide"><i class="iconoir-nav-arrow-right" aria-hidden="true"></i></button>
+                           <span class="slider-count" data-slider-count aria-live="off">1 / 6</span>
                         </div>
                      </div>
                      <!-- Tags and metrics -->
@@ -274,7 +305,7 @@
             </div>
          </section>
 
-         <section id="marketing-management" class="section-project project-blue experimental-layout" data-section="project" data-project-id="2">
+         <section id="marketing-management" class="section-project project-blue experimental-layout split-layout" data-section="project" data-project-id="2">
             <div class="contentbox">
                <div class="project-screen">
                   <div class="project-content">
@@ -336,19 +367,22 @@
 
                      </div>
 
-                     <!-- Images carousel -->
-                     <div class="slideshow-container">
-                        <div class="project-image-wrapper slideshow">
-                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default" loading="eager" fetchpriority="high" decoding="async" data-slide="0"><video src="/mkm/card-hover-2.mp4" aria-label="Marketing Management preview 2" class="project-image project-image-default loaded" muted loop playsinline preload="none" data-slide="1"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="2">
-                           <video src="/mkm/journey.mp4" aria-label="Marketing Management preview 4" class="project-image project-image-default loaded" muted loop playsinline preload="none" data-slide="3"></video>
-                           <img src="/mkm/UI-Leads-dashboard.webp" alt="Marketing Management preview 5" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="4"><img src="/mkm/UI-interactions-inbox.webp" alt="Marketing Management preview 6" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="5"><img src="/mkm/UI-Interactions-convo.webp" alt="Marketing Management preview 7" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="6"><img src="/mkm/UI-grid-lead.webp" alt="Marketing Management preview 8" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="7">
-                           <img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><video src="/mkm/card-hover-2.mp4" class="project-image project-image-default loaded" muted loop playsinline preload="none" aria-hidden="true"></video><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
-                           <video src="/mkm/journey.mp4" class="project-image project-image-default loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
-                           <img src="/mkm/UI-Leads-dashboard.webp" alt="Marketing Management preview 5" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/mkm/UI-interactions-inbox.webp" alt="Marketing Management preview 6" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/mkm/UI-Interactions-convo.webp" alt="Marketing Management preview 7" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/mkm/UI-grid-lead.webp" alt="Marketing Management preview 8" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
+                     <div class="project-slider" role="region" aria-roledescription="carousel" aria-label="Project images" data-slider>
+                        <div class="slider-track">
+                           <div class="slider-slide"><img src="/mkm/mkm-large hero.webp" alt="Marketing Management preview 1" class="slider-media" loading="eager" fetchpriority="high" decoding="async"></div>
+                           <div class="slider-slide"><video src="/mkm/card-hover-2.mp4" aria-label="Marketing Management preview 2" class="slider-media" muted loop playsinline preload="none"></video></div>
+                           <div class="slider-slide"><img src="/mkm/Look-and-feel-first-screen.webp" alt="Marketing Management preview 3" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><video src="/mkm/journey.mp4" aria-label="Marketing Management preview 4" class="slider-media" muted loop playsinline preload="none"></video></div>
+                           <div class="slider-slide"><img src="/mkm/UI-Leads-dashboard.webp" alt="Marketing Management preview 5" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/mkm/UI-interactions-inbox.webp" alt="Marketing Management preview 6" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/mkm/UI-Interactions-convo.webp" alt="Marketing Management preview 7" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/mkm/UI-grid-lead.webp" alt="Marketing Management preview 8" class="slider-media" loading="lazy" decoding="async"></div>
                         </div>
-                        <!-- Dots navigation (mobile only) -->
-                        <div class="carousel-dots">
-                           <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button><button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button><button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button><button class="carousel-dot" data-slide="3" aria-label="Go to slide 4"></button><button class="carousel-dot" data-slide="4" aria-label="Go to slide 5"></button><button class="carousel-dot" data-slide="5" aria-label="Go to slide 6"></button><button class="carousel-dot" data-slide="6" aria-label="Go to slide 7"></button><button class="carousel-dot" data-slide="7" aria-label="Go to slide 8"></button>
+                        <div class="slider-controls">
+                           <button type="button" class="slider-btn" data-slider-prev aria-label="Previous slide"><i class="iconoir-nav-arrow-left" aria-hidden="true"></i></button>
+                           <button type="button" class="slider-btn" data-slider-toggle aria-label="Pause autoplay" aria-pressed="false"><i class="iconoir-pause slider-icon-pause" aria-hidden="true"></i><i class="iconoir-play slider-icon-play" aria-hidden="true"></i></button>
+                           <button type="button" class="slider-btn" data-slider-next aria-label="Next slide"><i class="iconoir-nav-arrow-right" aria-hidden="true"></i></button>
+                           <span class="slider-count" data-slider-count aria-live="off">1 / 8</span>
                         </div>
                      </div>
                      <!-- Tags and metrics -->
@@ -370,7 +404,7 @@
             </div>
          </section>
 
-         <section id="design-system" class="section-project project-green experimental-layout" data-section="project" data-project-id="3">
+         <section id="design-system" class="section-project project-green experimental-layout split-layout" data-section="project" data-project-id="3">
             <div class="contentbox">
                <!-- Project Screen -->
                <div class="project-screen">
@@ -434,15 +468,19 @@
 
                      </div>
 
-                     <!-- Images carousel -->
-                     <div class="slideshow-container">
-                        <div class="project-image-wrapper slideshow">
-                           <img src="/ds/architecture.png" alt="Design System from Scratch preview 1" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="0"><img src="/ds/ds-color-display.png" alt="Design System from Scratch preview 2" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="1"><img src="/ds/handoff-pieces.png" alt="Design System from Scratch preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="2"><img src="/ds/last-version-color-specs.png" alt="Design System from Scratch preview 4" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="3"><img src="/ds/UIKIT.webp" alt="Design System from Scratch preview 5" class="project-image project-image-default loaded" loading="lazy" decoding="async" data-slide="4">
-                           <img src="/ds/architecture.png" alt="Design System from Scratch preview 1" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/ds/ds-color-display.png" alt="Design System from Scratch preview 2" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/ds/handoff-pieces.png" alt="Design System from Scratch preview 3" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/ds/last-version-color-specs.png" alt="Design System from Scratch preview 4" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true"><img src="/ds/UIKIT.webp" alt="Design System from Scratch preview 5" class="project-image project-image-default loaded" loading="lazy" decoding="async" aria-hidden="true">
+                     <div class="project-slider" role="region" aria-roledescription="carousel" aria-label="Project images" data-slider>
+                        <div class="slider-track">
+                           <div class="slider-slide"><img src="/ds/architecture.png" alt="Design System from Scratch preview 1" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/ds/ds-color-display.png" alt="Design System from Scratch preview 2" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/ds/handoff-pieces.png" alt="Design System from Scratch preview 3" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/ds/last-version-color-specs.png" alt="Design System from Scratch preview 4" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/ds/UIKIT.webp" alt="Design System from Scratch preview 5" class="slider-media" loading="lazy" decoding="async"></div>
                         </div>
-                        <!-- Dots navigation (mobile only) -->
-                        <div class="carousel-dots">
-                           <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button><button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button><button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button><button class="carousel-dot" data-slide="3" aria-label="Go to slide 4"></button><button class="carousel-dot" data-slide="4" aria-label="Go to slide 5"></button>
+                        <div class="slider-controls">
+                           <button type="button" class="slider-btn" data-slider-prev aria-label="Previous slide"><i class="iconoir-nav-arrow-left" aria-hidden="true"></i></button>
+                           <button type="button" class="slider-btn" data-slider-toggle aria-label="Pause autoplay" aria-pressed="false"><i class="iconoir-pause slider-icon-pause" aria-hidden="true"></i><i class="iconoir-play slider-icon-play" aria-hidden="true"></i></button>
+                           <button type="button" class="slider-btn" data-slider-next aria-label="Next slide"><i class="iconoir-nav-arrow-right" aria-hidden="true"></i></button>
+                           <span class="slider-count" data-slider-count aria-live="off">1 / 5</span>
                         </div>
                      </div>
                      <!-- Tags and metrics -->
@@ -464,7 +502,7 @@
             </div>
          </section>
 
-         <section id="energy-tracker" class="section-project project-neutral experimental-layout" data-section="project" data-project-id="4">
+         <section id="energy-tracker" class="section-project project-neutral experimental-layout split-layout" data-section="project" data-project-id="4">
             <div class="contentbox">
                <!-- Project Screen -->
                <div class="project-screen">
@@ -528,28 +566,22 @@
                         </div>
                      </div>
 
-                     <!-- Images carousel -->
-                     <div class="slideshow-container">
-                        <div class="project-image-wrapper slideshow">
-                           <img src="/microsite/mock.webp" alt="Energy Switching Tracker preview 1" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" data-slide="0">
-                           <video src="/microsite/loading-tomato-frame.mp4" aria-label="Energy Switching Tracker preview 2" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" data-slide="1"></video>
-                           <video src="/microsite/card-hover.mp4" aria-label="Energy Switching Tracker preview 3" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" data-slide="2"></video>
-                           <img src="/microsite/landing.webp" alt="Energy Switching Tracker preview 4" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" data-slide="3">
-                           <!-- <img src="/microsite/loading-animation.webp" alt="Energy Switching Tracker preview 5" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" data-slide="4"> -->
-                           <video src="/microsite/application.mp4" aria-label="Energy Switching Tracker preview 5" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" data-slide="4"></video>
-                           <img src="/microsite/tomato microsite screens.webp" alt="Energy Switching Tracker preview 6" class="project-image project-image-default contain" loading="lazy" decoding="async" data-slide="5">
-                           <img src="/microsite/tomato microsite screens.webp" alt="Energy Switching Tracker preview 7" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" data-slide="6">
-                           <img src="/microsite/mock.webp" alt="Energy Switching Tracker preview 1" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" aria-hidden="true">
-                           <video src="/microsite/loading-tomato-frame.mp4" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
-                           <video src="/microsite/card-hover.mp4" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
-                           <img src="/microsite/landing.webp" alt="Energy Switching Tracker preview 4" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" aria-hidden="true">
-                           <!-- <img src="/microsite/loading-animation.webp" alt="Energy Switching Tracker preview 5" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" aria-hidden="true"> -->
-                           <video src="/microsite/application.mp4" class="project-image project-image-default contain loaded" muted loop playsinline preload="none" aria-hidden="true"></video>
-                           <img src="/microsite/tomato microsite screens.webp" alt="Energy Switching Tracker preview 7" class="project-image project-image-default contain loaded" loading="lazy" decoding="async" aria-hidden="true">
+                     <div class="project-slider" role="region" aria-roledescription="carousel" aria-label="Project images" data-slider>
+                        <div class="slider-track">
+                           <div class="slider-slide"><img src="/microsite/mock.webp" alt="Energy Switching Tracker preview 1" class="slider-media loaded" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><video src="/microsite/loading-tomato-frame.mp4" aria-label="Energy Switching Tracker preview 2" class="slider-media loaded" muted loop playsinline preload="none"></video></div>
+                           <div class="slider-slide"><video src="/microsite/card-hover.mp4" aria-label="Energy Switching Tracker preview 3" class="slider-media loaded" muted loop playsinline preload="none"></video></div>
+                           <div class="slider-slide"><img src="/microsite/landing.webp" alt="Energy Switching Tracker preview 4" class="slider-media loaded" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/microsite/loading-animation.webp" alt="Energy Switching Tracker preview 5" class="slider-media loaded" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><video src="/microsite/application.mp4" aria-label="Energy Switching Tracker preview 5" class="slider-media loaded" muted loop playsinline preload="none"></video></div>
+                           <div class="slider-slide"><img src="/microsite/tomato microsite screens.webp" alt="Energy Switching Tracker preview 6" class="slider-media" loading="lazy" decoding="async"></div>
+                           <div class="slider-slide"><img src="/microsite/tomato microsite screens.webp" alt="Energy Switching Tracker preview 7" class="slider-media loaded" loading="lazy" decoding="async"></div>
                         </div>
-                        <!-- Dots navigation (mobile only) -->
-                        <div class="carousel-dots">
-                           <button class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></button><button class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></button><button class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></button><button class="carousel-dot" data-slide="3" aria-label="Go to slide 4"></button><button class="carousel-dot" data-slide="4" aria-label="Go to slide 5"></button><button class="carousel-dot" data-slide="5" aria-label="Go to slide 6"></button><button class="carousel-dot" data-slide="6" aria-label="Go to slide 7"></button>
+                        <div class="slider-controls">
+                           <button type="button" class="slider-btn" data-slider-prev aria-label="Previous slide"><i class="iconoir-nav-arrow-left" aria-hidden="true"></i></button>
+                           <button type="button" class="slider-btn" data-slider-toggle aria-label="Pause autoplay" aria-pressed="false"><i class="iconoir-pause slider-icon-pause" aria-hidden="true"></i><i class="iconoir-play slider-icon-play" aria-hidden="true"></i></button>
+                           <button type="button" class="slider-btn" data-slider-next aria-label="Next slide"><i class="iconoir-nav-arrow-right" aria-hidden="true"></i></button>
+                           <span class="slider-count" data-slider-count aria-live="off">1 / 8</span>
                         </div>
                      </div>
                      <!-- Tags and metrics -->
@@ -648,42 +680,10 @@
             </div>
             <div class="contact__inner">
                <div class="contact__content">
-                  <div class="socials">
-                     <!-- LinkedIn Link -->
-                     <a href="https://www.linkedin.com/in/silvia-travieso-gonzalez" target="_blank" rel="noopener noreferrer" class="social-link" data-name="linkedin" data-hover-text="peak at my past">
-                        <span class="icon">ln·</span>
-                        <div class="social-link__text">
-                           <p>Linkedin</p>
-                        </div>
-                     </a>
-                     <!-- Email Link -->
-                     <a href="mailto:silvia.travieso.g@gmail.com" class="social-link" data-name="email" data-hover-text="my inbox is your inbox">
-                        <span class="icon">@·</span>
-                        <div class="social-link__text">
-                           <p>silvia.travieso.g@gmail.com</p>
-                        </div>
-                     </a>
-                     <!-- CV Download Button -->
-                     <a id="cv-download-btn" href="/Silvia-Travieso-CV-2026.pdf" download class="social-link" data-name="cv" data-hover-text="read it at your own pace">
-                        <span class="icon">cv·</span>
-                        <div class="social-link__text">
-                           <p>Download CV</p>
-                        </div>
-                     </a>
-                     <!-- Git Link -->
-                     <a href="https://github.com/SilvT/Portfolio-2026" target="_blank" rel="noopener noreferrer" class="social-link" data-name="git-repo" data-hover-text="Inspect the code for this web">
-                        <span class="icon">&lt; / &gt;</span>
-                        <div class="social-link__text">
-                           <p>Github</p>
-                        </div>
-                     </a>
-                      <!-- PDF Link -->
-                     <a id="pdf-download-btn" href="/Silvia-Travieso_Portfolio-2026.pdf" download class="social-link" data-name="pdf" data-hover-text="save it for later">
-                        <span class="icon">pdf·</span>
-                        <div class="social-link__text">
-                           <p>Porfolio</p>
-                        </div>
-                     </a>
+                  <div class="contact-cta">
+                     <h2 class="contact-cta__title">Got a team or a problem in mind? Let's talk.</h2>
+                     <p class="contact-cta__text">I would love to hear what you are working on, and how I can help.</p>
+                     <a href="mailto:silvia.travieso.g@gmail.com" class="cta-button">Get in touch</a>
                   </div>
                   <div class="web">
                      <span class="web-tooltip">You can inspect the code for this website on my github repo✨</span>
@@ -704,13 +704,50 @@
                         </span>
                      </a>
                   </div>
+                  <div class="socials">
+                     <!-- LinkedIn Link -->
+                     <a href="https://www.linkedin.com/in/silvia-travieso-gonzalez" target="_blank" rel="noopener noreferrer" class="social-link" data-name="linkedin" data-hover-text="peak at my past">
+                        <span class="icon">ln·</span>
+                        <div class="social-link__text">
+                           <!-- <p>Linkedin</p> -->
+                        </div>
+                     </a>
+                     <!-- Email Link -->
+                     <a href="mailto:silvia.travieso.g@gmail.com" class="social-link" data-name="email" data-hover-text="my inbox is your inbox">
+                        <span class="icon">@·</span>
+                        <div class="social-link__text">
+                           <!-- <p>silvia.travieso.g@gmail.com</p> -->
+                        </div>
+                     </a>
+                     <!-- CV Download Button (temporarily hidden, remove `hidden` to restore) -->
+                     <!-- <a hidden id="cv-download-btn" href="/Silvia-Travieso-CV-2026.pdf" download class="social-link" data-name="cv" data-hover-text="read it at your own pace">
+                        <span class="icon">cv·</span>
+                        <div class="social-link__text">
+                           <p>Download CV</p>
+                        </div>
+                     </a> -->
+                     <!-- Git Link -->
+                     <!-- <a href="https://github.com/SilvT/Portfolio-2026" target="_blank" rel="noopener noreferrer" class="social-link" data-name="git-repo" data-hover-text="Inspect the code for this web">
+                        <span class="icon">&lt; / &gt;</span>
+                        <div class="social-link__text">
+                           <p>Github</p>
+                        </div>
+                     </a> -->
+                      <!-- PDF Link (temporarily hidden, remove `hidden` to restore) -->
+                     <a hidden id="pdf-download-btn" href="/Silvia-Travieso_Portfolio-2026.pdf" download class="social-link" data-name="pdf" data-hover-text="save it for later">
+                        <span class="icon">pdf·</span>
+                        <div class="social-link__text">
+                           <p>Porfolio</p>
+                        </div>
+                     </a>
+                  </div>
                </div>
             </div>
          </section>
       </footer>
+      </div>
 
-
-
+   <a class="layout-toggle" href="/index-original.html">View original layout</a>
 
    <script type="module" src="/src/js/main.js"></script>
    </body>
