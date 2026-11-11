@@ -7,6 +7,11 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ## 2026-11-11
 
+### Release note: `marketing-management.html` held back from main
+- `unskippable-CS` was merged into `main` locally with one exception: the new `marketing-management.html` (rewritten in the earlier "MKM case study" commits) is not ready, so a follow-up commit on `main` restores the previous version. The new version stays on `unskippable-CS`.
+- **To ship it later:** `git checkout unskippable-CS -- marketing-management.html` on `main`. A plain merge of `unskippable-CS` will NOT bring it, because `main` now has a newer change to that file (the old content).
+- Checked the old page with the new stylesheet (Playwright, reduced motion, 375/768/1440): renders, no horizontal scroll, no broken images, no page errors. Only the top of the 1440 screenshot was looked at. The old page has no logo "Home" tooltip.
+
 ### Refactor: `new-about.scss` merged into `about-stack.scss`
 - One file, `src/scss/landing-page/about-stack.scss`, now holds the About hero, the base About modal and the stacked-card deck, under three section comments. `new-about.scss` is deleted (`git rm`); `_landing-page.scss` has a single `@use 'about-stack'` at the old `new-about` position (so hero rules and the `_animations` CSS keep their place in the cascade; the deck selectors are all `.about-stack`-prefixed, so they are order-insensitive). Comments in `about-stack.scss` and `nav-bar.scss`, and `src/scss/CLAUDE.md` / `.claude/CLAUDE.md`, updated.
 - **Kept (still effective):** hero (`.about-sect`, `.section-about` + circles/keyframes, `.info-grid` name/job title/bio/`.about-cta`, will-change group; also used by `404.html`), modal base (dialog reset, `::backdrop`, backdrop position/opacity/transition, panel position/flex/transition/overflow, header flex, title, close size/glyph, content font/colour, `h2`, `p`, `strong`, `.tags`, `.tag-group-label`, entry flex, marker, body, `.meta-group` flex-wrap), `.status-chip` base (flex, gap, padding, font, radius, hover lift, em size/weight).
