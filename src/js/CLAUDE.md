@@ -27,7 +27,7 @@ src/js/
     ├── about-modal.js                # About modal slide-in panel
     ├── project-card-entry-animation.js # Project card entry mask reveal
     ├── analytics-events.js           # Vercel Analytics custom events
-    ├── tool-cards-preview.js      # Tools grid: preview swaps with hovered/focused card
+    ├── tool-card-detail.js        # Tools grid: click/tap a card opens its details dialog
     ├── phase-rail-accordion.js       # Expand/collapse for .case-phase-rail--accordion
     ├── accordion.js                  # Expand/collapse for .milestone / .cs-line-breaker.accordion
     ├── side-nav-bar.js               # Case study dynamic side nav
@@ -41,7 +41,7 @@ src/js/
 
 | Page | Loads |
 |------|-------|
-| `index.html` | `main.js` (bundles: flipBoardAnimation, scroll-hinter, navigation, icon-animation, about-entry-animation, about-modal, project-card-entry-animation, analytics-events, tool-cards-preview, phase-rail-accordion; `lightgallery.js` only via dynamic `import()` if a carousel/gallery selector is present on the page) |
+| `index.html` | `main.js` (bundles: flipBoardAnimation, scroll-hinter, navigation, icon-animation, about-entry-animation, about-modal, project-card-entry-animation, analytics-events, tool-card-detail, phase-rail-accordion; `lightgallery.js` only via dynamic `import()` if a carousel/gallery selector is present on the page) |
 | `design-system.html` | `lightgallery.js`, `phase-rail-accordion.js`, `scroll-to-top.js` |
 | `energy-tracker.html` | `accordion.js`, `lightgallery.js`, `scroll-to-top.js`, `side-nav-bar.js` |
 | `library-freeze.html` | `lightgallery.js`, `scroll-to-top.js` |
@@ -65,7 +65,7 @@ DOMContentLoaded
     ├── initAboutEntryAnimation()
     ├── initAboutModal()
     ├── initProjectCardEntryAnimation()
-    ├── initToolCardsPreview()
+    ├── initToolCardDetail()
     ├── initVisualEffects()
     │   ├── initFlipBoardAnimation()
     │   └── initScrollHint()
@@ -188,7 +188,7 @@ the landing page only when a matching selector is present.
 | `about-modal.js` | About modal slide-in panel |
 | `project-card-entry-animation.js` | Project card entry mask reveal |
 | `analytics-events.js` | Vercel Analytics custom events |
-| `tool-cards-preview.js` | Tools grid: preview image swaps with whichever card is hovered/focused |
+| `tool-card-detail.js` | Tools grid: clicking or tapping a card opens a native `<dialog>` with its details |
 
 ---
 

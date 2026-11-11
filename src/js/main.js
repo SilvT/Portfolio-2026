@@ -12,7 +12,6 @@ import { initAboutEntryAnimation } from "./modules/about-entry-animation.js";
 import { initAboutModal } from "./modules/about-modal.js";
 import { initProjectCardEntryAnimation } from "./modules/project-card-entry-animation.js";
 import { initAnalyticsEvents } from "./modules/analytics-events.js";
-import { initToolCardsPreview } from "./modules/tool-cards-preview.js";
 import { initToolCardDetail } from "./modules/tool-card-detail.js";
 import { initAboutDeck } from "./modules/about-deck.js";
 import { initProjectSliders } from "./modules/project-slider.js";
@@ -48,8 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Project card entry stagger
   initProjectCardEntryAnimation();
 
-  // Tools grid: preview card shows whichever card is hovered/focused
-  initToolCardsPreview();
+  // Tools grid: click or tap a card to open its details panel
   initToolCardDetail();
 
   // UI features

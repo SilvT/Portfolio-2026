@@ -19,11 +19,10 @@ export function initToolCardDetail() {
         dialog.style.setProperty(name, style.getPropertyValue(name));
       });
 
-      const preview = document.querySelector(`.tool-card-preview-img[data-preview-row="${card.dataset.toolRow}"]`);
       const detail = card.querySelector('.tool-card-detail') ?? card.querySelector('.tool-card-description');
       const cta = $('.tool-dialog__cta');
 
-      $('.tool-dialog__img').src = preview?.src ?? '';
+      $('.tool-dialog__img').src = card.querySelector('.tool-card-bg')?.src ?? '';
       $('.tool-dialog__tag').replaceChildren(card.querySelector('.tool-card-tag').cloneNode(true));
       $('.tool-dialog__title').textContent = card.querySelector('.tool-card-title').textContent;
       $('.tool-dialog__text').innerHTML = detail.innerHTML;
