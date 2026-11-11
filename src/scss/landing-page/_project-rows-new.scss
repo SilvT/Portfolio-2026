@@ -270,7 +270,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: right center; // keep the right side (the plugin UI), crop the left
+  object-position: center; // each image picks the part worth keeping:
+
+  &--left {
+    object-position: left center;
+  }
+
+  &--right {
+    object-position: right center;
+  }
 }
 
 .tool-card-icon-wrapper {
