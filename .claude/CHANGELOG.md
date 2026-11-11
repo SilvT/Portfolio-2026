@@ -7,6 +7,9 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ## 2026-11-11
 
+### Changed: metric cards in a row on tablet and mobile (project-split.scss)
+- `.data-metrics .metrics` is a column above 1024px and a row at `tablet` (1024px) and below. At `small-mobile` (480px) and below each card stacks value above label, because three cards side by side (111px each at 375px) were too narrow for value + label in a row ("Components tracked" clipped). Checked at 375/480/481/768/1024 on Library Freeze: no horizontal scroll, cards share one row. Screenshots viewed at 375 and 768 only.
+
 ### Release note: `marketing-management.html` held back from main
 - `unskippable-CS` was merged into `main` locally with one exception: the new `marketing-management.html` (rewritten in the earlier "MKM case study" commits) is not ready, so a follow-up commit on `main` restores the previous version. The new version stays on `unskippable-CS`.
 - **To ship it later:** `git checkout unskippable-CS -- marketing-management.html` on `main`. A plain merge of `unskippable-CS` will NOT bring it, because `main` now has a newer change to that file (the old content).
