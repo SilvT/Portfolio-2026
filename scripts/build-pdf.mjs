@@ -276,23 +276,23 @@ await tools.goto(`${base}index.html`, { waitUntil: 'networkidle' });
 await tools.addStyleTag({ content: `
   body > *:not(#tools) { display: none !important; }
   #tools { justify-content: center; }
-  .services-grid { flex: none !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; grid-template-rows: none !important; }
-  .service-card { min-height: 22rem; }
-  .service-card--preview { display: none !important; }
-  .service-card-description { max-height: none !important; opacity: 1 !important; margin-top: 0.5rem; }
-  .service-card-preview-img { position: static !important; display: block; width: 100% !important; height: auto !important; opacity: 1 !important; border-radius: 8px; }
+  .tools-grid { flex: none !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; grid-template-rows: none !important; }
+  .tool-card { min-height: 22rem; }
+  .tool-card--preview { display: none !important; }
+  .tool-card-description { max-height: none !important; opacity: 1 !important; margin-top: 0.5rem; }
+  .tool-card-preview-img { position: static !important; display: block; width: 100% !important; height: auto !important; opacity: 1 !important; border-radius: 8px; }
 ` });
 // Cover images go in a second grid row, each under its own card (same order as the cards)
 await tools.evaluate(() => {
   // PDF-only copy: new headline plus a detail paragraph styled like the covers' .project-details (styles read from a cover, not hardcoded)
-  document.querySelector('.services-headline').textContent = 'Custom tools, self-developed.';
+  document.querySelector('.tools-headline').textContent = 'Custom tools, self-developed.';
   const ref = getComputedStyle(document.querySelector('.project-details'));
   const detail = document.createElement('p');
   detail.textContent = 'Small tools built to solve specific design-system frictions that have expanded beyond their original scope and are now widely available for consumption on Figma Community.';
   Object.assign(detail.style, { color: ref.color, fontSize: ref.fontSize, lineHeight: ref.lineHeight, fontVariationSettings: ref.fontVariationSettings, margin: '1rem 0 0' });
-  document.querySelector('.services-headline').after(detail);
-  const grid = document.querySelector('.services-grid');
-  const imgs = [...grid.querySelectorAll('.service-card-preview-img')].sort((a, b) => a.dataset.previewRow - b.dataset.previewRow);
+  document.querySelector('.tools-headline').after(detail);
+  const grid = document.querySelector('.tools-grid');
+  const imgs = [...grid.querySelectorAll('.tool-card-preview-img')].sort((a, b) => a.dataset.previewRow - b.dataset.previewRow);
   imgs.forEach(i => { i.loading = 'eager'; grid.append(i); });
 });
 await tools.waitForTimeout(1000);

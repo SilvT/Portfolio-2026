@@ -14,7 +14,7 @@
   // fixed takes it out of document flow entirely, so .section-about's
   // background/decorative circles render underneath it instead of leaving
   // an empty gap above the section. .section-about compensates with its
-  // own padding-top (see new-about.scss) since it's the only section that
+  // own padding-top (see about-stack.scss) since it's the only section that
   // used to rely on the nav's layout height to be positioned correctly.
   position: fixed;
   top: 0;
@@ -104,7 +104,8 @@
     transition: opacity 0.3s ease;
     text-decoration: none;
 
-    &:hover {
+    // Fade the image only, so the tooltip keeps full contrast
+    &:hover img {
       opacity: 0.7;
     }
 
@@ -220,6 +221,11 @@
     }
 
     .nav-item {
+      // 44px tap target on phones (text is only ~19px tall)
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+
       &.active {
         font-size: $font-l;
       }
@@ -257,6 +263,54 @@
 
   .nav-item,
   .top-nav .logo img {
+    transition: none;
+  }
+}
+
+// ============================================
+// Logo tooltip: reuses the case study [data-tooltip] design
+// (case-study-components.scss: box, arrow, font, theme colours), placed to the
+// right of the logo instead of above it. Markup:
+// <a class="logo-tip" data-tooltip="Home" aria-label="Home">
+// The arrow is the same down-pointing triangle, rotated to point left.
+// Hover and keyboard focus-visible; hidden on mobile by the base rule.
+// ============================================
+
+.logo-tip[data-tooltip] {
+  &::before {
+    top: 50%;
+    bottom: auto;
+    left: calc(100% + #{$space-4} + #{$space-16}); // arrow gap + arrow width
+    min-width: 0;
+    white-space: nowrap;
+    transform: translateY(-50%);
+  }
+
+  &::after {
+    top: 50%;
+    bottom: auto;
+    left: calc(100% + #{$space-4});
+    transform: translateY(-50%) rotate(90deg);
+  }
+
+  &:hover::before,
+  &:focus-visible::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) rotate(90deg);
+  }
+}
+
+@include reduced-motion {
+  .logo-tip[data-tooltip]::before,
+  .logo-tip[data-tooltip]::after {
     transition: none;
   }
 }

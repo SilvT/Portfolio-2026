@@ -57,6 +57,20 @@
     width: 100%;
   }
 
+  // Specificity matches project-cards.scss so these win over its column/min-height rules
+  .data-metrics .metrics {
+    flex-direction: column;
+
+    .metric-card {
+      min-height: 0;
+
+      .cs-metric-content {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  }
+
   .metric-card {
     .cs-metric-icon-wrapper {
       display: none;
@@ -78,6 +92,7 @@
   }
 
   .data-tags {
+    display: none; // TEMP HIDDEN: remove this line to bring the project card tags back
     grid-area: tags;
 
     .tags .tag-list {
@@ -87,7 +102,8 @@
 
   .project-slider {
     grid-area: slider;
-    align-self: start;
+    align-self: stretch;
+    position: relative; // anchors the floating controls
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -96,8 +112,8 @@
 
   .slider-track {
     display: flex;
-    aspect-ratio: 4 / 3; // stable box: no jump while lazy images load
-    max-height: 75vh;
+    flex: 1 1 0; // 0 basis: images don't set the height, the grid row does
+    min-height: 20rem; // stable box: no jump while lazy images load
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
@@ -116,19 +132,43 @@
     scroll-snap-align: center;
   }
 
-  // Scales to the slide width; tall images are limited by the slide height instead
+  // Fills the slide; images are cropped to fit (cover)
   .slider-media {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+
+    // Add to an <img>/<video> that must show whole, uncropped (letterboxed)
+    &.slider-media--contain {
+      object-fit: contain;
+    }
   }
 
+  // Float over the bottom of the image so they take no layout space.
+  // Shown on hover and keyboard focus; always shown when there is no hover (touch).
   .slider-controls {
+    position: absolute;
+    left: 50%;
+    bottom: $space-16;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: $space-8;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .project-slider:hover .slider-controls,
+  .project-slider:focus-within .slider-controls {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .slider-controls {
+      opacity: 1;
+    }
   }
 
   .slider-btn {
@@ -140,12 +180,17 @@
     padding: 0;
     font-size: $font-l;
     color: $blue-dark;
-    background: transparent;
+    background: $color-white; // solid so it stays legible over any image
     border: 1px solid $blue-dark;
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
     @include focus-visible($blue-dark);
+
+    // typography.scss sets a global `i { color }`, so the icon must follow the button's colour
+    i {
+      color: inherit;
+    }
 
     &:hover {
       background: $blue-dark;
@@ -164,16 +209,12 @@
   }
 
   .slider-count {
-    min-width: 4ch;
-    margin-left: $space-8;
-    font-family: $font-anonymous;
-    font-size: $font-xs;
-    color: $blue-dark;
-    text-align: center;
+    display: none; // TEMP HIDDEN: remove this rule to bring the "1 / 6" counter back
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .slider-btn {
+    .slider-btn,
+    .slider-controls {
       transition: none;
     }
   }

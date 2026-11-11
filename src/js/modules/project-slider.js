@@ -2,6 +2,7 @@
 // Scroll-snap does the sliding; JS only picks the slide and runs the timer.
 
 const INTERVAL = 5000;
+const FIRST_DELAY = 1500; // first slide change after the slider scrolls into view
 
 // Autoplay waits while the about modal is open (the cards behind it shouldn't move)
 const aboutOpen = () => document.querySelector('.about-modal')?.open === true;
@@ -31,10 +32,14 @@ export function initProjectSliders() {
     };
     track.addEventListener('scroll', sync, { passive: true });
 
-    const stop = () => clearInterval(timer);
-    const start = () => {
+    const stop = () => clearTimeout(timer);
+    const start = (delay = INTERVAL) => {
       stop();
-      if (!paused && inView) timer = setInterval(() => { if (!aboutOpen()) show(index + 1); }, INTERVAL);
+      if (paused || !inView) return;
+      timer = setTimeout(() => {
+        if (!aboutOpen()) show(index + 1);
+        start();
+      }, delay);
     };
 
     const setPaused = (value) => {
@@ -50,14 +55,14 @@ export function initProjectSliders() {
 
     // Pause while hovered or focused so it never moves under the user
     slider.addEventListener('mouseenter', stop);
-    slider.addEventListener('mouseleave', start);
+    slider.addEventListener('mouseleave', () => start());
     slider.addEventListener('focusin', stop);
-    slider.addEventListener('focusout', start);
+    slider.addEventListener('focusout', () => start());
 
     // Only run while on screen
     new IntersectionObserver(([entry]) => {
       inView = entry.isIntersecting;
-      start();
+      start(FIRST_DELAY);
     }).observe(slider);
 
     setPaused(paused);

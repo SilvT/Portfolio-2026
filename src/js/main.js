@@ -8,12 +8,11 @@ import { initNavigation } from './modules/navigation.js';
 // GLightbox loaded dynamically — only needed on case study pages
 // import { initLightGallery } from './modules/lightgallery.js';
 import { initIconAnimation } from "./modules/icon-animation.js";
-import { initCarouselDots } from "./modules/carousel-dots.js";
 import { initAboutEntryAnimation } from "./modules/about-entry-animation.js";
 import { initAboutModal } from "./modules/about-modal.js";
 import { initProjectCardEntryAnimation } from "./modules/project-card-entry-animation.js";
 import { initAnalyticsEvents } from "./modules/analytics-events.js";
-import { initServiceCardsPreview } from "./modules/service-cards-preview.js";
+import { initToolCardsPreview } from "./modules/tool-cards-preview.js";
 import { initAboutDeck } from "./modules/about-deck.js";
 import { initProjectSliders } from "./modules/project-slider.js";
 import { initPhaseRailAccordion } from "./modules/phase-rail-accordion.js";
@@ -49,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initProjectCardEntryAnimation();
 
   // Tools grid: preview card shows whichever card is hovered/focused
-  initServiceCardsPreview();
+  initToolCardsPreview();
 
   // UI features
   initVisualEffects();
@@ -61,8 +60,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Carousel dot navigation
-  initCarouselDots();
 
   // Autoplay sliders (split project cards on index.html)
   initProjectSliders();

@@ -14,7 +14,6 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, 'index.html'),
         'marketing-management': path.resolve(__dirname, 'marketing-management.html'),
-        'index-original': path.resolve(__dirname, 'index-original.html'),
         'design-system': path.resolve(__dirname, 'design-system.html'),
         'energy-tracker': path.resolve(__dirname, 'energy-tracker.html'),
         'library-freeze': path.resolve(__dirname, 'library-freeze.html'),

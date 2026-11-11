@@ -11,7 +11,7 @@ $cta-pulse-themes: (
   neutral: ($neutral-dark, $neutral),
   mauve:   ($mauve-dark,   $mauve),
   brick:   ($brick-dark,   $brick-dark),
-  bronze:  ($bronze-dark,  $bronze-dark),
+  bronze:  ($bronze-dark,  $bronze),
 );
 
 @each $name, $c in $cta-pulse-themes {

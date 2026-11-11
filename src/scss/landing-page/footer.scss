@@ -68,6 +68,10 @@
   @include breakpoint(mobile){
     gap: 0;
   }
+
+  &[hidden] {
+    display: none; // display: flex above would otherwise override the hidden attribute
+  }
 }
 
 // Social link blocks

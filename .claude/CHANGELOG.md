@@ -5,6 +5,58 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ---
 
+## 2026-11-11
+
+### Refactor: `new-about.scss` merged into `about-stack.scss`
+- One file, `src/scss/landing-page/about-stack.scss`, now holds the About hero, the base About modal and the stacked-card deck, under three section comments. `new-about.scss` is deleted (`git rm`); `_landing-page.scss` has a single `@use 'about-stack'` at the old `new-about` position (so hero rules and the `_animations` CSS keep their place in the cascade; the deck selectors are all `.about-stack`-prefixed, so they are order-insensitive). Comments in `about-stack.scss` and `nav-bar.scss`, and `src/scss/CLAUDE.md` / `.claude/CLAUDE.md`, updated.
+- **Kept (still effective):** hero (`.about-sect`, `.section-about` + circles/keyframes, `.info-grid` name/job title/bio/`.about-cta`, will-change group; also used by `404.html`), modal base (dialog reset, `::backdrop`, backdrop position/opacity/transition, panel position/flex/transition/overflow, header flex, title, close size/glyph, content font/colour, `h2`, `p`, `strong`, `.tags`, `.tag-group-label`, entry flex, marker, body, `.meta-group` flex-wrap), `.status-chip` base (flex, gap, padding, font, radius, hover lift, em size/weight).
+- **Deleted as dead (no markup):** `.contexbox` (typo of `.contentbox`), `.status-chip__dot`, the `.is-open .about-modal__panel` rule (transform/opacity both overridden), `index-original.html` fallbacks.
+- **Deleted as overridden by the deck rules (higher specificity):** panel width/max-width/max-height/height/margins/radius/background/shadow/transform/opacity and its 1366px and mobile width rules; header align-items/padding; title colour; close border/background/colour/hover opacity/focus outline; content flex/overflow/padding/margin; `a:not(.cta-button)` underline (every modal link is `.about-modal__link`); entry gap/border (hardcoded `#dcdcdc`)/padding/direction/`+` margin; `.meta-group` margin/display/align/justify/gap; `.status-chip` position/top/right/desktop static, 999px radius, text-align, background, colour, em colour.
+- **Check:** Playwright (reduced motion) at 375/480/768/1024/1200/1728, index hero, open modal with all 5 deck cards, 404 hero: bounding boxes and ~70 computed properties per element identical before and after, except `top`/`right` on `.status-chip` at 1728 (`2%`/`10%` to `auto`), which were inert because the chip is `position: static` in the deck. No horizontal scroll, modal opens/closes, dots work, tab focus outlines identical. `npm run build` and `sass` compile pass. Pixel screenshots differ only in files that also differ between two identical pre-merge runs (480px etc.), so they are capture noise.
+- Lesson: when merging two files with a later override, compare computed styles, not just selectors; inert properties (top/right on a static element) show up as diffs but change nothing.
+
+### Added: "Home" tooltip on the logo link (index, case studies, 404)
+- **Reuses the case study `[data-tooltip]` design** (`case-study-components.scss`: dark box, arrow, Clash Display bold, theme colours from `_case-study.scss`) instead of a new style. First version used its own `data-tip` styling below the logo; replaced after Silvia asked for the existing look and a right-hand position.
+- `.logo-tip[data-tooltip]` override in `src/scss/landing-page/nav-bar.scss`: tooltip vertically centred to the right of the logo; the arrow is the existing down-pointing triangle rotated 90deg to point left, so it keeps the theme colour. Shows on `:hover` and `:focus-visible`; transitions off under reduced motion; hidden on mobile by the base rule (no hover on touch).
+- Markup (index.html, 404.html, marketing-management, design-system, energy-tracker, library-freeze, plus unbuilt case-energy-tracker and marketing-management-copy): `class="logo-tip" aria-label="Home" data-tooltip="Home"`; logo `<img>` now `alt=""` so the link name is just "Home" (index previously said "Navigate to About section", case pages "Back to home").
+- Decision: no Escape-to-dismiss JS (case pages do not load `main.js`).
+- Checked in Chromium (reduced motion) at 375/1024/1440 on index, library-freeze and design-system: hidden at rest, visible on hover and Tab focus (6 Tab stops on index), no horizontal scroll. Not checked: 404 page, non-reduced-motion version.
+
+### Renamed: Tools section "service" names to "tool" names
+- `services-header/-tag-group/-tag/-headline/-grid` to `tools-*`; `service-card` and every `service-card-*` / `--*` to `tool-card*`; `data-service-row` to `data-tool-row` (`dataset.toolRow`); mixin `service-card-active-state` to `tool-card-active-state`; `initServiceCardsPreview` to `initToolCardsPreview`; `service-cards-preview.js` to `tool-cards-preview.js` (`git mv`).
+- Files: index.html, `_project-rows-new.scss`, `main.js`, `tool-cards-preview.js`, `src/js/CLAUDE.md`, `scripts/build-pdf.mjs` (selectors only), `index-backup.html` while it existed.
+- Left alone on purpose: "self-service" / "customer service" copy and old changelog entries (historical).
+- Checked (Playwright, reduced motion) at 375/768/1024/1440: same grid, no horizontal scroll, hover and focus still swap the preview. Computed styles not compared against pre-rename.
+- Note: this entry was written by the agent but lost to a concurrent edit of this file, and re-added by hand. Lesson: one agent at a time on the changelog.
+
+### Changed: split project cards (slider, metrics, tags, spacing, CTA shadow)
+- **Slider fills the grid row** (`project-split.scss`): `.project-slider` is `align-self: stretch` and `position: relative`; `.slider-track` uses `flex: 1 1 0` with `min-height: 20rem` instead of `aspect-ratio: 4 / 3` and the `75vh` cap, so the row height (not the image) sets the slider height.
+- **Controls float over the bottom of the image** (`.slider-controls`, absolute, centred): hidden until `.project-slider:hover` / `:focus-within`, always visible under `@media (hover: none)`. Buttons have a solid `$color-white` background so they read over any image. Opacity transition is covered by the reduced-motion rule.
+- **Hidden with removable markers:** `.slider-count` ("1 / 6") and `.data-tags` (project card tags) are `display: none` with a `TEMP HIDDEN` comment; delete the line to restore. Preference: hide things this way, not by deleting markup.
+- **Cover by default, contain per slide:** `.slider-media` is `object-fit: cover`; the opt-in `.slider-media--contain` class shows the whole image uncropped. Applied in `index.html` to project 1 slides 2-6, project 2 slides 2-8, project 3 slide 2, project 4 slides 2, 3, 4 and 6. Silvia decides cover vs contain per image.
+- **Project 4 (Energy Switching Tracker):** old slide 5 (`loading-animation.webp`) commented out as a HIDDEN slide; the duplicate slide 8 deleted.
+- **Metric cards:** `.data-metrics .metrics` is a column; `.metric-card` has `min-height: 0` and `.cs-metric-content` is a row with `justify-content: space-between`. Selectors repeat the `project-cards.scss` nesting so they win on specificity.
+- `.meta-group` in `project-cards.scss` (inside `.experimental-layout`) is now `margin: $space-16 0` (was `margin-bottom: $space-16`).
+- `cta-pulse.scss`: bronze pulse shadow colour switched from `$bronze-dark` to `$bronze`, as a test.
+- **Autoplay:** first slide change after the slider scrolls into view is now 1.5s (`FIRST_DELAY` in `project-slider.js`, was 5s). The `setInterval` became a `setTimeout` chain so the first delay can differ from `INTERVAL`.
+- **Bug:** slider arrow invisible on hover. **Cause:** the global `i { color: $blue-dark }` in `typography.scss` overrides the button colour, so the icon matched the hover background. **Fix:** `.slider-btn i { color: inherit }`.
+- **Lesson:** `pkill -f vite` during the session may have killed Silvia's dev servers, so stale CSS in the browser was a possible false negative while debugging. Never kill by broad process name.
+- **Decisions:** Silvia is happy with the new split layout; the stack-card About design is the one to keep.
+- Not verified in this entry: the cover/contain choices and the new heights were not re-checked at every breakpoint width.
+
+### Removed: old index layout and the layout switch
+- The split project-card layout is now the only landing layout. Deleted: `index-original.html` (and its `vite.config.js` input), the floating "View original layout" link in `index.html`, `src/scss/landing-page/layout-toggle.scss` (and its `@use` in `_landing-page.scss`), `src/js/modules/marquee-scroll.js` and `src/js/modules/carousel-dots.js` (only the old marquee slideshows used them; `initCarouselDots` removed from `main.js`).
+- `project-card-entry-animation.js`: dropped the marquee tween creation/resume and the commented-out superseded staggered version. The mask-reveal on `.project-screen` is unchanged and still used by the split cards.
+- `project-cards.scss`: removed `.project-image-wrapper` / `.project-image`, `.slideshow-container`, the marquee `.slideshow`, `.carousel-dots` / `.carousel-dot` and their reduced-motion rule (class names no longer exist in `index.html` or any case study).
+- Docs: removed the marquee/dots sections from `.claude/CLAUDE.md` and `src/js/CLAUDE.md`.
+- Kept: `index-backup.html` (pre-experiment backup, not in the build; delete if not wanted), `new-about.scss` (still used by the about modal), `vercel.json` (had no routes for the old page).
+
+### Changed: About deck cards hug their content (about-stack.scss)
+- **Cause of equal heights:** `.about-deck` had `grid-template-rows: minmax(0, 1fr)` and the cards stretched to fill that single row. **Fix:** rows `auto` and `align-self: start` on `.about-modal__entry` / `.meta-group`; each card is now as tall as its content (the stack-behind effect still works).
+- **Card 1 must fit the viewport:** without the fixed row height the photo was natural size and card 1 was about 1000px tall (text cut off on short screens). `.about-modal__photo` now has `max-height: calc(100dvh - 26rem)` with width and height both `auto`, so the photo shrinks with the viewport and keeps its proportions (`object-fit: contain`). The 26rem allowance covers the card padding, icon and text at 375px.
+- **Bug:** the new "My stack" tag-group labels sat far from their tags. **Cause:** a generic body `p` rule adds 16px bottom padding. **Fix:** `padding: 0` on `.tag-group-label`.
+- Checked in Chromium (Playwright, reduced motion) at 375, 480, 768, 1024, 1200, 1728px plus 375x667, 1280x720, 1280x1200, 1440x1400: no horizontal scroll, no card content clipped, card 1 fits inside the viewport height at all of them. 767/769px not checked; the animated (non-reduced-motion) version was not checked.
+
 ## 2026-11-09
 
 ### Added: photo on the first About card (index.html)
@@ -1089,3 +1141,13 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 - Checked with Playwright at 1200x800, 1728x1000, 375x800: panel top 0 and height equal to the viewport, close button 44x44 at 16px from top and right, no horizontal overflow, hover state computed (white fill, `$blue` glyph, offset shadow). Not checked: Safari, keyboard focus ring visuals on the button, 480 to 1024.
 - Still open: white "Meet Me!" title is hard to see on the light scrim; Chrome's blue focus ring on the scroll container shows when the modal opens.
 
+
+## 2026-11-11
+
+### Changed — Tools section: "services" naming renamed to "tools" (pure rename, no style or logic change)
+- **Classes:** `services-header/-tag-group/-tag/-headline/-grid` -> `tools-*`; `service-card` and all `service-card-*` / `service-card--*` -> `tool-card*`.
+- **Data attribute:** `data-service-row` -> `data-tool-row` (`dataset.serviceRow` -> `toolRow`). `data-preview-row` unchanged.
+- **JS:** `src/js/modules/service-cards-preview.js` -> `tool-cards-preview.js` (`git mv`), `initServiceCardsPreview` -> `initToolCardsPreview`, import and call in `main.js` updated.
+- **SCSS:** `_project-rows-new.scss` selectors and mixin `service-card-active-state` -> `tool-card-active-state`.
+- **Also updated:** `index.html`, `index-backup.html` (stale copy, kept consistent), `scripts/build-pdf.mjs` selectors, `src/js/CLAUDE.md`.
+- **Left alone:** older changelog entries (historical), "self-service"/"customer service" copy in case studies.

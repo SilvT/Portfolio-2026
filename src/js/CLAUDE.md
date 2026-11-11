@@ -23,13 +23,11 @@ src/js/
     ├── flipBoardAnimation.js         # Hero animated job titles
     ├── scroll-hinter.js              # Scroll hint + GSAP smooth scroll
     ├── icon-animation.js             # Icon entry animation
-    ├── carousel-dots.js              # Dot nav synced to marquee-scroll tween
-    ├── marquee-scroll.js             # GSAP marquee tween registry (project card slideshows)
     ├── about-entry-animation.js      # About section entry stagger
     ├── about-modal.js                # About modal slide-in panel
-    ├── project-card-entry-animation.js # Project card entry stagger, creates marquee tween
+    ├── project-card-entry-animation.js # Project card entry mask reveal
     ├── analytics-events.js           # Vercel Analytics custom events
-    ├── service-cards-preview.js      # Tools grid: preview swaps with hovered/focused card
+    ├── tool-cards-preview.js      # Tools grid: preview swaps with hovered/focused card
     ├── phase-rail-accordion.js       # Expand/collapse for .case-phase-rail--accordion
     ├── accordion.js                  # Expand/collapse for .milestone / .cs-line-breaker.accordion
     ├── side-nav-bar.js               # Case study dynamic side nav
@@ -43,15 +41,11 @@ src/js/
 
 | Page | Loads |
 |------|-------|
-| `index.html` | `main.js` (bundles: flipBoardAnimation, scroll-hinter, navigation, icon-animation, carousel-dots, about-entry-animation, about-modal, project-card-entry-animation, analytics-events, service-cards-preview, phase-rail-accordion; `lightgallery.js` only via dynamic `import()` if a carousel/gallery selector is present on the page) |
+| `index.html` | `main.js` (bundles: flipBoardAnimation, scroll-hinter, navigation, icon-animation, about-entry-animation, about-modal, project-card-entry-animation, analytics-events, tool-cards-preview, phase-rail-accordion; `lightgallery.js` only via dynamic `import()` if a carousel/gallery selector is present on the page) |
 | `design-system.html` | `lightgallery.js`, `phase-rail-accordion.js`, `scroll-to-top.js` |
 | `energy-tracker.html` | `accordion.js`, `lightgallery.js`, `scroll-to-top.js`, `side-nav-bar.js` |
 | `library-freeze.html` | `lightgallery.js`, `scroll-to-top.js` |
 | `marketing-management.html` | `accordion.js`, `lightgallery.js`, `scroll-to-top.js`, `side-nav-bar.js` |
-
-`marquee-scroll.js` has no importer of its own in any HTML page — it's a
-shared `Map<HTMLElement, Tween>` registry imported only by
-`carousel-dots.js` and `project-card-entry-animation.js` on the landing page.
 
 Before assuming a module is unused, check both `main.js`'s static imports
 **and** every HTML page's inline `<script type="module">` block — an
@@ -71,7 +65,7 @@ DOMContentLoaded
     ├── initAboutEntryAnimation()
     ├── initAboutModal()
     ├── initProjectCardEntryAnimation()
-    ├── initServiceCardsPreview()
+    ├── initToolCardsPreview()
     ├── initVisualEffects()
     │   ├── initFlipBoardAnimation()
     │   └── initScrollHint()
@@ -113,28 +107,6 @@ Respects `prefers-reduced-motion` (instant text swap fallback). Uses
 (`gsap` + `gsap/ScrollToPlugin`). Handles `.scroll-hint` (click → scroll) and
 `.scroll-hinter` (visual indicator, opacity toggled by scroll position, same
 10ms-debounced pattern as `navigation.js`).
-
----
-
-## Module: marquee-scroll.js
-
-**Purpose:** Shared GSAP marquee tween registry for project card slideshows.
-Exports `createMarqueeTween(slideshow, opts)` and `getMarqueeTween(slideshow)`
-backed by a module-level `Map`. Duration 45s desktop / 80s mobile, pauses on
-hover (desktop), respects `prefers-reduced-motion` (returns `null`, no tween
-created). Consumed by `carousel-dots.js` (reads `tween.progress()` to sync
-dots) and `project-card-entry-animation.js` (creates the tween paused, plays
-it 3s after entry animation completes).
-
----
-
-## Module: carousel-dots.js
-
-**Purpose:** Mobile dot navigation synced to the `marquee-scroll.js` tween via
-`requestAnimationFrame`. Clicking a dot pauses the tween, jumps
-`tween.progress()`, resumes after 3s. Loads GLightbox + `lightgallery.js` on
-demand (dynamic `import()`) on first tap, for the mobile slideshow-tap-to-view
-interaction.
 
 ---
 
@@ -214,9 +186,9 @@ the landing page only when a matching selector is present.
 | `icon-animation.js` | Icon entry animation, initialized in its own `DOMContentLoaded` listener |
 | `about-entry-animation.js` | About section entry stagger |
 | `about-modal.js` | About modal slide-in panel |
-| `project-card-entry-animation.js` | Project card entry stagger; also creates the paused marquee tween (see `marquee-scroll.js`) |
+| `project-card-entry-animation.js` | Project card entry mask reveal |
 | `analytics-events.js` | Vercel Analytics custom events |
-| `service-cards-preview.js` | Tools grid: preview image swaps with whichever card is hovered/focused |
+| `tool-cards-preview.js` | Tools grid: preview image swaps with whichever card is hovered/focused |
 
 ---
 
@@ -235,8 +207,8 @@ Used in `navigation.js` and `scroll-hinter.js`.
 
 ### IntersectionObserver Usage
 
-Used in `main.js` (lazy-playing videos), `side-nav-bar.js` (active section
-tracking), and `carousel-dots.js`/`project-card-entry-animation.js` context.
+Used in `main.js` (lazy-playing videos), and `side-nav-bar.js` (active section
+tracking).
 
 ### Accessibility Patterns
 

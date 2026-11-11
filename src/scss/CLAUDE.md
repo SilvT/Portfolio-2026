@@ -16,7 +16,7 @@ src/scss/
 │   ├── _landing-page.scss     # Entry point + base reset + section styles
 │   ├── _animations.scss       # stagger-fade-in mixin + reduced-motion variant
 │   ├── _project-rows-new.scss # Layout/grid for the project rows section
-│   ├── new-about.scss         # About section (current; supersedes archived about.scss)
+│   ├── about-stack.scss       # About hero + stacked-card About modal (one file; supersedes archived about.scss)
 │   ├── nav-bar.scss
 │   ├── project-cards.scss     # Themed project card styles (blue/green/etc.)
 │   ├── footer.scss
@@ -50,7 +50,7 @@ _main.scss
     ├── typography.scss
     ├── accesibility.scss
     ├── landing-page/_landing-page.scss
-    │       └── imports: new-about, footer, nav-bar, project-cards,
+    │       └── imports: about-stack, footer, nav-bar, project-cards,
     │                     project-rows-new, scroll-hinter, case-studies/switch
     └── case-studies/_case-study.scss
             └── imports: blocks, breadcrumbs, lightbox, side-nav-bar, hero,
@@ -117,7 +117,7 @@ fix opportunistically mid-task.
 ### 7. Archive
 `archive/` holds files removed from the active import tree but kept for
 reference instead of deleted outright (e.g. `about.scss`, superseded by
-`new-about.scss`). Nothing in `archive/` is imported — if you need to revive
+`about-stack.scss`). Nothing in `archive/` is imported — if you need to revive
 one, move it back out and re-add the `@use`.
 
 ---
