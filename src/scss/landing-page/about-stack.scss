@@ -74,6 +74,16 @@
       height: 100%;
   }
   }
+  // Tablet: the svg is sized by width alone (viewBox 4:3), so in portrait it
+  // is shorter than the section and clips the circles with a hard bottom edge.
+  // Make it at least as tall as the section (100vh, like .about-sect) and
+  // centre it, like a "slice" fit; the section clips the sides.
+  @media (min-width: 769px) and (max-width: 1200px) {
+    svg {
+      width: max(100%, calc(100vh * 4 / 3));
+      margin-inline-start: min(0px, calc((100% - 100vh * 4 / 3) / 2));
+    }
+  }
     svg circle{
       fill: $blue;
       @include breakpoint(mobile){

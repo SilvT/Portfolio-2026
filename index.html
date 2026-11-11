@@ -660,7 +660,7 @@
 
          <div class="tools-grid">
 
-            <a class="tool-card tool-card--mauve" data-tool-row="1" href="https://www.figma.com/es-es/comunidad/plugin/1590435836553000116/token-launch" target="_blank" rel="noopener noreferrer">
+            <a class="tool-card tool-card--mauve" data-tool-row="1" aria-haspopup="dialog" href="https://www.figma.com/es-es/comunidad/plugin/1590435836553000116/token-launch" target="_blank" rel="noopener noreferrer">
                <span class="tool-card-tag tool-card-tag--published"><i class="iconoir-check"></i>Published</span>
                <div class="tool-card-icon-wrapper"><i class="iconoir-git-branch tool-card-icon"></i></div>
                <div class="tool-card-text">
@@ -669,7 +669,7 @@
                </div>
             </a>
 
-            <a class="tool-card tool-card--blue" data-tool-row="2" href="https://www.figma.com/community/plugin/1679494240475450330" target="_blank" rel="noopener noreferrer">
+            <a class="tool-card tool-card--blue" data-tool-row="2" aria-haspopup="dialog" href="https://www.figma.com/community/plugin/1679494240475450330" target="_blank" rel="noopener noreferrer">
                <span class="tool-card-tag tool-card-tag--published"><i class="iconoir-check"></i>Published</span>
                <div class="tool-card-icon-wrapper"><i class="iconoir-git-branch tool-card-icon"></i></div>
                <div class="tool-card-text">
@@ -680,14 +680,14 @@
 
 
            
-            <div class="tool-card tool-card--brick" tabindex="0" data-tool-row="3">
+            <button type="button" class="tool-card tool-card--brick" data-tool-row="3" aria-haspopup="dialog">
                <span class="tool-card-tag"><i class="iconoir-edit-pencil"></i>Coming soon</span>
                <div class="tool-card-icon-wrapper"><i class="iconoir-frame-select tool-card-icon"></i></div>
                <div class="tool-card-text">
                   <h3 class="tool-card-title">The Figma Finder</h3>
                   <p class="tool-card-description">Find any variable, style or effect instantly, with batch search, partial matches, and CSV/JSON export.</p>
                </div>
-            </div>
+            </button>
 
             <!-- <div class="tool-card tool-card--green" tabindex="0" data-tool-row="3">
                <span class="tool-card-tag"><i class="iconoir-edit-pencil"></i>Coming soon</span>
@@ -709,6 +709,19 @@
             </div>
 
          </div>
+
+         <!-- Tool details: filled from the clicked card by tool-card-detail.js. To add longer copy,
+              put <div class="tool-card-detail" hidden>...</div> inside a card; it replaces the short description here. -->
+         <dialog class="tool-dialog" aria-labelledby="tool-dialog-title">
+            <button type="button" class="tool-dialog__close" data-tool-dialog-close aria-label="Close"><i class="iconoir-xmark" aria-hidden="true"></i></button>
+            <img class="tool-dialog__img" alt="">
+            <div class="tool-dialog__body">
+               <div class="tool-dialog__tag"></div>
+               <h3 class="tool-dialog__title" id="tool-dialog-title"></h3>
+               <div class="tool-dialog__text"></div>
+               <a class="tool-dialog__cta" target="_blank" rel="noopener noreferrer">View plugin <i class="iconoir-arrow-up-right" aria-hidden="true"></i></a>
+            </div>
+         </dialog>
       </div>
 
       <footer>

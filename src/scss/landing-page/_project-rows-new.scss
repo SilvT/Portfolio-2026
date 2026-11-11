@@ -148,6 +148,12 @@
   text-decoration: none;
   transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 
+  // Reset for cards that are a <button> (tools without a public link yet)
+  width: 100%;
+  border: 0;
+  font: inherit;
+  text-align: left;
+
   // Published tools are real links — the rest stay inert placeholder cards
   &[href] {
     cursor: pointer;
@@ -337,3 +343,137 @@
   }
 }
 
+
+// ============================================
+// Tool details panel (tool-card-detail.js): native <dialog>, About-card width,
+// filled with the clicked card's accent colour (--card-accent-hover, white
+// text passes AA there, see the card modifiers above).
+// ============================================
+
+.tool-dialog {
+  width: min(calc(#{$space-120} * 5), calc(100% - #{$space-32}));
+  max-height: calc(100% - #{$space-32});
+  margin: auto; // the global `* { margin: 0 }` would pin it to the top-left
+  padding: 0;
+  border: 0;
+  border-radius: $space-12;
+  overflow-y: auto; // scrolls inside itself on short screens
+  background-color: var(--card-accent-hover);
+  color: $color-white;
+
+  &::backdrop {
+    background-color: $color-shadows-dark;
+  }
+
+  &[open] {
+    animation: tool-dialog-in 0.25s ease;
+  }
+}
+
+@keyframes tool-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY($space-16);
+  }
+}
+
+.tool-dialog__close {
+  position: absolute;
+  top: $space-12;
+  right: $space-12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: $font-l;
+  color: $color-white;
+  background-color: var(--card-accent-hover);
+  border: 2px solid $color-white;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $color-white;
+    outline-offset: 2px;
+  }
+
+  i {
+    color: inherit; // typography.scss sets a global `i` colour
+  }
+}
+
+.tool-dialog__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.tool-dialog__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-16;
+  padding: $space-24;
+}
+
+// The card's own tag pill, cloned in: take it out of the card's absolute position
+.tool-dialog__tag .tool-card-tag {
+  position: static;
+}
+
+.tool-dialog__title {
+  font-size: $font-xl;
+  font-weight: $weight-bold;
+  color: $color-white;
+}
+
+.tool-dialog__text {
+  font-size: $font-s;
+  line-height: $leading-normal;
+  color: $color-white;
+}
+
+.tool-dialog__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-8;
+  min-height: 44px;
+  padding: $space-8 $space-24;
+  font-family: $font-anonymous;
+  font-weight: $weight-bold;
+  text-decoration: none;
+  color: var(--card-accent-hover);
+  background-color: $color-white;
+  border-radius: $space-8;
+  transition: background-color 0.25s ease;
+
+  &[hidden] {
+    display: none; // `display: inline-flex` above would override the hidden attribute
+  }
+
+  &:hover {
+    background-color: $color-neutral-100;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-white;
+    outline-offset: 2px;
+  }
+
+  i {
+    color: inherit;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-dialog[open] {
+    animation: none;
+  }
+
+  .tool-dialog__cta {
+    transition: none;
+  }
+}

@@ -7,6 +7,21 @@ Newest entries first. Each entry notes structural decisions, bugs (symptom, caus
 
 ## 2026-11-11
 
+### Added: Tools cards open a details panel on click (branch `tools-click-interaction`)
+- Reference was the "Fancy Navigation Block" CodePen: its hover (accent fill, description reveal) already existed on `.tool-card`, so only the click interaction was added. No code copied from the pen (no licence stated).
+- **Native `<dialog class="tool-dialog">`** in `#tools` (index.html), opened with `showModal()` from `src/js/modules/tool-card-detail.js` (called from `main.js`): Escape, focus trap, focus return to the card and an inert page come from the platform. X button and backdrop click close it. Tap on touch opens it the same way. Dialog content is filled from the clicked card: preview image (`.tool-card-preview-img` by row), cloned tag pill, title, text, and a "View plugin" button link when the card has an `href` (hidden for "Coming soon").
+- **Cards:** the two published `<a href>` cards keep their link as the no-JS fallback and as the panel's button; ctrl/cmd/shift-click still opens normally. "The Figma Finder" is now a real `<button>` (was a div with tabindex); `.tool-card` got a button reset (`width`, `border`, `font`, `text-align`). All three have `aria-haspopup="dialog"`.
+- **Look:** About-card width (`calc($space-120 * 5)`, capped to the viewport minus a gutter), `$space-12` radius, filled with the card's `--card-accent-hover` (white text passes AA there), copied from the card's computed style so the accent stays defined in one place. Styles at the end of `_project-rows-new.scss`.
+- **Copy slot:** longer copy goes in `<div class="tool-card-detail" hidden>` inside a card; it replaces the short description in the panel. Copy to be provided by Silvia.
+- **Bugs found while testing:** (1) global `* { margin: 0 }` removes the dialog's automatic centring, so it sat in the top-left and backdrop clicks hit the dialog itself; fix `margin: auto`. (2) `display: inline-flex` on the CTA overrode the `hidden` attribute, so the "Coming soon" card showed a link button; fix `.tool-dialog__cta[hidden] { display: none }`. Lesson: author `display` beats `[hidden]`; test the hidden state visually, not only via the property.
+- Checked (Chromium, reduced motion) at 1440/1024/768/375: all three cards open with the right accent, title, image and tag; Escape closes and returns focus to the card; X and backdrop close; Enter opens; no horizontal scroll or page errors. Not checked: non-reduced-motion open animation, 480/1200/1728, tabbing order inside the panel beyond the initial focus on the close button. No exit animation (native close is instant).
+- Added `iconoir-arrow-up-right` (`npm run icons`).
+
+### Fixed: hero circles cut off on tablet (about-stack.scss)
+- **Symptom:** at iPad Pro portrait (1024x1366) the large lower circle in the landing hero ended in a hard horizontal edge about halfway down.
+- **Cause:** `.section-about .ellipse-decor svg` had no size rules above 768px, so the svg was 100% wide with a 1600x1200 viewBox (height = width x 0.75): 1024x768 inside a 1366px-tall section, and the svg clips its overflow. Mobile already sets the svg to 100% x 100%.
+- **Fix (agent):** inside that block, `@media (min-width: 769px) and (max-width: 1200px)`: `svg { width: max(100%, calc(100vh * 4 / 3)); margin-inline-start: min(0px, calc((100% - 100vh * 4 / 3) / 2)); }` so the svg is at least as tall as the section and centred, like a slice fit. 1024x768 landscape, 1200x800, 375, 480, 767, 768, 1440 and 1728 unchanged (boxes compared); no horizontal scroll at the 13 widths checked. Only the 1024x1366 result was looked at by eye. Not checked: animated (non-reduced-motion) version.
+
 ### Changed: metric cards in a row on tablet and mobile (project-split.scss)
 - `.data-metrics .metrics` is a column above 1024px and a row at `tablet` (1024px) and below. At `small-mobile` (480px) and below each card stacks value above label, because three cards side by side (111px each at 375px) were too narrow for value + label in a row ("Components tracked" clipped). Checked at 375/480/481/768/1024 on Library Freeze: no horizontal scroll, cards share one row. Screenshots viewed at 375 and 768 only.
 
