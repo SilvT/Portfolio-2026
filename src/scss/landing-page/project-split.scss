@@ -61,12 +61,23 @@
   .data-metrics .metrics {
     flex-direction: column;
 
+    // Tablet and mobile: cards sit side by side
+    @include breakpoint(tablet) {
+      flex-direction: row;
+    }
+
     .metric-card {
       min-height: 0;
 
       .cs-metric-content {
         flex-direction: row;
         justify-content: space-between;
+
+        // Three cards side by side are too narrow for value + label in a row
+        @include breakpoint(small-mobile) {
+          flex-direction: column;
+          justify-content: center;
+        }
       }
     }
   }
