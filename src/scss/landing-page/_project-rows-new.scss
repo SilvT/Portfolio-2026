@@ -28,6 +28,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center; // header + short cards sit in the middle of the viewport
   background-color: $blue-light;
   padding: $space-80 $space-40;
 
@@ -98,11 +99,9 @@
 // Below mobile the section no longer holds to 100vh, so cards stack in a
 // single column at their natural (card-content-driven) height instead.
 .tools-grid {
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: none;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: minmax(0, 1fr);
   gap: $space-8;
 
   @include breakpoint(tablet) {
@@ -160,9 +159,12 @@
     cursor: pointer;
   }
 
-  // Grid rows give these a natural height on desktop; stacked they'd otherwise
-  // collapse to fit only their absolutely-positioned children
+  // Desktop: height comes from the ratio (closer to the 2.4:1 images than a tall column).
+  // Stacked: a minimum height, since absolutely-positioned children give no height.
+  aspect-ratio: 4 / 3;
+
   @include breakpoint(tablet) {
+    aspect-ratio: auto;
     min-height: calc(#{$space-120} * 2);
   }
 
@@ -268,6 +270,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: right center; // keep the right side (the plugin UI), crop the left
 }
 
 .tool-card-icon-wrapper {
@@ -299,7 +302,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 50%;
+  min-height: 50%; // lower half; grows if the description needs more room
   z-index: 2;
   display: flex;
   flex-direction: column;
