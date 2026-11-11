@@ -72,7 +72,7 @@ Also check 1px either side of any breakpoint the change touches (e.g. 767px and 
 4. **Tap targets at least 44×44px** on phone widths.
 5. **Sticky nav still sticks** after scrolling.
 6. **Images and videos keep their proportions** and load.
-7. **Interactive parts work:** nav links, about modal, accordions, Swiper carousels, marquee dots (mobile only), GLightbox on case study pages.
+7. **Interactive parts work:** nav links, about modal, accordions, Swiper carousels, project sliders, GLightbox on case study pages.
 8. **Design System Rules hold:** contrast passes and focus states are visible (tab through the page).
 
 ### Animations
@@ -129,7 +129,6 @@ Portfolio-clean/
     │       ├── scroll-hinter.js     # Scroll hint + GSAP scroll
     │       ├── lightgallery.js      # GLightbox initialization
     │       ├── accordion.js         # Expand/collapse sections
-    │       ├── carousel-dots.js     # Slideshow dot nav + marquee sync
     │       └── side-nav-bar.js      # Dynamic case study nav
     └── scss/
         ├── _main.scss           # Main import file
@@ -138,7 +137,7 @@ Portfolio-clean/
         ├── typography.scss      # Type system
         ├── breakpoints.scss     # Responsive mixins
         ├── landing-page/        # Homepage styles
-        │   ├── about.scss
+        │   ├── about-stack.scss    # About hero + stacked-card About modal
         │   ├── nav-bar.scss
         │   ├── project-cards.scss
         │   └── footer.scss
@@ -179,9 +178,11 @@ Portfolio-clean/
 - **Neutrals:** Light (#A8ADB8) → Dark (#2A2723)
 
 ### Typography
-- **Primary:** Bricolage Grotesque
+- **Primary:** Atkinson Hyperlegible Next (self-hosted, `public/fonts/atkinson`, token `$font-bricolage`)
 - **Display:** Fascinate
-- **Monospace:** Anonymous Pro
+- **Labels:** Clash Display (self-hosted, `public/fonts/clash`, token `$font-anonymous`; weights 300/500/700 only)
+- **Backup:** Newsreader Text / Caption (`src/scss/newsreader-backup.scss`, not imported)
+- `@font-face` rules live in `src/scss/fonts.scss`. Token names `$font-bricolage` and `$font-anonymous` are kept from the old fonts
 - **Scale:** 4XL (48px) → XS (14px)
 
 ### Spacing
@@ -215,12 +216,6 @@ Initializes GLightbox for carousels, standalone images, gallery grids, and accor
 
 ### `accordion.js`
 Mutually exclusive accordion behavior for `.milestone` and `.cs-line-breaker.accordion` elements.
-
-### `marquee-scroll.js`
-GSAP-driven infinite marquee for project card slideshows. Exports `createMarqueeTween(slideshow, opts)` and `getMarqueeTween(slideshow)` via a shared `Map` registry. Handles hover-pause on desktop and respects `prefers-reduced-motion`. Duration: 45s desktop / 80s mobile.
-
-### `carousel-dots.js`
-Syncs dot navigation with the GSAP marquee tween on project card slideshows. Uses `requestAnimationFrame` to read `tween.progress()` and updates the active dot. Clicking a dot pauses the marquee via `tween.pause()`, jumps via `tween.progress()`, and resumes after 3s.
 
 ### `side-nav-bar.js`
 Generates navigation from `data-section-title` attributes. Intersection Observer tracks scroll position with animated indicator.
@@ -261,7 +256,6 @@ GLightbox JS and CSS are **dynamically imported**, not bundled into the main lan
 
 - **Landing page**: GLightbox is NOT loaded (no lightbox needed)
 - **Case study pages**: Loaded via dynamic `import()` in `main.js` when `.new-carousel.swiper` or similar selectors are detected
-- **Mobile slideshow tap**: `carousel-dots.js` loads GLightbox on-demand on first tap via `await import('glightbox')`
 - **CSS**: Loaded at runtime via `<link>` injection from CDN (`cdn.jsdelivr.net`), not via Vite CSS extraction (which would bundle it into all pages)
 
 **NEVER add a static `import GLightbox` or `import 'glightbox/dist/css/glightbox.min.css'` to `main.js` or any module statically imported by `main.js`** — this would add ~60 KB JS + 14 KB CSS to the landing page where it's unused.
@@ -337,30 +331,8 @@ Built with modern vanilla web technologies:
 
 
 ---
-# Slideshow Behavior (Project Cards)
-The project card slideshows use a **GSAP-driven marquee** on all viewports — a continuous infinite horizontal scroll of images, with duplicated images for seamless looping.
-
-## Marquee Animation (GSAP)
-- **Module**: `src/js/modules/marquee-scroll.js` — shared registry (`Map<HTMLElement, Tween>`)
-- `gsap.to(slideshow, { xPercent: -50, ease: 'none', repeat: -1 })` replaces CSS `@keyframes`
-- Images are duplicated in HTML (`aria-hidden="true"`) so the loop is seamless
-- `width: max-content` on `.project-image-wrapper.slideshow` keeps all images side-by-side
-- Desktop gap: `1.5rem` / Mobile gap: `1rem`
-- Duration: 45s desktop / 80s mobile
-- Hover pauses tween on desktop (`mouseenter`/`mouseleave`)
-- Respects `prefers-reduced-motion` (returns `null`, no tween created)
-- **Entry animation integration**: `project-card-entry-animation.js` creates the tween paused, plays it 3s after entry animation completes
-- **NEVER use CSS `@keyframes` or `animation:` for the marquee** — all control is via GSAP `.pause()`, `.play()`, `.progress()`, `.restart()`
-
-## Dot Indicators (Mobile Only)
-- `.carousel-dots` are `display: none` on desktop, `display: flex` at `max-width: 768px`
-- Positioned absolutely at bottom center with semi-transparent white background
-- Active dot: expands from 8px circle to 24px rounded rectangle in `$blue`
-- Inactive dots: 8px circles at 30% opacity blue
-- **JavaScript-driven** via `carousel-dots.js`:
-  - `requestAnimationFrame` loop reads `tween.progress()` to determine which slide is visible
-  - Active dot updates in real-time as the marquee scrolls
-  - Clicking a dot: `tween.pause()` → `tween.progress(index/count)` → resumes after 3s
+# Project Card Sliders
+Project cards use the split layout (`split-layout`, `project-split.scss`) with autoplay sliders in `src/js/modules/project-slider.js`. The old GSAP marquee and carousel dots were removed on 2026-11-11.
 ---
 # Critical CSS Rule: `overflow: clip` not `hidden`
 

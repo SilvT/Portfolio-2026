@@ -38,7 +38,7 @@
 }
 
 // Section header: "S.02 / OUR TOOLS" tag pair + headline
-.services-header {
+.tools-header {
   flex: none;
   max-width: 760px;
   margin-bottom: $space-60;
@@ -48,7 +48,7 @@
   }
 }
 
-.services-tag-group {
+.tools-tag-group {
   display: flex;
   align-items: center;
   gap: $space-8;
@@ -57,7 +57,7 @@
 
 // Same bordered/solid pill pair used by .cta-button (outline) and .type-label
 // (solid fill) elsewhere on the page
-.services-tag {
+.tools-tag {
   font-family: $font-anonymous;
   font-size: $font-xs;
   font-weight: $weight-semibold;
@@ -78,7 +78,7 @@
   }
 }
 
-.services-headline {
+.tools-headline {
   font-size: $font-xl;
   font-weight: $weight-bold;
   color: $color-neutral-600;
@@ -94,7 +94,7 @@
 // see that rule's comment for why), so it always fits in one viewport height.
 // Below mobile the section no longer holds to 100vh, so cards stack in a
 // single column at their natural (card-content-driven) height instead.
-.services-grid {
+.tools-grid {
   flex: 1 1 auto;
   min-height: 0;
   display: grid;
@@ -108,25 +108,25 @@
   }
 }
 
-@mixin service-card-active-state {
+@mixin tool-card-active-state {
   background-color: var(--card-accent-hover);
   color: white;
   transform: translate(-1px, -3px);
   box-shadow: 3px 3px 0 var(--card-accent);
 
-  .service-card-icon-wrapper {
+  .tool-card-icon-wrapper {
     background-color: var(--card-accent);
   }
 
-  .service-card-icon {
+  .tool-card-icon {
     color: $color-white;
   }
 
-  .service-card-title {
+  .tool-card-title {
     color: $color-white;
   }
 
-  .service-card-description {
+  .tool-card-description {
     max-height: 100px;
     opacity: 1;
     margin-top: $space-8;
@@ -137,7 +137,7 @@
 // Same language as .metric-card: soft tint background at rest, hard-edged
 // offset shadow + lift on hover (3px 3px 0 $accent), rather than a flat
 // colour flood — consistent with the metrics on the current/new layouts
-.service-card {
+.tool-card {
   position: relative;
   display: block; // reset for cards published as <a> instead of <div>
   background-color: $color-neutral-100;
@@ -204,20 +204,20 @@
   // the user taps elsewhere, which read as a broken/overlapping layout.
   // :focus-visible (keyboard) still applies everywhere, since it clears on
   // its own as focus moves.
-  &:not(.service-card--preview):focus-visible {
-    @include service-card-active-state;
+  &:not(.tool-card--preview):focus-visible {
+    @include tool-card-active-state;
   }
 
   @media (hover: hover) {
-    &:not(.service-card--preview):hover {
-      @include service-card-active-state;
+    &:not(.tool-card--preview):hover {
+      @include tool-card-active-state;
     }
   }
 }
 
 // "Coming soon" tag — top right, neutral/grey, same pill language as
-// .services-tag. Sits above the hover fill so it stays legible on hover.
-.service-card-tag {
+// .tools-tag. Sits above the hover fill so it stays legible on hover.
+.tool-card-tag {
   position: absolute;
   top: $space-24;
   right: $space-24;
@@ -246,7 +246,7 @@
   }
 }
 
-.service-card-icon-wrapper {
+.tool-card-icon-wrapper {
   position: absolute;
   top: $space-24;
   left: $space-24;
@@ -260,7 +260,7 @@
   transition: background-color 0.25s ease;
 }
 
-.service-card-icon {
+.tool-card-icon {
   font-size: $font-l;
   color: $color-neutral-600;
   transition: color 0.25s ease;
@@ -269,21 +269,21 @@
 // Title + description are one bottom-anchored stack (not two independently
 // positioned elements) so the description always lands inside the card's own
 // bounds instead of being pushed past its bottom edge by the title's position.
-.service-card-text {
+.tool-card-text {
   position: absolute;
   bottom: $space-24;
   left: $space-24;
   right: $space-24;
 }
 
-.service-card-title {
+.tool-card-title {
   font-size: $font-l;
   font-weight: $weight-bold;
   color: $color-neutral-600;
   transition: color 0.25s ease;
 }
 
-.service-card-description {
+.tool-card-description {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
@@ -295,10 +295,10 @@
 }
 
 // Always-on preview card — no title/description of its own. Shows whichever
-// of the other cards is hovered/focused (service-cards-preview.js toggles
+// of the other cards is hovered/focused (tool-cards-preview.js toggles
 // .is-active on the matching data-preview-row image), crossfading between
 // them. One grid cell, same size as a content card.
-.service-card--preview {
+.tool-card--preview {
   padding: 0;
   cursor: default;
 
@@ -307,7 +307,7 @@
   }
 }
 
-.service-card-preview-img {
+.tool-card-preview-img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -321,18 +321,18 @@
   }
 }
 
-.service-card--preview .service-card-overlay {
+.tool-card--preview .tool-card-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 60%);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-card,
-  .service-card-icon,
-  .service-card-title,
-  .service-card-description,
-  .service-card-preview-img {
+  .tool-card,
+  .tool-card-icon,
+  .tool-card-title,
+  .tool-card-description,
+  .tool-card-preview-img {
     transition: none;
   }
 }

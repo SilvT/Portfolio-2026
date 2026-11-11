@@ -183,32 +183,8 @@
 // block). One place to add a theme or change a value instead of repeating
 // the same 7 rules per component.
 @mixin case-theme-background($selector) {
-  .case-page[data-theme="blue"] #{$selector} {
-    background-color: $blue-light;
-  }
-
-  .case-page[data-theme="green"] #{$selector} {
-    background-color: $green-light;
-  }
-
-  .case-page[data-theme="neutral"] #{$selector} {
-    background-color: $cream;
-  }
-
-  .case-page[data-theme="brick"] #{$selector} {
-    background-color: $brick-light;
-  }
-
-  .case-page[data-theme="bronze"] #{$selector} {
-    background-color: $bronze-light;
-  }
-
-  .case-page[data-theme="mauve"] #{$selector} {
-    background-color: $mauve-light;
-  }
-
-  .case-page[data-theme="red"] #{$selector} {
-    background-color: $color-red-light;
+  .case-page[data-theme] #{$selector} {
+    background-color: var(--theme-light, $blue-light);
   }
 }
 
@@ -219,32 +195,8 @@
 // dark background, e.g. .case-carousel-panel below. Not the same rule as
 // case-theme-background's light tints.
 @mixin case-theme-background-dark($selector) {
-  .case-page[data-theme="blue"] #{$selector} {
-    background-color: $blue;
-  }
-
-  .case-page[data-theme="green"] #{$selector} {
-    background-color: $green;
-  }
-
-  .case-page[data-theme="neutral"] #{$selector} {
-    background-color: $cream-dark;
-  }
-
-  .case-page[data-theme="brick"] #{$selector} {
-    background-color: $brick-dark;
-  }
-
-  .case-page[data-theme="bronze"] #{$selector} {
-    background-color: $bronze;
-  }
-
-  .case-page[data-theme="mauve"] #{$selector} {
-    background-color: $mauve;
-  }
-
-  .case-page[data-theme="red"] #{$selector} {
-    background-color: $color-red-main;
+  .case-page[data-theme] #{$selector} {
+    background-color: var(--theme-panel, $blue);
   }
 }
 
@@ -253,32 +205,8 @@
 // .case-display-statement below. Same one-place-to-edit pattern as
 // case-theme-background.
 @mixin case-theme-text-dark($selector) {
-  .case-page[data-theme="blue"] #{$selector} {
-    color: $blue-dark;
-  }
-
-  .case-page[data-theme="green"] #{$selector} {
-    color: $green-dark;
-  }
-
-  .case-page[data-theme="neutral"] #{$selector} {
-    color: $cream-dark;
-  }
-
-  .case-page[data-theme="brick"] #{$selector} {
-    color: $brick-dark;
-  }
-
-  .case-page[data-theme="bronze"] #{$selector} {
-    color: $bronze-dark;
-  }
-
-  .case-page[data-theme="mauve"] #{$selector} {
-    color: $mauve-dark;
-  }
-
-  .case-page[data-theme="red"] #{$selector} {
-    color: $color-red-main;
+  .case-page[data-theme] #{$selector} {
+    color: var(--theme-dark, $blue-dark);
   }
 }
 
@@ -439,7 +367,8 @@
     font-family: $font-bricolage;
     font-weight: $weight-semibold;
     color: $case-ink;
-    margin: 0 0 16px;
+    margin: 0 0 1rem;
+    margin-top: 3rem;
   }
 
   h2 {
@@ -528,14 +457,20 @@
   // starts — reserve the same left offset as an empty spacer instead of
   // letting the row's text column slide to the row's left edge.
   &--text-only {
+    // TEMP: original ::before commented out, swapped for the 40% test below
+    // &::before {
+    //   content: '';
+    //   flex: 0 0 $case-image-support-width;
+    //   max-width: $case-image-support-width;
+    //
+    //   @include breakpoint(tablet) {
+    //     display: none;
+    //   }
+    // }
     &::before {
-      content: '';
-      flex: 0 0 $case-image-support-width;
-      max-width: $case-image-support-width;
-
-      @include breakpoint(tablet) {
-        display: none;
-      }
+      content: "";
+      flex: 0 0 40%;
+      max-width: 40%;
     }
 
     .case-pairing-row__right {
@@ -782,10 +717,11 @@
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: $case-gutter * 2;
 
-  // Desktop/laptop only: column count follows the number of cells, up to
+  // Tablet up: column count follows the number of cells, up to
   // 4 per row (3 cells → 3 columns, 7 cells → 4 then 3). auto-fit collapses
   // empty tracks, and the minmax floor is set so a 5th column can never fit.
-  @include breakpoint(desktop, min) {
+  // (Was desktop-only, which let auto-fill make a 5th empty track at 1024-1199px.)
+  @include breakpoint(tablet, min) {
     grid-template-columns: repeat(auto-fit, minmax(max(160px, (100% - #{$case-gutter * 2} * 3) / 4), 1fr));
   }
 
@@ -1364,7 +1300,7 @@
   }
 
   .case-lettered-section__body {
-    font-family: $font-anonymous;
+    font-family: $font-bricolage;
     font-size: $font-2xs;
     line-height: $leading-relaxed;
     color: $case-ink;
@@ -1480,4 +1416,35 @@
   @include breakpoint(mobile) {
     padding: 0 $case-page-margin-mobile;
   }
+}
+
+// TEMP: p.alt-quote test styling
+.alt-quote {
+  background-color: color-mix(in srgb, var(--theme-color) 15%, transparent);
+  box-shadow: 3px 3px 0 var(--theme-color);
+  margin: 2rem 0 0 3rem;
+  padding: 1rem;
+  
+  p{
+    color: $case-ink-soft;
+    color: var(--theme-color-dark);
+
+    .alt-quote-mark{
+    margin: 0 .5rem;
+    color: var(--theme-color);
+    font-size: 22px;
+
+    }
+  }
+  
+  p.alt-quote-author{
+    font-family: $font-anonymous;
+    color:$case-ink-soft;
+    line-height: normal;
+
+    .alt-quote-author-title{
+      font-size: $font-2xs;
+    }
+  }
+
 }

@@ -1,0 +1,886 @@
+@use 'sass:color';
+@use '../_variables' as *;
+@use '../breakpoints' as *;
+@use '../typography' as *;
+@use '../accesibility' as *;
+@use '_animations' as *;
+
+// About: everything for the hero (index.html and the 404 page) and the
+// stacked-card About modal (index.html, body.about-stack).
+//
+// 1. Hero (.section-about)
+// 2. About modal: base (dialog, backdrop, panel, header, close, content, entries, chip)
+// 3. About modal: stacked-card deck (body.about-stack), overrides and extends section 2
+//
+// Section 2 comes before section 3 on purpose: section 3 relies on being later
+// in the cascade. (Merged from new-about.scss, 2026-11-11; only the rules still
+// in effect were kept.)
+
+
+// ===========================
+// 1. Hero
+// ===========================
+
+/* Prepare elements for animation */
+.ellipse-decor circle,
+.name-wrapper,
+.flip-board-container,
+.bio {
+  will-change: transform, opacity;
+}
+
+/* Force GPU acceleration */
+.ellipse-decor circle {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+
+.about-sect {
+  width: 100%;
+  max-width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 0 5vw 20vh 5vw;
+
+
+  @include breakpoint(mobile) {
+    height: auto;
+    min-height: 100vh;
+    padding: $space-80 $space-30 $space-40;
+    // align-items: flex-start;
+    padding-bottom: 20vh;
+  }
+}
+.section-about{
+    background: none !important;
+    position: relative;
+    overflow: hidden;
+    background-color: $color-bg;
+
+ .ellipse-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: soft-light;
+  filter: saturate(95%) brightness(102%);
+
+  @include breakpoint(mobile){
+  svg{
+      width: 100%;
+      height: 100%;
+  }
+  }
+    svg circle{
+      fill: $blue;
+      @include breakpoint(mobile){
+      transform: translateY(-100%);
+      }
+
+    }
+  circle:nth-child(1) {
+    animation: drift1 40s ease-in-out infinite alternate;
+  }
+
+  circle:nth-child(2) {
+    animation: drift2 30s ease-in-out infinite alternate;
+  }
+  circle:nth-child(3) {
+    animation: drift3 30s ease-in-out infinite alternate;
+  }
+  @keyframes drift1 {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-20%) translateX(10%); }
+  }
+
+  @keyframes drift2 {
+    0% { transform: translateX(0px);    fill: $blue;
+  }
+    100% { transform: translateX(20%) translateY(-5%);    fill: $color-blue-200;
+  }
+  }
+  @keyframes drift3 {
+    0% { transform: translateX(0px);    fill: $color-blue-200;
+  }
+    100% { transform: translateY(10%) translateX(-15%);    fill: $blue;
+  }
+  }
+}
+}
+
+.info-grid{
+max-width: 40vw;
+
+@include breakpoint(mobile){
+    max-width: none;
+}
+    
+    .name  {
+        font-size: $font-title;
+        font-weight: $weight-medium;
+        letter-spacing: $tracking-tight;
+        
+        @include breakpoint (mobile){
+            font-size: $font-3xl;
+        }
+        .first-letter{
+            font-family: $font-fascinate;
+            color: $blue-soft;
+            // color: $cream-dark;
+            margin-right: 0.5rem;
+        }
+        
+        .rest-name{
+            font-family: $font-bricolage;
+            color: $blue;
+        }
+    }
+    .dynamic-job-title {
+        color: $blue-soft;
+        margin-bottom: 1rem;
+        letter-spacing: 0.5rem;
+    }
+    .bio{
+
+        .bold{
+            font-size: $font-2xl;
+            line-height: $leading-tight;
+            letter-spacing: -0.01rem;
+            // margin-bottom: 0.5rem;
+            color: $blue-dark;
+            @include breakpoint (mobile){
+                font-size: $font-l;
+                font-weight: $weight-medium;
+            }
+        }
+        .content{
+            font-size: $font-l;
+            color: $color-neutral-400;
+            @include breakpoint (mobile){
+                font-size: $font-xs;
+            }
+        }
+        .subtitle{
+          font-size: $font-s;
+          color: $color-neutral-400;
+          margin-top: 0.2rem;
+          @include breakpoint (mobile){
+          font-size: $font-xs; // 14px minimum
+          }
+        }
+        .about-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: $space-8 $space-16;
+          border-radius: 0.5rem;
+          font-family: $font-bricolage;
+          font-weight: $weight-medium;
+          font-size: $font-base;
+          text-decoration: none;
+          white-space: nowrap;
+          cursor: pointer;
+          min-height: 3rem;
+          margin-top: $space-16;
+          background-color: transparent;
+          color: $blue;
+          border: 2px solid $blue;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background-color: $blue;
+            color: $color-white;
+          }
+
+          @include breakpoint(mobile) {
+            font-size: $font-xs;
+            min-height: 44px;
+            padding: $space-8 $space-16;
+            width: 100%;
+          }
+        }
+    }
+}
+
+// ===========================
+// 2. About modal: base
+// ===========================
+// Only the declarations the deck section below does not override.
+
+.about-modal {
+  // Reset native dialog defaults
+  border: none;
+  padding: 0;
+  max-width: none;
+  max-height: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: fixed;
+  inset: 0;
+
+  // Hide native backdrop — we use our own .about-modal__backdrop
+  &::backdrop {
+    background: transparent;
+  }
+
+  // Custom backdrop element (inside dialog, controlled via .is-open)
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+  }
+
+  // Animated open state — JS adds .is-open one frame after showModal()
+  &.is-open .about-modal__backdrop {
+    opacity: 1;
+  }
+
+  &__panel {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-family: $font-bricolage;
+    font-size: $font-xl;
+    font-weight: $weight-medium;
+    color: $case-ink;
+    margin: 0;
+
+    @include breakpoint(mobile) {
+      font-size: $font-l;
+    }
+  }
+
+  // Plain × glyph
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    font-size: $font-xl;
+    line-height: $leading-none;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    svg {
+      display: none;
+    }
+
+    &::before {
+      content: '\00d7';
+    }
+  }
+
+  // Scrollable content area, a single ink colour throughout. Base font is
+  // mono (h2 labels, icon markers); body copy (p) switches to the display font.
+  &__content {
+    font-family: $font-anonymous;
+    font-size: $font-xs;
+    line-height: $leading-relaxed;
+    color: $case-ink;
+
+    // Small uppercase mono eyebrow label above each entry's text
+    h2{
+      color: $case-ink-soft;
+      margin: 0 0 10px;
+      font-family: $font-anonymous;
+      font-size: $font-2xs;
+      font-weight: $weight-bold;
+      text-transform: uppercase;
+      letter-spacing: $tracking-wide;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      i {
+        font-size: $font-s;
+      }
+    }
+
+    // Body text: display font, not mono
+    p {
+      margin-bottom: 0;
+      font-family: $font-bricolage;
+      font-size: $font-s;
+      color: $case-ink;
+      padding-bottom: $space-16;
+
+      // Standalone callout lines: accent colour, mono
+      strong {
+        color:$color-blue-400;
+        font-family: $font-anonymous;
+        font-size: $font-m;
+      }
+    }
+
+    // Tag chips (same markup/styles as the project cards' .tags) under a paragraph
+    .tags {
+      margin-top: $space-12;
+      flex-direction: column;
+      gap: $space-4;
+    }
+
+    .tag-group-label {
+      font-family: $font-anonymous;
+      font-size: $font-xs;
+      color: $color-neutral-500;
+      margin: 0;
+      padding: 0; // a generic body-p rule adds bottom padding
+    }
+  }
+
+  // Lettered entries: each entry's own icon is the marker
+  &__entry {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__marker {
+    flex: 0 0 auto;
+    display: flex;
+    color:$blue;
+    margin: 0;
+    padding-top: 0.2em; // optically aligns the icon with the first line of body text
+
+    i {
+      font-size: $font-m;
+      color:$blue;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .meta-group{
+    flex-wrap: wrap;
+  }
+}
+
+
+// "open to work" tag on the Reach Out card
+.status-chip {
+  display: flex;
+  align-items: center;
+  gap: $space-12;
+  margin: 0;
+  padding: $space-8 $space-16;
+  font-family: $font-anonymous !important;
+  font-size: $font-xs !important;
+  line-height: $leading-relaxed;
+  border-radius: 6px;
+
+  // Same hover language as the project cards' .metric-card: lift + hard offset shadow
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translate(-1px, -3px);
+    box-shadow: 3px 3px 0 $color-green-600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  em{
+    font-weight: $weight-bold;
+    font-size: $font-s;
+  }
+
+  @include breakpoint(mobile) {
+    border-radius: 1rem;
+  }
+}
+
+
+// ===========================
+// 3. About modal: stacked-card deck
+// ===========================
+
+// Height of the card area; the panel wraps it (header + this)
+$deck-height: 73vh;
+
+// Stacked-card about modal (index.html only, via body.about-stack).
+// The page behind scales back and dims; the modal is a card rising from the
+// bottom.
+// --scroll-y is set by about-modal.js so the page scales around the viewport
+// centre, not the top of the document.
+
+// Lock the page scroll while the modal is open. It has to be on html (the
+// viewport scroller); clip, not hidden, so the sticky nav keeps working.
+html:has(.about-stack .about-modal[open]) {
+  overflow: clip;
+}
+
+.about-stack {
+  .page-stack {
+    transform-origin: 50% calc(var(--scroll-y, 0px) + 50vh);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+  }
+
+  // Depth-scaling background (page shrinks and dims behind the modal): off for now
+  // &:has(.about-modal.is-open) .page-stack {
+  //   transform: scale(0.92);
+  //   filter: brightness(0.7);
+  // }
+
+  .about-modal[open] {
+    overscroll-behavior: contain;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end; // panel sits against the right edge (was: center)
+  }
+
+  .about-modal__backdrop {
+    // Flat tint replaced by the hero's circles (see .about-modal__circles below)
+    // background: rgba($blue-dark, 0.6); // was 0.25
+    background: transparent;
+    backdrop-filter: blur($space-8); // was none
+    -webkit-backdrop-filter: blur($space-8);
+
+    .about-modal__circles {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      color: $blue-soft; // circles fill with currentColor (was $blue-dark, then $blue)
+    }
+
+    // Noise texture over the scrim (test): SVG fractal noise, desaturated,
+    // blended with the tint. Static, so nothing to disable for reduced motion.
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+  }
+
+
+  // Modal content as a deck of 5 cards (4 entries + the Reach Out card).
+  // The dots on the left swap the top card (about-deck.js sets --d on each
+  // card: 0 = on top, 1+ = underneath, negative = already sent away).
+  .about-modal__content {
+    // The panel now fills the full height; the content takes what is left and
+    // the stage fills the content. ($deck-height was the old fixed height.)
+    // flex: none;
+    // height: $deck-height;
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    padding: $space-24 $space-40;
+
+    @include breakpoint(mobile) {
+      padding: $space-16 $space-24;
+    }
+
+    // This is the scroller: the stage sticks while the invisible track below
+    // gives it scroll distance, and about-deck.js maps scrollTop to the top card.
+    // The page behind is locked (html rule above), so scrolling only ever moves the deck.
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    // Hide the scrollbar, keep the scrolling (the dots show the position)
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .about-deck__stage {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: $space-24;
+      // height: calc(#{$deck-height} - #{$space-24} * 2);
+      height: 100%;
+
+      @include breakpoint(mobile) {
+        gap: $space-8;
+        // height: calc(#{$deck-height} - #{$space-16} * 2);
+      }
+    }
+
+    .about-deck__track {
+      height: 160vh;
+    }
+
+    // One grid cell; each card hugs its own content (align-self: start on the cards)
+    .about-deck {
+      display: grid;
+      grid-template-rows: auto;
+      grid-template-columns: minmax(0, 1fr); // cards can't push the deck wider
+      flex: 0 1 36rem;
+      min-width: 0;
+      padding-bottom: $space-24; // room for the cards underneath
+    }
+
+    // Right column: header (title + close) stacked on top of the dots
+    .about-deck__side {
+      display: flex;
+      flex-direction: column;
+      flex: none;
+      order: 1; // after the deck, so the column sits on the right
+      justify-content: center;
+    }
+
+    // Vertical dot navigation, right of the cards (same language as the
+    // project card carousel dots: small circle, active one elongates)
+    .about-deck__dots {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: none;
+    }
+
+    .about-deck__dot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: $space-12;
+      min-width: 44px;
+      height: 44px; // 44px tap target
+      padding: 0 0 0 $space-16; // centres the 8px dot in the first 44px
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      @include focus-visible($blue-dark);
+
+      &::before {
+        content: '';
+        flex: none;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background-color: rgba($blue, 0.3);
+        transition: height 0.3s ease, background-color 0.3s ease;
+      }
+
+      &:hover::before {
+        background-color: rgba($blue, 0.6);
+      }
+
+      &.is-active::before {
+        height: 24px;
+        background-color: $blue;
+      }
+    }
+
+    // Text label next to each dot (the dots sit on the dimmed page, so the
+    // label uses $blue-dark for contrast). Hidden on mobile to keep the deck wide.
+    .about-deck__label {
+      font-family: $font-anonymous;
+      font-size: $font-xs;
+      font-weight: $weight-regular;
+      line-height: 1;
+      color: $blue-dark;
+      white-space: nowrap;
+
+      @include breakpoint(mobile) {
+        display: none;
+      }
+    }
+
+    .about-deck__dot.is-active .about-deck__label {
+      font-weight: $weight-bold;
+    }
+
+    .about-modal__entry,
+    .meta-group {
+      grid-area: 1 / 1;
+      align-self: start;
+      min-height: 50vh;
+      --d: 0;
+      --tilt: -1.5deg;
+      --dir: 1;
+      position: relative;
+      flex-direction: column;
+      gap: $space-12;
+      margin: 0;
+      padding: $space-36;
+      background-color: var(--card-tint, #{$color-white}); // opaque soft hue, set per card below
+      border: 1px solid $cream-mid;
+      border-radius: $space-12;
+      box-shadow: 0 $space-4 $space-16 $color-shadows-dark;
+      z-index: calc(10 - var(--d));
+      transform-origin: 50% 100%;
+      transform:
+        translate(calc(var(--d) * var(--dir) * #{$space-8}), calc(var(--d) * #{$space-12}))
+        rotate(var(--tilt))
+        scale(calc(1 - var(--d) * 0.04));
+      overflow: clip; // no inner scroll: scrolling the modal navigates the deck
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+
+      @include breakpoint(mobile) {
+        padding: $space-16;
+      }
+
+      // Soft hue of a project colour per card, mixed into white at compile time
+      // so the card stays fully opaque: green, mauve, bronze, brick, blue
+      --card-tint: #{color.mix($green, $color-white, 10%)};
+      &:nth-child(2) { --card-tint: #{color.mix($mauve, $color-white, 10%)}; }
+      &:nth-child(3) { --card-tint: #{color.mix($bronze, $color-white, 10%)}; }
+      &:nth-child(4) { --card-tint: #{color.mix($brick, $color-white, 10%)}; }
+      &:nth-child(5) { --card-tint: #{color.mix($blue, $color-white, 10%)}; }
+
+      // Not perfectly straight: each card has its own tilt and side
+      &:nth-child(2) { --tilt: 1deg; --dir: -1; }
+      &:nth-child(3) { --tilt: -2deg; }
+      &:nth-child(4) { --tilt: 1.5deg; --dir: -1; }
+      &:nth-child(5) { --tilt: -1deg; }
+
+      // Already seen: thrown up and out
+      &[data-state='gone'] {
+        transform: translateY(-120%) rotate(calc(var(--tilt) * 3));
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      // Too deep to show
+      &[data-state='hidden'] {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+
+    // Photo on the first card: keeps its proportions and shrinks to whatever
+    // height the card leaves after the icon and text, so nothing overflows.
+    .about-modal__photos {
+      display: flex;
+      flex: 0 1 auto;
+      align-self: flex-start;
+      min-height: 0;
+      max-width: 100%;
+    }
+
+    .about-modal__photo {
+      position: relative;
+      z-index: 2; // the front photo sits above the one behind it
+      flex: 0 1 auto;
+      min-width: 0;
+      min-height: 0;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      // The photo adapts so card 1 fits the viewport: width follows height
+      // (both auto), so proportions hold. Rest of the card (text, padding) is
+      // allowed for in the subtraction.
+      max-height: calc(100dvh - 26rem);
+      border-radius: $space-8;
+      box-shadow: 0 $space-8 $space-24 $color-shadows-dark; // soft drop for depth
+
+      // Second photo tucked behind the first, overlapping its edge
+      &--back {
+        z-index: 1;
+        margin-left: -$space-24;
+        transform: scale(0.9);
+        transform-origin: 0 50%; // smaller, vertically centred behind the front photo
+        box-shadow: none;
+      }
+    }
+
+    // Front photo hidden (temporary): the remaining photo loses its "tucked
+    // behind" treatment and sits centred in the card. Remove `hidden` in the
+    // HTML to get the two-photo layout back.
+    .about-modal__photos:has(> [hidden]) {
+      align-self: center;
+
+      .about-modal__photo--back {
+        margin-left: 0;
+        transform: none;
+        box-shadow: 0 $space-8 $space-24 $color-shadows-dark;
+      }
+    }
+
+    // Reach Out card: same card, blue tint (card 5); chip sits inside the card
+    .meta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: $space-16;
+      padding: $space-60;
+
+      @include breakpoint(mobile) {
+        padding: $space-16;
+      }
+
+      .status-chip {
+        position: static;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        // .about-modal__body p { padding-bottom: $space-16 } also hits this <p>; put back the chip's own padding
+        padding-bottom: $space-8;
+        margin-top: auto;
+        // Soft blue chip: dark blue text passes WCAG AA
+        background-color: $color-blue-200;
+        color: $case-ink;
+
+        em {
+          color: $color-blue-500;
+        }
+      }
+    }
+
+    // Social links on the Reach Out card (same set as the footer)
+    .about-modal__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $space-8;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      // List links: bottom border only (the standalone mailto link keeps the full box)
+      .about-modal__link {
+        border: 0;
+        border-bottom: 1px solid $blue-dark;
+      }
+    }
+
+    .about-modal__link {
+      display: inline-flex;
+      align-items: center;
+      // long email must wrap inside the card instead of being clipped at 375px
+      max-width: 100%;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      min-height: 44px;
+      padding: $space-8 $space-16;
+      font-family: $font-anonymous;
+      font-size: $font-xs;
+      font-weight: $weight-regular;
+      color: $blue-dark;
+      text-decoration: none;
+      border: 1px solid $blue-dark;
+      border-radius: 4px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      @include focus-visible($blue-dark);
+
+      &:hover {
+        background-color: $blue-dark;
+        color: $color-white;
+      }
+    }
+  }
+
+  .about-modal__panel {
+    margin: 0;
+    // Panel surface removed for now: it hugs the deck, header carries the background
+    background-color: transparent; // was $color-bg
+    box-shadow: none; // was: 0 -8px 32px $color-shadows-dark
+    max-width: none; // was: min(64%, 56rem)
+    width: auto;
+    // max-height: 92vh; // limit removed: the panel fills the full height
+    max-height: none; // was 94vh
+    height: 100%;
+    padding-bottom: $space-40; // breathing room under the cards, off the screen edge
+    border-radius: $space-16 $space-16 0 0;
+    transform: translateY(100%);
+    opacity: 1;
+
+    // @media (max-width: 1366px) {
+    //   width: 80vw;
+    // }
+
+    @include breakpoint(mobile) {
+      // width: 100%;
+      // max-width: 100%;
+      // max-height: 94dvh;
+      max-height: none;
+      padding-bottom: $space-24;
+    }
+  }
+
+  // Close button pinned to the top right of the screen (not tied to the header).
+  // It is a direct child of the dialog; the panel's transform would otherwise
+  // become the containing block for position: fixed.
+  .about-modal__close {
+    position: fixed;
+    top: $space-16;
+    right: $space-16;
+    z-index: 3;
+    // Same language as .cta-button: filled $blue, white glyph, 2px border,
+    // 0.5rem radius; hover flips to outline and lifts like the metric cards.
+    background-color: $blue;
+    color: $color-white;
+    border: 2px solid $blue;
+    border-radius: $space-8;
+    opacity: 1;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    @include focus-visible($blue-dark);
+
+    &:hover {
+      opacity: 1;
+      background-color: $color-white;
+      color: $blue;
+      transform: translate(-1px, -3px);
+      box-shadow: 3px 3px 0 $blue;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+
+  .about-modal__header {
+    background-color: transparent; // was $color-bg (#FAFAFA)
+    flex-direction: column; // title above the close button
+    align-items: flex-start;
+    padding: 0 0 $space-16 $space-16;
+
+    .about-modal__title {
+      color: $color-white;
+    }
+  }
+
+  .about-modal.is-open .about-modal__panel {
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-stack,
+    .about-modal__panel,
+    .about-modal__entry,
+    .meta-group,
+    .about-deck__dot::before,
+    .about-modal__link {
+      transition: none;
+    }
+  }
+}

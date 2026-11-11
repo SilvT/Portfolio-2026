@@ -18,6 +18,8 @@ export function initAboutModal() {
 
   function openModal() {
     if (dialog.open || isClosing) return;
+    // Scale origin for the stacked-card variant (see about-stack.scss)
+    document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
     dialog.showModal();
     // Add .is-open next frame so the browser sees the "before" state first
     requestAnimationFrame(() => {

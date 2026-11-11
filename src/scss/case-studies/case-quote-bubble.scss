@@ -1,0 +1,94 @@
+@use '../breakpoints' as *;
+@use '../variables' as *;
+@use 'case-study-components' as *;
+
+// ---- Quote Bubble ----
+// Speech-bubble quote for case studies (replaces .case-display-statement for quotes). Outline takes the
+// page theme's -dark colour via currentColor; the tail is an open curve
+// hooked onto the bottom edge (the ::before strip hides the outline under it).
+//
+// <figure class="case-quote-bubble">
+//   <blockquote><p>“Quote.”</p></blockquote>
+//   <figcaption>CEO <sub>(context)</sub></figcaption>
+// </figure>
+$bubble-line: 2px;
+$bubble-tail: 60px;
+$bubble-tail-left: 50px;
+
+.case-quote-bubble {
+  max-width: 900px;
+  margin: $space-24 auto $space-50;
+
+  blockquote {
+    position: relative;
+    margin: 0;
+    padding: $space-24;
+    border: $bubble-line solid currentColor;
+    border-radius: $space-24;
+    font-family: $font-anonymous;
+    font-size: clamp($font-l, 2.4vw, $font-xl);
+    font-weight: $weight-medium;
+    line-height: $leading-tight;
+    letter-spacing: $tracking-tight;
+    color: $case-ink;
+
+    @include breakpoint(mobile) {
+      font-size: clamp($font-base, 5vw, $font-l);
+    }
+
+    p {
+      margin: 0;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    // Hides the bottom outline where the tail joins.
+    &::before {
+      content: '';
+      position: absolute;
+      left: $bubble-tail-left;
+      bottom: -$bubble-line;
+      width: calc(#{$bubble-tail} + #{$space-24});
+      height: $bubble-line;
+      background: $case-bg;
+    }
+
+    // The tail: runs along the bottom edge, then curves down.
+    &::after {
+      content: '';
+      position: absolute;
+      left: $bubble-tail-left;
+      top: 100%;
+      width: $bubble-tail;
+      height: $bubble-tail;
+      border-top: $bubble-line solid currentColor;
+      border-right: $bubble-line solid currentColor;
+      border-radius: 0 100% 0 0;
+    }
+  }
+
+  figcaption {
+    margin-top: $space-16;
+    margin-left: calc(#{$bubble-tail-left} + #{$bubble-tail} + #{$space-24});
+    font-family: $font-bricolage;
+    font-size: $font-base;
+    line-height: $leading-tight;
+    color: $case-ink;
+
+    sub {
+      font-size: $font-s;
+      color: $case-ink-soft;
+    }
+
+    @include breakpoint(mobile) {
+      margin: $bubble-tail 0 0 $space-24;
+      font-size: $font-s;
+
+      sub {
+        font-size: $font-xs;
+      }
+    }
+  }
+}
+
+@include case-theme-text-dark('.case-quote-bubble blockquote');

@@ -2,13 +2,15 @@
 @use '../breakpoints' as *;
 @use '../typography' as *;
 
-// @use 'about' as *;
-@use 'new-about' as *;
+@use 'about-stack' as *;
 @use 'footer' as *;
+@use 'contact-cta' as *;
 @use 'nav-bar' as *;
 @use 'project-cards' as *;
+@use 'cta-pulse' as *;
 @use 'project-rows-new' as *;
 @use 'scroll-hinter' as *;
+@use 'project-split' as *;
 @use 'error-page' as *;
 @use '../case-studies/switch' as *;
 

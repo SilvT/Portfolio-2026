@@ -157,6 +157,21 @@ $cream-dark:$color-cream-400;
     $color-cream: $color-cream-200;
     $color-cream-alpha:rgba(227, 221, 211, 0.4);
 
+// Case study theme palettes. _case-study.scss emits each entry per
+// [data-theme] as --theme-{key}, e.g. var(--theme-dark).
+//   light: tinted backgrounds   color: main brand shade
+//   dark:  body-text-safe dark  panel: dark background behind light text
+//   alpha: translucent fill
+$theme-colors: (
+  "blue": (light: $blue-light, color: $blue, dark: $blue-dark, panel: $blue, alpha: $color-blue-alpha),
+  "green": (light: $green-light, color: $green, dark: $green-dark, panel: $green, alpha: $color-green-alpha),
+  "neutral": (light: $cream, color: $blue-dark, dark: $cream-dark, panel: $cream-dark, alpha: $color-cream-alpha),
+  "mauve": (light: $mauve-light, color: $mauve, dark: $mauve-dark, panel: $mauve, alpha: $color-mauve-alpha),
+  "brick": (light: $brick-light, color: $brick, dark: $brick-dark, panel: $brick-dark, alpha: $color-brick-alpha),
+  "bronze": (light: $bronze-light, color: $bronze, dark: $bronze-dark, panel: $bronze, alpha: $color-bronze-alpha),
+  "red": (light: $color-red-light, color: $color-red-main, dark: $color-red-main, panel: $color-red-main, alpha: $color-red-alpha),
+);
+
 
 // ===========================
 // CASE STUDY (editorial palette)
@@ -188,10 +203,10 @@ $color-shadows-blue-dark:rgba($color-blue-400, 20%);
 $color-shadows-blue-light:rgba($color-blue-200, 20%);
 $color-shadows-dark:rgba(32,58,72, 0.25);
 
-// Fonts
-$font-bricolage: 'Bricolage Grotesque', sans-serif;
-$font-fascinate: 'Fascinate', 'Bricolage Grotesque', sans-serif;
-$font-anonymous: 'Anonymous Pro', monospace;
+// Fonts (@font-face rules live in fonts.scss)
+$font-bricolage: 'Atkinson Hyperlegible Next', sans-serif; // main font. Backup: 'Newsreader Text' (see newsreader-backup.scss)
+$font-fascinate: 'Fascinate', 'Atkinson Hyperlegible Next', sans-serif;
+$font-anonymous: 'Clash Display', sans-serif; // label font (was Anonymous Pro). Backup: 'Newsreader Caption'
 
 
 //Typography Size

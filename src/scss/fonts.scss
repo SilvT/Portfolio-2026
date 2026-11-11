@@ -1,0 +1,10 @@
+// Self-hosted fonts (files in public/fonts). Fascinate still loads from Google Fonts in the HTML <head>.
+
+// Atkinson Hyperlegible Next: main font ($font-bricolage). Variable file, weights 200 to 800.
+@font-face { font-family: 'Atkinson Hyperlegible Next'; src: url('/fonts/atkinson/AtkinsonHyperlegibleNextVF-Variable.woff2') format('woff2'); font-weight: 200 800; font-style: normal; font-display: swap; }
+
+// Clash Display: label font ($font-anonymous). Only 300, 500 and 700 are declared, each at its real weight.
+// CSS font matching fills the gaps: 400 -> 500 (Medium), 600 -> 700 (Bold), 800 -> 700.
+@font-face { font-family: 'Clash Display'; src: url('/fonts/clash/ClashDisplay-Light.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Clash Display'; src: url('/fonts/clash/ClashDisplay-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Clash Display'; src: url('/fonts/clash/ClashDisplay-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
