@@ -28,11 +28,15 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center; // header + short cards sit in the middle of the viewport
   background-color: $blue-light;
   padding: $space-80 $space-40;
 
+  @include breakpoint(tablet) {
+    height: auto; // cards stack in one column, so the section grows with them
+  }
+
   @include breakpoint(mobile) {
-    height: auto;
     padding: $space-60 $space-20;
   }
 }
@@ -95,22 +99,18 @@
 // Below mobile the section no longer holds to 100vh, so cards stack in a
 // single column at their natural (card-content-driven) height instead.
 .tools-grid {
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: none;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: $space-8;
 
-  @include breakpoint(mobile) {
+  @include breakpoint(tablet) {
     grid-template-columns: 1fr;
     grid-template-rows: none;
   }
 }
 
 @mixin tool-card-active-state {
-  background-color: var(--card-accent-hover);
-  color: white;
   transform: translate(-1px, -3px);
   box-shadow: 3px 3px 0 var(--card-accent);
 
@@ -122,15 +122,15 @@
     color: $color-white;
   }
 
-  .tool-card-title {
-    color: $color-white;
+  // Accent panel slides up over the lower half of the image
+  .tool-card-text::before {
+    transform: translateY(0);
   }
 
   .tool-card-description {
-    max-height: 100px;
+    max-height: $space-120;
     opacity: 1;
     margin-top: $space-8;
-    color: $color-white;
   }
 }
 
@@ -146,23 +146,41 @@
   overflow: hidden;
   cursor: default;
   text-decoration: none;
-  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  // Reset for cards that are a <button> (tools without a public link yet)
+  width: 100%;
+  border: 0;
+  font: inherit;
+  text-align: left;
 
   // Published tools are real links — the rest stay inert placeholder cards
   &[href] {
     cursor: pointer;
   }
 
-  // Grid rows give these a natural height on desktop; stacked on mobile they'd
-  // otherwise collapse to fit only their absolutely-positioned children,
-  // crowding the icon/tag against the title
-  @include breakpoint(mobile) {
-    min-height: 12rem;
+  // Desktop: height comes from the ratio (closer to the 2.4:1 images than a tall column).
+  // Stacked: a minimum height, since absolutely-positioned children give no height.
+  aspect-ratio: 4 / 3;
+
+  @include breakpoint(tablet) {
+    aspect-ratio: auto;
+    min-height: calc(#{$space-120} * 2);
+  }
+
+  // Dark scrim over the image so the white title reads on any picture
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgba($color-case-ink, 0.75), rgba($color-case-ink, 0) 60%);
+    pointer-events: none;
   }
 
   &:focus-visible {
-    outline: 2px solid $color-neutral-600;
-    outline-offset: -2px;
+    outline: 2px solid $color-white;
+    outline-offset: -$space-4;
   }
 
   // --card-accent-hover is a darkened variant used only for the hover fill,
@@ -204,12 +222,12 @@
   // the user taps elsewhere, which read as a broken/overlapping layout.
   // :focus-visible (keyboard) still applies everywhere, since it clears on
   // its own as focus moves.
-  &:not(.tool-card--preview):focus-visible {
+  &:focus-visible {
     @include tool-card-active-state;
   }
 
   @media (hover: hover) {
-    &:not(.tool-card--preview):hover {
+    &:hover {
       @include tool-card-active-state;
     }
   }
@@ -221,7 +239,7 @@
   position: absolute;
   top: $space-24;
   right: $space-24;
-  z-index: 1;
+  z-index: 3;
   display: flex;
   align-items: center;
   gap: $space-4;
@@ -246,10 +264,28 @@
   }
 }
 
+.tool-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center; // each image picks the part worth keeping:
+
+  &--left {
+    object-position: left center;
+  }
+
+  &--right {
+    object-position: right center;
+  }
+}
+
 .tool-card-icon-wrapper {
   position: absolute;
   top: $space-24;
   left: $space-24;
+  z-index: 3;
   width: 2.2rem;
   height: 2.2rem;
   border-radius: 50%;
@@ -271,16 +307,31 @@
 // bounds instead of being pushed past its bottom edge by the title's position.
 .tool-card-text {
   position: absolute;
-  bottom: $space-24;
-  left: $space-24;
-  right: $space-24;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 50%; // lower half; grows if the description needs more room
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: $space-24;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--card-accent-hover);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
 }
 
 .tool-card-title {
   font-size: $font-l;
   font-weight: $weight-bold;
-  color: $color-neutral-600;
-  transition: color 0.25s ease;
+  color: $color-white;
 }
 
 .tool-card-description {
@@ -289,51 +340,152 @@
   opacity: 0;
   font-size: $font-s;
   font-weight: $weight-regular;
-  color: $color-neutral-500;
+  color: $color-white;
   line-height: $leading-normal;
   transition: opacity 0.25s ease, max-height 0.25s ease, margin-top 0.25s ease;
-}
-
-// Always-on preview card — no title/description of its own. Shows whichever
-// of the other cards is hovered/focused (tool-cards-preview.js toggles
-// .is-active on the matching data-preview-row image), crossfading between
-// them. One grid cell, same size as a content card.
-.tool-card--preview {
-  padding: 0;
-  cursor: default;
-
-  &:hover {
-    background-color: $color-white;
-  }
-}
-
-.tool-card-preview-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-
-  &.is-active {
-    opacity: 1;
-  }
-}
-
-.tool-card--preview .tool-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 60%);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .tool-card,
   .tool-card-icon,
-  .tool-card-title,
   .tool-card-description,
-  .tool-card-preview-img {
+  .tool-card-text::before {
     transition: none;
   }
 }
 
+
+// ============================================
+// Tool details panel (tool-card-detail.js): native <dialog>, About-card width,
+// filled with the clicked card's accent colour (--card-accent-hover, white
+// text passes AA there, see the card modifiers above).
+// ============================================
+
+.tool-dialog {
+  width: max(50vw, calc(#{$space-120} * 5)); // 50vw (720px at 1440), never narrower than 37.5rem
+  max-width: calc(100% - #{$space-32}); // phones: viewport minus a gutter
+  max-height: calc(100% - #{$space-32});
+  margin: auto; // the global `* { margin: 0 }` would pin it to the top-left
+  padding: 0;
+  border: 0;
+  border-radius: $space-12;
+  overflow-y: auto; // scrolls inside itself on short screens
+  background-color: var(--card-accent-hover);
+  color: $color-white;
+
+  &::backdrop {
+    background-color: $color-shadows-dark;
+  }
+
+  &[open] {
+    animation: tool-dialog-in 0.25s ease;
+  }
+}
+
+@keyframes tool-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY($space-16);
+  }
+}
+
+.tool-dialog__close {
+  position: absolute;
+  top: $space-12;
+  right: $space-12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: $font-l;
+  color: $color-white;
+  background-color: var(--card-accent-hover);
+  border: 2px solid $color-white;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $color-white;
+    outline-offset: 2px;
+  }
+
+  i {
+    color: inherit; // typography.scss sets a global `i` colour
+  }
+}
+
+.tool-dialog__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 12 / 5; // matches the tool images (1920x800), so cover crops nothing
+  object-fit: cover;
+}
+
+.tool-dialog__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-16;
+  padding: $space-24;
+}
+
+// The card's own tag pill, cloned in: take it out of the card's absolute position
+.tool-dialog__tag .tool-card-tag {
+  position: static;
+}
+
+.tool-dialog__title {
+  font-size: $font-xl;
+  font-weight: $weight-bold;
+  color: $color-white;
+}
+
+.tool-dialog__text {
+  font-size: $font-s;
+  line-height: $leading-normal;
+  color: $color-white;
+}
+
+.tool-dialog__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-8;
+  min-height: 44px;
+  padding: $space-8 $space-24;
+  font-family: $font-anonymous;
+  font-weight: $weight-bold;
+  text-decoration: none;
+  color: var(--card-accent-hover);
+  background-color: $color-white;
+  border-radius: $space-8;
+  transition: background-color 0.25s ease;
+
+  &[hidden] {
+    display: none; // `display: inline-flex` above would override the hidden attribute
+  }
+
+  &:hover {
+    background-color: $color-neutral-100;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-white;
+    outline-offset: 2px;
+  }
+
+  i {
+    color: inherit;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-dialog[open] {
+    animation: none;
+  }
+
+  .tool-dialog__cta {
+    transition: none;
+  }
+}
