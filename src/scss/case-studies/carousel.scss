@@ -341,3 +341,45 @@ box-shadow: 0px 2px 26px $color-shadows-blue;
     }
   }
 }
+// Pause/play toggle over autoplay videos (src/js/modules/video-controls.js)
+.video-wrap {
+  position: relative;
+}
+
+.video-toggle {
+  position: absolute;
+  right: $space-8;
+  top: $space-8;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: $font-l;
+  color: $blue-dark;
+  background: $color-white;
+  border: 1px solid $blue-dark;
+  border-radius: 50%;
+  cursor: pointer;
+  @include focus-visible($blue-dark);
+
+  i {
+    color: inherit; // typography.scss sets a global `i { color }`
+  }
+
+  &:hover {
+    background: $blue-dark;
+    color: $color-white;
+  }
+
+  .video-icon-play,
+  &[aria-pressed='true'] .video-icon-pause {
+    display: none;
+  }
+
+  &[aria-pressed='true'] .video-icon-play {
+    display: inline-block;
+  }
+}

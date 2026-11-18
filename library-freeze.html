@@ -34,6 +34,8 @@
       <script type="module">
         import { initLightGallery } from '/src/js/modules/lightgallery.js';
         import { initScrollToTop } from '/src/js/modules/scroll-to-top.js';
+        import { initCaseAnalytics } from '/src/js/modules/case-analytics.js';
+        import { initVideoControls } from '/src/js/modules/video-controls.js';
         import Swiper from 'swiper';
         import { Pagination, Navigation } from 'swiper/modules';
 
@@ -75,6 +77,8 @@
           initLightGallery();
           initTldrPanel();
           initScrollToTop();
+          initCaseAnalytics();
+          initVideoControls();
         }
 
         // Floating TL;DR CTA — opens a side panel, auto-closes after 8s
@@ -86,6 +90,7 @@
           const panel = document.querySelector('.case-tldr-panel');
           const closeBtn = panel?.querySelector('.case-tldr-panel__close');
           if (!cta || !panel) return;
+          panel.inert = true;
 
           let closeTimer = null;
           const AUTO_CLOSE_MS = 8000;
@@ -93,6 +98,7 @@
           function openPanel() {
             panel.classList.add('is-open');
             panel.setAttribute('aria-hidden', 'false');
+            panel.inert = false;
             cta.setAttribute('aria-expanded', 'true');
             scheduleClose();
           }
@@ -100,6 +106,7 @@
           function closePanel() {
             panel.classList.remove('is-open');
             panel.setAttribute('aria-hidden', 'true');
+            panel.inert = true;
             cta.setAttribute('aria-expanded', 'false');
             clearTimeout(closeTimer);
           }
@@ -118,6 +125,9 @@
           });
 
           closeBtn?.addEventListener('click', closePanel);
+
+          // Keyboard users: don't auto-close while focus is inside the panel
+          panel.addEventListener('focusin', () => clearTimeout(closeTimer));
 
           panel.addEventListener('mouseenter', () => clearTimeout(closeTimer));
           panel.addEventListener('mouseleave', () => {
@@ -161,7 +171,7 @@
             <img class="case-logo" src="/logo-filled.svg" alt="">
          </a>
          <div class="case-masthead-nav">
-            <a href="/marketing-management.html" aria-label="Next project: Marketing Management"><span>Next</span> →</a>
+            <a href="/marketing-management.html"><span>Next</span> <span class="visually-hidden">project: Marketing Management</span> →</a>
          </div>
       </nav>
 
@@ -283,13 +293,13 @@
             <section class="case-split-panel">
                <div class="case-split-panel__half">
                   <figure class="cs-column-image">
-                     <img src="/library-freeze/freeze-doc-og.png" alt="first draft of library freeze process" loading="lazy">
+                     <img src="/library-freeze/freeze-doc-og.png" alt="First draft of the library freeze process document" loading="lazy">
                      <figcaption class="case-caption cs-image-caption"><span class="case-caption-num">--first-draft-</span> a plain bullet-list doc with day/time rules, one lead, one backup.</figcaption>
                   </figure>
                </div>
                <div class="case-split-panel__half">
                   <figure class="cs-column-image">
-                     <img src="/library-freeze/freeze-doc-steps-mini.png" alt="final official documentation of steps and checklist for library freeze process" loading="lazy">
+                     <img src="/library-freeze/freeze-doc-steps-mini.png" alt="Final official documentation of steps and checklist for library freeze process" loading="lazy">
                      <figcaption class="case-caption cs-image-caption"><span class="case-caption-num">--doc-</span> What's running now: a phased operational board, kept open during every freeze.</figcaption>
                   </figure>
                </div>
@@ -394,35 +404,35 @@
             <div class="case-index-grid case-index-grid--3-col">
                <div class="case-index-grid__cell">
                   <div class="case-index-grid__cell__image" aria-hidden="true">
-                      <img src="/library-freeze/entrada-tab.png" alt="tbd" loading="lazy">
+                      <img src="/library-freeze/entrada-tab.png" alt="Add entry tab of the Changelog plugin with a pre-filled component name, user and timestamp" loading="lazy">
                   </div>
                   <p class="case-index-grid__cell__title">Add entry</p>
                   <p class="case-index-grid__cell__body">Logged by designers as they work. Click a component, the plugin pre-fills name, user, timestamp; you add the note. Colour-coded by change type. No context switching, nothing to remember later.</p>
                </div>
                <div class="case-index-grid__cell">
                    <div class=" case-index-grid__cell__image" aria-hidden="true">
-                      <img src="/library-freeze/Changelog-example.png" alt="tbd" loading="lazy">
+                      <img src="/library-freeze/Changelog-example.png" alt="Example of a general changelog page collected at the end of a sprint" loading="lazy">
                   </div>
                   <p class="case-index-grid__cell__title">General and Partial Changelog</p>
                   <p class="case-index-grid__cell__body">Collected at the end of each sprint on its own dedicated page.</p>
                </div>
                <div class="case-index-grid__cell">
                   <div class="case-index-grid__cell__image" aria-hidden="true">
-                      <img src="/library-freeze/freeze-security.png" alt="tbd" loading="lazy">
+                      <img src="/library-freeze/freeze-security.png" alt="Freeze tab of the Changelog plugin compiling entries into a named save point" loading="lazy">
                   </div>
                   <p class="case-index-grid__cell__title">Freeze</p>
                   <p class="case-index-grid__cell__body">Run once per sprint, by the lead. Compiles every scattered partial entry into one changelog, creates a named save point in Figma's version history, and feeds the compiled log to an LLM to generate a plain-language publish summary for developers.</p>
                </div>
                <div class="case-index-grid__cell">
                   <div class=" case-index-grid__cell__image" aria-hidden="true">
-                      <img src="/library-freeze/snapshot.png" alt="tbd" loading="lazy">
+                      <img src="/library-freeze/snapshot.png" alt="Snapshot tab of the Changelog plugin listing variable values at freeze time" loading="lazy">
                   </div>
                   <p class="case-index-grid__cell__title">Snapshot</p>
                   <p class="case-index-grid__cell__body">A JSON snapshot of every variable value at freeze time. Each new freeze diffs against the last, auto-detecting token changes instead of anyone hunting for them.</p>
                </div>
                 <div class="case-index-grid__cell">
                   <div class="case-index-grid__cell__image" aria-hidden="true">
-                      <img src="/library-freeze/diff.png" alt="tbd" loading="lazy">
+                      <img src="/library-freeze/diff.png" alt="Diff view listing the differences between two freezes" loading="lazy">
                   </div>
                   <p class="case-index-grid__cell__title">Diff</p>
                   <p class="case-index-grid__cell__body">View the list of differences on a downloadable file.</p>

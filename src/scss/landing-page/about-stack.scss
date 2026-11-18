@@ -93,13 +93,16 @@
     }
   circle:nth-child(1) {
     animation: drift1 40s ease-in-out infinite alternate;
+    @include reduced-motion { animation: none; }
   }
 
   circle:nth-child(2) {
     animation: drift2 30s ease-in-out infinite alternate;
+    @include reduced-motion { animation: none; }
   }
   circle:nth-child(3) {
     animation: drift3 30s ease-in-out infinite alternate;
+    @include reduced-motion { animation: none; }
   }
   @keyframes drift1 {
     0% { transform: translateY(0px); }
@@ -138,7 +141,7 @@ max-width: 40vw;
         }
         .first-letter{
             font-family: $font-fascinate;
-            color: $blue-soft;
+            color: $blue; // a graphic (the logo mark as text): needs 3:1, $blue-soft was 2.1:1
             // color: $cream-dark;
             margin-right: 0.5rem;
         }
@@ -168,14 +171,14 @@ max-width: 40vw;
         }
         .content{
             font-size: $font-l;
-            color: $color-neutral-400;
+            color: $color-neutral-500;
             @include breakpoint (mobile){
                 font-size: $font-xs;
             }
         }
         .subtitle{
           font-size: $font-s;
-          color: $color-neutral-400;
+          color: $color-neutral-500;
           margin-top: 0.2rem;
           @include breakpoint (mobile){
           font-size: $font-xs; // 14px minimum
@@ -196,7 +199,7 @@ max-width: 40vw;
           min-height: 3rem;
           margin-top: $space-16;
           background-color: transparent;
-          color: $blue;
+          color: $color-blue-400;
           border: 2px solid $blue;
           transition: all 0.3s ease;
 
@@ -314,7 +317,7 @@ max-width: 40vw;
       color: $case-ink-soft;
       margin: 0 0 10px;
       font-family: $font-anonymous;
-      font-size: $font-2xs;
+      font-size: $font-xs;
       font-weight: $weight-bold;
       text-transform: uppercase;
       letter-spacing: $tracking-wide;
@@ -875,7 +878,7 @@ html:has(.about-stack .about-modal[open]) {
     padding: 0 0 $space-16 $space-16;
 
     .about-modal__title {
-      color: $color-white;
+      color: $blue-dark; // white on the pale backdrop failed contrast
     }
   }
 

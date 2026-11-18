@@ -5,10 +5,18 @@
 // Test layout for the project cards (index.html only; index-original.html
 // keeps the marquee). Left column: text, metrics, tags. Right column: slider.
 .split-layout {
-  // Each card fits within one viewport height (stacked layouts below tablet
-  // can't, so they keep their natural height)
+  // Each card is at least one viewport tall. On short viewports the content
+  // (text + metric cards) can be taller, so the section grows instead of
+  // clipping the last metric card.
   @include breakpoint(tablet, min) {
-    max-height: 100vh;
+    height: auto;
+    min-height: 100vh;
+
+    .contentbox,
+    .contentbox .project-screen {
+      height: auto;
+      min-height: 100vh;
+    }
   }
 
   // Stacked layouts grow with their content (project-cards.scss pins these to 95vh on mobile)
@@ -68,6 +76,16 @@
 
     .metric-card {
       min-height: 0;
+
+      // A wrapped label stays against the right edge, like the single-line ones
+      // (this selector outranks .project-content .metrics .metric-card .cs-metric-label in project-cards.scss)
+      .cs-metric-label {
+        text-align: right;
+
+        @include breakpoint(small-mobile) {
+          text-align: center;
+        }
+      }
 
       .cs-metric-content {
         flex-direction: row;
@@ -133,6 +151,8 @@
     &::-webkit-scrollbar {
       display: none;
     }
+
+  @include focus-visible($blue-dark, -2px);
   }
 
   .slider-slide {
@@ -154,6 +174,17 @@
     &.slider-media--contain {
       object-fit: contain;
     }
+  }
+
+  // Two images side by side in one slide
+  .slider-slide--pair {
+    display: flex;
+    gap: $space-8;
+  }
+
+  .slider-slide--pair .slider-media {
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   // Float over the bottom of the image so they take no layout space.
@@ -229,4 +260,14 @@
       transition: none;
     }
   }
+}
+
+// Slide background for the Energy Tracker carousel only
+#energy-tracker .slider-slide {
+  background-color: $color-case-stage-tint;
+}
+
+// Marketing Management card: the cropped hero slide is anchored left instead of centred.
+#marketing-management .slider-media:not(.slider-media--contain) {
+  object-position: left center;
 }

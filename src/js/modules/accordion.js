@@ -53,8 +53,18 @@ export function initCaseStudyAccordions() {
     // Initially hide the content
     content.style.display = 'none';
 
-    // Make the whole accordion clickable
+    // Make the whole accordion clickable and keyboard operable
     accordion.style.cursor = 'pointer';
+    accordion.setAttribute('role', 'button');
+    accordion.setAttribute('tabindex', '0');
+    accordion.setAttribute('aria-expanded', 'false');
+
+    accordion.addEventListener('keydown', (event) => {
+      if (event.target === accordion && (event.key === 'Enter' || event.key === ' ')) {
+        event.preventDefault();
+        accordion.click();
+      }
+    });
 
     accordion.addEventListener('click', (event) => {
       event.preventDefault();
@@ -68,12 +78,14 @@ export function initCaseStudyAccordions() {
           itemContent.style.display = 'none';
         }
         item.classList.remove('is-open');
+        item.setAttribute('aria-expanded', 'false');
       });
 
       // If this one wasn't open, open it
       if (!isCurrentlyOpen) {
         content.style.display = 'block';
         accordion.classList.add('is-open');
+        accordion.setAttribute('aria-expanded', 'true');
       }
     });
   });

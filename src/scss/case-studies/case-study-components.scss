@@ -326,7 +326,7 @@
   line-height: $leading-normal;
 
   .case-caption-num {
-    font-weight: $weight-bold;
+    font-weight: $weight-medium;
     color: $case-ink;
   }
 }
@@ -402,7 +402,7 @@
     span.case-caption-num{
       font-family: $font-anonymous;
       font-size: $font-s;
-      // font-weight: 700;
+      font-weight: $weight-medium;
       color: $case-ink;
     }
   }
@@ -533,7 +533,7 @@
 
   &__counter {
     font-family: $font-anonymous;
-    font-size: $font-2xs;
+    font-size: $font-xs;
   }
 
   .new-carousel {
@@ -1070,7 +1070,7 @@
   p{
     font-family: $font-anonymous;
     font-size: $font-xs;
-    color:$case-ink-soft;
+    color: $case-ink;
   }
 }
 
@@ -1165,7 +1165,8 @@
 // does not fully satisfy WCAG 2.2.1 (Timing Adjustable). Flagged, not
 // fixed, per an explicit decision (2026-10-07) to scope this as a known gap
 // rather than solve it now.
-.case-tldr-cta {
+.case-tldr-cta,
+.case-top-cta {
   position: fixed;
   top: 90px;
   left: 40px;
@@ -1175,14 +1176,14 @@
   align-items: center;
   // font-family: $case-font-mono;
   font-family: $font-bricolage;
-  font-size: $font-2xs;
+  font-size: $font-xs;
   font-weight: $weight-bold;
   letter-spacing: $tracking-wide;
   text-transform: uppercase;
   color: $case-bg;
   background: $case-ink;
   border: none;
-  border-radius: 999px;
+  border-radius: 0.5rem; // same as .cta-button
   padding: 10px 20px;
   cursor: pointer;
 
@@ -1203,7 +1204,7 @@
     left: 20px;
     min-height: 44px;
     padding: 12px 16px;
-    font-size: $font-2xs;
+    font-size: $font-xs;
 
     @media (prefers-reduced-motion: no-preference) {
       transition: top 0.2s ease;
@@ -1216,6 +1217,44 @@
 }
 
 @include case-theme-background-dark('.case-tldr-cta');
+
+// "To top" button: bottom right (pages without a TL;DR), shown once scrolled.
+// Outline style, to read differently from the filled TL;DR button: theme-light fill, 2px --theme-text border and text
+// (5.1:1 on neutral, 7.1:1 on green), filling in on hover. Same corner radius as the TL;DR button.
+.case-page[data-theme] .case-top-cta {
+  background-color: var(--theme-light, $case-bg);
+  color: var(--theme-text, $case-ink);
+  border: 2px solid var(--theme-text, $case-ink);
+  border-radius: 0.5rem;
+  // Bottom right, clear of the content column (the TL;DR position, top left, overlaps text on wide screens)
+  top: auto;
+  left: auto;
+  bottom: $space-24;
+  right: $space-40;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:hover {
+    background-color: var(--theme-text, $case-ink);
+    color: $case-bg;
+    opacity: 1;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+
+  // Phones already have the full-width .case-scroll-top button before the footer
+  @include breakpoint(mobile) {
+    display: none;
+  }
+}
 
 .case-tldr-panel {
   position: fixed;
@@ -1378,6 +1417,31 @@
   }
 }
 
+// Lightbox links: "Click to enlarge" hint inside the top of the image, no arrow.
+// The "/ ''" alt text keeps the generated text out of the accessible name, so screen readers skip it.
+a.glightbox-standalone,
+a.glightbox-gallery {
+  display: block;
+}
+
+a.glightbox-standalone[data-tooltip],
+a.glightbox-gallery[data-tooltip] {
+  &::before {
+    content: attr(data-tooltip) / "";
+    top: $space-12;
+    bottom: auto;
+    transform: translateX(-50%);
+  }
+
+  &:hover::before {
+    transform: translateX(-50%);
+  }
+
+  &::after {
+    display: none;
+  }
+}
+
 // Placeholder for a case study page whose body content isn't written yet
 // (title block stays live, body is swapped for this note).
 .case-coming-soon {
@@ -1427,7 +1491,7 @@
   
   p{
     color: $case-ink-soft;
-    color: var(--theme-color-dark);
+    color: var(--theme-dark);
 
     .alt-quote-mark{
     margin: 0 .5rem;

@@ -1,0 +1,170 @@
+@use 'sass:map';
+@use '../variables' as *;
+@use '../breakpoints' as *;
+
+// ---- Scroll-story (opt-in) ----
+// <div class="case-scrolly case-prose" style="--case-scrolly-steps: N">
+//   <div class="case-scrolly__step">
+//     <div class="case-scrolly__left case-pairing-row__left"> stage content </div>
+//     <div class="case-scrolly__right"> text chunk </div>
+//   </div> ... </div>
+//
+// Default (no JS, or 1024px and under): each step stacks as left then right.
+// Pinned (scrolly.js adds .is-pinned above 1024px): steps dissolve into one
+// grid; every left sits in column 1 across all rows, sticky, and only the
+// active one is visible. The rights flow down column 2. The left un-pins
+// by itself when its grid area (the last chunk) ends.
+
+.case-scrolly {
+  display: flex;
+  flex-direction: column;
+  gap: $case-gutter * 2;
+}
+
+.case-scrolly__step {
+  display: flex;
+  flex-direction: column;
+  gap: $case-gutter;
+}
+
+// Wider than the 1024px stacking breakpoint by 1px, so the two never overlap.
+// Proportions: left wide (col 1), right narrow (col 2, $case-image-support-width). Default: left is the pinned stage, right text scrolls.
+// --flip: right is the pinned stage (swaps), left scrolls.
+@media (min-width: map.get($breakpoints, 'tablet') + 1px) {
+  .case-scrolly.is-pinned {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, $case-image-support-width);
+    column-gap: $case-gutter * 2;
+    row-gap: 0;
+    align-items: start;
+
+    .case-scrolly__step {
+      display: contents;
+    }
+
+    .case-scrolly__left,
+    .case-scrolly__right {
+      max-width: none;
+    }
+
+    // Stage = whichever side is pinned: every panel in one grid area, sticky.
+    &:not(.case-scrolly--flip) .case-scrolly__left,
+    &.case-scrolly--flip .case-scrolly__right {
+      position: sticky;
+      top: $space-40;
+      transition: opacity 0.4s ease, visibility 0.4s;
+
+      &:not(.is-active) {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    &:not(.case-scrolly--flip) {
+      .case-scrolly__left {
+        grid-column: 1;
+        grid-row: 1 / span var(--case-scrolly-steps, 1);
+      }
+
+      .case-scrolly__right {
+        grid-column: 2;
+        padding-bottom: $case-gutter * 2;
+      }
+    }
+
+    &.case-scrolly--flip {
+      .case-scrolly__right {
+        grid-column: 2;
+        grid-row: 1 / span var(--case-scrolly-steps, 1);
+      }
+
+      // Each scrolling left step sets the pace for its swap.
+      .case-scrolly__left {
+        grid-column: 1;
+        min-height: 80vh;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-scrolly__left,
+  .case-scrolly__right {
+    transition: none !important;
+  }
+}
+
+// One-column index grid inside a scrolly right column
+.case-scrolly__right .case-index-grid {
+  grid-template-columns: 1fr;
+}
+
+// Phase rail shown as one piece, in either column of a pairing row or scroll story.
+// Row 1: index + title. Row 2 (underneath, aligned with the title): meta + outcome.
+.case-pairing-row__left > .case-phase-rail,
+.case-pairing-row__right > .case-phase-rail,
+.case-scrolly__right > .case-phase-rail {
+  margin-bottom: $case-gutter;
+
+  .case-phase-row {
+    grid-template-columns: 48px auto 1fr;
+    row-gap: $space-4;
+    align-items: baseline;
+
+    @include breakpoint(mobile) {
+      grid-template-columns: 32px auto 1fr;
+    }
+  }
+
+  // Larger than the shared base rail (13px / 18px): this rail is the lead element of its column.
+  .case-phase-row__index { grid-column: 1; grid-row: 1; margin: 0; font-size: $font-s; }
+  .case-phase-row__title { grid-column: 2 / -1; grid-row: 1; margin: 0; font-size: $font-m; }
+  .case-phase-row__meta { grid-column: 2; grid-row: 2; margin: 0; font-size: $font-s; }
+  .case-phase-row__outcome { grid-column: 3; grid-row: 2; margin: 0; font-size: $font-s; }
+
+  // The default row hides meta on phones; here it is part of the second row.
+  .case-phase-row .case-phase-row__meta {
+    @include breakpoint(mobile) {
+      display: block;
+    }
+  }
+}
+
+// Several images stacked in one left column. lightgallery.js wraps each img in an <a>,
+// so match both. The gap goes above every image that follows another image or a caption.
+.case-pairing-row__left > :is(img, a) + :is(img, a),
+.case-pairing-row__left > .case-caption + :is(img, a) {
+  margin-top: $case-gutter * 2;
+}
+
+// Static pairing row whose left column matches the scroll-story left column.
+// Stacked (1024px and under): full width, like the scroll story's stacked left.
+// Above that: everything except the (empty) right 40% and the column gap.
+.case-pairing-row--wide-left .case-pairing-row__left {
+  width: 100%;
+}
+
+@media (min-width: map.get($breakpoints, 'tablet') + 1px) {
+  .case-pairing-row--wide-left .case-pairing-row__left {
+    flex: 0 0 calc(100% - #{$case-image-support-width} - #{$case-gutter * 2});
+    max-width: none;
+  }
+}
+
+// Videos and 2-up grids stacked in a scrolly left column: same gap as stacked images.
+.case-scrolly__left > .case-caption + :is(.case-video, .case-split-panel) {
+  margin-top: $case-gutter * 2;
+}
+
+// Images and videos in a scrolling left column never grow taller than the viewport (same 80vh as the left step height).
+// object-fit: contain letterboxes inside the capped box instead of stretching.
+.case-scrolly__left :is(img, video) {
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+// Tinted stage behind the media in every scroll-story image column: the theme's header-cover colour at 30% opacity.
+.case-scrolly__left {
+  background-color: color-mix(in srgb, var(--theme-light) 30%, transparent);
+  padding: $case-gutter;
+}

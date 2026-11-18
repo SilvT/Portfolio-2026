@@ -319,6 +319,11 @@
             opacity: 0;
             animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 
+            @include reduced-motion {
+                animation: none;
+                opacity: 1;
+            }
+
             &:nth-child(1) {
                 animation-delay: 0.5s;
             }
@@ -569,7 +574,7 @@ margin:0 $space-120 0 $space-60;
         }
         }
         .right-data{
-            color: $neutral-light;
+            color: $neutral-soft;
             font-size:$font-base;
             $font-weigth: 100;
             line-height: $leading-tight;

@@ -15,6 +15,8 @@
 @use 'accordion' as *;
 @use 'case-study-components' as *;
 @use 'case-image-block-pair' as *;
+@use 'case-scrolly' as *;
+@use 'case-even-text' as *;
 @use 'case-quote-bubble' as *;
 @use 'project-navigation' as *;
 @use 'tldr-mascot' as *;
@@ -263,6 +265,8 @@ body[data-theme="blue"] a:not(.case-project-nav__link):not(.cta-button),
     border: 1px solid $blue-dark;
   }
 
+  @include focus-visible($blue-dark);
+
   &[data-tooltip]::before {
     background-color: $blue-dark;
   }
@@ -309,12 +313,14 @@ body[data-theme="green"] a:not(.case-project-nav__link):not(.cta-button),
     background-color: $color-green-200;
   }
   &:visited {
-   color: $color-green-400;
+   color: $color-green-500;
   }
 
   &:focus{
     border:1px solid $color-green-600;
   }
+
+  @include focus-visible($color-green-600);
 
   &[data-tooltip]::before {
     background-color: $green-dark;
@@ -379,12 +385,14 @@ body[data-theme="neutral"] a:not(.case-project-nav__link):not(.cta-button),
   }
 
   &:visited {
-    color: $color-neutral-400;
+    color: $color-neutral-500;
   }
 
   &:focus {
     border: 1px solid $neutral-dark;
   }
+
+  @include focus-visible($neutral-dark);
 
   &[data-tooltip]::before {
     background-color: $neutral-dark;
@@ -456,6 +464,8 @@ body[data-theme="mauve"] a:not(.case-project-nav__link):not(.cta-button),
     border: 1px solid $color-mauve-600;
   }
 
+  @include focus-visible($color-mauve-600);
+
   &[data-tooltip]::before {
     background-color: $mauve-dark;
   }
@@ -523,6 +533,8 @@ body[data-theme="brick"] a:not(.case-project-nav__link):not(.cta-button),
   &:focus {
     border: 1px solid $color-brick-600;
   }
+
+  @include focus-visible($color-brick-600);
 
   &[data-tooltip]::before {
     background-color: $color-brick-600;
@@ -593,6 +605,8 @@ body[data-theme="bronze"] a:not(.case-project-nav__link):not(.cta-button),
   &:focus {
     border: 1px solid $color-bronze-600;
   }
+
+  @include focus-visible($color-bronze-600);
 
   &[data-tooltip]::before {
     background-color: $bronze-dark;

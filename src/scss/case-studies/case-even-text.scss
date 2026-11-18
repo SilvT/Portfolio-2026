@@ -1,0 +1,75 @@
+@use 'sass:map';
+@use '../variables' as *;
+@use '../breakpoints' as *;
+
+// ---- Even text column (opt in with .case-article--even-text on <article>) ----
+// Used by energy-tracker-copy.html and design-system-copy.html.
+// Text-only rows match the scroll story's right column: right-aligned,
+// $case-image-support-width wide. The lede (--intro) gets a 70% right column.
+// Above the tablet breakpoint only; stacked layouts are untouched.
+@media (min-width: map.get($breakpoints, 'tablet') + 1px) {
+  .case-article--even-text .case-pairing-row:not(.case-pairing-row--wide-left, .case-pairing-row--intro) {
+    // Spacer: the empty left slot or the text-only ::before
+    &::before,
+    > .case-pairing-row__left {
+      flex: 1 1 0;
+      max-width: none;
+    }
+
+    > .case-pairing-row__right {
+      flex: 0 0 $case-image-support-width;
+      max-width: none;
+    }
+  }
+
+  .case-article--even-text .case-pairing-row--intro {
+    &::before {
+      flex: 1 1 0;
+      max-width: none;
+    }
+
+    > .case-pairing-row__right {
+      flex: 0 0 70%;
+      max-width: none;
+    }
+  }
+}
+
+// TEST: section headings in the case theme's text-safe shade (--theme-text, see $theme-colors).
+// H2s are large text (3:1 needed); neutral uses $cream-text (5.6:1 on white), green $green-dark (7.1:1).
+.case-article--even-text .case-section-heading {
+  font-family: $font-anonymous; // Clash Display, sans-serif
+  color: var(--theme-text);
+}
+
+// TEST: phase rail divider lines in the same theme shade as the headings.
+.case-article--even-text .case-phase-rail {
+  border-top-color: color-mix(in srgb, var(--theme-color) 50%, transparent); // same as the row dividers
+}
+
+.case-article--even-text .case-phase-row {
+  border-bottom-color: color-mix(in srgb, var(--theme-color) 50%, transparent); // theme colour at 50% opacity, text stays solid
+}
+
+// Full-width image block: cap the height at 80vh on desktop (same cap as the scroll story images).
+@media (min-width: map.get($breakpoints, 'tablet') + 1px) {
+  .case-article--even-text .case-image-block :is(img, video) {
+    max-height: 80vh;
+    object-fit: contain;
+  }
+}
+
+// Subtitle takes the width of the title (its longest word), so it never runs under the cover image.
+// The one grid column is min-content wide: the title stacks one word per line and the subtitle fills that width.
+@media (min-width: map.get($breakpoints, 'mobile') + 1px) {
+  .case-article--even-text .case-title-main {
+    display: grid;
+    grid-template-columns: min-content;
+    justify-content: start;
+    align-content: end; // keep the title and subtitle at the bottom, as the flex column did (flex-end)
+
+    h1 {
+      width: auto;
+    }
+  }
+}

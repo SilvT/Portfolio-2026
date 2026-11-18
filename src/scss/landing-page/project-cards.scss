@@ -51,7 +51,7 @@
           .metric-card{
         background-color: rgba($green, 0.07);
           .cs-metric-value{
-          color: $green;
+          color: $green-dark;
         }
         .cs-metric-icon i{
           color: $green;
@@ -121,6 +121,15 @@
       &:hover {
         background-color: transparent;
         color: $neutral-dark;
+      }
+    }
+    .meta-group .cta-button.cta-button--outline {
+      background-color: transparent;
+      color: $neutral-dark;
+
+      &:hover {
+        background-color: $neutral-dark;
+        color: $color-white;
       }
     }
 
@@ -397,9 +406,11 @@
     }
 
     .cs-metric-value {
-      color: $blue;
+      color: $blue-dark;
       font-size: $font-l;
       width: auto;
+      white-space: nowrap;
+      flex-shrink: 0;
       @include breakpoint(mobile) {
         font-size: $font-base;
         text-align: center;
@@ -413,7 +424,7 @@
       width: auto;
       text-align: center;
       @include breakpoint(mobile) {
-        font-size: $font-2xs;
+        font-size: $font-xs;
         text-align: center;
         // white-space: pre;
       }
@@ -513,7 +524,7 @@
        border-radius: 2px
        ;
        @include breakpoint(mobile){
-        font-size: $font-3xs;
+        font-size: $font-xs;
        }
     }
   }
@@ -536,7 +547,7 @@
 
   &.brick .tag-list span {
     background-color: $color-brick-alpha;
-    color: $brick-dark;
+    color: $color-brick-600;
   }
 
   &.bronze .tag-list span {
@@ -584,6 +595,8 @@
 
     .title-group {
       .project-title {
+        font-size: $font-3xl; // was inherited from h1
+        font-weight: $weight-bold;
         line-height: $leading-snug;
         margin: 0.5rem 0;
 
@@ -603,7 +616,7 @@
         width: fit-content;
 
         @include breakpoint(mobile) {
-          font-size: $font-3xs;
+          font-size: $font-xs;
           padding: 0.2rem 0.75rem;
         }
       }
@@ -646,6 +659,7 @@
       gap: $space-8;
 
       .project-description {
+        font-size: $font-l; // was inherited from h2
         line-height: $leading-normal;
         font-weight: $weight-medium;
 
@@ -683,9 +697,16 @@
 
       .meta-group {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: stretch;
+        width: fit-content;
         justify-content: flex-start;
+
+        @include breakpoint(mobile) {
+          width: 100%;
+        }
         margin: $space-16 0;
+        gap: $space-12;
       }
     }
   }

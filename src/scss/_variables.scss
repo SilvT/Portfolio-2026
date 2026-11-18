@@ -146,12 +146,14 @@ $color-cream-200: #F5F3F0;   // existing cream
 $color-cream-300: #E3DDD3;   // from alpha base, solid
 $color-cream-400: #CFC7BB;   // UI contrast cream
 $color-cream-500: #B8B0A4;   // dark cream accent
+$color-cream-600: #6F6659;   // text-safe cream: 5.1:1 on cream-200, 5.6:1 on white
 
 // Shorthand-versions
 $cream-light:$color-cream-100;
 $cream:$color-cream-200;
 $cream-mid:$color-cream-300;
 $cream-dark:$color-cream-400;
+$cream-text:$color-cream-600;
 
     // Alternate aliases (widely used across blocks.scss, project-cards.scss, line-breaker.scss)
     $color-cream: $color-cream-200;
@@ -160,16 +162,17 @@ $cream-dark:$color-cream-400;
 // Case study theme palettes. _case-study.scss emits each entry per
 // [data-theme] as --theme-{key}, e.g. var(--theme-dark).
 //   light: tinted backgrounds   color: main brand shade
-//   dark:  body-text-safe dark  panel: dark background behind light text
+//   text:  text-safe shade for headings (passes AA large text on white)
+//   dark:  dark shade  panel: dark background behind light text
 //   alpha: translucent fill
 $theme-colors: (
-  "blue": (light: $blue-light, color: $blue, dark: $blue-dark, panel: $blue, alpha: $color-blue-alpha),
-  "green": (light: $green-light, color: $green, dark: $green-dark, panel: $green, alpha: $color-green-alpha),
-  "neutral": (light: $cream, color: $blue-dark, dark: $cream-dark, panel: $cream-dark, alpha: $color-cream-alpha),
-  "mauve": (light: $mauve-light, color: $mauve, dark: $mauve-dark, panel: $mauve, alpha: $color-mauve-alpha),
-  "brick": (light: $brick-light, color: $brick, dark: $brick-dark, panel: $brick-dark, alpha: $color-brick-alpha),
-  "bronze": (light: $bronze-light, color: $bronze, dark: $bronze-dark, panel: $bronze, alpha: $color-bronze-alpha),
-  "red": (light: $color-red-light, color: $color-red-main, dark: $color-red-main, panel: $color-red-main, alpha: $color-red-alpha),
+  "blue": (light: $blue-light, color: $blue, dark: $blue-dark, panel: $color-blue-400, alpha: $color-blue-alpha, text: $blue-dark),
+  "green": (light: $green-light, color: $green, dark: $green-dark, panel: $green-dark, alpha: $color-green-alpha, text: $green-dark),
+  "neutral": (light: $cream, color: $blue-dark, dark: $cream-dark, panel: $cream-dark, alpha: $color-cream-alpha, text: $cream-text),
+  "mauve": (light: $mauve-light, color: $mauve, dark: $mauve-dark, panel: $mauve, alpha: $color-mauve-alpha, text: $mauve-dark),
+  "brick": (light: $brick-light, color: $brick, dark: $brick-dark, panel: $brick-dark, alpha: $color-brick-alpha, text: $brick-dark),
+  "bronze": (light: $bronze-light, color: $bronze, dark: $bronze-dark, panel: $bronze-dark, alpha: $color-bronze-alpha, text: $bronze-dark),
+  "red": (light: $color-red-light, color: $color-red-main, dark: $color-red-main, panel: $color-red-main, alpha: $color-red-alpha, text: $color-red-main),
 );
 
 
@@ -183,6 +186,7 @@ $color-case-bg: #ffffff;
 $color-case-accent: #fcd300;
 $color-case-stage-bg: #3a3a3a;
 $color-case-line: #dcdcdc;
+$color-case-stage-tint: #E9ECEC; // light grey-blue behind media (Energy Tracker carousel + case study image stages)
 
 // Shorthand-versions
 $case-ink: $color-case-ink;

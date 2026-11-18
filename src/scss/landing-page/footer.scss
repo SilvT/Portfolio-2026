@@ -92,7 +92,7 @@
   transition: color 0.3s ease, border-color 0.3s ease;
 
   &:hover {
-    color: $blue;
+    color: $color-blue-400;
     border-left-color: $blue;
   }
 
@@ -151,7 +151,7 @@
   transition: opacity 0.2s ease;
 
   &:hover {
-    color: $blue;
+    color: $color-blue-400;
     border-left-color: $blue;
   }
 
@@ -168,8 +168,9 @@
   text-decoration: none;
   color: $blue-dark;
   &:hover{
-    color:$blue;
+    color:$color-blue-400;
   }
+  @include focus-visible($blue-dark);
  }
   // Tooltip
   .web-tooltip {
@@ -292,7 +293,7 @@
 
    p{
       font-size: $font-s;
-      color: $blue;
+      color: $blue-dark;
       &.bold{
         font-size: $font-m;
       }
@@ -334,13 +335,15 @@
   }
  circle:nth-child(1) {
   animation: f-drift1 40s ease-in-out infinite alternate;
+    @include reduced-motion { animation: none; }
   }
-
   circle:nth-child(2) {
     animation: f-drift2 30s ease-in-out infinite alternate;
+    @include reduced-motion { animation: none; }
   }
   circle:nth-child(3) {
     animation: f-drift3 30s ease-in-out infinite alternate;
+    @include reduced-motion { animation: none; }
   }
   @keyframes f-drift1 {
     0% { transform: translateY(0px); } 

@@ -43,9 +43,9 @@ src/js/
 |------|-------|
 | `index.html` | `main.js` (bundles: flipBoardAnimation, scroll-hinter, navigation, icon-animation, about-entry-animation, about-modal, project-card-entry-animation, analytics-events, tool-card-detail, phase-rail-accordion; `lightgallery.js` only via dynamic `import()` if a carousel/gallery selector is present on the page) |
 | `design-system.html` | `lightgallery.js`, `phase-rail-accordion.js`, `scroll-to-top.js` |
-| `energy-tracker.html` | `accordion.js`, `lightgallery.js`, `scroll-to-top.js`, `side-nav-bar.js` |
+| `energy-tracker.html` | `lightgallery.js`, `scroll-to-top.js` , `scrolly.js`, `video-controls.js` |
 | `library-freeze.html` | `lightgallery.js`, `scroll-to-top.js` |
-| `marketing-management.html` | `accordion.js`, `lightgallery.js`, `scroll-to-top.js`, `side-nav-bar.js` |
+| `marketing-management.html` | `lightgallery.js`, `scroll-to-top.js`, `scrolly.js`, `video-controls.js` (scrolly layout; the previous version is archived as `marketing-management-old.html`, not built) |
 
 Before assuming a module is unused, check both `main.js`'s static imports
 **and** every HTML page's inline `<script type="module">` block — an

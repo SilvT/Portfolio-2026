@@ -21,13 +21,20 @@ export function initAnalyticsEvents() {
     });
   }
 
-  // ── Read Case Study buttons ──
-  document.querySelectorAll('.cta-button').forEach((btn) => {
+  // ── Read Case Study buttons (links to a case study page; not the prototype or Reach out buttons) ──
+  // Project name comes from the section id (e.g. "marketing-management")
+  document.querySelectorAll('a.cta-button[href$=".html"]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      // Derive project name from the section id (e.g. "marketing-management")
       const section = btn.closest('section[id]');
-      const project = section ? section.id : 'unknown';
-      track('read_case_study', { project });
+      track('read_case_study', { project: section ? section.id : 'unknown' });
+    });
+  });
+
+  // ── Prototype buttons (outline CTA under a project card) ──
+  document.querySelectorAll('a.cta-button--outline').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const section = btn.closest('section[id]');
+      track('prototype_click', { project: section ? section.id : 'unknown' });
     });
   });
 

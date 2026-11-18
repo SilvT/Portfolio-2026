@@ -4,8 +4,21 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Marketing Management | Silvia Travieso - Product Designer</title>
-      <meta name="description" content="Built from scratch to unify fragmented marketing operations across 4 departments, replacing manual Excel workflows with real-time data visibility. Grew from Mid UI Designer to co-owning product strategy">
+      <meta name="description" content="Six disconnected sources of marketing data, brought into one desktop app, scoped and designed from a 20-minute brief.">
+      <meta name="keywords" content="Product Design, UI/UX, B2B, Desktop App, Marketing Data, Design Systems">
       <meta name="robots" content="noindex">
+      <!-- Open Graph -->
+      <meta property="og:type" content="article">
+      <meta property="og:url" content="https://www.silviatravieso.com/marketing-management.html">
+      <meta property="og:title" content="Marketing Management - Product Design Case Study">
+      <meta property="og:description" content="Six disconnected sources of marketing data, brought into one desktop app, scoped and designed from a 20-minute brief.">
+      <meta property="og:image" content="https://www.silviatravieso.com/mkm/mkm-large hero.png">
+      <meta property="og:site_name" content="Silvia Travieso Portfolio">
+      <!-- Twitter -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="Marketing Management - Product Design Case Study">
+      <meta name="twitter:description" content="Six disconnected sources of marketing data, brought into one desktop app, scoped and designed from a 20-minute brief.">
+      <meta name="twitter:image" content="https://www.silviatravieso.com/mkm/mkm-large hero.png">
       <link rel="canonical" href="https://www.silviatravieso.com/marketing-management.html">
       <!-- Favicon -->
       <link rel="icon" type="image/png" href="/favicon.png">
@@ -14,107 +27,109 @@
       <!-- Google Fonts -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap">
-      <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-      <noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fascinate&family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet"></noscript>
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fascinate&display=swap">
+      <link href="https://fonts.googleapis.com/css2?family=Fascinate&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+      <noscript><link href="https://fonts.googleapis.com/css2?family=Fascinate&display=swap" rel="stylesheet"></noscript>
       <!-- Load source files for dev mode -->
       <link rel="stylesheet" href="/src/scss/_main.scss">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
       <script type="module">
-        import { initScrollToTop } from '/src/js/modules/scroll-to-top.js';
-        import { initAccordions, initCaseStudyAccordions } from '/src/js/modules/accordion.js';
         import { initLightGallery } from '/src/js/modules/lightgallery.js';
-        import { initSideNavBar } from '/src/js/modules/side-nav-bar.js';
-        import Swiper from 'swiper';
-        import { Pagination } from 'swiper/modules';
+        import { initScrollToTop } from '/src/js/modules/scroll-to-top.js';
+        import { initCaseAnalytics } from '/src/js/modules/case-analytics.js';
+        import { initScrolly } from '/src/js/modules/scrolly.js';
+        import { initVideoControls } from '/src/js/modules/video-controls.js';
 
         function initialize() {
+          initLightGallery();
           initScrollToTop();
-          initAccordions();
-          initCaseStudyAccordions();
-          initSideNavBar();
+          initCaseAnalytics();
+          initTldrPanel();
+          initScrolly();
+          initVideoControls();
+        }
 
-          // Stacked metrics swiper with custom stacking behaviour
-          const stackedSwiper = document.querySelector('.stacked-metrics-swiper');
-          if (stackedSwiper) {
-            new Swiper(stackedSwiper, {
-              modules: [Pagination],
-              grabCursor: true,
-              slidesPerView: 1,
-              slidesPerGroup: 1,
-              speed: 600,
-              loop: false,
-              watchSlidesProgress: true,
-              allowTouchMove: true,
-              virtualTranslate: true, // Disable default slide positioning
-              pagination: {
-                el: '.stacked-metrics-swiper .swiper-pagination',
-                clickable: true,
-              },
-              on: {
-                init: function() {
-                  clearSwiperInlineStyles(this);
-                  updateStackClasses(this);
-                },
-                slideChange: function() {
-                  updateStackClasses(this);
-                },
-                setTranslate: function() {
-                  clearSwiperInlineStyles(this);
-                }
-              }
-            });
+        // Floating TL;DR CTA — opens a side panel, auto-closes after 8s.
+        // Hovering the panel pauses the timer; it resumes once the pointer
+        // leaves. Also closes on Escape or clicking outside the panel/CTA.
+        function initTldrPanel() {
+          const cta = document.querySelector('.case-tldr-cta');
+          const panel = document.querySelector('.case-tldr-panel');
+          const closeBtn = panel?.querySelector('.case-tldr-panel__close');
+          if (!cta || !panel) return;
+          panel.inert = true;
+
+          let closeTimer = null;
+          let isHovering = false;
+          const AUTO_CLOSE_MS = 8000;
+
+          function openPanel() {
+            panel.classList.add('is-open');
+            panel.setAttribute('aria-hidden', 'false');
+            panel.inert = false;
+            cta.setAttribute('aria-expanded', 'true');
+            if (!isHovering) scheduleClose();
           }
 
-          // Clear Swiper's inline styles that interfere with our custom positioning
-          function clearSwiperInlineStyles(swiperInstance) {
-            swiperInstance.slides.forEach((slide) => {
-              slide.style.transform = '';
-              slide.style.width = '';
-              slide.style.height = '';
-              slide.style.marginRight = '';
-            });
+          function closePanel() {
+            panel.classList.remove('is-open');
+            panel.setAttribute('aria-hidden', 'true');
+            panel.inert = true;
+            cta.setAttribute('aria-expanded', 'false');
+            clearTimeout(closeTimer);
           }
 
-          // Update stacking classes based on distance from active slide
-          function updateStackClasses(swiperInstance) {
-            swiperInstance.slides.forEach((slide, index) => {
-              slide.classList.remove('stack-active', 'stack-1', 'stack-2', 'stack-3', 'stack-back');
-              const distance = index - swiperInstance.activeIndex;
-              if (distance === 0) {
-                slide.classList.add('stack-active');
-              } else if (distance === 1) {
-                slide.classList.add('stack-1');
-              } else if (distance === 2) {
-                slide.classList.add('stack-2');
-              } else if (distance === 3) {
-                slide.classList.add('stack-3');
-              } else if (distance > 3) {
-                slide.classList.add('stack-back');
-              }
-            });
+          function scheduleClose() {
+            clearTimeout(closeTimer);
+            closeTimer = setTimeout(closePanel, AUTO_CLOSE_MS);
           }
 
-          // Initialize all other Swiper carousels - basic slide mode
-          const swiperElements = document.querySelectorAll('.swiper:not(.stacked-metrics-swiper)');
-          swiperElements.forEach((swiperEl) => {
-            new Swiper(swiperEl, {
-              modules: [Pagination],
-              grabCursor: true,
-              autoplay: false,
-              speed: 0,
-              slidesPerView: 1,
-              spaceBetween: 0,
-              preventClicks: false,
-              preventClicksPropagation: false,
-              pagination: {
-                el: swiperEl.querySelector('.swiper-pagination'),
-                clickable: true
-              }
-            });
+          cta.addEventListener('click', () => {
+            if (panel.classList.contains('is-open')) {
+              closePanel();
+            } else {
+              openPanel();
+            }
           });
 
-          initLightGallery();
+          closeBtn?.addEventListener('click', closePanel);
+
+          // Keyboard users: don't auto-close while focus is inside the panel
+          panel.addEventListener('focusin', () => clearTimeout(closeTimer));
+
+          function onEnter() {
+            isHovering = true;
+            clearTimeout(closeTimer);
+          }
+
+          function onLeave() {
+            isHovering = false;
+            if (panel.classList.contains('is-open')) scheduleClose();
+          }
+
+          cta.addEventListener('mouseenter', onEnter);
+          cta.addEventListener('mouseleave', onLeave);
+          panel.addEventListener('mouseenter', onEnter);
+          panel.addEventListener('mouseleave', onLeave);
+
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && panel.classList.contains('is-open')) closePanel();
+          });
+
+          document.addEventListener('click', (e) => {
+            if (!panel.classList.contains('is-open')) return;
+            if (panel.contains(e.target) || cta.contains(e.target)) return;
+            closePanel();
+          });
+
+          // Mobile: sit below the masthead at rest, tuck up to the corner
+          // once the page has scrolled past it.
+          let scrollTimeout;
+          window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+              cta.classList.toggle('is-scrolled', window.scrollY > 0);
+            }, 10);
+          }, { passive: true });
         }
 
         if (document.readyState === 'loading') {
@@ -124,48 +139,74 @@
         }
       </script>
    </head>
-   <body class="project-page-body js-loaded case-page side-nav-hidden" data-theme="blue">
+   <body class="project-page-body js-loaded case-page" data-theme="blue">
       <a class="skip-link" href="#project-content">Skip to content</a>
 
-      <!-- Masthead: low visual weight, just an anchor -->
+      <!-- Masthead -->
       <nav class="case-masthead" aria-label="Case study navigation">
          <a href="/" aria-label="Back to home">
-            <img class="case-logo" src="/logo-filled.svg" alt="Silvia Travieso Logo">
+            <img class="case-logo" src="/logo-filled.svg" alt="">
          </a>
          <div class="case-masthead-nav">
-            <a href="/library-freeze.html" aria-label="Previous project: Library Freeze System">← <span>Prev</span></a>
-            <a href="/design-system.html" aria-label="Next project: Design System from Scratch"><span>Next</span> →</a>
+            <a href="/library-freeze.html">← <span>Prev</span> <span class="visually-hidden">project: Library Freeze System</span></a>
+            <a href="/design-system.html"><span>Next</span> <span class="visually-hidden">project: Design System from Scratch</span> →</a>
          </div>
       </nav>
 
-      <main id="project-content" data-project-id="2">
-         <article class="case-article">
+      <!-- Floating TL;DR CTA + side panel -->
+      <button type="button" class="case-tldr-cta" aria-expanded="false" aria-controls="tldr-panel">TL;DR</button>
+      <div class="case-tldr-panel" id="tldr-panel" role="dialog" aria-label="TL;DR summary" aria-hidden="true">
+         <button type="button" class="case-tldr-panel__close" aria-label="Close">&times;</button>
+         <div class="case-tldr-panel__content">
+            <h2 class="case-tldr-panel__title">TL;DR</h2>
+            <div class="case-lettered-section__entry">
+               <p class="case-lettered-section__marker">A.</p>
+               <p class="case-lettered-section__body">Tomato Energy’s marketing ran on hand-updated spreadsheets, and most of its leads arrived through channels nobody tracked. The brief was 20 minutes long: “Campaigns. Leads. Unify the data. Make it work.”</p>
+            </div>
+            <div class="case-lettered-section__entry">
+               <p class="case-lettered-section__marker">B.</p>
+               <p class="case-lettered-section__body">Hired as a UI designer, I co-owned scope with the backend lead (there was no PM or UX), then designed the app end to end: campaigns, leads, a social inbox, and a pipeline I proposed that routes Facebook complaints straight to Customer Care.</p>
+            </div>
+            <div class="case-lettered-section__entry">
+               <p class="case-lettered-section__marker">C.</p>
+               <p class="case-lettered-section__body">A production-ready MVP from a three-person core team, roughly 90% fewer review rounds than other projects (a peer comparison), and a design system the company adopted at month 15.</p>
+            </div>
+            <p class="case-tldr-mascot">
+               <span class="case-tldr-mascot__face" aria-hidden="true"></span>
+               <span class="case-tldr-mascot__message">
+                  <span class="case-tldr-mascot__message-default">&lt;-- you, a stressed recruiter</span>
+                  <span class="case-tldr-mascot__message-hover" aria-hidden="true">relax! I got you!</span>
+               </span>
+            </p>
+         </div>
+      </div>
 
-            <!-- 1. Title block + Component 1: metadata block -->
+      <main id="project-content" tabindex="-1" data-project-id="2">
+         <article class="case-article case-article--even-text">
+
             <header class="case-title-block">
                <div class="case-title-main">
-                  <img class="case-title-image" src="/mkm/mkm-large hero.png" alt="Marketing Management platform dashboard overview" loading="eager">
+                  <img class="case-title-image" src="/mkm/mkm-large hero.webp" alt="Marketing Management desktop app, dashboard overview" loading="eager">
                   <h1>Marketing Management</h1>
-                  <p class="case-subtitle">A B2B SaaS platform, designed and co-owned.</p>
+                  <p class="case-subtitle">One desktop app for a company's scattered marketing data, designed and co-owned over 18 months.</p>
                </div>
 
                <div class="case-title-side">
-
                   <aside class="case-info">
                      <p class="case-issue-number">02</p>
 
                      <p class="case-info-label">Information</p>
                      <dl>
                         <dt>Project Type</dt>
-                        <dd>Product</dd>
+                        <dd>B2B · Desktop app</dd>
                         <dt>Role</dt>
-                        <dd>Mid UI Designer → Product Co-owner</dd>
+                        <dd>Solo Product Designer&nbsp;→ Product <span style="white-space: nowrap">Co-owner</span></dd>
                      </dl>
                      <dl>
                         <dt>Company</dt>
                         <dd>Senapt LTD (Startup)</dd>
                         <dt>Team</dt>
-                        <dd>1 Backend Lead + 1 Frontend + Mid UI <em>(me)</em></dd>
+                        <dd>1 Backend Lead + 1 Frontend + Product Designer <em>(me)</em></dd>
                      </dl>
                      <dl>
                         <dt>Stack</dt>
@@ -177,726 +218,269 @@
                </div>
             </header>
 
-
-            <!-- Content Blocks Section -->
-            <div class="cs-content-container">
-               <!-- Line breaker - visual -->
-               <div class="cs-line-breaker ">
-                  <div class="cs-landscape-cover">
-                     <div class="floating-text">
-                        <span class="cs-line-heading"> From Excel to UI</span>
-                        <span class="cs-line-subhead">Replaced manually-maintained Excel dashboards with unified automation platform</span>
-                        <img class="before" src="/mkm/Excel dashboard.png" alt="Previous Excel dashboard" loading="lazy">
-                     </div>
-
-                     <span class="cs-line-subhead arrow"> → </span>
-                     <img class="after" src="/mkm/UI-Leads-dashboard.png" alt="Leads dashboard" loading="lazy">
-                  </div>
-               </div>
-
-
-               <!-- SECTION 1: MY ROLE -->
-               <section class="cs-block cs-section" data-section-title="My Role" id="cs-section-1">
-                  <div class="cs-block cs-block-two-column">
-                     <h2 class="cs-section-heading">Beyond UI - Into Product Ownership</h2>
-                 <div class="cs-block cs-two-column-grid content-left">
-                        <div class="cs-content-section cs-column">
-                           <div class="cs-paragraph">
-                              <p class="cs-text">I was hired as a UI designer. But one month in, faced with three section names, no feature definitions, and a backend engineer who also needed directions... someone had to answer:</p>
-                              <p class="cs-text text-higlight"><i>What actually goes in "Campaigns"? How deep does each section go? What is v1? and v2?<br>Who decides all this?</i></p>
-                           </div>
-                        </div>
-                     <div class="cs-text-column side-resume cs-column">
-                        <p class="cs-subhead"> Hired as</p>
-                        <p class="cs-subtext">UI Designer</p>
-                        <p class="arrows"> ↓ ↓ ↓ </p>
-                        <p class="cs-subhead"> Reality</p>
-                        <p class="cs-subtext"> No Product team. No UX. No definition.</p>
-                     </div>
-
-                  </div>
-                 </div>
-
-                  <div class="cs-block cs-block-two-column">
-                     <div class="cs-two-column-grid">
-                           <div class="cs-column">
-                           <h3 class="cs-column-heading">The Shift: Becoming Co-Owners</h3>
-                           <p class="cs-section-text cs-text">Backend Lead and I became <em>de facto co-owners</em>, not by choice, but by necessity. No one else was defining scope.<br>We operated as a hub: each handled our technical domains, but co-owned everything strategic.</p>
-                           <ul class="cs-text-block-list cs-text">
-                              <li><strong> Backend Lead </strong> → All technical architecture, data models, APIs</li>
-                              <li><strong> Me </strong> → Design, research, specs, QA</li>
-                              <li><strong> Marketing Lead </strong> → provided user validation and domain knowledge (to me)</li>
-                              <li><strong> CEO </strong> →  received results-based check-ins (from both of us)</li>
-                           </ul>
-                           </div>
-                           <div class="cs-column">
-                           <figure class="cs-column-image">
-                              <img src="/mkm/collaboration-model.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img" loading="lazy">
-                              <figcaption class="cs-image-caption">Co-product ownership model: separate technical domains, shared strategic decisions</figcaption>
-                           </figure>
-                        </div>
-                     </div>
-                  </div>
-
-
-   <!-- Line-break -->
-      <div class="cs-block cs-block-three-column-text full-width cs-line-breaker">
-                  <div class="cs-three-column-grid">
-                     <div class="cs-text-column">
-                        <div class="content">
-                           <h3>The brief: Direction, Not Definition</h3>
-                           <p class="cs-section-text">
-                              <span class="big-commas">"</span>
-                              <span>
-                                 <i>Campaigns. Leads. Unify the data. Make it work</i>
-                              </span>
-                                  <span class="big-commas">"</span><br>
-                              <span class="quote-author">- CEO, Jan 24</span>
-                           </p>
-                        </div>
-                     <p class="cs-images-caption cs-subtext">A very brief Brief</p>
-                     </div>
-                     <div class="cs-images-column">
-                            <div class="cs-images-wrapper">
-                           <img src="/mkm/brief-sketch.png" alt="Brief sketch" loading="lazy">
-                        </div>
-                     </div>
-                     <div class="cs-images-column">
-                        <div class="cs-images-wrapper">
-                           <img src="/mkm/brief-sketch-2.png" alt="Brief sketch 2" loading="lazy">
-                        </div>
-                      </div>
-                  </div>
-      </div>
-   <!-- Line break -->
-                  <div class="cs-block cs-block-two-column">
-                  <div class="cs-two-column-grid">
-                     <div class="cs-column">
-                        <figure class="cs-column-image">
-                           <img src="/mkm/decisions-framework.png" alt="Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together" class="cs-column-img" loading="lazy">
-                           <figcaption class="cs-image-caption">Decision framework: User needs → Marketing Lead | Feasibility → Backend Lead | Design approach → Me | Strategic buy-in → Backend + Me together</figcaption>
-                        </figure>
-                     </div>
-                     <div class="cs-column">
-                           <h3 class="cs-column-heading">Why This Worked</h3>
-                           <p class="cs-section-text cs-text">Backend had the CEO's ear. Rather than compete for access, we aligned on ownership.
-                               We made decisions by combining both our knowledges:
-                               I'd propose features based on user research and real workflows; Backend validated them against available data, architecture, constraints...
-                               Many ideas didn't survive the process; the ones that did became the roadmap.<br>
-                               This approach ensured every feature had a solid backing long before reaching executives reviews.
-                               </p>
-                        </div>
-                  </div>
-               </div>
-   <!-- Line break -->
-
-   </section>
-
-
-   <!-- SECTION 2 - THE PROBLEM -->
-
-   <section class="cs-block cs-section" data-section-title="The Problem" id="cs-section-2">
-    <div class="cs-block cs-block-two-column">
-       <h2 class="cs-section-heading">The problem: Fragmented data, Blind decisions</h2>
-                 <div class="cs-two-column-grid content-left">
-                     <div class="cs-main-content cs-column">
-                        <div class="cs-content-section">
-                           <div class="cs-paragraph">
-                              <p class="cs-text">When I joined in, the marketing team was flying blind.
-                                 Campaigns performance was spread across multiple manually maintained Excel files, updated when time allowed.
-                                 By the time they caught something that wasn't working, they'd already spent too much and missed many opportunities.
-                                 CEO saw the inefficiency: fragmented data,slow feedback loops, and no shared view of performances across teams.</p>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="cs-text-column side-resume long">
-                        <h3> Constraints </h3>
-                        <p class="cs-subtext"><span class="arrows"> > </span> <em>Results; not process</em><span class="arrows"> → </span> CEO's priority</p>
-                        <p class="cs-subtext"><span class="arrows"> > </span><em>No precedents</em> <span class="arrows"> : </span> No component libraries, no patterns</p>
-                        <p class="cs-subtext"><span class="arrows"> > </span> <em>Java FX</em><span class="arrows"> : </span> limited documentation and tools</p>
-                        <p class="cs-subtext"><span class="arrows"> > </span> Frontend onboarded with <em>only 1 approved screen</em></p>
-                        <p class="cs-subtext"><span class="arrows"> > </span> <em>Full async</em> with Front-end</p>
-                        <p class="cs-subtext"><span class="arrows"> > </span> No PM, no UX</p>
-                     </div>
-
-                  </div>
-               </div>
-
-               <div class="cs-block cs-block-two-column">
-                  <div class="cs-two-column-grid">
-                      <div class="cs-column">
-                           <h3 class="cs-text-block-heading">The Reality on the Ground</h3>
-                           <p class="cs-section-text cs-text">What we inherited:</p>
-                           <ul class="cs-text-block-list cs-text">
-                              <li><b>14K customers</b> → projected growth 24K</li>
-                              <li><b>Manual data entry</b> across 6+ touchpoints + no visibility between teams</li>
-                              <li><b>Queries via Social Media</b> manually redirected to customer support</li>
-                              <li><b>No tools</b> to track campaign ROI in real-time</li>
-                           </ul>
-
-                     </div>
-                     <div class="new-carousel swiper">
-                        <div class="new-container swiper-wrapper">
-                           <div class="new-slide swiper-slide">
-                              <img src="/mkm/Excel dashboard.png" data-src="/mkm/Excel dashboard.png" alt="Excel dashboard, manually updated" class="cs-carousel-img" loading="lazy">
-                           </div>
-                           <div class="new-slide swiper-slide">
-                              <img src="/mkm/Excel dashboard-hover.png" data-src="/mkm/Excel dashboard-hover.png" alt="Manual track of cohorts " class="cs-carousel-img" loading="lazy">
-                           </div>
-                        </div>
-                        <figcaption class="cs-image-caption">Original Excel-based tracking system</figcaption>
-                        <div class="swiper-pagination"></div>
-                     </div>
-                  </div>
-               </div>
-    </section>
-
-
-
-
-   <!-- Line breaker -->
-               <div class="cs-block cs-key-insight">
-                  <div class="cs-key-insight-content">
-                     <div class="cs-key-insight-header">
-                        <h3 class="cs-key-insight-title">Key Learning: Partnership over Hierarchy</h3>
-                     </div>
-                     <p class="cs-key-insight-text"> The strongest validation came from daily collaborators, not executives.</p>
-                     <p class="cs-key-insight-result"><strong>→ Result:</strong> We built the product specs Through design and iteration. Each step was validated.</p>
-                  </div>
-               </div>
-   <!-- Line breaker -->
-
-
-    <!-- SECTION 3 - THE JOURNEY -->
-    <section class="cs-block  cs-section" data-section-title="The Journey" id="cs-section-3">
-      <div class="cs-block cs-block-one-column">
-         <h2 class="cs-section-heading">The Journey: Milestones: Building the Plane While Flying It</h2>
-         <div class="milestones">
-
-         <!-- Phase 1 -->
-            <div class="cs-block">
-            <details class="milestone is-open" open>
-               <summary class="milestone-header">
-                  <div class="milestone-meta">
-                  <span class="milestone-index">01</span>
-                  <div>
-                     <h3 class="milestone-title">Foundation, Discovery & Early Chaos</h3>
-                     <p class="milestone-period">Months 1–3 · Jan–March 2024</p>
-                  </div>
-                  </div>
-
-                  <div class="milestone-outcome">
-                  <strong>Outcome:</strong> Core architecture validated. Look & Feel approved
-                  </div>
-               </summary>
-
-               <div class="milestone-body">
-                  <div class="milestone-block">
-                  <p class="milestone-block-heading"><strong>The challenges</strong></p>
-                  <ul>
-                     <li>Competitor research (Self-driven + Marketing Lead)</li>
-                     <li>Designing while learning marketing terminology & workflows</li>
-                     <li>Unifying IA (information architecture) for 4 data sources</li>
-                     <li>Unclear visual direction until month 3</li>
-                  </ul>
-                  </div>
-
-                  <div class="milestone-block">
-                  <p class="milestone-block-heading"><strong>Key learning</strong></p>
-                  <p>Partnership, early validation, and open communication.</p>
-                  </div>
-               </div>
-            </details>
-
-            <!-- Phase 2 -->
-            <details class="milestone">
-               <summary class="milestone-header">
-                  <div class="milestone-meta">
-                  <span class="milestone-index">02</span>
-                  <div>
-                     <h3 class="milestone-title">Systematic Thinking Kicks In</h3>
-                     <p class="milestone-period">Months 3–4 · March-April 2024</p>
-                  </div>
-                  </div>
-
-                  <div class="milestone-outcome">
-                  <strong>Outcome:</strong> Reusability as the only way forward
-                  </div>
-               </summary>
-
-               <div class="milestone-body">
-                  <div class="milestone-block">
-                  <p class="milestone-block-heading"><strong>Challenges</strong></p>
-                  <ul>
-                     <li>Frontend onboarded with only 1 approved screen <small>(heighten pressure to deliver)</small></li>
-                     <li>No component libraries precedents</li>
-                     <li>System Tools don't support JavaFX</li>
-                     <li>Async collaboration across timezones and language barriers</li>
-                  </ul>
-                  </div>
-
-                  <div class="milestone-block">
-                  <p class="milestone-block-heading"><strong>Key learning</strong></p>
-                  <p>Short-term fixes weren't sustainable.</p>
-                  </div>
-               </div>
-            </details>
-
-            <!-- Phase 3 -->
-            <details class="milestone">
-            <summary class="milestone-header">
-               <div class="milestone-meta">
-                  <span class="milestone-index">03</span>
-                  <div>
-                  <h3 class="milestone-title">The Product stopped shifting</h3>
-                  <p class="milestone-period">Months 4–8 · July–Nov 2024</p>
-                  </div>
-               </div>
-
-               <div class="milestone-outcome">
-                  <strong>Outcome:</strong> Foundations were solid; new features can grow on top
-               </div>
-            </summary>
-
-            <div class="milestone-body">
-               <div class="milestone-block">
-                  <p class="milestone-block-heading"><strong>Milestones</strong></p>
-                  <ul>
-                  <li class="milestone--shipped"><strong>Leads section & dashboard v1:shipped </strong></li>
-                  <li>Component library v1.0 + tokens implemented</li>
-                  <li>Discovered Facebook DM bottleneck during user validation</li>
-                  <li class="milestone--insight"><strong>Proposed Facebook DM → CRM pipeline</strong></li>
-                  <li>Feature validated with Backend and added to MVP scope</li>
-                  <li>Took over sprint coordination and ticket management (no PM)</li>
-                  <li>Backend and I presented product progress company-wide</li>
-                  <li>New section added: <u>Analytics</u></li>
-                  <li>Second Backend joined to support architecture</li>
-                  </ul>
-               </div>
-
-               <div class="milestone-block">
-                  <p class="milestone-block-heading"><strong>Key learning</strong></p>
-                  <p>Not everything worked; what did became the base.</p>
+            <!-- Lede (the CEO quote is its last element) -->
+            <div class="case-pairing-row case-pairing-row--text-only case-pairing-row--intro case-prose">
+               <div class="case-pairing-row__right">
+                  <p class="lede">The brief was 20 minutes long: two hand-drawn sketches, three section names (Campaigns, Leads, Channels) and nothing written down. I was hired as a UI designer; a month in, someone had to decide what actually went inside each of those names.</p>
+                  <p>There was no product team and no UX function to hand that to. The backend developer needed direction as much as I did, so the two of us ended up co-owning scope. We split along technical lines and shared the strategic calls: they owned architecture, data models and APIs; I owned design, research, specs and QA. The marketing lead joined as end user and domain expert, and the CEO got results-based check-ins from both of us.</p>
+                  <p>Eighteen months later, a three-person team had a production-ready MVP.</p>
+                  <figure class="case-quote-bubble">
+                     <blockquote><p>“Campaigns. Leads. Unify the data. Make it work.”</p></blockquote>
+                     <figcaption>CEO <sub>(January 2024)</sub></figcaption>
+                  </figure>
                </div>
             </div>
-            </details>
 
-            <!-- Phase 4 -->
-            <details class="milestone">
-            <summary class="milestone-header">
-               <div class="milestone-meta">
-                  <span class="milestone-index">04</span>
-                  <div>
-                  <h3 class="milestone-title">Advancing Features</h3>
-                  <p class="milestone-period">Months 9–14 · Dec 2024–May 2025</p>
-                  </div>
+            <!-- SPLIT: The Problem -->
+            <h2 class="case-section-heading">The Problem: Fragmented Data, Blind Decisions</h2>
+            <div class="case-scrolly case-scrolly--flip case-prose" style="--case-scrolly-steps: 1" data-section-title="The Problem">
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                  <img src="/mkm/Excel dashboard.png" alt="Excel dashboard the marketing team used to track campaigns" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--before-</span>Campaign tracking as it was: spreadsheets, updated by hand.</p>
+                  <img src="/mkm/brief-sketches.webp" alt="The two hand-drawn sketches from the brief, side by side" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--the-brief-</span>The two sketches the project started from.</p>
+                  <img src="/mkm/ux-lead-sources 1.png" alt="Seven lead sources feeding into one platform, Marketing Management, with most of them untracked before" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--lead-sources-</span>Seven lead sources, most of them untracked.</p>
                </div>
-
-               <div class="milestone-outcome">
-                  <strong>Outcome:</strong> Systematic delivery held as feature complexity increased
+               <div class="case-scrolly__right">
+                  <h3>Where the data lived</h3>
+                  <p>Marketing Management is Senapt's own software; Tomato Energy, a UK energy supplier, was its first client and where it was tested. Its marketing team tracked campaign performance across several manually maintained Excel files, updated when someone had time, for roughly 14K customers (with growth to 24K projected over the following year). Leads arrived through six or more channels, and most of them weren't tracked at all:</p>
+                  <p><span class="case-caption-num"> ✦ </span>Telesales, tracked by a different department.</p>
+                  <p><span class="case-caption-num"> ✦ </span>Social media, untracked; complaints in the comments never reached Customer Care.</p>
+                  <p><span class="case-caption-num"> ✦ </span>The website's own quotation tool, untracked.</p>
+                  <p><span class="case-caption-num"> ✦ </span>Door-to-door campaigns and live events, untracked.</p>
+                  <h3>What I started with</h3>
+                  <p>No component library or pattern precedent, a stack (JavaFX) with thin documentation and little mature tooling, and a frontend developer working fully async from Japan, seven hours ahead. For the first four or five months I also had no direct access to the marketing department.</p>
                </div>
-            </summary>
-
-            <div class="milestone-body">
-               <div class="milestone-block">
-                  <p class="milestone-block-heading"><strong>Milestones</strong></p>
-                  <ul>
-                  <li class="milestone--shipped"><strong>Campaigns dashboard & management v1:shipped</strong></li>
-                  <li>Facebook DM → CRM pipeline fully implemented</li>
-                  <li>Unified inbox combining social media and customer support</li>
-                  <li>Google Ads + Analytics API integration</li>
-                  <li class="milestone--insight">Proposed Figma-to-git personalised workflow</li>
-                  </ul>
-               </div>
-
-               <div class="milestone-block">
-                  <p class="milestone-block-heading"><strong>Async system: At scale</strong></p>
-                  <ul>
-                  <li>Detailed Figma annotations for every interaction state</li>
-                  <li>Prototypes with full microcopy included (no assumptions)</li>
-                  <li>Edge-case documentation for error states and corner cases</li>
-                  <li>Recorded mute-video walkthroughs for complex flows (language barrier)</li>
-                  <li>Backend review before handoff to align endpoint naming</li>
-                  </ul>
-               </div>
-
-               <div class="milestone-block">
-                  <p class="milestone-block-heading"><strong>Key learning</strong></p>
-                  <p>Documentation replaced constant alignment and allowed us to jump over language and time gaps.</p>
-               </div>
-            </div>
-            </details>
-
-            <!-- Phase 5 -->
-            <details class="milestone">
-            <summary class="milestone-header">
-               <div class="milestone-meta">
-                  <span class="milestone-index">05</span>
-                  <div>
-                  <h3 class="milestone-title">Proving the System</h3>
-                  <p class="milestone-period">Months 15–18 · June–Oct 2025</p>
-                  </div>
-               </div>
-
-               <div class="milestone-outcome">
-                  <strong>Outcome:</strong> The proof-of-concept unlocked the buy-in
-               </div>
-            </summary>
-
-            <div class="milestone-body with-cta">
-               <div class="body-left">
-
-                  <div class="milestone-block">
-                     <p class="milestone-block-heading"><strong>Milestones</strong></p>
-                     <ul>
-                        <li class="milestone--shipped"><strong>MVP shipped and ready for user testing</strong></li>
-                        <li class="milestone--shipped"><strong>Figma-to-Git pipeline validated and integrated </strong></li>
-                        <li>Systematic async handoff reached <strong>~ 90% design-to-code accuracy</strong></li>
-                        <li>CEO approved expansion of the design system company-wide</li>
-                        <li>Design Ops team formed</li>
-                        <li>Trained 5 designers on systematic handoff methods</li>
-                        <li>Foundations built for this product became the company design system</li>
-                     </ul>
-                  </div>
-
-                  <div class="milestone-block">
-                     <p class="milestone-block-heading"><strong>Key learning</strong></p>
-                     <p>Building created the momentum that discussion couldn't.</p>
-                  </div>
-               </div>
-
-               <div class="milestone-cta">
-                  <span>
-                     <p>This whole project proved the value <br>of a systematic approach.</p>
-                     <a class="cta-button" href="/design-system.html">
-                        Read Design System Case→
-                     </a>
-                  </span>
-               </div>
-            </div>
-            </details>
-
-
-
+             </div>
             </div>
 
-         </div>
-      </div>
-
-          <div class="cs-block cs-block-two-column">
-            <div class="cs-two-column-grid">
-               <div class="cs-column">
-                  <h3 class="cs-column-heading">What This Actually Looked Like</h3>
-                  <ul class="cs-text-block-list cs-text">
-                     <li>Open conversation with <b>Marketing Lead</b>: "Campaigns". </li>
-                     <li><b>Campaigns</b> moves from rough concept to first UX flow</li>
-                     <li><b>Backend</b> validates data and terminology against architecture</li>
-                     <li>UX refined using backend feedback - repeat & iterate -</li>
-                     <li>Translate UX flows to Wireframes, then to UI, then handoff</li>
-                  </ul>
-               </div>
-
-                  <div class="new-carousel swiper tight">
-                     <div class="new-container swiper-wrapper">
-                        <div class="new-slide swiper-slide"><img src="/mkm/UX-0.png" data-src="/mkm/UX-0.png" alt="Initial UX draft for Marketing Management dashboard showing early information architecture" class="cs-carousel-img" loading="lazy"></div>
-                        <div class="new-slide swiper-slide"><img src="/mkm/UX-1.png" data-src="/mkm/UX-1.png" alt="UX design iteration incorporating backend requirements and data structure feedback" class="cs-carousel-img" loading="lazy"></div>
-                        <div class="new-slide swiper-slide"><img src="/mkm/UX-2.png" data-src="/mkm/UX-2.png" alt="Low-fidelity wireframes translating UX concepts into layout structure" class="cs-carousel-img" loading="lazy"></div>
-                        <div class="new-slide swiper-slide"><img src="/mkm/UX-3.png" data-src="/mkm/UX-3.png" alt="Final UI deliverables with complete visual design and component specifications" class="cs-carousel-img" loading="lazy"></div>
+            <!-- FULL: phase rail -->
+            <h2 class="case-section-heading">Building the Plane While Flying It</h2>
+            <div class="case-pairing-row case-pairing-row--wide-left case-prose" data-section-title="Building the Plane While Flying It">
+               <div class="case-pairing-row__left">
+                  <div class="case-phase-rail">
+                     <div class="case-phase-row">
+                        <p class="case-phase-row__index">01</p>
+                        <p class="case-phase-row__title">Discovery and Early Direction</p>
+                        <p class="case-phase-row__meta">Months 1–3</p>
+                        <p class="case-phase-row__outcome">Competitor research, learning marketing vocabulary from zero, and a look and feel approved after two or three rounds of feedback. Two months in, a two-week detour: a door-to-door lead-capture tablet tool in Nuxt.js, with no visual link to this product; it shipped on time and was later replaced by the website's quote tool.</p>
                      </div>
-                     <figcaption class="cs-image-caption">Full cycle evolution: From original UX draft, to Ux with backend input, transfer to wireframes, until final UI deliverables</figcaption>
-                     <div class="swiper-pagination"></div>
+                     <div class="case-phase-row">
+                        <p class="case-phase-row__index">02</p>
+                        <p class="case-phase-row__title">Systematic by Necessity</p>
+                        <p class="case-phase-row__meta">Months 3–4</p>
+                        <p class="case-phase-row__outcome">Frontend onboarded with a single approved screen; reusable components became the only way to keep up.</p>
+                     </div>
+                     <div class="case-phase-row">
+                        <p class="case-phase-row__index">03</p>
+                        <p class="case-phase-row__title">The Product Settles</p>
+                        <p class="case-phase-row__meta">Months 4–8</p>
+                        <p class="case-phase-row__outcome">Leads dashboard and component library v1 shipped, Analytics added as a section, and sprint coordination taken on (there was no PM).</p>
+                     </div>
+                     <div class="case-phase-row">
+                        <p class="case-phase-row__index">04</p>
+                        <p class="case-phase-row__title">Advancing Features</p>
+                        <p class="case-phase-row__meta">Months 9–14</p>
+                        <p class="case-phase-row__outcome">Campaigns dashboard, a unified inbox for social media and support, the Facebook-to-CRM pipeline, and Google Ads and Analytics integration.</p>
+                     </div>
+                     <div class="case-phase-row">
+                        <p class="case-phase-row__index">05</p>
+                        <p class="case-phase-row__title">Proving the System</p>
+                        <p class="case-phase-row__meta">Months 15–18</p>
+                        <p class="case-phase-row__outcome">MVP ready for user testing; the handoff approach adopted across the company.</p>
+                     </div>
                   </div>
+               </div>
             </div>
-         </div>
-    </section>
 
-
-   <!-- Line breaker -->
-                  <div class="cs-block cs-block-three-column-text full-width cs-line-breaker accordion">
-                  <div class="cs-three-column-grid">
-                     <div class="cs-text-column">
-                        <div class="content">
-                           <h3>A Defining Example:</h3>
-                           <p class="cs-section-text">
-                                A pain-point surfaced during validations and was owned end-to-end, from discovery to delivery.
-                           </p>
-                        </div>
-                     </div>
-                     <div class="cs-images-column two-img">
-                            <div class="cs-images-wrapper">
-                              <img class="first" src="/mkm/CRM-UI-2.png" alt="Visual display: Customer has been located and connected with Bussiness internal profile. Now Support can see the conversation" loading="lazy">
-                              <img class="second" src="/mkm/CRM-idea--2.png" alt="UX rough graph of problem solution - Used while brainstorming with backend" loading="lazy">
-                        </div>
-                     </div>
-                     <div class="cs-images-column one-img">
-                        <div class="cs-images-wrapper">
-                           <img src="/mkm/CRM-UI.png" alt="Visual alert indicates conversation has been identified as potential Support issue (ID has been provided by customer) " loading="lazy">
-                        </div>
-                      </div>
+            <!-- FULL: The Shift -->
+            <h2 class="case-section-heading">The Shift: Becoming Co-Owners</h2>
+            <div class="case-scrolly case-scrolly--flip case-prose" style="--case-scrolly-steps: 1" data-section-title="The Shift: Becoming Co-Owners">
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                  <img src="/mkm/ux-decision-framework-flat.webp" alt="Decision framework: design and backend are co-product owners who share scope; user needs from the marketing lead feed scope; design decides the approach and system alone; results are shown to the CEO to gain buy-in. Scope was shared; the system was mine." loading="lazy">
+                  <div class="case-video">
+                     <video src="/mkm/ux-ia-growth.mp4" poster="/mkm/ux-ia-growth-poster.webp" autoplay loop playsinline muted aria-label="The information architecture growing from the three sections in the brief to the full structure, with a pass down the Leads branch"></video>
                   </div>
-
-                  <div class="accordion-content">
-
-
-                  <div class="cs-block cs-block-one-column">
-                           <div class="cs-column">
-                           <div class="cs-text-block-section intro">
-                                <p class="cs-section-text">
-                                    Social Media managers were constantly pulled into handling customer complaints arriving via Facebook messages. These were manually handled and increasingly blurred the line between marketing and support.
-                                 </p>
-                           </div>
-                           <div class="cs-text-block-section">
-                              <h3>The existing flow</h3>
-                           <ol class="cs-text-block-list numbered">
-                                 <li>Facebook Message captured via Facebook API ➝ Our inbox</li>
-                                 <li>Social Media team identifies it as support-related issue</li>
-                                 <li>Conversation manually emailed to Customer Support</li>
-                                 <li>Support locates customer, creates ticket and engages via email</li>
-                                 <li>Social team responds separately on Facebook</li>
-                              </ol>
-                           </div>
-                           <div class="cs-text-block-section">
-                              <h3 class="cs-text-block-heading">My proposal</h3>
-                              <p>
-                                The idea was to use the conversation itself to identify support cases and connect them directly to the CRM.
-                              </p>
-                              <p class="text-higlight-center">Facebook message → ID request → CRM validation → Support workflow</p>
-                              <p class="cs-section-text">
-                                    When a customer sends a Facebook message, an automated reply prompts them to provide their contract number if the issue relates to support.
-                                    Once detected, the ID is validated against the CRM and the customer is automatically located.                           </p>
-                                <ul class="cs-text-block-list">
-                                 <li>The inbox shows clear indicators that the conversation is a support case</li>
-                                 <li>A single action creates a CRM ticket and attaches the full message history</li>
-                                 <li>The customer receives an automatic confirmation that their issue was transferred</li>
-                              </ul>
-                           </div>
-                        </div>
-                      </div>
-
-                  </div>
+                  <p class="case-caption"><span class="case-caption-num">--ia-growth-</span>How the structure grew: from the three sections in the brief to the full information architecture, with a pass down the Leads branch.</p>
                </div>
-
-   <!-- Line breaker -->
-
-   <!-- SECTION 4 - THE OUTCOME -->
-    <section class="cs-block  cs-block-one-column" data-section-title="The Outcome" id="cs-section-4">
-         <h2 class="cs-section-heading">Outcome and Impact</h2>
-                  <div class="cs-block cs-block-two-column metrics inner">
-                  <div class="cs-two-column-grid">
-                     <div class="cs-column">
-                        <p class="cs-section-text cs-text">The Marketing Management platform delivered measurable impact across three dimensions: Product, Organization, and Business. This later reflected in CEO buy-in and investors-facing use.</p>
-                     </div>
-                     <div class="cs-column">
-
-                        <div class=" stacked-metrics-swiper swiper cs-metrics">
-                           <div class="swiper-wrapper metrics-content">
-                              <div class="swiper-slide new" id="card-1">
-                                    <div class="cs-metric-card">
-                                             <div class="cs-metric-icon-wrapper">
-                                                <span class="cs-metric-icon"><i class="iconoir-presentation"></i></span>
-                                             </div>
-                                             <div class="cs-metric-value">Featured</div>
-                                          <div class="cs-metric-label">Used in investor conversations and fundraiser events </div>
-                                          <div class="cs-metric-tag bus">Business</div>
-                                    </div>
-                              </div>
-
-                              <div class="swiper-slide new" id="card-2">
-                                    <div class="cs-metric-card">
-                                             <div class="cs-metric-icon-wrapper">
-                                                <span class="cs-metric-icon"><i class="iconoir-media-video"></i></span>
-                                             </div>
-                                             <div class="cs-metric-value">Showcased</div>
-                                          <div class="cs-metric-label">Presented at company booths during developer events</div>
-                                          <div class="cs-metric-tag bus">Business</div>
-                                    </div>
-                              </div>
-                              <div class="swiper-slide new" id="card-3">
-                                    <div class="cs-metric-card">
-                                             <div class="cs-metric-icon-wrapper">
-                                                <span class="cs-metric-icon"><i class="iconoir-eye"></i></span>
-                                             </div>
-                                             <div class="cs-metric-value">Unified visibility</div>
-                                          <div class="cs-metric-label">Digital and traditional marketing for 1st time</div>
-                                          <div class="cs-metric-tag prod">Product</div>
-                                 </div>
-                              </div>
-                              <div class="swiper-slide new" id="card-4">
-                                    <div class="cs-metric-card">
-                                             <div class="cs-metric-icon-wrapper">
-                                                <span class="cs-metric-icon"><i class="iconoir-flash"></i></span>
-                                             </div>
-                                             <div class="cs-metric-value">Real-time</div>
-                                          <div class="cs-metric-label">Replacing 2-week reporting lag</div>
-                                          <div class="cs-metric-tag org">Organization</div>
-                                 </div>
-                              </div>
-                              <div class="swiper-slide new" id="card-5">
-                                    <div class="cs-metric-card">
-                                             <div class="cs-metric-icon-wrapper">
-                                                <span class="cs-metric-icon"><i class="iconoir-check-square"></i></span>
-                                             </div>
-                                             <div class="cs-metric-value">90%</div>
-                                          <div class="cs-metric-label">Reduction in QA through systematic design-to-dev handoff</div>
-                                          <div class="cs-metric-tag bus">Business</div>
-                                    </div>
-                              </div>
-                              <div class="swiper-slide new" id="card-6">
-                                    <div class="cs-metric-card">
-                                             <div class="cs-metric-icon-wrapper">
-                                                <span class="cs-metric-icon"><i class="iconoir-page-star"></i></span>
-                                             </div>
-                                             <div class="cs-metric-value">First ever</div>
-                                          <div class="cs-metric-label">Comprehensive product documentation system (Confluence hub)</div>
-                                          <div class="cs-metric-tag org">Organization</div>
-                                 </div>
-                              </div>
-                              <div class="swiper-slide new" id="card-7">
-                                    <div class="cs-metric-card">
-                                             <div class="cs-metric-icon-wrapper">
-                                                <span class="cs-metric-icon"><i class="iconoir-rocket"></i></span>
-                                             </div>
-                                             <div class="cs-metric-value">0 → MVP</div>
-                                          <div class="cs-metric-label">Production-ready platform built in 18 months by a 3-person team</div>
-                                          <div class="cs-metric-tag prod">Product</div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="swiper-pagination"></div>
-                        </div>
-                     </div>
-                  </div>
+               <div class="case-scrolly__right">
+                  <p>I was given the three section names and the sketches. Everything else had to be built: the information architecture, the flows, the UI, the component library it was built on, and the specs frontend worked from.</p>
+                  <p>Nobody was going to define the product for us, so the decision was how to define it ourselves without stepping on each other. Backend and I agreed a simple rule: scope was decided between the two of us, from what the marketing lead needed and what the timeline allowed, and design approach and system decisions sat with me. Anything strategic went to the CEO as a result to react to, not an open question.</p>
+                  <p>In practice I proposed features from research and real workflows, and backend checked them against the data, the architecture and the constraints. Many ideas didn't survive that; the ones that did became the roadmap, with backing in place long before they reached an executive review.</p>
+                  <p><strong>Two co-owners, one rule.</strong> Scope was shared; the system was mine.</p>
                </div>
+             </div>
+            </div>
 
-
-   <!-- before and after -->
-               <div class="cs-block cs-block-two-column inner cs-before-after">
-                  <h2 class="cs-section-heading">The Change</h2>
-                  <div class="cs-before-after-grid">
-                     <div class="cs-before-after-col cs-before-col cs-column">
-                        <h3 class="cs-before-after-label">Before: Fragmented and Manual</h3>
-                        <ul class="cs-before-after-list cs-before-list cs-text">
-                           <li><i class="iconoir-xmark"></i><span>Campaigns tracked on Excel across 4 departments</span></li>
-                           <li><i class="iconoir-xmark"></i><span>Multiple lead entry points with no shared view</span></li>
-                           <li><i class="iconoir-xmark"></i><span>Delayed reach of queries via social media to Customer Support</span></li>
-                           <li><i class="iconoir-xmark"></i><span>No real-time visibility into campaign performance or ROI</span></li>
-                           <li><i class="iconoir-xmark"></i><span>Manual errors and blind spots </span></li>
-                        </ul>
-                     </div>
-                     <div class="cs-before-after-col cs-after-col  cs-column">
-                        <h3 class="cs-before-after-label">After: Unified and Production-Ready</h3>
-                        <ul class="cs-before-after-list cs-after-list cs-text">
-                           <li><i class="iconoir-check"></i><span>Single source of truth across marketing, support, sales and leadership</span></li>
-                           <li><i class="iconoir-check"></i><span>Automated data flows replacing manual input</span></li>
-                           <li><i class="iconoir-check"></i><span>Facebook-to-CRM pipeline connecting customers to support</span></li>
-                           <li><i class="iconoir-check"></i><span>Real-time tracking and comparison</span></li>
-                           <li><i class="iconoir-check"></i><span>Reliable data-based decisions</span></li>
-                        </ul>
-                     </div>
-                  </div>
+            <!-- SPLIT: What This Actually Looked Like -->
+            <h2 class="case-section-heading">What This Actually Looked Like</h2>
+            <div class="case-scrolly case-scrolly--flip case-prose" style="--case-scrolly-steps: 3" data-section-title="What This Actually Looked Like">
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                  <!-- <div class="case-video">
+                     <video src="/mkm/ux-design-loop.mp4" poster="/mkm/ux-design-loop.webp" autoplay loop playsinline muted aria-label="The design loop for each section: open conversation, first UX flow, backend validates and UX refined on repeat, then wireframes, UI and handoff"></video>
+                  </div> -->
+                  <!-- <p class="case-caption"><span class="case-caption-num">--design-loop-</span>The process, repeated for each section.</p> -->
+                  <!-- <img src="/mkm/UX-0.png" alt="First UX map of campaign statuses and actions, with open questions" loading="lazy"> -->
+                  <!-- <p class="case-caption"><span class="case-caption-num">--first-map-</span>Campaign statuses and actions, with the questions still open.</p> -->
+                  <img src="/mkm/ux-campaign-lifecycle.webp" alt="The campaign map redrawn: status transitions, actions by status and the open questions as dashed notes" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--campaign-lifecycle-</span>Campaign statuses and actions, with the open questions kept as notes.</p>
+                  <img src="/mkm/UX-2-detail-dashboard.webp" alt="Early on two-step campaign wizard and the campaigns dashboard wireframe" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--wireframes-</span>The two-step campaign wizard and the campaigns dashboard.</p>
                </div>
+               <div class="case-scrolly__right">
+                  <!-- <p>I was given the three section names and the sketches. Everything else had to be built: the information architecture, the flows, the UI, the component library it was built on, and the specs frontend worked from.</p> -->
+                  <h3>From names to flows</h3>
+                  <p>Competitor research came first, cross-checked with the marketing lead, plus an LLM to get up to speed on marketing terminology I didn't have. Campaigns started as a status-and-actions map full of open questions ("can a campaign be extended without adding budget?"), which became the basis for scoping conversations rather than a finished answer.</p>
+                  <p>The wireframes then turned into a step-by-step map of the wizard, with every input and the rule behind it: the channel type decides whether a platform is needed, a free channel needs no budget input, and anything still unresolved (which products a campaign could be tied to) stayed marked as an open question.</p>
+               </div>
+             </div>
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                                  <img src="/mkm/ux-create-campaign-flow.webp" alt="Step-by-step map of the campaign wizard: every input, the rules behind it, and the open question about which products a campaign could be tied to" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--wizard-logic-</span>Every input in the wizard and the rules behind it: channel type decides platform and name, a free channel skips the budget.</p>
 
-
-   <!-- conclusiones -->
-                  <div class="cs-block cs-block-two-column conclusions inner">
-                     <h2 class="cs-section-heading">Looking back</h2>
-                 <div class="cs-two-column-grid content-left ">
-                        <div class="cs-content-section cs-column">
-                           <div class="cs-paragraph">
-                              <p class="cs-text">
-                                 This project didn't just reach production-ready. It changed how I work.
-                              </p>
-
-                              <p class="cs-text">
-                                 I joined the company as a <strong>mid-level UI designer</strong>, with no prior product or leadership experience.
-                              </p>
-
-                              <p class="cs-text">
-                                 For the first time, I found out firsthand what it really means to <strong>build while defining</strong>. Scoping, designing, shipping, validating, revisiting, and restructuring all happened at once, with no clean lines between them.
-                              </p>
-
-                              <p class="cs-text">
-                                 I had to navigate the high level of uncertainty most startups are known for. Design, product, and system concerns were all active at the same time, constantly influencing one another.
-                              </p>
-
-                              <p class="cs-text">
-                                 At times, it was chaotic and stressful. Early decisions were continuously tested while foundations were still being laid; priorities shifted, assumptions broke, and not everything held.
-                              </p>
-
-                              <p class="cs-text">
-                                 Processes were sometimes messy. Acting as a one-person team – covering UI, UX, systems, product decisions, and parts of project management – forced me to step into responsibility quickly, with no buffer between decisions and consequences.
-                              </p>
-
-                              <p class="cs-text">
-                                 Looking back, the most valuable outcome wasn't a feature, metrics, or a set of polished screens. It was learning how to keep moving without fully knowing the road ahead, and growing into responsibility through doing – not waiting for a title or label to arrive first.
-                              </p>
-                           </div>
-                        </div>
-                     <div class="cs-text-column side-resume">
-                        <p class="cs-subhead"> Related case</p>
-                        <p class="arrows"> ↓ ↓ ↓ </p>
-                        <a class="cta-button" href="/design-system.html"> Design System from Scratch</a>
-                     </div>
-
+                  <img src="/mkm/ux-ui-marketing-objectives.webp" alt="Marketing objectives from the code check to the shipped step, with the label logic for Select all" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--with-backend-</span>Marketing objectives from the code check to the shipped step, with the label logic for "Select all".</p>
+               </div>
+               <div class="case-scrolly__right">
+                  <h3>Design and data model in the same diagram</h3>
+                  <p>Once backend had a model, I mapped it field by field against the UX, so every input in the campaign wizard (audience, targets, marketing objectives) had a matching field in the code before it reached frontend.</p>
+                  <p class="case-label">Trade-off</p>
+                  <p><strong>Quick fixes vs. reusable components.</strong> With frontend waiting on screens, one-off solutions were faster in the moment, but they didn't survive the next feature. Reusable components cost more up front and became the only way to keep pace.</p>
+               </div>
+             </div>
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                  <div class="case-video">
+                     <video src="/mkm/create-campaign-flow.mp4" poster="/mkm/create-campaign-flow-poster.webp" autoplay loop playsinline muted aria-label="The six-step campaign creation wizard, from the campaign details to the new row in the campaigns list"></video>
                   </div>
-                 </div>
+                  <p class="case-caption"><span class="case-caption-num">--create-campaign-</span>The six-step wizard, from campaign details to the new row in the list.</p>
+                  <img src="/mkm/UI-energyl-lead.png" alt="Lead detail page with property, history, cohort and conversion" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--lead-detail-</span>One lead from a campaign: property, history, cohort and conversion.</p>
+               </div>
+               <div class="case-scrolly__right">
+                  <h3>Where a campaign ends up</h3>
+                  <p>Every campaign's result lands in Leads, so the lead page closes the loop: the campaign that brought the person in, their property, client history and cohort sit together, with actions (surveys, quality checks) at the bottom where the marketing lead's workflow ended.</p>
+               </div>
+             </div>
+            </div>
 
-
-
-   </section>
-
-
-               <section class="cs-block cs-block-gallery" data-section-title="Gallery" id="cs-section-5">
-                  <div class="cs-gallery">
-                     <h2 class="cs-section-title">Gallery</h2>
-                     <div class="cs-gallery-grid">
-                        <div class="cs-gallery-item">
-                           <img src="/mkm/Look-and-feel-first-screen.png" alt="Marketing Management platform dashboard showing the approved look and feel for the first screen" class="cs-gallery-image" loading="lazy">
-                           <p class="cs-gallery-caption">Approved look &amp; feel - First screen design</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <video src="/mkm/journey.mov" class="cs-gallery-image cs-gallery-video" loop="" autoplay="" playsinline="" aria-label="Video demonstration of user journey through the Marketing Management platform"></video>
-                           <p class="cs-gallery-caption">User journey walkthrough</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <video src="/mkm/card-hover.mov" class="cs-gallery-image cs-gallery-video" loop="" autoplay="" playsinline="" aria-label="Video demonstration of interactive card hover states and animations"></video>
-                           <p class="cs-gallery-caption">Card hover interactions</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <img src="/mkm/Socials-0-UX-Interactions.png" alt="UX wireframes showing social media inbox interaction patterns and user flows" class="cs-gallery-image" loading="lazy">
-                           <p class="cs-gallery-caption">Social inbox UX - Interaction patterns</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <img src="/mkm/Socials-1-UI-Interactions.png" alt="High-fidelity UI design for social media inbox with complete interaction states" class="cs-gallery-image" loading="lazy">
-                           <p class="cs-gallery-caption">Social inbox UI - Interaction design</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <img src="/mkm/Socials-2-HO-Interactions.png" alt="Developer handoff documentation for social media inbox showing all interaction specifications" class="cs-gallery-image" loading="lazy">
-                           <p class="cs-gallery-caption">Social inbox - Handoff documentation</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <img src="/mkm/Identity-excerpt.png" alt="Brand identity system excerpt showing color palette, typography, and visual design principles" class="cs-gallery-image" loading="lazy">
-                           <p class="cs-gallery-caption">Brand identity excerpt</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <img src="/mkm/UI-Campaigns-dashboard.png" alt="Campaigns dashboard UI showing active marketing campaigns with performance metrics and controls" class="cs-gallery-image" loading="lazy">
-                           <p class="cs-gallery-caption">Campaigns dashboard UI</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <img src="/mkm/UI-createcamp-resume.png" alt="Campaign creation flow summary screen showing configured settings and review before launch" class="cs-gallery-image" loading="lazy">
-                           <p class="cs-gallery-caption">Create campaign - Review summary</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <img src="/mkm/UI-energyl-lead.png" alt="Lead management interface for energy sector showing customer details and interaction history" class="cs-gallery-image" loading="lazy">
-                           <p class="cs-gallery-caption">Energy sector lead details</p>
-                        </div>
-                        <div class="cs-gallery-item">
-                           <video src="/mkm/login.mov" class="cs-gallery-image cs-gallery-video" loop="" autoplay="" playsinline="" aria-label="Video demonstration of login flow and authentication process for Marketing Management platform"></video>
-                           <p class="cs-gallery-caption">Login flow animation</p>
-                        </div>
-                     </div>
+            <!-- SPLIT: The Feature Nobody Asked For -->
+            <h2 class="case-section-heading">The Feature Nobody Asked For</h2>
+            <div class="case-scrolly case-scrolly--flip case-prose" style="--case-scrolly-steps: 2" data-section-title="The Feature Nobody Asked For">
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                  <img src="/mkm/Socials-0-UX-Interactions.png" alt="Posts grid wireframe annotated with every action the API exposes" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--posts-wireframe-</span>The posts grid, annotated with every action the API exposes.</p>
+                  <!-- <img src="/mkm/Socials-1-UI-Interactions.png" alt="The posts grid in the UI" loading="lazy"> -->
+                  <img src="/mkm/Socials-1-UI-Interactions-v2.webp" alt="The final design with real data comming through" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--posts-</span>The same grid in the UI.</p>
+                  <img src="/mkm/UI-post-card-before-after.webp" alt="One post card in its four states, as a placeholder component and with real content" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--post-card-</span>One post card in its four states, as a placeholder component and with real content.</p>
+               </div>
+               <div class="case-scrolly__right">
+                  <h3>Designing for the API review</h3>
+                  <p>Getting social data in meant designing around Facebook's API review first and users second. Early dashboards had to be cut back to what the review would approve, and two versions were kept in parallel so work on features still waiting for access wasn't lost.</p>
+                  <p>Once access came through, the marketing lead validated the inbox and comments views, which surfaced two gaps: nobody owned following up on a given conversation, and the social media manager was absorbing support traffic that belonged to Customer Care. The first became an internal tagging and assignment system.</p>
+               </div>
+             </div>
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                  <img src="/mkm/crm-pipeline-draw-poster.webp" alt="The Connect to Business pipeline: a Facebook customer message triggers an automatic reply asking for a contract number, which is checked against the CRM to locate the client, flag the conversation, copy the message log and raise a ticket, then the conversation lands in the Contract Issues inbox" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--connect-to-business-</span>From a Facebook message to a matched customer in the CRM.</p>
+                  <div class="case-video">
+                     <video src="/mkm/crm-conversation-flow.mp4" poster="/mkm/crm-conversation-flow-poster.webp" autoplay loop playsinline muted aria-label="A Facebook support conversation in the inbox: the customer gives a contract number, the conversation is connected to the business and the customer is told their issue has been passed on"></video>
                   </div>
-               </section>
+                  <p class="case-caption"><span class="case-caption-num">--in-the-inbox-</span>The contract number arrives, the customer is identified, and one click hands the case to Customer Care.</p>
+               </div>
+               <div class="case-scrolly__right">
+                  <h3>From a complaint to a ticket</h3>
+                  <p>Before this, a support message on Facebook was emailed to Customer Care by hand; Care located the customer and opened a ticket, while the social team replied separately on Facebook. I proposed using the conversation itself instead: an automatic reply asks for a contract number, the number is checked against the CRM, and the inbox marks the conversation as a support case. One action then opens a CRM ticket with the full message history, and the customer is told their issue has been passed on. I validated it with backend, marketing and a Customer Care contact before taking it to the CEO, so it arrived as a worked solution with a draft architecture.</p>
+               </div>
+             </div>
+            </div>
+
+            <!-- SPLIT: A Handoff Built for Async -->
+            <h2 class="case-section-heading">A Handoff Built for Async</h2>
+            <div class="case-scrolly case-scrolly--flip case-prose" style="--case-scrolly-steps: 1" data-section-title="A Handoff Built for Async">
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                  <img src="/mkm/Socials-2-HO-Interactions.png" alt="Posts grid and list view with states, annotated for frontend" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--handoff-</span>Posts grid, list view and states, annotated for frontend.</p>
+               </div>
+               <div class="case-scrolly__right">
+                  <p>With frontend seven hours ahead, a question asked at the end of my day was answered the next morning at best. So the specs had to answer it first:</p>
+                  <p><span class="case-caption-num"> ✦ </span>Every component annotated with its tokens, and every state (default, hover, pressed, focus) drawn out.</p>
+                  <p><span class="case-caption-num"> ✦ </span>Prototypes with the final microcopy, so nothing was left to guess.</p>
+                  <p><span class="case-caption-num"> ✦ </span>Error states and edge cases documented alongside the happy path.</p>
+                  <p><span class="case-caption-num"> ✦ </span>Silent video walkthroughs for complex flows, which worked across the language barrier.</p>
+                  <p><span class="case-caption-num"> ✦ </span>A backend review before each handoff, so endpoint names matched.</p>
+                  <p>That level of annotation took longer up front, and it's where the review-round figures in the outcomes come from.</p>
+                  <p class="case-label">Trade-off</p>
+                  <p><strong>Documentation vs. live alignment.</strong> Each spec took longer to hand over, but it replaced the constant back-and-forth that a seven-hour gap and a language barrier made too slow.</p>
+               </div>
+             </div>
+            </div>
+
+            <!-- SPLIT: Look and Feel -->
+            <h2 class="case-section-heading">Look and Feel</h2>
+            <div class="case-scrolly case-scrolly--flip case-prose" style="--case-scrolly-steps: 1" data-section-title="Look and Feel">
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                  <img src="/mkm/Look-and-feel-first-screen.webp" alt="The first screen approved for the look and feel" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--first-approved-</span>The first screen signed off.</p>
+                  <img src="/mkm/Identity-excerpt.png" alt="The mark, the wordmark and its variants" loading="lazy">
+                  <p class="case-caption"><span class="case-caption-num">--identity-</span>A quick, rough identity; never a full style guide.</p>
+               </div>
+               <div class="case-scrolly__right">
+                  <p>There was no visual direction to start from. I put together broad mood-board explorations; after two or three rounds of feedback, the CEO shared their own visual references, which finally gave us something concrete to approve against.</p>
+                  <p>The same meeting that approved the look and feel brought frontend in to start immediately, on a library that held rough brand colours, rough text styles, a bento-box card layout and a borrowed icon set. The identity grew from there.</p>
+               </div>
+             </div>
+            </div>
+
+            <!-- FULL: Showcase -->
+            <figure class="case-image-block">
+               <img src="/mkm/UI-Analytics-dashboard.webp" alt="Analytics dashboard: KPIs, lead quality, spend ranking, audience map and campaign efficiency" loading="lazy">
+            </figure>
+
+            <!-- SPLIT: Outcomes -->
+            <h2 class="case-section-heading">Outcomes</h2>
+            <div class="case-scrolly case-scrolly--flip case-prose" style="--case-scrolly-steps: 1" data-section-title="Outcomes">
+             <div class="case-scrolly__step">
+               <div class="case-scrolly__left case-pairing-row__left">
+                  <div class="case-video">
+                     <video src="/mkm/product-tour.mp4" poster="/mkm/product-tour-poster.webp" autoplay loop playsinline muted aria-label="A tour of the main screens of the MVP: home, leads, campaigns, interactions and analytics"></video>
+                  </div>
+                  <p class="case-caption"><span class="case-caption-num">--the-product-</span>Home, leads, campaigns, interactions and analytics: the main screens of the MVP.</p>
+                  <!-- <div class="case-video">
+                     <video src="/mkm/journey.mp4" autoplay loop playsinline muted aria-label="Walkthrough of the app"></video>
+                  </div> -->
+               </div>
+               <div class="case-scrolly__right">
+                  <p>A production-ready MVP in 18 months, built by a three-person team. Digital and traditional marketing were visible in one place for the first time, and reporting moved from a two-week lag to real time. Events got a capture tool writing to the same database, social messages with certain keywords came in as leads, and telesales were cross-referenced against the sales CRM for a rough read on funnel conversion.</p>
+                  <p>The handoff process cut QA and design review rounds by roughly 90% compared with other projects at the company (around one round for every 8 or 9 the rest of the team needed). Builds of my designs ran roughly twice as fast as a result. Both are peer comparisons, not tracked data.</p>
+                  <p>The CEO had started out sceptical of design-system talk; the system got their buy-in as a proof of concept around month 5 or 6, and was adopted across the company at month 15. The product itself ended up in investor conversations, as an asset with white-label potential, and on the company's booth at developer events, neither of which was in the brief.</p>
+               </div>
+             </div>
+            </div>
+
+            <!-- Learnings (same block as the energy tracker and design system case studies) -->
+            <div class="case-footer-grid">
+               <div class="case-pairing-row__left">
+               </div>
+               <div class="case-pairing-row__right">
+                  <h3>Learnings</h3>
+                  <p>The MVP only reached user testing at the end of the project, so there's no usage data to show yet. I'd get the marketing team testing earlier, on the Leads dashboard rather than the finished product, since for the first months every workflow decision went through one person. I'd also have tracked the review rounds and build times properly from the start; the figures above come from comparing notes with the rest of the design team.</p>
+                  <p><strong>Scope is a design decision.</strong> Nobody handed over a definition of "Campaigns", so deciding what went into it, and what waited for v2, became part of the design work. Most of what I now call product thinking started as answering that question with backend, one section at a time.</p>
+                  <p><strong>Validation from daily collaborators counts for more than sign-off.</strong> Backend checked feasibility, the marketing lead checked workflows and a Customer Care contact checked the pipeline, so ideas reached the CEO already tested. Executive review stopped being where things were decided and became where they were confirmed.</p>
+                  <p><strong>Written handoffs scale better than meetings.</strong> The annotation habit started as a workaround for a seven-hour gap and a language barrier. It ended up as the part of the project other designers were asked to learn from.</p>
+                  <p><strong>Responsibility comes before the title.</strong> I joined as a mid-level UI designer with no product experience; priorities shifted, early decisions broke, and there was no buffer between a call and its consequences. What stayed with me is learning to keep moving without the full picture, and growing into the role by doing it rather than waiting for the label first.</p>
+               </div>
             </div>
 
          </article>

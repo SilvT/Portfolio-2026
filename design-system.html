@@ -35,6 +35,7 @@
         import { initLightGallery } from '/src/js/modules/lightgallery.js';
         import { initPhaseRailAccordion } from '/src/js/modules/phase-rail-accordion.js';
         import { initScrollToTop } from '/src/js/modules/scroll-to-top.js';
+        import { initCaseAnalytics } from '/src/js/modules/case-analytics.js';
         import Swiper from 'swiper';
         import { Pagination, Navigation } from 'swiper/modules';
 
@@ -73,6 +74,7 @@
           initTldrPanel();
           initPhaseRailAccordion();
           initScrollToTop();
+          initCaseAnalytics();
         }
 
         // Floating TL;DR CTA — opens a side panel, auto-closes after 8s.
@@ -83,6 +85,7 @@
           const panel = document.querySelector('.case-tldr-panel');
           const closeBtn = panel?.querySelector('.case-tldr-panel__close');
           if (!cta || !panel) return;
+          panel.inert = true;
 
           let closeTimer = null;
           let isHovering = false;
@@ -91,6 +94,7 @@
           function openPanel() {
             panel.classList.add('is-open');
             panel.setAttribute('aria-hidden', 'false');
+            panel.inert = false;
             cta.setAttribute('aria-expanded', 'true');
             if (!isHovering) scheduleClose();
           }
@@ -98,6 +102,7 @@
           function closePanel() {
             panel.classList.remove('is-open');
             panel.setAttribute('aria-hidden', 'true');
+            panel.inert = true;
             cta.setAttribute('aria-expanded', 'false');
             clearTimeout(closeTimer);
           }
@@ -116,6 +121,9 @@
           });
 
           closeBtn?.addEventListener('click', closePanel);
+
+          // Keyboard users: don't auto-close while focus is inside the panel
+          panel.addEventListener('focusin', () => clearTimeout(closeTimer));
 
           function onEnter() {
             isHovering = true;
@@ -169,8 +177,8 @@
             <img class="case-logo" src="/logo-filled.svg" alt="">
          </a>
          <div class="case-masthead-nav">
-            <a href="/marketing-management.html" aria-label="Previous project: Marketing Management">← <span>Prev</span></a>
-            <a href="/energy-tracker.html" aria-label="Next project: Energy Switching Tracker"><span>Next</span> →</a>
+            <a href="/marketing-management.html">← <span>Prev</span> <span class="visually-hidden">project: Marketing Management</span></a>
+            <a href="/energy-tracker.html"><span>Next</span> <span class="visually-hidden">project: Energy Switching Tracker</span> →</a>
          </div>
       </nav>
 
@@ -362,7 +370,7 @@
                </div>
              <div class="case-index-grid__cell">
                   <div class="case-index-grid__cell__image" aria-hidden="true">
-                     <img src="/ds/modes.png" alt="we used them as closer to prototype style as we had no dark mode" loading="lazy">
+                     <img src="/ds/modes.png" alt="Variable modes used on a few component-level collections for statuses, alert types and on/off states" loading="lazy">
                   </div>
                   <p class="case-index-grid__cell__title">Using Modes</p>
                   <p class="case-index-grid__cell__body"> Modes are used as a tool across a small number of isolated collections, scoped to the component layer, for statuses, alert types and on/off, closer to a prototype approach.</p>

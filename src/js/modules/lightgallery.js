@@ -23,6 +23,13 @@ export function initLightGallery() {
   initGalleryGrid();
   initAccordionImages();
   initIndexGridImages();
+
+  restoreFocusOnClose();
+
+  // Desktop hover hint via the CSS tooltip (hidden on mobile, skipped by screen readers; see case-study-components.scss)
+  document.querySelectorAll('a.glightbox-standalone, a.glightbox-gallery, a.glightbox').forEach((el) => {
+    el.dataset.tooltip = 'Click to enlarge';
+  });
 }
 
 /**
@@ -120,10 +127,14 @@ function initStandaloneImages() {
     anchor.appendChild(img);
   });
 
-  const pairingImages = document.querySelectorAll('.case-pairing-row__left > img');
+  // Direct images, plus images inside a 2-up .case-split-panel (its caption follows the panel)
+  const pairingImages = document.querySelectorAll(
+    '.case-pairing-row__left > img, .case-pairing-row__left .case-split-panel__half > img'
+  );
 
   pairingImages.forEach((img) => {
-    const caption = img.parentNode.querySelector('.case-caption');
+    const next = (img.closest('.case-split-panel') || img).nextElementSibling;
+    const caption = next?.classList.contains('case-caption') ? next : img.parentNode.querySelector('.case-caption');
     const sharedCaption = caption ? caption.textContent.trim() : '';
 
     const altText = img.alt || '';
@@ -278,4 +289,23 @@ function buildDescription(altText, captionText) {
     return captionText;
   }
   return '';
+}
+
+/**
+ * GLightbox leaves focus on <body> when it closes, so the next Tab restarts from the top of the
+ * page and lands on the "Skip to content" link. Hand focus back to the link that opened it.
+ */
+function restoreFocusOnClose() {
+  let opener = null;
+
+  document.addEventListener('click', (e) => {
+    opener = e.target.closest('a.glightbox-standalone, a.glightbox-gallery, a.glightbox') || opener;
+  }, true);
+
+  new MutationObserver(() => {
+    if (opener && !document.body.classList.contains('glightbox-open')) {
+      opener.focus({ preventScroll: true });
+      opener = null;
+    }
+  }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
 }

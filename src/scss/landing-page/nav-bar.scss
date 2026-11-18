@@ -100,6 +100,9 @@
   .logo {
     display: flex;
     align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
     cursor: pointer;
     transition: opacity 0.3s ease;
     text-decoration: none;

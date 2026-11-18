@@ -154,7 +154,7 @@ function setupClickHandlers(nav) {
 
         window.scrollTo({
           top: targetPosition,
-          behavior: 'smooth'
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
         });
 
         // Update URL hash without jumping
