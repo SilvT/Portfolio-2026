@@ -13,7 +13,7 @@
 
 ## Pages
 - [x] 404 page: draft built (`404.html`). Still to decide: flip-board headline (needs `flipBoardAnimation.js` to accept custom titles), copy review, and a `vercel.json` check that Vercel serves it (remove the no-op `rewrites` block).
-- [ ] When `marketing-management.html` and `energy-tracker.html` are finished: remove `noindex`, add them back to `sitemap.xml`, and add OG/Twitter tags to `marketing-management.html` (energy-tracker already has them).
+- [x] When `marketing-management.html` and `energy-tracker.html` are finished: remove `noindex`, add them back to `sitemap.xml`, and add OG/Twitter tags to `marketing-management.html` (energy-tracker already has them). Done 2026-11-18.
 - [ ] Check link previews of `design-system.html` and `library-freeze.html` after deploy (LinkedIn Post Inspector).
 
 ## Accessibility / polish
