@@ -1,4 +1,4 @@
-import { track } from '@vercel/analytics';
+import { track } from './track.js';
 
 /**
  * Attaches Vercel Analytics custom-event listeners

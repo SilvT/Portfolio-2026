@@ -1,4 +1,5 @@
-import { inject, track } from '@vercel/analytics';
+import { inject } from '@vercel/analytics';
+import { track } from './track.js';
 
 /**
  * Vercel Analytics for case study pages (they don't load main.js):
